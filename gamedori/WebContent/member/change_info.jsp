@@ -18,10 +18,10 @@
 	<h2>정보 수정</h2>
 	
 	<form action="change_info.do">
-		<table border="0">
+		<table width="400">
 			<tbody>
-			<tr>
-				<th>이름</th>
+				<tr>
+					<th>이름</th>
 					<td>
 						<%=user.getMember_name()%>
 					</td>
@@ -57,7 +57,7 @@
 			<tfoot>
 				<tr>
 					<th colspan="2">
-						<input type="submit" value="가입">
+						<input type="submit" value="변경">
 					</th>
 				</tr>
 			</tfoot>
