@@ -11,7 +11,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import gamedori.beans.dto.EventboardDto;
 import gamedori.beans.dto.MemberDto;
 
 public class MemberDao {
@@ -136,41 +135,15 @@ public class MemberDao {
 		ps.setString(4, mdto.getMember_nick());
 		ps.setString(5, mdto.getMember_phone());
 
-<<<<<<< HEAD
-
-				ps.setString(1, mdto.getMember_name());
-				ps.setString(2, mdto.getMember_id());
-				ps.setString(3, mdto.getMember_pw());
-				ps.setString(4, mdto.getMember_nick());
-				ps.setString(5, mdto.getMember_phone());
-=======
 		ps.execute();
 
 		con.close();
 	}
->>>>>>> refs/remotes/origin/master
 
-				ps.execute();
+	// 정보 수정 메소드
+	public void changeInfo(MemberDto mdto) throws Exception {
+		Connection con = getConnection();
 
-<<<<<<< HEAD
-				con.close();
-			}
-			//비밀번호 변경 메소드
-			public void changePassword(MemberDto mdto) throws Exception{
-				Connection con = getConnection();
-				
-				String sql = "UPDATE member SET member_pw=? WHERE member_id=?";
-				PreparedStatement ps = con.prepareStatement(sql);
-				ps.setString(1, mdto.getMember_pw());
-				ps.setString(2, mdto.getMember_id());
-				ps.execute();
-				
-				con.close();
-			}
-			
-			
-			
-=======
 		String sql = "UPDATE member "
 				+ "SET member_pw = ?, member_nick = ?, member_phone = ? "
 				+ "WHERE member_id = ?";
@@ -260,7 +233,21 @@ public class MemberDao {
 			con.close();
 		}
 
->>>>>>> refs/remotes/origin/master
+		//비밀번호 변경 메소드
+		public void changePassword(MemberDto mdto) throws Exception{
+			Connection con = getConnection();
+			
+			String sql = "UPDATE member SET member_pw=? WHERE member_id=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, mdto.getMember_pw());
+			ps.setString(2, mdto.getMember_id());
+			ps.execute();
+			
+			con.close();
+		}
+
 }
+
+
 
 

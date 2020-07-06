@@ -2,6 +2,8 @@ package gamedori.beans.dto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class EventboardDto {
 	private int event_no, member_no;
@@ -69,11 +71,11 @@ public class EventboardDto {
 		this.depth = depth;
 	}
 	private int eventboard_replycount;
-	public int getBoard_replycount() {
+	public int getEventboard_replycount() {
 		return eventboard_replycount;
 	}
-	public void setBoard_replycount(int board_replycount) {
-		this.eventboard_replycount = board_replycount;
+	public void setEventboard_replycount(int Eventboard_replycount) {
+		this.eventboard_replycount = Eventboard_replycount;
 	}
 
 	
@@ -87,6 +89,32 @@ public class EventboardDto {
 	
 	
 		}
-	
-}
+	//메소드 2개를 추가
+		//[1] getBoard_time() : 시간을 반환하는 메소드
+		//[2] getBoard_day() : 날짜를 반환하는 메소드
+		//[3] getBoard_autotime() : 자동으로 오늘날짜에는 시간을, 아닌 경우는 날짜를 반환
+		public String getEventboard_time() {
+			return event_date.substring(11, 16);
+		}
+		
+		public String getEventboard_day() {
+			return event_date.substring(0, 10);
+		}
+		
+		public String getEventboard_autotime() {
+//			Date d = new Date();
+//			Format f = new SimpleDateFormat("yyyy-MM-dd");
+//			String today = f.format(d);
+			String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+			if(getEventboard_day().equals(today)) {//오늘 작성한 글이라면
+				return getEventboard_time();
+			}
+			else {//아니라면
+				return getEventboard_day();
+			}
+		}
+	}
+
+
+
 
