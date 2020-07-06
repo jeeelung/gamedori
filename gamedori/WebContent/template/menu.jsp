@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+
 <%
 	//rootPath에는 프로젝트 root path(/home)가 자동으로 계산되어 저장된다. 이는 절대경로 작성 시 활용할 수 있다.
 	String rootPath = request.getContextPath();
@@ -20,6 +21,13 @@
 	<%if(mdto.getMember_auth().equals("관리자")) {%>
 	<a href="<%=rootPath%>/admin/home.jsp">관리메뉴</a>
 	<%} %>
+
+	<a href="<%=request.getContextPath()%>/index.jsp">홈으로</a>
+	<a href="<%=request.getContextPath()%>/guest/join.jsp">회원가입</a>
+	<a href="<%=request.getContextPath()%>/guest/login.jsp">로그인</a>
+	<a href="<%=request.getContextPath()%>/member/logout.do">로그아웃</a>
+	<a href="<%=request.getContextPath()%>/member/info.jsp">내정보</a>
+
 	<a href="#">공지사항</a>
 	<a href="#">커뮤니티</a>
 	<a href="#">이벤트</a>

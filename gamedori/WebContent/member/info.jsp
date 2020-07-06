@@ -1,3 +1,4 @@
+
 <%@page import="gamedori.beans.dao.MemberDao"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -16,7 +17,6 @@
 	int member_no=mdto.getMember_no();
 	MemberDao mdao=new MemberDao();
 	MemberDto user=mdao.get(member_no);//member_id(P.K)를 이용한 단일조회 수행
-
 
 %>
 
@@ -71,7 +71,7 @@
 	<h5><a href="check.jsp?go=change_info.jsp">개인정보 변경하기</a></h5>
 <!-- 	아래의 링크는 비밀번호 확인 페이지로 가지만 최종 목적지는 exit.do라는 뜻의 링크이다 -->
 	<h5><a href="check.jsp?go=exit.do">회원 탈퇴</a></h5>
-	
+
 
 </div>
 
