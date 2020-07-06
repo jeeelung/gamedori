@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dto.MemberDto;
 
-@WebServlet(urlPatterns = "/member/find_pw.do")
+@WebServlet(urlPatterns = "/guest/find_pw.do")
 public class MemberFindPwServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

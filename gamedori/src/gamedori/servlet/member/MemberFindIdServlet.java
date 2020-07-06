@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dto.MemberDto;
 
-@WebServlet(urlPatterns = "/member/find_id.do")
+@WebServlet(urlPatterns = "/guest/find_id.do")
 public class MemberFindIdServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
