@@ -8,7 +8,7 @@
 	<h2>회원가입</h2>
 	
 <!-- 	<form action="/home/member/join.do"> -->
-	<form action="/semi/member/join.do">
+	<form action="/gamedori/member/join.do">
 		<table border="0">
 			<tbody>
 			<tr>
