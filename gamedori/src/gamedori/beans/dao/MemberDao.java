@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import gamedori.beans.dto.EventboardDto;
 import gamedori.beans.dto.MemberDto;
 
 public class MemberDao {
@@ -158,5 +159,8 @@ public class MemberDao {
 				
 				con.close();
 			}
+			
+			
 }
+
 

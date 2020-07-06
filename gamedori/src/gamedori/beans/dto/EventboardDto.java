@@ -54,7 +54,9 @@ public class EventboardDto {
 		this.setEvent_content(rs.getString("event_content"));
 		this.setEvent_date(rs.getString("event_date"));
 		this.setEvent_read(rs.getString("event_read"));
-
+	
+	
+		}
 	
 }
-}
+

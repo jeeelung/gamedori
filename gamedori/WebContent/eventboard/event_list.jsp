@@ -63,6 +63,8 @@
 					</a>
 				</td>
 				<td><%=edto.getEvent_no()%></td>
+				<td><%=edto.getEvent_content() %></td>
+				<td><%=edto %>
 				<td><%=edto.getEvent_date()%></td>
 				<td><%=edto.getEvent_read()%></td>
 			</tr>

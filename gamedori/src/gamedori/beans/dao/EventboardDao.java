@@ -180,29 +180,8 @@ public class EventboardDao {
 		con.close();
 	}
 	
-	public EventboardDto id(String member_id) throws Exception {
-		Connection con = getConnection();
-		
-		String sql = "SELECT * FROM EVENT WHERE MEMBER_NO = ?";
-		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setString(1, "member_id");
-		ResultSet rs = ps.executeQuery();
-		
-//		BoardDto bdto = 객체 or null;
-//		BoardDto bdto;
-//		if(rs.next()) {
-//			bdto = new BoardDto(rs);
-//		}
-//		else {
-//			bdto = null;
-//		}
-		EventboardDto edto = rs.next() ? new EventboardDto(rs) : null;//3항 연산자
-		
-		con.close();
-		
-		return edto;
+
 	}
 	
-}
 
 
