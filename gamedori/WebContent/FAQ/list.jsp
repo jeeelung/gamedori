@@ -1,10 +1,11 @@
-<%@page import="home.beans.dto.BoardDto"%>
+<%@page import="gamedori.beans.dao.FAQDao"%>
+<%@page import="gamedori.beans.dto.FAQDto"%>
 <%@page import="java.util.List"%>
-<%@page import="home.beans.dao.BoardDao"%>
+<%@page import="gamedori.beans.dao.FAQDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- 
-	/board/list.jsp : 게시판 목록 겸 검색 페이지
+	/FAQ/list.jsp : 게시판 목록 겸 검색 페이지
  -->
 
 <%
@@ -13,7 +14,7 @@
 	//2. 처리
 	//		- isSearch라는 변수에 검색인지 아닌지 판정하여 저장
 	//		- isSearch의 값에 따라 "목록" 또는 "검색" 결과를 저장
-	//3. 결과물(출력) : 게시글 리스트 - List<BoardDto>
+	//3. 결과물(출력) : 게시글 리스트 - List<FAQDto>
 	
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
@@ -51,7 +52,7 @@
 	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
 	int finishBlock = startBlock + blockSize - 1;
 
-	CommuDao bdao = new CommuDao();
+	FAQDao bdao = new FAQDao();
 	
 	//(주의!) 다음 버튼의 경우 계산을 통하여 페이지 개수를 구해야 출력 여부 판단이 가능
 	//int count = 목록개수 or 검색개수;
@@ -69,13 +70,13 @@
 	}
 	
 	
-// 	List<BoardDto> list = 목록 or 검색;
-	List<BoardDto> list;
+// 	List<FAQDto> list = 목록 or 검색;
+	List<FAQDto> list;
 	if(isSearch){
-		list = bdao.search(type, keyword, start, finish); 
+		list = bdao.search(type, keyword); 
 	}
 	else{
-		list = bdao.getList(start, finish); 
+		list = bdao.getList(); 
 	}
 %> 
  
@@ -122,56 +123,56 @@
 			</tr>
 		</thead>
 		<tbody align="center">
-			<%-- list의 데이터를 하나하나 bdto라는 이름으로 접근하여 출력 --%>
-			<%for(BoardDto bdto : list){ %>
+			<%-- list의 데이터를 하나하나 fdto라는 이름으로 접근하여 출력 --%>
+			<%for(FAODto fdto : list){ %>
 			<tr>
-				<td><%=bdto.getBoard_no()%></td>
+				<td><%=fdto.getFAQ_no()%></td>
 				<td align="left">
 				
 					<!-- 
 						답글은 띄어쓰기 구현
 						- 답글인 경우는 super_no > 0 , depth > 0 
 					-->
-					<%if(bdto.getDepth() > 0){ %>
-						<%for(int i=0; i < bdto.getDepth(); i++){ %>
+					<%if(fdto.getDepth() > 0){ %>
+						<%for(int i=0; i < fdto.getDepth(); i++){ %>
 							&nbsp;&nbsp;&nbsp;&nbsp;
 						<%} %>
 						<img src="<%=request.getContextPath()%>/image/reply.png"
 							width="20" height="15">
 					<%} %>
 				
-					<%if(bdto.getBoard_head() != null){ %>
+					<%if(fdto.getFAQ_head() != null){ %>
 						<!-- 말머리는 있을 경우만 출력 -->
 						<font color="gray">
-						[<%=bdto.getBoard_head()%>]
+						[<%=fdto.getFAQ_head()%>]
 						</font>
 					<%} %>
 					
 					<!-- 게시글 제목 -->
-					<a href="content.jsp?board_no=<%=bdto.getBoard_no()%>">
-						<%=bdto.getBoard_title()%>
+					<a href="content.jsp?FAQ_no=<%=fdto.getFAQ_no()%>">
+						<%=fdto.getFAQ_title()%>
 					</a>
 					
-					<%if(bdto.getBoard_replycount() > 0){ %>
+					<%if(fdto.getFAQ_replycount() > 0){ %>
 					<!-- 댓글 개수를 출력(있을 경우만) -->
-					[<%=bdto.getBoard_replycount()%>]
+					[<%=fdto.getFAQ_replycount()%>]
 					<%} %>
 					
 				</td>
 				<td>
-					<%if(bdto.getBoard_writer() != null){ %>
-						<%=bdto.getBoard_writer()%>
+					<%if(fdto.getFAQ_writer() != null){ %>
+						<%=fdto.getFAQ_writer()%>
 					<%} else { %>
 						<font color="gray">탈퇴한 사용자</font>
 					<%} %>
 				</td>
-				<td><%=bdto.getBoard_autotime()%></td>
-				<td><%=bdto.getBoard_read()%></td>
+				<td><%=fdto.getFAQ_autotime()%></td>
+				<td><%=fdto.getFAQ_read()%></td>
 				
 				<!-- 테스트 항목 3개 출력 -->
-				<td><%=bdto.getSuper_no()%></td>
-				<td><%=bdto.getGroup_no()%></td>
-				<td><%=bdto.getDepth()%></td>
+				<td><%=fdto.getSuper_no()%></td>
+				<td><%=fdto.getGroup_no()%></td>
+				<td><%=fdto.getDepth()%></td>
 			</tr>
 			<%} %>
 		</tbody>
@@ -235,8 +236,8 @@
 	<form action="list.jsp" method="get">
 		<!-- 검색분류 -->
 		<select name="type">
-			<option value="board_title">제목만</option>
-			<option value="board_writer">글작성자</option>
+			<option value="FAQ_title">제목만</option>
+			<option value="FAQ_writer">글작성자</option>
 		</select>
 		
 		<!-- 검색어 -->

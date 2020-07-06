@@ -12,24 +12,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 
-import home.beans.dao.BoardFileDao;
-import home.beans.dto.BoardFileDto;
+import gamedori.beans.dao.FAQFileDao;
+import gamedori.beans.dto.FAQFileDto;
 
-@WebServlet(urlPatterns = "/board/download.do")
+
+@WebServlet(urlPatterns = "/faq/download.do")
 public class FAQFileDownloadServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 //			목표 : 사용자가 원하는 파일을 다운로드 할 수 있도록 전송
 //			1. 사용자 요청정보에서 board_file_no를 불러온다
-			int board_file_no = Integer.parseInt(req.getParameter("board_file_no"));
+			int board_file_no = Integer.parseInt(req.getParameter("faq_file_no"));
 			
 //			2. 데이터베이스에서 board_file_no에 해당하는 파일 정보를 불러온다.
-			FAOFileDao bfdao = new FAOFileDao();
-			FAQFileDto bfdto = bfdao.get(board_file_no);
+			FAQFileDao ffdao = new FAQFileDao();
+			FAQFileDto ffdto = ffdao.get(faq_file_no);
 			
 //			3. 만약 대상 파일이 없으면 사용자에게 오류를 송출
-			if(bfdto == null) {
+			if(ffdto == null) {
 				resp.sendError(404);
 				return;//중지
 			}
@@ -47,11 +48,11 @@ public class FAQFileDownloadServlet extends HttpServlet{
 			
 			resp.setHeader("Content-Type", "application/octet-stream; charset=UTF-8");
 //			resp.setHeader("Content-Disposition", "attachment; filename="+bfdto.getBoard_file_name());
-			resp.setHeader("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(bfdto.getBoard_file_name(), "UTF-8")+"\"");
-			resp.setHeader("Content-Length", String.valueOf(bfdto.getBoard_file_size()));
+			resp.setHeader("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(ffdto.getFaq_file_name(), "UTF-8")+"\"");
+			resp.setHeader("Content-Length", String.valueOf(ffdto.getFaq_file_size()));
 			
 //			5. 실제 데이터를 불러와서 사용자에게 전송한다.
-			File target = new File("D:/upload/board", String.valueOf(bfdto.getBoard_file_no()));
+			File target = new File("D:/upload/faq", String.valueOf(ffdto.getFaq_file_no()));
 			byte[] data = FileUtils.readFileToByteArray(target);//파일 데이터 로드
 			resp.getOutputStream().write(data);//사용자에게 전송
 		}
@@ -61,12 +62,3 @@ public class FAQFileDownloadServlet extends HttpServlet{
 		}
 	}
 }
-
-
-
-
-
-
-
-
-

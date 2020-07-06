@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 import gamedori.beans.dto.FAQFileDto;
 
-public class FAOFileDao {
+public class FAQFileDao {
 	
 	private static DataSource src;
 	static {
