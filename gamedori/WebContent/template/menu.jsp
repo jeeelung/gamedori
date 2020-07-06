@@ -22,12 +22,6 @@
 	<a href="<%=rootPath%>/admin/home.jsp">관리메뉴</a>
 	<%} %>
 
-	<a href="<%=request.getContextPath()%>/index.jsp">홈으로</a>
-	<a href="<%=request.getContextPath()%>/guest/join.jsp">회원가입</a>
-	<a href="<%=request.getContextPath()%>/guest/login.jsp">로그인</a>
-	<a href="<%=request.getContextPath()%>/member/logout.do">로그아웃</a>
-	<a href="<%=request.getContextPath()%>/member/info.jsp">내정보</a>
-
 	<a href="#">공지사항</a>
 	<a href="#">커뮤니티</a>
 	<a href="#">이벤트</a>
@@ -35,8 +29,8 @@
 	<a href="#">1:1문의</a>	
 	<%}else{ %>
 <!-- 	로그인 상태가 아닐 경우 -->
-	<a href="<%=rootPath%>/member/join.jsp">회원가입</a>
-	<a href="<%=rootPath%>/member/login.jsp">로그인</a>
+	<a href="<%=rootPath%>/guest/join.jsp">회원가입</a>
+	<a href="<%=rootPath%>/guest/login.jsp">로그인</a>
 	<a href="#">공지사항</a>
 	<a href="#">커뮤니티</a>
 	<a href="#">이벤트</a>
