@@ -5,7 +5,7 @@
 
 <div align="center">
 	
-	<h2>아이디 찾기</h2>
+	<h2>비밀번호 찾기</h2>
 	
 	<form action="find_pw.do" method="post">
 		<table border="0">

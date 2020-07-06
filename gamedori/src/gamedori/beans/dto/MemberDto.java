@@ -92,6 +92,7 @@ public class MemberDto {
 	public void setMember_login_date(String member_login_date) {
 		this.member_login_date = member_login_date;
 	}
+	
 	public MemberDto(ResultSet rs) throws SQLException {
 		this.setMember_no(rs.getInt("member_no"));
 		this.setMember_name(rs.getString("member_name"));
