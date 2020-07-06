@@ -17,10 +17,15 @@
 					<!-- 메뉴(navigation) 영역 -->
 				<tr>
 					<td>
+<<<<<<< HEAD
 					<jsp:include page="/template/menu.jsp"></jsp:include>
+=======
+	 					<jsp:include page="/template/menu.jsp"></jsp:include>
+>>>>>>> refs/remotes/origin/master
 					</td>
 				</tr>
 				<!-- 본문(section) 영역 -->
 				
 				<tr height="350">
 					<td valign="top">
+					
