@@ -1,4 +1,4 @@
-package home.servlet.board;
+package gamedori.servlet.FAQ;
 
 import java.io.IOException;
 
@@ -33,7 +33,7 @@ public class BoardWriteServlet extends HttpServlet{
 				bdto.setSuper_no(Integer.parseInt(req.getParameter("board_no")));
 			}
 			
-			BoardDao bdao = new BoardDao();
+			FAQDao bdao = new FAQDao();
 			int board_no = bdao.getSequence();//들어갈 번호 먼저 추출
 			bdto.setBoard_no(board_no);//들어갈 번호를 설정한 뒤
 			bdao.write(bdto);//등록

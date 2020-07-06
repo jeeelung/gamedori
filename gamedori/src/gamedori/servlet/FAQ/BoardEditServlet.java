@@ -1,4 +1,4 @@
-package home.servlet.board;
+package gamedori.servlet.FAQ;
 
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ public class BoardEditServlet extends HttpServlet{
 			bdto.setBoard_content(req.getParameter("board_content"));
 			
 //			처리 : 
-			BoardDao bdao = new BoardDao();
+			FAQDao bdao = new FAQDao();
 			bdao.edit(bdto);
 			
 //			출력 : 

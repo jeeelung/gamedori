@@ -1,4 +1,4 @@
-package home.servlet.board;
+package gamedori.servlet.FAQ;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,7 +63,7 @@ public class BoardWriteWithFileServlet extends HttpServlet{
 			bdto.setBoard_writer(user.getMember_id());
 			
 //			7. 작성할 게시글의 번호를 미리 가져온다.
-			BoardDao bdao = new BoardDao();
+			FAQDao bdao = new FAQDao();
 			int board_no = bdao.getSequence();
 			
 //			8. 게시글 정보에 7번에서 가져온 번호를 첨부
@@ -77,7 +77,7 @@ public class BoardWriteWithFileServlet extends HttpServlet{
 //			- (주의) 파일이 없어도 개수가 1개가 나오므로 개수로 처리하는 것은 무리!
 //			- 파일이 있는지 없는지는 파일의 크기를 이용해서 확인
 			List<FileItem> fileList = map.get("board_file");
-			BoardFileDao bfdao = new BoardFileDao();
+			FAOFileDao bfdao = new FAOFileDao();
 			for(FileItem item : fileList) {
 				//item에 있는 정보를 뽑아내서 DB에 저장
 				//item의 파일 데이터를 하드디스크에 저장

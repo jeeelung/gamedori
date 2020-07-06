@@ -1,4 +1,4 @@
-package home.servlet.board;
+package gamedori.servlet.FAQ;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class BoardFileDownloadServlet extends HttpServlet{
 			int board_file_no = Integer.parseInt(req.getParameter("board_file_no"));
 			
 //			2. 데이터베이스에서 board_file_no에 해당하는 파일 정보를 불러온다.
-			BoardFileDao bfdao = new BoardFileDao();
+			FAOFileDao bfdao = new FAOFileDao();
 			FAQFileDto bfdto = bfdao.get(board_file_no);
 			
 //			3. 만약 대상 파일이 없으면 사용자에게 오류를 송출
