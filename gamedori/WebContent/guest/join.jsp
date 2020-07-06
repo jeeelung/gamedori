@@ -11,9 +11,9 @@
 		<table border="0">
 			<tbody>
 			<tr>
-					<th>이름</th>
+				<th>이름</th>
 					<td>
-						<input type="text" name="member_name" required placeholder="5자 이하 한글">
+						<input type="text" name="member_name" required placeholder="5~20자 영문 또는 숫자">
 					</td>
 				</tr>
 				<tr>
@@ -34,14 +34,12 @@
 						<input type="text" name="member_nick" required placeholder="한글 8자 이내">
 					</td>
 				</tr>
-				
 				<tr>
 					<th>전화번호</th>
 					<td>
 						<input type="text" name="member_phone" required placeholder="- 제외">
 					</td>
 				</tr>
-				
 			</tbody>
 			<tfoot>
 				<tr>
@@ -52,7 +50,6 @@
 			</tfoot>
 		</table>
 	</form>
-
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>
