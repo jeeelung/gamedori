@@ -47,6 +47,36 @@ public class EventboardDto {
 		this.event_read = event_read;
 	}
 	
+	private int super_no;
+	private int group_no;
+	private int depth;
+	public int getSuper_no() {
+		return super_no;
+	}
+	public void setSuper_no(int super_no) {
+		this.super_no = super_no;
+	}
+	public int getGroup_no() {
+		return group_no;
+	}
+	public void setGroup_no(int group_no) {
+		this.group_no = group_no;
+	}
+	public int getDepth() {
+		return depth;
+	}
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+	private int eventboard_replycount;
+	public int getBoard_replycount() {
+		return eventboard_replycount;
+	}
+	public void setBoard_replycount(int board_replycount) {
+		this.eventboard_replycount = board_replycount;
+	}
+
+	
 	public EventboardDto(ResultSet rs) throws SQLException {
 		this.setEvent_no(rs.getInt("event_no"));
 		this.setMember_no(rs.getInt("member_no"));
