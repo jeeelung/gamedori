@@ -144,7 +144,9 @@ public class MemberDao {
 	public void changeInfo(MemberDto mdto) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "UPDATE member " + "SET member_pw = ?, member_nick = ?, member_phone = ? " + "WHERE member_id = ?";
+		String sql = "UPDATE member "
+				+ "SET member_pw = ?, member_nick = ?, member_phone = ? "
+				+ "WHERE member_id = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, mdto.getMember_pw());
 		ps.setString(2, mdto.getMember_nick());
@@ -155,11 +157,32 @@ public class MemberDao {
 
 		con.close();
 	}
+	
+	// 단일 조회 메소드
+		public MemberDto get(String member_id) throws Exception{
+			Connection con = getConnection();
+			
+			String sql = "SELECT * FROM member WHERE member_id = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, member_id);
+			ResultSet rs = ps.executeQuery();
+			
+			MemberDto mdto;
+			if(rs.next()) {
+				mdto = new MemberDto(rs);
+			} else {
+				mdto = null;
+			}
+			con.close();
+			return mdto;
+		}
 
 	// 비밀번호 변경 메소드
 	public void changePw(MemberDto mdto) throws Exception {
 		Connection con = getConnection();
-		String sql = "UPDATE member " + "Set member_pw = ? " + "WHERE member_id = ?";
+		String sql = "UPDATE member "
+				+ "Set member_pw = ? "
+				+ "WHERE member_id = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, mdto.getMember_pw());
 		ps.setString(2, mdto.getMember_id());
