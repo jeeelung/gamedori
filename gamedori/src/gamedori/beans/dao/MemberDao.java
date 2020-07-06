@@ -35,7 +35,7 @@ public class MemberDao {
 	public MemberDto login(MemberDto mdto) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "SELECT * FROM member WHERE member_id=? AND member_pw=?";
+		String sql = "SELECT * FROM member WHERE member_id = ? AND member_pw = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, mdto.getMember_id());
 		ps.setString(2, mdto.getMember_pw());
@@ -78,11 +78,11 @@ public class MemberDao {
 	public String findId(MemberDto mdto) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "SELECT member_id FROM member " + "WHERE member_name=? and member_phone=? and member_nick=?";
+		String sql = "SELECT member_id FROM member "
+				+ "WHERE member_name = ? and member_phone = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, mdto.getMember_name());
 		ps.setString(2, mdto.getMember_phone());
-		ps.setString(3, mdto.getMember_nick());
 		ResultSet rs = ps.executeQuery();
 
 		String member_id;
@@ -97,19 +97,18 @@ public class MemberDao {
 		return member_id;
 	}
 
-	// 비밃번호 찾기 메소드
+	// 비밀번호 찾기 메소드
 	public String findPw(MemberDto mdto) throws Exception{
 		Connection con = getConnection();
 		
 		String sql = "SELECT member_pw FROM member "
-				+ "WHERE member_id=? and member_phone=? and member_name=?";
+				+ "WHERE member_id = ? and member_phone = ? and member_name=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, mdto.getMember_id());
 		ps.setString(2, mdto.getMember_phone());
 		ps.setString(3, mdto.getMember_name());
 		ResultSet rs = ps.executeQuery();
 		
-
 		String member_pw;
 		if(rs.next()) {
 			member_pw = rs.getString("member_pw");
