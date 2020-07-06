@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- server.xml 의 Content 태그에 대한 설정을 내부에서 수행 -->
+<context>
+
+	<!-- Resource 태그는 자원을 등록하기 위한 태그이며 첫 글자가 대문자여야 한다 -->
+	<Resource	name="jdbc/oracle"
+				type="javax.sql.DataSource"
+				auth="Container"
+				
+				driverClassName="oracle.jdbc.OracleDriver"
+				url="jdbc:oracle:thin:@localhost:1521:xe"
+				username="c##gamedori"
+				password="c##gamedori"
+				
+				maxTotal="20"
+				maxIdle="5"
+				maxWait="3000"></Resource>
+
+</context>
