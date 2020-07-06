@@ -17,8 +17,7 @@ import gamedori.beans.dto.MemberDto;
 		@Override
 		protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			try {
-				//입력 : login.jsp에서 전달되는 member_id, member_pw를 수신하여 MemberDto 형태로 저장
-				req.setCharacterEncoding("UTF-8");//지금은 필요없지만 습관처럼 쓴다
+				req.setCharacterEncoding("UTF-8");
 				MemberDto mdto = new MemberDto();
 				mdto.setMember_id(req.getParameter("member_id"));
 				mdto.setMember_pw(req.getParameter("member_pw"));
