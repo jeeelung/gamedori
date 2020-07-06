@@ -8,9 +8,8 @@
 <!-- 
 	/board/list.jsp : 게시판 목록 겸 검색 페이지
  -->
-
-<%
-	//이 페이지를 출력하기 위한 프로그래밍 처리
+<% 
+//이 페이지를 출력하기 위한 프로그래밍 처리
 	//1. 준비물(입력) : 검색창의 입력값 - type, keyword (둘다 있으면 검색)
 	//2. 처리
 	//		- isSearch라는 변수에 검색인지 아닌지 판정하여 저장
@@ -22,18 +21,16 @@
 	
 	boolean isSearch = type != null && keyword != null;
 	
-	EventboardDao edao = new EventboardDao();
-// 	List<BoardDto> list = 목록 or 검색;
+	EventboardDao bdao = new EventboardDao();
+//	List<BoardDto> list = 목록 or 검색;
 	List<EventboardDto> list;
 	if(isSearch){
 		list = edao.search(type, keyword); 
 	}
 	else{
 		list = edao.getList();
-	}
-%> 
- 
- 
+	%>
+	
 <jsp:include page="/template/header.jsp"></jsp:include>
 
 <div align="center">
@@ -64,11 +61,11 @@
 				</td>
 				<td><%=edto.getEvent_no()%></td>
 				<td><%=edto.getEvent_content() %></td>
-				<td><%=edto %>
+				<td><%=edto.getMember_no() %>
 				<td><%=edto.getEvent_date()%></td>
 				<td><%=edto.getEvent_read()%></td>
 			</tr>
-			<%} %>
+			<%}} %>
 		</tbody>
 		
 		<tfoot>
