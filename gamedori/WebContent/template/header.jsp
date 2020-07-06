@@ -18,9 +18,11 @@
 				<tr>
 					<td>
 					<jsp:include page="/template/menu.jsp"></jsp:include>
+
 					</td>
 				</tr>
 				<!-- 본문(section) 영역 -->
 				
 				<tr height="350">
 					<td valign="top">
+					
