@@ -16,7 +16,7 @@ import home.beans.dao.BoardFileDao;
 import home.beans.dto.BoardFileDto;
 
 @WebServlet(urlPatterns = "/board/download.do")
-public class BoardFileDownloadServlet extends HttpServlet{
+public class FAQFileDownloadServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {

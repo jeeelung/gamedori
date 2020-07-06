@@ -22,7 +22,7 @@ import home.beans.dto.BoardFileDto;
 import home.beans.dto.MemberDto;
 
 @WebServlet(urlPatterns = "/board/write.do")
-public class BoardWriteWithFileServlet extends HttpServlet{
+public class FAQWriteWithFileServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
