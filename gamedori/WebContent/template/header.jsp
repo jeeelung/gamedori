@@ -17,7 +17,7 @@
 					<!-- 메뉴(navigation) 영역 -->
 				<tr>
 					<td>
-<%-- 					<jsp:include page="/template/menu.jsp"></jsp:include> --%>
+					<jsp:include page="/template/menu.jsp"></jsp:include>
 					</td>
 				</tr>
 				<!-- 본문(section) 영역 -->
