@@ -57,6 +57,14 @@
 				<th>포인트</th>
 				<td><%=user.getMember_point()%></td>
 			</tr>
+			<tr>
+ 				<th>가입일</th>
+ 				<td><%=user.getMember_join_date()%></td>
+ 			</tr>
+ 			<tr>
+ 				<th>최종 로그인 일시</th>
+ 				<td><%=user.getMember_login_date()%></td>
+ 			</tr>
 		</tbody>
 	</table>
 	
