@@ -46,18 +46,18 @@
 
 	
 	//FAQ_no를 이용하여 FAQDto를 얻어낸다
-	FAQDto bdto = fdao.get(faq_no);
+	FAQDto fdto = fdao.get(faq_no);
 	
 	//추가 : 만약 회원의 "권한"을 추가적으로 표시하고 싶다면 작성자 회원정보가 필요
 	MemberDao mdao = new MemberDao();
-	MemberDto mdto = mdao.get(bdto.getFaq_writer());//작성자로 회원조회
+	MemberDto mdto = mdao.get(fdto.getFaq_writer_no());//작성자로 회원조회
 	
 	//내글인지 또는 관리자인지를 파악하여 이후의 작업에 적용
 	// - 관리자 : 세션에 있는 userinfo 데이터의 권한 정보
 	boolean isAdmin = user.getMember_auth().equals("관리자");
 	
 	// - 내글 : 게시글(bdto)의 작성자와 로그인 된 사용자(user)의 아이디가 같아야 함
-	boolean isMine = user.getMember_id().equals(bdto.getFaq_writer());
+	boolean isMine = user.getMember_id().equals(fdto.getFaq_writer_no());
 	
 	
 
@@ -81,15 +81,15 @@
 				<td>
 					<font size="6">
 					<%
-						if(bdto.getFaq_head() != null){
+						if(fdto.getFaq_head() != null){
 					%>
 						<!-- 말머리는 있을 경우만 출력 -->
-						[<%=bdto.getFaq_head()%>]
+						[<%=fdto.getFaq_head()%>]
 					<%
 							}
 						%>
 					
-					<%=bdto.getFaq_title()%>
+					<%=fdto.getFaq_title()%>
 					</font>
 				</td>
 			</tr>
@@ -129,7 +129,7 @@
 			<!-- 게시글 내용 영역 -->
 			<tr height="300">
 				<td valign="top">
-					<%=bdto.getFaq_content()%>
+					<%=fdto.getFaq_content()%>
 				</td>  
 			</tr>
 			
