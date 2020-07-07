@@ -23,7 +23,7 @@ public class FAQFileDownloadServlet extends HttpServlet{
 		try {
 //			목표 : 사용자가 원하는 파일을 다운로드 할 수 있도록 전송
 //			1. 사용자 요청정보에서 board_file_no를 불러온다
-			int board_file_no = Integer.parseInt(req.getParameter("faq_file_no"));
+			int faq_file_no = Integer.parseInt(req.getParameter("faq_file_no"));
 			
 //			2. 데이터베이스에서 board_file_no에 해당하는 파일 정보를 불러온다.
 			FAQFileDao ffdao = new FAQFileDao();

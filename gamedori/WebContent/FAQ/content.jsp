@@ -97,7 +97,7 @@
 				<td>
 					<!-- 작성자 -->
 					<%
-						if(fdto.getFaq_writer_no() != null){
+						if(fdto.getFaq_writer_no() != 0){
 					%>
 						<%=fdto.getFaq_writer_no()%>
 					<%

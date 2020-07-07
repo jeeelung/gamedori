@@ -13,7 +13,7 @@
 			<tr>
 				<th>이름</th>
 					<td>
-						<input type="text" name="member_name" required placeholder="5자 이하 한글">
+						<input type="text" name="member_name" required placeholder="5~20자 영문 또는 숫자">
 					</td>
 				</tr>
 				<tr>
