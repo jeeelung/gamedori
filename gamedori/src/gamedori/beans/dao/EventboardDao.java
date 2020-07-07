@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import gamedori.beans.dto.EventDto;
 import gamedori.beans.dto.EventboardDto;
 
 
@@ -61,7 +62,7 @@ public class EventboardDao {
 	}
 	
 	//검색 메소드
-	public List<EventboardDto> search(String type, String keyword) throws Exception{
+	public List<EventDto> search1(String type, String keyword) throws Exception{
 		Connection con = getConnection();
 		
 		String sql = "SELECT * FROM event "
@@ -72,16 +73,16 @@ public class EventboardDao {
 		ps.setString(1, keyword);
 		ResultSet rs = ps.executeQuery();
 		
-		List<EventboardDto> list = new ArrayList<>();
+		List<EventDto> list = new ArrayList<>();
 		while(rs.next()) {
-			EventboardDto edto = new EventboardDto(rs);
-			list.add(edto);
+			EventDto edto2 = new EventDto(rs);
+			list.add(edto2);
 		}
 		
 		con.close();
 		return list;
-	}
 	
+}
 	//단일조회
 	public EventboardDto get(int event_no) throws Exception {
 		Connection con = getConnection();
@@ -144,7 +145,7 @@ public class EventboardDao {
 		//		- 상위글번호 : 원본글번호
 		//		- 그룹번호 : 원본글 그룹번호
 		//		- 차수 : 원본글 차수 + 1
-		public void write(EventboardDto edto) throws Exception {
+		public void write(EventDto edto) throws Exception {
 			if(edto.getSuper_no() == 0) {//새글이면
 				//bdto에는 5개의 정보가 들어있다(번호,말머리,제목,작성자,내용)
 				//- 추가로 그룹번호를 설정해주어야 한다(나머지는 0)
@@ -206,7 +207,7 @@ public class EventboardDao {
 		//- 1번글의 댓글 개수를 5개로 변경해라!
 		//- UPDATE board SET board_replycount = 5 WHERE board_no = 1
 		//- 위의 두 구문을 합쳐서 실행하도록 구현
-		public void editReplycount(int board_no) throws Exception {
+		public void editReplycount(int event_no) throws Exception {
 			Connection con = getConnection();
 			
 			String sql = "UPDATE board "
@@ -215,8 +216,8 @@ public class EventboardDao {
 								+ ") "
 								+ "WHERE board_no = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, board_no);
-			ps.setInt(2, board_no);
+			ps.setInt(1, event_no);
+			ps.setInt(2, event_no);
 			ps.execute();
 			
 			con.close();
@@ -226,48 +227,55 @@ public class EventboardDao {
 		public int getCount() throws Exception{
 			Connection con = getConnection();
 			
-			String sql = "SELECT count(*) FROM board";
+			String sql = "SELECT count(*) FROM event";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			rs.next();//데이터 무조건 1개 나오므로 이동
-			int count = rs.getInt(1);//또는 rs.getInt("count(*)");
+			int count = rs.getInt(4);//또는 rs.getInt("count(*)");
 			
 			con.close();
 			
 			return count;
 		}
-		public int getCount(String type, String keyword) throws Exception{
+		
+		
+		public List<EventDto> getidlist() throws Exception{
+			
+			Connection con = getConnection();
+			String sql= "select e.event_title, m.member_id, e.EVENT_CONTENT, e.EVENT_DATE,e.EVENT_READ,e.EVENT_NO from event e inner join member m on e.member_no = m.member_no";
+			PreparedStatement ps= con.prepareStatement(sql);
+			
+			ResultSet rs= ps.executeQuery();
+			List<EventDto> list = new ArrayList<>();
+			
+			while(rs.next()) {
+			EventDto edto2 = new EventDto(rs);
+			
+			list.add(edto2);
+				
+			}
+		
+			con.close();
+			return list; 
+		}
+	
+		public List<EventDto> getList2() throws Exception{
 			Connection con = getConnection();
 			
-			String sql = "SELECT count(*) FROM board WHERE instr(#1, ?) > 0";
-			sql = sql.replace("#1", type);
+			String sql = "SELECT * FROM event ORDER BY event_no DESC";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, keyword);
 			ResultSet rs = ps.executeQuery();
-			rs.next();//데이터 무조건 1개 나오므로 이동
-			int count = rs.getInt(1);//또는 rs.getInt("count(*)");
+			
+			List<EventDto> list = new ArrayList<>();
+			while(rs.next()) {
+				EventDto edto2 = new EventDto(rs);
+				list.add(edto2);
+			}
 			
 			con.close();
-			
-			return count;
+			return list;
 		}
-	
-
-
-
-
-	public void mid(EventboardDto edto) throws Exception{
-		
-		Connection con = getConnection();
-		String sql= "select event_title, member_id from event, MEMBER where event.member_no = member.member_no";
-		PreparedStatement ps= con.prepareStatement(sql);
-		ps.execute();
-		
-		con.close();
-	}
-	
-
-	}
+}
 	
 
 

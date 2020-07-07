@@ -77,8 +77,17 @@ public class EventboardDto {
 	public void setEventboard_replycount(int Eventboard_replycount) {
 		this.eventboard_replycount = Eventboard_replycount;
 	}
-
 	
+	
+	private String member_id;
+	
+	
+	public String getMember_id() {
+		return member_id;
+	}
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
 	public EventboardDto(ResultSet rs) throws SQLException {
 		this.setEvent_no(rs.getInt("event_no"));
 		this.setMember_no(rs.getInt("member_no"));
