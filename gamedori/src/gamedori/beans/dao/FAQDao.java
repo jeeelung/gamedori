@@ -55,7 +55,7 @@ public class FAQDao {
 //		FAQ_no와 super_no가 같으면 연결되어 있는 것으로 생각하고
 //		super_no가 NULL인 항목부터 시작해서 추출해라.
 //		이렇게 추출되는 글 그룹들을 그룹번호 내림차순, 글번호 오름차순으로 정렬해라!"
-		String sql = "SELECT * FROM FAQ oder by faq_no desc";	
+		String sql = "SELECT * FROM FAQ order by faq_no desc";	
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		List<FAQDto> list = new ArrayList<>();
@@ -98,36 +98,15 @@ public class FAQDao {
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, faq_no);
 		ResultSet rs = ps.executeQuery();
-		
-//		FAQDto fdto = 객체 or null;
-//		FAQDto fdto;
-//		if(rs.next()) {
-//			fdto = new FAQDto(rs);
-//		}
-//		else {
-//			fdto = null;
-//		}
+
 		FAQDto fdto = rs.next() ? new FAQDto(rs) : null;//3항 연산자
-		
+
 		con.close();
 		
 		return fdto;
 	}
 	
-	//조회수 증가
-	public void plusReadcount(int faq_no, int member_no) throws Exception {
-		Connection con = getConnection();
-		
-		String sql = "UPDATE FAQ "
-						+ "SET FAQ_read = FAQ_read + 1 "
-						+ "WHERE FAQ_no = ? and FAQ_writer_no != ?";
-		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, faq_no);
-		ps.setInt(2, member_no);
-		ps.execute();
-		
-		con.close();
-	}
+	
 	
 	//시퀀스 생성
 	// - dual 테이블은 오라클이 제공하는 임시 테이블
@@ -146,35 +125,14 @@ public class FAQDao {
 	}
 	
 	//등록
-	// - 번호가 이미 생성되어서 fdto에 들어있으므로 시퀀스 사용 금지!
-	// - fdto의 상황은 크게 두 가지 경우로 나뉜다
-	//		1. fdto.getSuper_no() == 0 : 새글
-	//		2. fdto.getSuper_no() > 0 : 답글
-	// - fdto에 들어갈 데이터(상위글번호, 그룹번호, 차수정보)를 계산하여 등록!
-	// - 새글 등록 기준
-	//		- 상위글번호 : 0
-	//		- 그룹번호 : 글번호와 동일
-	//		- 차수 : 0
-	// - 답글 등록 기준
-	//		- 상위글번호 : 원본글번호
-	//		- 그룹번호 : 원본글 그룹번호
-	//		- 차수 : 원본글 차수 + 1
 	public void write(FAQDto fdto) throws Exception {		
 		Connection con = getConnection();
-		String sql = "INSERT INTO FAQ"
-								+ "("
-									+ "FAQ_no, "
-									+ "FAQ_head, "
-									+ "FAQ_title, "
-									+ "FAQ_writer_no, "
-									+ "FAQ_content,"
-								+ ") "
-						+ "VALUES(?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO FAQ VALUES(?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, fdto.getFaq_no());
-		ps.setString(2, fdto.getFaq_head());
-		ps.setString(3, fdto.getFaq_title());
-		ps.setInt(4, fdto.getFaq_writer_no());
+		ps.setInt(2, fdto.getMember_no());
+		ps.setString(3, fdto.getFaq_head());
+		ps.setString(4, fdto.getFaq_title());
 		ps.setString(5, fdto.getFaq_content());
 		ps.execute();
 		

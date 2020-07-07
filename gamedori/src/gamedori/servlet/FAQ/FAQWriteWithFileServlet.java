@@ -21,7 +21,7 @@ import gamedori.beans.dto.FAQDto;
 import gamedori.beans.dto.FAQFileDto;
 import gamedori.beans.dto.MemberDto;
 
-@WebServlet(urlPatterns = "/faq/write.do")
+@WebServlet(urlPatterns = "/FAQ/write.do")
 public class FAQWriteWithFileServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,14 +48,16 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 			
 //			5. 해석한 데이터에서 필요한 정보들을 추출
 			FAQDto fdto = new FAQDto();
-			fdto.setFaq_head(map.get("faq_head").get(0).getString());
-			fdto.setFaq_title(map.get("faq_title").get(0).getString());
-			fdto.setFaq_content(map.get("faq_content").get(0).getString());
+			//System.out.println(map.get("faq_head"));
+			fdto.setFaq_head(map.get("FAQ_head").get(0).getString());
+			
+			fdto.setFaq_title(map.get("FAQ_title").get(0).getString());
+			fdto.setFaq_content(map.get("FAQ_content").get(0).getString());
 			
 //			6. 세션에서 작성자 정보를 가져오는 코드는 동일하다
 			MemberDto user = (MemberDto) req.getSession().getAttribute("userinfo");
-			fdto.setFaq_writer_no(user.getMember_no());
-			
+			//System.out.println(user.getMember_no());
+			fdto.setMember_no(user.getMember_no());
 //			7. 작성할 게시글의 번호를 미리 가져온다.
 			FAQDao fdao = new FAQDao();
 			int faq_no = fdao.getSequence();
@@ -70,7 +72,7 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 //			- 전송되는 이름은 faq_file
 //			- (주의) 파일이 없어도 개수가 1개가 나오므로 개수로 처리하는 것은 무리!
 //			- 파일이 있는지 없는지는 파일의 크기를 이용해서 확인
-			List<FileItem> fileList = map.get("faq_file");
+			List<FileItem> fileList = map.get("FAQ_file");
 			FAQFileDao ffdao = new FAQFileDao();
 			for(FileItem item : fileList) {
 				//item에 있는 정보를 뽑아내서 DB에 저장
@@ -85,7 +87,7 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 					ffdto.setFaq_file_name(item.getName());//파일명
 					ffdto.setFaq_file_size(item.getSize());//파일크기
 					ffdto.setFaq_file_type(item.getContentType());//파일유형
-					ffdto.setFaq_origin(faq_no);//게시글 번호
+					ffdto.setFaq_no(faq_no);//게시글 번호
 					ffdao.save(ffdto);
 					
 					//하드디스크에 저장
@@ -104,9 +106,3 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 		}
 	}
 }
-
-
-
-
-
-

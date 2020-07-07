@@ -3,7 +3,6 @@ package gamedori.servlet.FAQ;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +11,7 @@ import gamedori.beans.dao.FAQDao;
 import gamedori.beans.dto.FAQDto;
 import gamedori.beans.dto.MemberDto;
 
-@WebServlet(urlPatterns = "/faq/write.do")
+//@WebServlet(urlPatterns = "/faq/write.do")
 public class FAQWriteServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,7 +26,7 @@ public class FAQWriteServlet extends HttpServlet{
 			fdto.setFaq_head(req.getParameter("faq_head"));
 			fdto.setFaq_title(req.getParameter("faq_title"));
 			fdto.setFaq_content(req.getParameter("faq_content"));
-			fdto.setFaq_writer_no(member_no);
+			fdto.setMember_no(member_no);
 			
 			FAQDao fdao = new FAQDao();
 			int faq_no = fdao.getSequence();//들어갈 번호 먼저 추출
@@ -42,12 +41,3 @@ public class FAQWriteServlet extends HttpServlet{
 		}
 	}
 }
-
-
-
-
-
-
-
-
-

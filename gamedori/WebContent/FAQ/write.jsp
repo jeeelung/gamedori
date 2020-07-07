@@ -17,10 +17,10 @@
 	<!-- 게시글 전송 폼 -->
 	<form action="write.do" method="post" enctype="multipart/form-data">
 	
-		<%if(request.getParameter("board_no") != null){ %>
+		<%if(request.getParameter("FAQ_no") != null){ %>
 		<!-- 원본글번호가 넘어온다면(즉, 답글이라면) 원본글번호를 hidden으로 첨부 -->
-		<input type="hidden" name="board_no" 
-						value="<%=request.getParameter("board_no")%>">
+		<input type="hidden" name="FAQ_no" 
+						value="<%=request.getParameter("FAQ_no")%>">
 		<%} %>
 		
 		<table border="1">
@@ -29,11 +29,10 @@
 					<th>말머리</th>
 					<td>
 						<!-- 말머리는 select로 구현 -->
-						<select name="board_head">
+						<select name="FAQ_head">
 							<option value="">말머리 선택</option>
-							<option value="정보">정보</option>
-							<option value="공지">공지</option>
-							<option value="유머">유머</option>
+							<option value="회원문의">회원문의</option>
+							<option value="게임문의">게임문의</option>
 						</select>
 					</td>
 				</tr>
@@ -41,14 +40,14 @@
 					<th>제목</th>
 					<td>
 						<!-- 제목은 일반 입력창으로 구현 -->
-						<input type="text" name="board_title" size="70" required>
+						<input type="text" name="FAQ_title" size="70" required>
 					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
 					<td>
 						<!-- 내용은 textarea로 구현 -->
-						<textarea name="board_content" required rows="15" cols="72"></textarea>
+						<textarea name="FAQ_content" required rows="15" cols="72"></textarea>
 					</td>  
 				</tr>
 				
@@ -56,7 +55,7 @@
 				<tr>
 					<th>첨부파일</th>
 					<td>
-						<input type="file" name="board_file" multiple accept=".jpg, .png, .gif">
+						<input type="file" name="FAQ_file" multiple accept=".jpg, .png, .gif">
 					</td>
 				</tr>
 			</tbody>

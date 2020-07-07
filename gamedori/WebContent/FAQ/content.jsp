@@ -16,7 +16,7 @@
 	//2. 처리 : 기본키를 이용한 단일조회 수행
 	//3. 결과 : 단일 조회 결과(게시글 , FAQDto)
 	
-	int faq_no = Integer.parseInt(request.getParameter("FAQ_no"));
+	int faq_file_no = Integer.parseInt(request.getParameter("faq_file_no"));
 
 	///////////////////////////////////////////////////////////////
 	// 게시글 조회수 중복방지를 위한 저장소 처리 코드 구현
@@ -36,28 +36,24 @@
 	
 	session.setAttribute("memory", memory);
 	
-	
 	FAQDao fdao = new FAQDao();
 	
 	//FAQ_no를 이용하여 조회수를 증가시킨다
 	// - 내 글인 경우에는 조회수가 늘어나면 안되기 때문에 현재 사용자의 ID를 같이 전달
 	MemberDto user = (MemberDto) session.getAttribute("userinfo");
-	
-
-	
 	//FAQ_no를 이용하여 FAQDto를 얻어낸다
-	FAQDto fdto = fdao.get(faq_no);
+	FAQDto fdto = fdao.get(faq_file_no);
 	
 	//추가 : 만약 회원의 "권한"을 추가적으로 표시하고 싶다면 작성자 회원정보가 필요
 	MemberDao mdao = new MemberDao();
-	MemberDto mdto = mdao.get(fdto.getFaq_writer_no());//작성자로 회원조회
+	MemberDto mdto = mdao.get(fdto.getMember_no());//작성자로 회원조회
 	
 	//내글인지 또는 관리자인지를 파악하여 이후의 작업에 적용
 	// - 관리자 : 세션에 있는 userinfo 데이터의 권한 정보
 	boolean isAdmin = user.getMember_auth().equals("관리자");
 	
 	// - 내글 : 게시글(bdto)의 작성자와 로그인 된 사용자(user)의 아이디가 같아야 함
-	boolean isMine = user.getMember_id().equals(fdto.getFaq_writer_no());
+	boolean isMine = user.getMember_id().equals(fdto.getMember_no());
 	
 	
 
@@ -66,13 +62,13 @@
 	// 첨부파일 목록을 구해오는 코드
 	////////////////////////////////////////////////////////////////
 	FAQFileDao ffdao = new FAQFileDao();
-	List<FAQFileDto> fileList = ffdao.getList(faq_no);
+	List<FAQFileDto> fileList = ffdao.getList(faq_file_no);
 %>     
 
 <jsp:include page="/template/header.jsp"></jsp:include>
 
 <div align="center">
-	<h2>게시글 상세보기</h2>
+	<h2>FAQ</h2>
 
 	<!-- 테이블에 글 정보를 출력 -->
 	<table border="1" width="60%">
@@ -97,9 +93,9 @@
 				<td>
 					<!-- 작성자 -->
 					<%
-						if(fdto.getFaq_writer_no() != 0){
+						if(fdto.getMember_no() != 0){
 					%>
-						<%=fdto.getFaq_writer_no()%>
+						<%=fdto.getMember_no()%>
 					<%
 						} else {
 					%>

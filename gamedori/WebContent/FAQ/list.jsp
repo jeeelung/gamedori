@@ -1,3 +1,6 @@
+<%@page import="gamedori.beans.dao.FAQNickDao"%>
+<%@page import="gamedori.beans.dto.FAQNickDto"%>
+<%@page import="gamedori.beans.dto.MemberDto"%>
 <%@page import="gamedori.beans.dao.FAQDao"%>
 <%@page import="gamedori.beans.dto.FAQDto"%>
 <%@page import="java.util.List"%>
@@ -50,15 +53,15 @@
 	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
 	int finishBlock = startBlock + blockSize - 1;
 
-	FAQDao bdao = new FAQDao();
-
+	FAQDao fdao = new FAQDao();
+	FAQNickDao fndao = new FAQNickDao();
 	//(주의!) 다음 버튼의 경우 계산을 통하여 페이지 개수를 구해야 출력 여부 판단이 가능
 	//int count = 목록개수 or 검색개수;
 	int count;
 	if (isSearch) {//검색
-		count = bdao.getCount(type, keyword);
+		count = fdao.getCount(type, keyword);
 	} else {//목록
-		count = bdao.getCount();
+		count = fdao.getCount();
 	}
 	int pageCount = (count + pageSize - 1) / pageSize;
 	//만약 finishBlock이 pageCount보다 크다면 수정해야 한다
@@ -69,10 +72,13 @@
 	// 	List<FAQDto> list = 목록 or 검색;
 	List<FAQDto> list;
 	if (isSearch) {
-		list = bdao.search(type, keyword);
+		list = fdao.search(type, keyword);
 	} else {
-		list = bdao.getList();
+		list = fdao.getList();
 	}
+	List<FAQNickDto> listNick;
+	listNick = fndao.getList();
+	
 %>
 
 
@@ -81,69 +87,78 @@
 <div align="center">
 
 	<!-- 계산한 데이터를 확인하기 위해 출력 -->
-	<h3>
-		type =
-		<%=type%>, keyword =
-		<%=keyword%>, isSearch =
-		<%=isSearch%>
-	</h3>
-	<h3>
-		pageStr =
-		<%=pageStr%>, pageNo =
-		<%=pageNo%>, start =
-		<%=start%>, finish =
-		<%=finish%>
-	</h3>
-	<h3>
-		count =
-		<%=count%>, pageCount =
-		<%=pageCount%>, startBlock =
-		<%=startBlock%>, finishBlock =
-		<%=finishBlock%>
-	</h3>
+	<!-- 	<h3> -->
+	<!-- 		type = -->
+	<%-- 		<%=type%>, keyword = --%>
+	<%-- 		<%=keyword%>, isSearch = --%>
+	<%-- 		<%=isSearch%> --%>
+	<!-- 	</h3> -->
+	<!-- 	<h3> -->
+	<!-- 		pageStr = -->
+	<%-- 		<%=pageStr%>, pageNo = --%>
+	<%-- 		<%=pageNo%>, start = --%>
+	<%-- 		<%=start%>, finish = --%>
+	<%-- 		<%=finish%> --%>
+	<!-- 	</h3> -->
+	<!-- 	<h3> -->
+	<!-- 		count = -->
+	<%-- 		<%=count%>, pageCount = --%>
+	<%-- 		<%=pageCount%>, startBlock = --%>
+	<%-- 		<%=startBlock%>, finishBlock = --%>
+	<%-- 		<%=finishBlock%> --%>
+	<!-- 	</h3> -->
 
 	<!-- 제목 -->
-	<h2>자유 게시판</h2>
+	<h2>FAQ</h2>
 
 	<!-- 테이블 -->
 	<table border="1" width="90%">
 		<thead>
 			<tr>
 				<th>번호</th>
-				<th width="40%">제목</th>
+				<th width="70%">제목</th>
 				<th>작성자</th>
-				<th>작성일</th>
-				<th>조회수</th>
-				<!-- 테스트를 위해 항목 3개를 추가 -->
-				<th>super_no</th>
-				<th>group_no</th>
-				<th>depth</th>
 			</tr>
 		</thead>
 		<tbody align="center">
 			<%-- list의 데이터를 하나하나 fdto라는 이름으로 접근하여 출력 --%>
+			
 			<%
-				for (FAQDto fdto : list) {
+				for (FAQNickDto fndto : listNick) {
 			%>
 			<tr>
-				<td><%=fdto.getFaq_no()%></td>
+				<td><%=fndto.getFaq_no()%></td>
 				<td align="left">
 					<!-- 
 						답글은 띄어쓰기 구현
 						- 답글인 경우는 super_no > 0 , depth > 0 
-					--> <%
- 	if (fdto.getFaq_head() != null) {
- %> <!-- 말머리는 있을 경우만 출력 --> <font color="gray"> [<%=fdto.getFaq_head()%>]
-				</font> <%
- 	}
- %> <!-- 게시글 제목 --> <a href="content.jsp?FAQ_no=<%=fdto.getFaq_no()%>"> <%=fdto.getFaq_title()%>
-				</a> <%
-						if (fdto.getFaq_writer_no() != 0) {
-					%> <%=fdto.getFaq_writer_no()%> <%
- 	} else {
- %> <font color="gray">탈퇴한 사용자</font> <%
- 	}
- %>
+					-->
+					<%
+						if (fndto.getFaq_head() != null) {
+					%>
+					<!-- 말머리는 있을 경우만 출력 -->
+					<font color="gray"> [<%=fndto.getFaq_head()%>]
+					</font>
+					<%
+						}
+					%>
+					<!-- 게시글 제목 -->
+					<a href="content.jsp?FAQ_no=<%=fndto.getFaq_no()%>">
+						<%=fndto.getFaq_title()%>
+					</a>
+				</td>
+				<td>
+					<%
+						if (fndto.getMember_nick() != null) {
+					%>
+					<%=fndto.getMember_nick()%>
+					<%
+						} else {
+					%>
+					<font color="gray">탈퇴한 사용자</font>
+					<%
+						}
+					%>
 				</td>
 			</tr>
 			<%
@@ -153,8 +168,11 @@
 
 		<tfoot>
 			<tr>
-				<td colspan="8" align="right"><a href="write.jsp"> <input type="button" value="글쓰기">
-				</a></td>
+				<td colspan="8" align="right">
+					<a href="write.jsp">
+						<input type="button" value="글쓰기">
+					</a>
+				</td>
 			</tr>
 		</tfoot>
 	</table>
@@ -238,7 +256,7 @@
 		<!-- 검색분류 -->
 		<select name="type">
 			<option value="FAQ_title">제목만</option>
-			<option value="FAQ_writer">글작성자</option>
+			<option value="member_no">글작성자</option>
 		</select>
 
 		<!-- 검색어 -->

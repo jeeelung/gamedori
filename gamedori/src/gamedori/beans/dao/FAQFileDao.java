@@ -34,7 +34,7 @@ public class FAQFileDao {
 	public int getSequence() throws Exception {
 		Connection con = getConnection();
 		
-		String sql = "SELECT FAQ_file_seq.nextval FROM dual";
+		String sql = "SELECT FAQ_file_temporary_seq.nextval FROM dual";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		rs.next();
@@ -50,13 +50,13 @@ public class FAQFileDao {
 	public void save(FAQFileDto ffdto) throws Exception {
 		Connection con = getConnection();
 		
-		String sql = "INSERT INTO FAQ_file VALUES(?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO FAQ_file_temporary VALUES(?, ?,?,?,?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, ffdto.getFaq_file_no());
 		ps.setString(2, ffdto.getFaq_file_name());
 		ps.setLong(3, ffdto.getFaq_file_size());
 		ps.setString(4, ffdto.getFaq_file_type());
-		ps.setInt(5, ffdto.getFaq_origin());
+		ps.setInt(5, ffdto.getFaq_no());
 		ps.execute();
 		
 		con.close();
@@ -65,9 +65,9 @@ public class FAQFileDao {
 	//게시글 첨부파일 조회(댓글 조회와 동일)
 	public List<FAQFileDto> getList(int faq_no) throws Exception {
 		Connection con = getConnection();
-		String sql = "SELECT * FROM FAQ_file "
-							+ "WHERE FAQ_origin = ? "
-							+ "ORDER BY FAQ_file_no ASC";
+		String sql = "SELECT * FROM FAQ_file_temporary "
+							+ "WHERE FAQ_no = ? "
+							+ "ORDER BY faq_file_no ASC";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, faq_no);
 		ResultSet rs = ps.executeQuery();
@@ -84,7 +84,7 @@ public class FAQFileDao {
 	public FAQFileDto get(int faq_file_no) throws Exception {
 		Connection con = getConnection();
 		
-		String sql = "SELECT * FROM FAQ_file WHERE FAQ_file_no = ?";
+		String sql = "SELECT * FROM FAQ_file_temporary WHERE faq_file_no = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, faq_file_no);
 		ResultSet rs = ps.executeQuery();
@@ -101,17 +101,3 @@ public class FAQFileDao {
 		return ffdto;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

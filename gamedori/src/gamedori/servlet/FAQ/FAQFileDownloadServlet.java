@@ -46,7 +46,7 @@ public class FAQFileDownloadServlet extends HttpServlet{
 //			- 변환 명령 : URLEncoder.encode(값, "UTF-8");
 //			- 위의 명령은 주소에 포함될 수 없는 형태의 글자들(%, ? 등)을 가능한 형태로 변환해준다.
 			
-			resp.setHeader("Content-Type", "application/octet-stream; charset=UTF-8");
+			resp.setHeader("Content-Type", "application/octet-stre am; charset=UTF-8");
 //			resp.setHeader("Content-Disposition", "attachment; filename="+bfdto.getBoard_file_name());
 			resp.setHeader("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(ffdto.getFaq_file_name(), "UTF-8")+"\"");
 			resp.setHeader("Content-Length", String.valueOf(ffdto.getFaq_file_size()));
@@ -60,5 +60,5 @@ public class FAQFileDownloadServlet extends HttpServlet{
 			e.printStackTrace();
 			resp.sendError(500);
 		}
-	}
+	} 
 }

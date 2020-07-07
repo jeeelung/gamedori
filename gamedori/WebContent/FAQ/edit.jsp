@@ -17,7 +17,7 @@
 
 <div align="center">
 	
-	<h2>게시글 수정</h2>
+	<h2>FAQ 수정</h2>
 	
 	<!-- 게시글 전송 폼 -->
 	<form action="edit.do" method="post">
