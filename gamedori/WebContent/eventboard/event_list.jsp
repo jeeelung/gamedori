@@ -78,7 +78,7 @@
 <div align="center">
 	
 	<!-- 제목 -->
-	<h2>자유 게시판</h2>
+	<h2>이벤트 게시판</h2>
 	
 	<!-- 테이블 -->
 	<table border="1" width="90%">
