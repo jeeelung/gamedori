@@ -122,15 +122,18 @@ public class CommunityDao {
 	}
 	
 	// 게시물 목록 메소드
-	public List<CommunityDto> getList() throws Exception{
+	public List<CommunityDto> getList(int start, int finish) throws Exception{
 		Connection con = getConnection();
 		String sql = "SELECT ROWNUM rn, T.* FROM("
-				+ "SELECT * FROM community " 
+				+ "SELECT * FROM community "
 				+ "CONNECT BY PRIOR commu_no = commu_super_no "  
 				+ "START WITH commu_super_no IS NULL " 
 				+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
-				+ ")T";
+				+ ")T"
+			+ ") WHERE rn BETWEEN ? and ?";
 		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, start);
+		ps.setInt(2, finish);
 		ResultSet rs = ps.executeQuery();
 		
 		List<CommunityDto> list = new ArrayList<CommunityDto>();
@@ -158,18 +161,21 @@ public class CommunityDao {
 	}
 	
 	// 검색 서블릿
-	public List<CommunityDto> search(String type, String keyword) throws Exception {
+	public List<CommunityDto> search(String type, String keyword, int start, int finish) throws Exception {
 		Connection con = getConnection();
 		String sql = "SELECT ROWNUM rn, T.* FROM("
-					+"SELECT * FROM community "
-					+ "WHERE instr(#1, ?) > 0 "
-					+ "CONNECT BY PRIOR commu_no = commu_super_no "  
-					+ "START WITH commu_super_no IS NULL " 
-					+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
-				+ ")T";
+						+"SELECT * FROM community "
+						+ "WHERE instr(#1, ?) > 0 "
+						+ "CONNECT BY PRIOR commu_no = commu_super_no "  
+						+ "START WITH commu_super_no IS NULL " 
+						+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
+						+ ")T"
+					+ ") WHERE rn BETWEEN ? and ?";
 		sql = sql.replace("#1", type);
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);
+		ps.setInt(2, start);
+		ps.setInt(3, finish);
 		ResultSet rs = ps.executeQuery();
 		
 		List<CommunityDto> list = new ArrayList<CommunityDto>();

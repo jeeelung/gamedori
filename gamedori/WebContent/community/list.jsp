@@ -10,17 +10,48 @@
 	
 	boolean isSearch = type != null && keyword != null;
 	
+	// 페이지 번호 계산 코드
+	int pageSize = 10;
+	String pageStr = request.getParameter("page");
+	int pageNo;
+	try{
+		pageNo = Integer.parseInt(pageStr);
+		
+		if(pageNo <= 0 ){ // 음수시 강제 예외
+			throw new Exception();
+		}
+	} catch(Exception e){ // 문제가 생기면 무조건 1페이지
+		pageNo = 1;
+	}
+	
+	// 시작 글 순서와 종료 글 순서 계산
+	int finish = pageNo * pageSize;
+	int start = finish - (pageSize-1);
+	
+	// 검색 또는 목록
 	CommunityDao cdao = new CommunityDao();
 	List<CommunityDto> list;
 	if(isSearch){
-		list = cdao.search(type, keyword);
+		list = cdao.search(type, keyword, start, finish);
 	} else {
-		list = cdao.getList();
+		list = cdao.getList(start, finish);
 	}
 %>
     
 <jsp:include page="/template/header.jsp"></jsp:include>
 <div align="center">
+
+	<!-- 계산한 데이터를 확인하기 위해 출력 -->
+	<h5>
+	pageStr = <%=pageStr%>, 
+	pageNo = <%=pageNo%>,
+	start = <%=start%>
+	finish = <%=finish%>
+<%-- 	pageCount = <%=pageCount%> --%>
+<%-- 	startblock = <%=startBlock%> --%>
+<%-- 	finishblock = <%=finishBlock%> --%>
+	</h5>
+	
 	<h2></h2>
 	<form action="list.jsp" method="get">
 	<table border="1" width="90%">
@@ -43,9 +74,7 @@
 		</thead>
 		
 		<tbody>
-			<%
-			System.out.println(list.size());
-			for(CommunityDto cdto : list) { %>
+			<% for(CommunityDto cdto : list) { %>
 			<tr>
 				<%MemberDto mdto = cdao.getWriter(cdto.getMember_no());%>
 				<th><%=cdto.getCommu_no()%></th>
