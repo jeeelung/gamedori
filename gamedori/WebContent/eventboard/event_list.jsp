@@ -1,4 +1,5 @@
-<%@page import="gamedori.beans.dto.EventDto"%>
+
+<%@page import="gamedori.beans.dto.MemberDto"%>
 <%@page import="gamedori.beans.dto.EventboardDto"%>
 <%@page import="java.util.List"%>
 <%@page import="gamedori.beans.dao.EventboardDao"%>
@@ -6,8 +7,14 @@
     pageEncoding="UTF-8"%>
 
 
-<% EventboardDao edao2= new EventboardDao();
-  List<EventDto> event_list=edao2.getidlist();
+<% 
+
+
+
+//	List<BoardDto> list = 목록 or 검색;
+EventboardDao edao= new EventboardDao();
+List<EventboardDto> list=edao.getList();
+
   
 %>
  
@@ -43,23 +50,16 @@
 			</thead>
 			<tbody align="center">
 				<%-- list의 데이터를 하나하나 edto라는 이름으로 접근하여 출력 --%>
-				<%for(EventDto edto : event_list){ %>
+				<%for(EventboardDto edto : list){ %>
 				<tr>
 				
 					<td><%=edto.getEvent_no()%></td>
 					<td class="left">
-					<%if(edto.getDepth()>0){ %>
-						<%for(int i=0; i < edto.getDepth(); i++){ %>
-								&nbsp;&nbsp;&nbsp;&nbsp;
-							<%} %>
-							<img src="<%=request.getContextPath()%>/image/reply.png"
-								width="20" height="15">
-						<%} %>
-			
+					
 					
 					
 					<!-- 게시글 제목 -->
-					<a href="content.jsp?event_no=<%=edto.getEvent_no() %>">
+					<a href="Eventcontent.jsp?event_no=<%=edto.getEvent_no() %>">
 					<%=edto.getEvent_title() %>
 					</a>
 					<%if (edto.getEventboard_replycount() > 0){ %>
@@ -68,7 +68,8 @@
 						<%} %>
 						
 					</td>
-					<td><%=edto.getMember_id() %></td>
+					<%MemberDto mdto = edao.getWriter(edto.getMember_no()); %>
+					<td><%=mdto.getMember_nick() %></td>
 					<td><%=edto.getEventboard_autotime() %></td>
 					<td><%=edto.getEvent_read() %></td>
 					

@@ -233,21 +233,4 @@ public class MemberDao {
 			con.close();
 		}
 
-		//비밀번호 변경 메소드
-		public void changePassword(MemberDto mdto) throws Exception{
-			Connection con = getConnection();
-			
-			String sql = "UPDATE member SET member_pw=? WHERE member_id=?";
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, mdto.getMember_pw());
-			ps.setString(2, mdto.getMember_id());
-			ps.execute();
-			
-			con.close();
-		}
-
 }
-
-
-
-

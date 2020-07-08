@@ -10,7 +10,8 @@ package gamedori.servlet.eventboard;
 	import javax.servlet.http.HttpServletResponse;
 
 import gamedori.beans.dao.EventboardDao;
-import gamedori.beans.dto.EventDto;
+
+import gamedori.beans.dto.EventboardDto;
 import gamedori.beans.dto.MemberDto;
 
 
@@ -25,7 +26,7 @@ import gamedori.beans.dto.MemberDto;
 				MemberDto mdto = (MemberDto) req.getSession().getAttribute("userinfo");
 				String member_id = mdto.getMember_id();//작성자 추출
 				
-				EventDto edto = new EventDto();
+				EventboardDto edto = new EventboardDto();
 				
 				edto.setEvent_title(req.getParameter("event_title"));
 				edto.setEvent_content(req.getParameter("event_content"));
@@ -38,7 +39,7 @@ import gamedori.beans.dto.MemberDto;
 				//번호를 설정한 뒤
 				edao.write(edto);//등록
 				
-				resp.sendRedirect("content.jsp?board_no="+event_no);
+				resp.sendRedirect("content.jsp?event_no="+event_no);
 			}
 			catch(Exception e) {
 				e.printStackTrace();

@@ -33,7 +33,7 @@ public class MemberChangePasswordServlet extends HttpServlet{
 			
 			//MemberDao에 회원정보(user)를 주고 비밀번호를 변경하도록 지시
 			MemberDao mdao = new MemberDao();
-			mdao.changePassword(user);
+			mdao.changePw(user);
 			
 			//출력
 			resp.sendRedirect("change_password_result.jsp");
