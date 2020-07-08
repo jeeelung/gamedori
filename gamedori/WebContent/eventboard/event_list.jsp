@@ -31,7 +31,7 @@
 	<div class="row">
 	
 		<!-- 테이블 -->
-		<table class="table table-border table-stripe table-hover">
+		<table border="1" width="90%" class="table table-border table-stripe table-hover" >
 			<thead>
 				<tr aling="center">
 					<th>번호</th>
@@ -75,17 +75,17 @@
 				</tr>
 				<%} %>
 			</tbody>
-			
-		</table>
-	
-	</div>
-	
-	<!-- 글쓰기 버튼 -->
-	<div class="row right">
-		<a href="EventBoardWrite.jsp">
-			<input class="form-btn form-inline" type="button" value="글쓰기">
-		</a>
-	</div>
+		
+		<tfoot>
+			<tr>
+				<td colspan="5" align="right">
+					<a href="EventBoardWrite.jsp">
+						<input type="button" value="글쓰기">
+					</a>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
 	
 	<!-- 페이지 네비게이터 -->
 	<div class="row center pagination">
@@ -95,11 +95,11 @@
 	<!-- 검색창 -->
 	<div class="row center">
 	
-		<form action="list.jsp" method="get">
+		<form action="event_list.jsp" method="get">
 			<!-- 검색분류 -->
 			<select class="form-input form-inline" name="type">
-				<option value="board_title">제목만</option>
-				<option value="board_writer">글작성자</option>
+				<option value="event_title">제목만</option>
+				<option value="member_id">글작성자</option>
 			</select>
 			
 			<!-- 검색어 -->
