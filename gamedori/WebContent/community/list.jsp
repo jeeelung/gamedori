@@ -31,6 +31,7 @@
 	// 검색 또는 목록
 	CommunityDao cdao = new CommunityDao();
 	List<CommunityDto> list;
+	
 	if(isSearch){
 		list = cdao.search(type, keyword, start, finish);
 	} else {
@@ -107,6 +108,14 @@
 			</tr>
 		</tfoot>
 	</table>
+	<!-- 네비게이터 -->
+	<%for(int i=0; i<pageSize; i++) { %>
+		<%if(!isSearch) {%>
+			<a href="list.jsp?page=<%=i%>"><%=i%></a>
+		<%} else {%>
+			<a href="list.jsp?page=<%=i%>&type=<%=type%>&keyword=<%=keyword%>"><%=i%></a>
+		<%}%>
+	<%}%>
 	<!-- 검색창 -->
 	<select name="type">
 		<option value="commu_title">제목만</option>

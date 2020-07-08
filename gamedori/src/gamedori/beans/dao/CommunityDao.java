@@ -124,7 +124,8 @@ public class CommunityDao {
 	// 게시물 목록 메소드
 	public List<CommunityDto> getList(int start, int finish) throws Exception{
 		Connection con = getConnection();
-		String sql = "SELECT ROWNUM rn, T.* FROM("
+		String sql = "SELECT * FROM("
+				+ "SELECT ROWNUM rn, T.* FROM("
 				+ "SELECT * FROM community "
 				+ "CONNECT BY PRIOR commu_no = commu_super_no "  
 				+ "START WITH commu_super_no IS NULL " 
@@ -163,7 +164,8 @@ public class CommunityDao {
 	// 검색 서블릿
 	public List<CommunityDto> search(String type, String keyword, int start, int finish) throws Exception {
 		Connection con = getConnection();
-		String sql = "SELECT ROWNUM rn, T.* FROM("
+		String sql = "SELECT * FROM("
+				+ "SELECT ROWNUM rn, T.* FROM("
 						+"SELECT * FROM community "
 						+ "WHERE instr(#1, ?) > 0 "
 						+ "CONNECT BY PRIOR commu_no = commu_super_no "  
