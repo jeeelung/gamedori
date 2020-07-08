@@ -47,7 +47,7 @@ public class FilesDao {
 	// 파일정보 업로드 메소드
 	public void save(FilesDto fdto) throws Exception{
 		Connection con = getConnection();
-		String sql = "INSERT INTO files value(?, ?, ?, ?)";
+		String sql = "INSERT INTO files values(?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, fdto.getFile_no());
 		ps.setString(2, fdto.getFile_name());
@@ -57,5 +57,17 @@ public class FilesDao {
 		ps.execute();
 		
 		con.close();
+	}
+	
+	public FilesDto get(int file_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT * FROM files WHERE file_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, file_no);
+		ResultSet rs = ps.executeQuery();
+		
+		FilesDto fdto = rs.next()? new FilesDto(rs): null;
+		con.close();
+		return fdto;
 	}
 }

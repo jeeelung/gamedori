@@ -1,5 +1,8 @@
 package gamedori.beans.dto;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class CommunityFileDto {
 
 	private int commu_no;
@@ -7,6 +10,11 @@ public class CommunityFileDto {
 	
 	public CommunityFileDto() {
 		super();
+	}
+	
+	public CommunityFileDto(ResultSet rs) throws SQLException {
+		this.setCommu_no(rs.getInt("commu_no"));
+		this.setFile_no(rs.getInt("file_no"));
 	}
 
 	public int getCommu_no() {

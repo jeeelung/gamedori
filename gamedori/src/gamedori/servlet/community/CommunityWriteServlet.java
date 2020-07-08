@@ -58,7 +58,6 @@ public class CommunityWriteServlet extends HttpServlet{
 			
 			List<FileItem> fileList = map.get("commu_file");
 			
-			
 			for(FileItem item : fileList) {
 				
 				if(item.getSize() > 0) { // 파일이 있는 경우
@@ -71,6 +70,7 @@ public class CommunityWriteServlet extends HttpServlet{
 					fdto.setFile_name(item.getName());
 					fdto.setFile_size(item.getSize());
 					fdto.setFile_type(item.getContentType());
+					fdao.save(fdto);
 					
 					CommunityFileDto cfdto = new CommunityFileDto();
 					cfdto.setCommu_no(commu_no);
@@ -78,7 +78,6 @@ public class CommunityWriteServlet extends HttpServlet{
 					
 					CommunityFileDao cfdao = new CommunityFileDao();
 					cfdao.save(cfdto);
-					fdao.save(fdto);
 					
 					File target = new File(baseDir, String.valueOf(file_no));
 					item.write(target);

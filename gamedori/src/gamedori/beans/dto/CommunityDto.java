@@ -92,7 +92,11 @@ public class CommunityDto {
 	
 	public String getCommu_auto() {
 		String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-		return today;
+		if(getCommu_day().equals(today)) {
+			return getCommu_time();
+		} else {			
+			return getCommu_day();
+		}
 	}
 
 	public void setCommu_date(String commu_date) {

@@ -33,20 +33,29 @@
 		</thead>
 		
 		<tbody>
+			<%
+			System.out.println(list.size());
+			for(CommunityDto cdto : list) { %>
 			<tr>
-			<%for(CommunityDto cdto : list) { %>
+				<%MemberDto mdto = cdao.getWriter(cdto.getMember_no());%>
 				<th><%=cdto.getCommu_no()%></th>
 				<td>
+					<%if(cdto.getCommu_super_no() > 0){ %>
+						<%for(int i=0; i<cdto.getCommu_depth(); i++) {%>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+						<%}%>
+					<img src="<%=request.getContextPath()%>/image/reply.PNG"
+							width="20" height="15">
+					<%}%>
 					<a href="<%=request.getContextPath()%>/community/content.jsp?commu_no=<%=cdto.getCommu_no()%>">
 					[<%=cdto.getCommu_head()%>]<%=cdto.getCommu_title()%>
 					</a>
 				</td>
-				<%MemberDto mdto = cdao.getWriter(cdto.getMember_no());%>
 				<td><%=mdto.getMember_nick()%></td>
 				<td><%=cdto.getCommu_auto()%></td>
 				<td><%=cdto.getCommu_read()%></td>
-			<%}%>
 			</tr>
+			<%}%>
 		</tbody>
 		
 		<tfoot>

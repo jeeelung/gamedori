@@ -84,7 +84,7 @@ public class CommunityDao {
 				+ "commu_group_no, "
 				+ "commu_depth"
 				+ ") "
-				+ "value(?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "values(?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, cdto.getCommu_no());
 		ps.setInt(2, cdto.getMember_no());
@@ -133,10 +133,8 @@ public class CommunityDao {
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		
-		List<CommunityDto> list = null;
+		List<CommunityDto> list = new ArrayList<CommunityDto>();
 		while(rs.next()) {
-			list = new ArrayList<CommunityDto>();
-			
 			CommunityDto cdto = new CommunityDto(rs);
 			list.add(cdto);
 		}
