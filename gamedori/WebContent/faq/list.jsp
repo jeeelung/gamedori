@@ -1,4 +1,3 @@
-
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@page import="gamedori.beans.dao.FAQDao"%>
 <%@page import="gamedori.beans.dto.FAQDto"%>
@@ -21,10 +20,6 @@
 	String keyword = request.getParameter("keyword");
 
 	boolean isSearch = type != null && keyword != null;
-
-	////////////////////////////////////////////////////////////
-	// 페이지 계산 코드
-	////////////////////////////////////////////////////////////
 	int pageSize = 10;//한 페이지에 표시할 데이터 개수
 
 	//page 번호를 계산하기 위한 코드
@@ -118,11 +113,10 @@
 		</thead>
 		<tbody align="center">
 			<%-- list의 데이터를 하나하나 fdto라는 이름으로 접근하여 출력 --%>
-
-			<tr>
 				<%
 					for (FAQDto fdto : list) {
 				%>
+			<tr>
 				<td><%=fdto.getFaq_no()%></td>
 				<td align="left">
 					<!-- 
@@ -143,21 +137,21 @@
 					<%
 						if (mdto.getMember_nick() != null) {
 					%> <%=mdto.getMember_nick()%> <%
- 	} else {
- %> <font color="gray">탈퇴한 사용자</font> <%
- 	}
- %>
+ 							} else {
+ 						%> <font color="gray">탈퇴한 사용자</font> <%
+ 						}
+ 						%>
 				</td>
 			</tr>
 			<%
 				}
 			%>
 		</tbody>
-
 		<tfoot>
 			<tr>
-				<td colspan="8" align="right"><a href="write.jsp"> <input type="button" value="글쓰기">
-				</a></td>
+				<td colspan="3" align="right"><a href="write.jsp"> <input type="button" value="글쓰기">
+				</a>
+			</td>
 			</tr>
 		</tfoot>
 	</table>
@@ -168,7 +162,7 @@
 		<!-- 
 		이전 버튼을 누르면 startBlock - 1 에 해당하는 페이지로 이동해야 한다
 		(주의) startBlock이 1인 경우에는 출력하지 않는다
-	 -->
+	 	-->
 		<%
 			if (startBlock > 1) {
 		%>
@@ -241,7 +235,6 @@
 			<option value="faq_title">제목만</option>
 			<option value="member_no">글작성자</option>
 		</select>
-
 		<!-- 검색어 -->
 		<input type="text" name="keyword" required>
 
@@ -249,11 +242,4 @@
 		<input type="submit" value="검색">
 	</form>
 </div>
-
 <jsp:include page="/template/footer.jsp"></jsp:include>
-
-
-
-
-
-

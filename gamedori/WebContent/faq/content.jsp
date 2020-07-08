@@ -1,3 +1,4 @@
+<%@page import="gamedori.beans.dto.FilesDto"%>
 <%@page import="gamedori.beans.dto.FAQFileDto"%>
 <%@page import="gamedori.beans.dao.MemberDao"%>
 <%@page import="gamedori.beans.dao.FAQFileDao"%>
@@ -12,17 +13,25 @@
 	FAQDao fdao = new FAQDao();
 	
 	int faq_no = Integer.parseInt(request.getParameter("faq_no"));
+	MemberDto user = (MemberDto)session.getAttribute("userinfo");
+	
 	FAQDto fdto = fdao.get(faq_no);
 	MemberDto mdto = fdao.getWriter(fdto.getMember_no());
+	boolean isAdmin = user.getMember_auth().equals("관리자");
+	boolean isMine = user.getMember_id().equals(mdto.getMember_id());
+	FAQFileDao ffdao = new FAQFileDao();
+	List<FilesDto> fileList = ffdao.getList(faq_no);
+	
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
 
 <div align="center">
+<form>
 	<h2>FAQ</h2>
-
 	<!-- 테이블에 글 정보를 출력 -->
 	<table align="center">
+	
 		<thead>
 			<tr>
 				<th>
@@ -32,34 +41,41 @@
 			</tr>
 			<tr>
 				<th>
-					<!-- 작성자 --> <%if (mdto != null) {%> <%=mdto.getMember_nick()%> <font color="gray"><%=mdto.getMember_auth() %></font> 
-					<%} else {%>
-					<font color="gray">탈퇴한 사용자</font><%} %>
+					<!-- 작성자 --> <%if (mdto != null) {%> <%=mdto.getMember_nick()%> <font color="gray"><%=mdto.getMember_auth() %></font> <%} else {%> <font color="gray">탈퇴한 사용자</font>
+					<%} %>
 				</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr>
+		<tbody align="left" valign="top">
+			<tr height="400">
 				<td><%=fdto.getFaq_content() %></td>
 			</tr>
+			<%if(!fileList.isEmpty()){ %>
 			<tr>
-			<th>첨부파일</th>
+				<th>첨부파일</th>
 				<td>
-				<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif">
+					<ul>
+						<%for(FilesDto filesdto : fileList) {%>
+						<li><%=filesdto.getFile_name() %> (<%=filesdto.getFile_size() %>bytes) <a href="download.do?file_no=<%=filesdto.getFile_no() %>"><input type="button" value="다운로드"> <input type="file" name="faq_file" multiple accept=".jpg, .png, .gif"> </a></li>
+						<%} %>
+					</ul>
 				</td>
+
 			</tr>
+			<%} %>
 		</tbody>
 		<!-- 각종 버튼들 구현 -->
 		<tfoot>
 			<tr align="center">
-				<td colspan="2">
-				<input type="button" value="임시저장">
-				<input type="button" value="미리보기">
-				<input type="submit" value="확인">
+				<td><a href="write.jsp"> <input type="button" value="글쓰기"></a> <%if(isAdmin || isMine){ %> <a href="edit.jsp?faq_no=<%=faq_no %>"><input type="button" value="수정"></a> <a href="<%=request.getContextPath()%>/member/check.jsp?go=<%=request.getContextPath()%>/faq/delete.do?faq_no=<%=faq_no %>"><input type="button" value="삭제"></a>
+				<%} %>
+				<a href="list.jsp"><input type="button" value="목록으로"></a><br><br>
 				</td>
 			</tr>
 		</tfoot>
 	</table>
+	<br>
+	</form>
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

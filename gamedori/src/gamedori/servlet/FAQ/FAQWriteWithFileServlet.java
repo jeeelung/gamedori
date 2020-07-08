@@ -49,12 +49,13 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 			
 //			5. 해석한 데이터에서 필요한 정보들을 추출
 			FAQDto fdto = new FAQDto();
-			//System.out.println(map.get("faq_head"));
 			fdto.setMember_no(Integer.parseInt(map.get("member_no").get(0).getString()));
-			fdto.setFaq_head(map.get("FAQ_head").get(0).getString());
-			
-			fdto.setFaq_title(map.get("FAQ_title").get(0).getString());
-			fdto.setFaq_content(map.get("FAQ_content").get(0).getString());
+			fdto.setFaq_head(map.get("faq_head").get(0).getString());			
+			fdto.setFaq_title(map.get("faq_title").get(0).getString());
+			fdto.setFaq_content(map.get("faq_content").get(0).getString());
+//			6.
+//			MemberDto user = (MemberDto) req.getSession().getAttribute("userinfo");
+//			fdto.getMember_no(Integer.parseInt(user.getMember_no()));
 			
 //			7. 작성할 게시글의 번호를 미리 가져온다.
 			FAQDao fdao = new FAQDao();
@@ -70,7 +71,7 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 //			- 전송되는 이름은 faq_file
 //			- (주의) 파일이 없어도 개수가 1개가 나오므로 개수로 처리하는 것은 무리!
 //			- 파일이 있는지 없는지는 파일의 크기를 이용해서 확인
-			List<FileItem> fileList = map.get("FAQ_file");
+			List<FileItem> fileList = map.get("faq_file");
 			for(FileItem item : fileList) {
 				
 				if(item.getSize() > 0) {//파일이 있는 경우
@@ -79,14 +80,18 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 					FilesDto filesdto = new FilesDto();
 					//데이터베이스에 저장
 					int file_no = filesdao.getSequence();
+					filesdto.setFile_no(file_no);
+					filesdto.setFile_name(item.getName());
+					filesdto.setFile_size(item.getSize());
+					filesdto.setFile_type(item.getContentType());
+					filesdao.save(filesdto);
 					
 					FAQFileDto ffdto = new FAQFileDto();
 					ffdto.setFaq_no(faq_no);//파일번호
 					ffdto.setFile_no(file_no);//파일명
-					FAQFileDao ffdao = new FAQFileDao();
 					
+					FAQFileDao ffdao = new FAQFileDao();
 					ffdao.save(ffdto);
-					filesdao.save(filesdto);
 					//하드디스크에 저장
 					File target = new File(baseDir, String.valueOf(file_no));
 					item.write(target);

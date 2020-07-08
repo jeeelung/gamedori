@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 
-import gamedori.beans.dao.FAQFileDao;
-import gamedori.beans.dto.FAQFileDto;
+import gamedori.beans.dao.FilesDao;
+import gamedori.beans.dto.FilesDto;
 
 
 @WebServlet(urlPatterns = "/faq/download.do")
@@ -23,14 +23,14 @@ public class FAQFileDownloadServlet extends HttpServlet{
 		try {
 //			목표 : 사용자가 원하는 파일을 다운로드 할 수 있도록 전송
 //			1. 사용자 요청정보에서 board_file_no를 불러온다
-			int faq_file_no = Integer.parseInt(req.getParameter("faq_file_no"));
+			int file_no = Integer.parseInt(req.getParameter("file_no"));
 			
 //			2. 데이터베이스에서 board_file_no에 해당하는 파일 정보를 불러온다.
-			FAQFileDao ffdao = new FAQFileDao();
-			FAQFileDto ffdto = ffdao.get(faq_file_no);
+			FilesDao filesdao = new FilesDao();
+			FilesDto filesdto = filesdao.get(file_no);
 			
 //			3. 만약 대상 파일이 없으면 사용자에게 오류를 송출
-			if(ffdto == null) {
+			if(filesdto == null) {
 				resp.sendError(404);
 				return;//중지
 			}
@@ -48,11 +48,11 @@ public class FAQFileDownloadServlet extends HttpServlet{
 			
 			resp.setHeader("Content-Type", "application/octet-stre am; charset=UTF-8");
 //			resp.setHeader("Content-Disposition", "attachment; filename="+bfdto.getBoard_file_name());
-			resp.setHeader("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(ffdto.getFaq_file_name(), "UTF-8")+"\"");
-			resp.setHeader("Content-Length", String.valueOf(ffdto.getFaq_file_size()));
+			resp.setHeader("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(filesdto.getFile_name(), "UTF-8")+"\"");
+			resp.setHeader("Content-Length", String.valueOf(filesdto.getFile_size()));
 			
 //			5. 실제 데이터를 불러와서 사용자에게 전송한다.
-			File target = new File("D:/upload/faq", String.valueOf(ffdto.getFaq_file_no()));
+			File target = new File("D:/upload/faq", String.valueOf(filesdto.getFile_no()));
 			byte[] data = FileUtils.readFileToByteArray(target);//파일 데이터 로드
 			resp.getOutputStream().write(data);//사용자에게 전송
 		}

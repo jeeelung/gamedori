@@ -47,5 +47,15 @@ public class FilesDao {
 		ps.execute();
 		con.close();
 	}
+	public FilesDto get(int file_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "select * from files where file_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, file_no);
+		ResultSet rs = ps.executeQuery();
+		FilesDto filesdto = rs.next()? new FilesDto(rs):null;
+		con.close();
+		return filesdto;
+	}
 
 }
