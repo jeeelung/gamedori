@@ -156,5 +156,31 @@ public class CommunityDao {
 		
 		con.close();
 	}
+	
+	// 검색 서블릿
+	public List<CommunityDto> search(String type, String keyword) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT ROWNUM rn, T.* FROM("
+					+"SELECT * FROM community "
+					+ "WHERE instr(#1, ?) > 0 "
+					+ "CONNECT BY PRIOR commu_no = commu_super_no "  
+					+ "START WITH commu_super_no IS NULL " 
+					+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
+				+ ")T";
+		sql = sql.replace("#1", type);
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ResultSet rs = ps.executeQuery();
+		
+		List<CommunityDto> list = new ArrayList<CommunityDto>();
+		
+		while(rs.next()) {
+			CommunityDto cdto = new CommunityDto(rs);
+			list.add(cdto);
+		}
+		
+		con.close();
+		return list;
+	}
 
 }
