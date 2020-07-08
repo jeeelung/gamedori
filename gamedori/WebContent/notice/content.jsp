@@ -65,35 +65,30 @@
 	////////////////////////////////////////////////////////////////
 	// 첨부파일 목록을 구해오는 코드
 	////////////////////////////////////////////////////////////////
-	BoardFileDao bfdao = new BoardFileDao();
-	List<BoardFileDto> fileList = bfdao.getList(board_no);
+	NoticeFileDao nfdao = new NoticeFileDao();
+	List<NoticeFileDto> fileList = nfdao.getList(notice_no);
 %>     
 
 <jsp:include page="/template/header.jsp"></jsp:include>
 
 <div align="center">
-	<h2>게시글 상세보기</h2>
+	<h2>공지사항 상세보기</h2>
 
 	<!-- 테이블에 글 정보를 출력 -->
 	<table border="1" width="60%">
 		<tbody>
 			<tr>
 				<td>
-					<font size="6">
-					<%if(bdto.getBoard_head() != null){ %>
-						<!-- 말머리는 있을 경우만 출력 -->
-						[<%=bdto.getBoard_head()%>]
-					<%} %>
-					
-					<%=bdto.getBoard_title()%>
+					<font size="6">										
+					<%=bdto.getNotice_title()%>
 					</font>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<!-- 작성자 -->
-					<%if(bdto.getBoard_writer() != null){ %>
-						<%=bdto.getBoard_writer()%>
+					<%if(ndto.getNotice_no() != null){ %>
+						<%=bdto.getNotice_no()%>
 					<%} else { %>
 						<font color="gray">탈퇴한 사용자</font>
 					<%} %>
@@ -108,15 +103,15 @@
 			</tr>
 			<tr>
 				<td>
-					<%=bdto.getBoard_date()%>
-					조회 <%=bdto.getBoard_read()%>
+					<%=bdto.getNotice_date()%>
+					조회 <%=bdto.getNotice_read()%>
 				</td>
 			</tr>
 			
 			<!-- 게시글 내용 영역 -->
 			<tr height="300">
 				<td valign="top">
-					<%=bdto.getBoard_content()%>
+					<%=ndto.getNotice_content()%>
 				</td>  
 			</tr>
 			
@@ -126,15 +121,15 @@
 				<td>
 					첨부파일 목록
 					<ul>
-						<%for(BoardFileDto bfdto : fileList){ %>
+						<%for(NoticeFileDto nfdto : fileList){ %>
 						<li>
-						<%=bfdto.getBoard_file_name()%>
-						(<%=bfdto.getBoard_file_size()%> bytes)
+						<%=nfdto.getNotice_file_name()%>
+						(<%=nfdto.getNotice_file_size()%> bytes)
 						<!-- 다운로드 버튼을 누른다면 해당 파일을 다운로드 할 수 있도록 링크 -->
-						<a href="download.do?board_file_no=<%=bfdto.getBoard_file_no()%>">다운로드</a>
+						<a href="download.do?notice_file_no=<%=nfdto.getNotice_file_no()%>">다운로드</a>
 						
 						<!-- 다운로드 주소를 img 태그로 지정하면 미리보가 가능 -->
-						<img src="download.do?board_file_no=<%=bfdto.getBoard_file_no()%>" width="50" height="50">
+						<img src="download.do?notice_file_no=<%=nfdto.getNotice_file_no()%>" width="50" height="50">
 						
 						</li>
 						<%} %>
@@ -196,7 +191,7 @@
 			<tr>
 				<td align="right">
 					<form action="reply_insert.do" method="post">
-						<input type="hidden" name="reply_origin" value="<%=board_no%>">
+						<input type="hidden" name="reply_origin" value="<%=notice_no%>">
 						<textarea name="reply_content" rows="4" cols="80" placeholder="댓글 작성"></textarea>
 						<br>
 						<input type="submit" value="등록">
@@ -213,18 +208,18 @@
 					<input type="button" value="글쓰기">
 					</a>
 					
-					<a href="write.jsp?board_no=<%=board_no%>">
+					<a href="write.jsp?notice_no=<%=notice_no%>">
 					<input type="button" value="답글">
 					</a>
 					
 					<%if(isAdmin || isMine){ %>
 					<!-- 관리자이거나 내 글인 경우만 수정/삭제 버튼을 표시 -->
 					
-					<a href="edit.jsp?board_no=<%=board_no%>">
+					<a href="edit.jsp?notice_no=<%=notice_no%>">
 					<input type="button" value="수정">
 					</a>
 					
-					<a href="<%=request.getContextPath()%>/member/check.jsp?go=<%=request.getContextPath()%>/board/delete.do?board_no=<%=board_no%>">
+					<a href="<%=request.getContextPath()%>/member/check.jsp?go=<%=request.getContextPath()%>/notice/delete.do?notice_no=<%=notice_no%>">
 					<input type="button" value="삭제">
 					</a>
 					<%} %>
