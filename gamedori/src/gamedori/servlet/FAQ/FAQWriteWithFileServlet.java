@@ -17,9 +17,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import gamedori.beans.dao.FAQDao;
 import gamedori.beans.dao.FAQFileDao;
+import gamedori.beans.dao.FilesDao;
 import gamedori.beans.dto.FAQDto;
 import gamedori.beans.dto.FAQFileDto;
-import gamedori.beans.dto.MemberDto;
+import gamedori.beans.dto.FilesDto;
 
 @WebServlet(urlPatterns = "/FAQ/write.do")
 public class FAQWriteWithFileServlet extends HttpServlet{
@@ -49,15 +50,12 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 //			5. 해석한 데이터에서 필요한 정보들을 추출
 			FAQDto fdto = new FAQDto();
 			//System.out.println(map.get("faq_head"));
+			fdto.setMember_no(Integer.parseInt(map.get("member_no").get(0).getString()));
 			fdto.setFaq_head(map.get("FAQ_head").get(0).getString());
 			
 			fdto.setFaq_title(map.get("FAQ_title").get(0).getString());
 			fdto.setFaq_content(map.get("FAQ_content").get(0).getString());
 			
-//			6. 세션에서 작성자 정보를 가져오는 코드는 동일하다
-			MemberDto user = (MemberDto) req.getSession().getAttribute("userinfo");
-			//System.out.println(user.getMember_no());
-			fdto.setMember_no(user.getMember_no());
 //			7. 작성할 게시글의 번호를 미리 가져온다.
 			FAQDao fdao = new FAQDao();
 			int faq_no = fdao.getSequence();
@@ -73,31 +71,27 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 //			- (주의) 파일이 없어도 개수가 1개가 나오므로 개수로 처리하는 것은 무리!
 //			- 파일이 있는지 없는지는 파일의 크기를 이용해서 확인
 			List<FileItem> fileList = map.get("FAQ_file");
-			FAQFileDao ffdao = new FAQFileDao();
 			for(FileItem item : fileList) {
-				//item에 있는 정보를 뽑아내서 DB에 저장
-				//item의 파일 데이터를 하드디스크에 저장
+				
 				if(item.getSize() > 0) {//파일이 있는 경우
 					
+					FilesDao filesdao = new FilesDao();
+					FilesDto filesdto = new FilesDto();
 					//데이터베이스에 저장
-					int faq_file_no = ffdao.getSequence();
+					int file_no = filesdao.getSequence();
 					
 					FAQFileDto ffdto = new FAQFileDto();
-					ffdto.setFaq_file_no(faq_file_no);//파일번호
-					ffdto.setFaq_file_name(item.getName());//파일명
-					ffdto.setFaq_file_size(item.getSize());//파일크기
-					ffdto.setFaq_file_type(item.getContentType());//파일유형
-					ffdto.setFaq_no(faq_no);//게시글 번호
-					ffdao.save(ffdto);
+					ffdto.setFaq_no(faq_no);//파일번호
+					ffdto.setFile_no(file_no);//파일명
+					FAQFileDao ffdao = new FAQFileDao();
 					
+					ffdao.save(ffdto);
+					filesdao.save(filesdto);
 					//하드디스크에 저장
-					File target = new File(baseDir, String.valueOf(faq_file_no));
+					File target = new File(baseDir, String.valueOf(file_no));
 					item.write(target);
 				}
 			}
-			
-			
-//			11. 상세보기 페이지로 리다이렉트
 			resp.sendRedirect("content.jsp?faq_no="+faq_no);
 		}
 		catch(Exception e) {
