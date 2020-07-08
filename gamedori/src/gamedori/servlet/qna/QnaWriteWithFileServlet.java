@@ -1,4 +1,4 @@
-package servlet.qna;
+package gamedori.servlet.qna;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,14 +70,15 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 				fdto.setFile_name(item.getName());
 				fdto.setFile_size(item.getSize());
 				fdto.setFile_type(item.getContentType());
+				fdao.save(fdto);
 				
 				QnaFileDto qfdto = new QnaFileDto();
 				qfdto.setQna_no(qna_no);
 				qfdto.setFile_no(file_no);
 				
+				
 				QnaFileDao qfdao = new QnaFileDao();
 				qfdao.save(qfdto);
-				fdao.save(fdto);
 				
 				File target = new File(baseDir, String.valueOf(file_no));
 				item.write(target);

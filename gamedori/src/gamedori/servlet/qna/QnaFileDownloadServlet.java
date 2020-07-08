@@ -1,4 +1,4 @@
-package servlet.qna;
+package gamedori.servlet.qna;
 
 import java.io.File;
 import java.io.IOException;
