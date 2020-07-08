@@ -15,7 +15,7 @@ import gamedori.beans.dto.EventboardDto;
 import gamedori.beans.dto.MemberDto;
 
 
-	@WebServlet(urlPatterns = "/eventboard/write.do")
+	@WebServlet(urlPatterns = "/eventboard/eventwrite.do")
 	public class EventBoardWriteServlet extends HttpServlet{
 		@Override
 		protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,23 +23,30 @@ import gamedori.beans.dto.MemberDto;
 //				목표 : 게시글 등록 후 상세 페이지로 이동
 //				준비 : 말머리, 제목, 내용, 작성자
 				
+				String event_title = req.getParameter("event_title");
+				String event_content = req.getParameter("event_content");
+				
 				MemberDto mdto = (MemberDto) req.getSession().getAttribute("userinfo");
 				String member_id = mdto.getMember_id();//작성자 추출
 				
 				EventboardDto edto = new EventboardDto();
 				
-				edto.setEvent_title(req.getParameter("event_title"));
-				edto.setEvent_content(req.getParameter("event_content"));
+				edto.setEvent_title(event_title);
+				edto.setEvent_content(event_content);
 				edto.setMember_id(member_id);
-			
+				edto.setMember_no(mdto.getMember_no());
+
 				// 번호를 알아야 그 번호에 맞춰서 수정 가능
 				EventboardDao edao = new EventboardDao();
 				int event_no = edao.getSequence();//번호 먼저 추출
+				System.out.println(event_no);
+				System.out.println(edto.getEvent_title());
 				edto.setEvent_no(event_no);
+				
 				//번호를 설정한 뒤
 				edao.write(edto);//등록
 				
-				resp.sendRedirect("content.jsp?event_no="+event_no);
+				resp.sendRedirect("Eventcontent.jsp?event_no="+event_no);
 			}
 			catch(Exception e) {
 				e.printStackTrace();

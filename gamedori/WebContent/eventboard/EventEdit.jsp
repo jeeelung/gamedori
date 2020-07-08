@@ -1,5 +1,5 @@
 <%@page import="gamedori.beans.dto.EventboardDto"%>
-<%@page import="gamedori.beans.dto.EventDto"%>
+
 <%@page import="gamedori.beans.dao.EventboardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
