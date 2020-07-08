@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -102,12 +104,14 @@ public class CommunityDao {
 	}
 	
 	// 작성자 메소드
-	public MemberDto getWriter() throws Exception {
+	public MemberDto getWriter(int member_no) throws Exception {
 		Connection con = getConnection();
-		String sql = "SELECT m.member_id, m.member_nick, m.member_auth "
+		String sql = "SELECT m.* "
 				+ "FROM member m INNER JOIN community c "
-				+ "ON m.member_no = c.member_no";
+				+ "ON m.member_no = c.member_no "
+				+ "WHERE c.member_no = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, member_no);
 		ResultSet rs = ps.executeQuery();
 		
 		MemberDto mdto = rs.next()? new MemberDto(rs): null;
@@ -115,6 +119,44 @@ public class CommunityDao {
 		con.close();
 		
 		return mdto;
+	}
+	
+	// 게시물 목록 메소드
+	public List<CommunityDto> getList() throws Exception{
+		Connection con = getConnection();
+		String sql = "SELECT ROWNUM rn, T.* FROM("
+				+ "SELECT * FROM community " 
+				+ "CONNECT BY PRIOR commu_no = commu_super_no "  
+				+ "START WITH commu_super_no IS NULL " 
+				+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
+				+ ")T";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		
+		List<CommunityDto> list = null;
+		while(rs.next()) {
+			list = new ArrayList<CommunityDto>();
+			
+			CommunityDto cdto = new CommunityDto(rs);
+			list.add(cdto);
+		}
+		con.close();
+		return list;
+	}
+	
+	// 조회수 서블릿
+	public void plusReadCount(int commu_no, int member_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "UPDATE community "
+				+ "SET commu_read = commu_read + 1 "
+				+ "WHERE commu_no = ? "
+				+ "AND member_no != ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, commu_no);
+		ps.setInt(2, member_no);
+		ps.execute();
+		
+		con.close();
 	}
 
 }

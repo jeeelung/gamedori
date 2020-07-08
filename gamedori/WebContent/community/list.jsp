@@ -1,8 +1,12 @@
+<%@page import="gamedori.beans.dto.MemberDto"%>
+<%@page import="java.util.List"%>
+<%@page import="gamedori.beans.dao.CommunityDao"%>
 <%@page import="gamedori.beans.dto.CommunityDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	
+	CommunityDao cdao = new CommunityDao();
+	List<CommunityDto> list = cdao.getList();
 %>
     
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -14,11 +18,11 @@
 		<thead>
 			<tr>
 				<th>
-					<select name="board_head">
-						<option>전체보기</option>
-						<option>정보</option>
+					<select name="commu_head">
+						<option value="">전체보기</option>
+						<option>자유</option>
 						<option>유머</option>
-						<option>공지</option>
+						<option>공략</option>
 					</select>
 				</th>
 				<th width="50%">제목</th>
@@ -30,11 +34,18 @@
 		
 		<tbody>
 			<tr>
-				<th>번호</th>
-				<td>[말머리]제목</td>
-				<td>작성자</td>
-				<td>작성일</td>
-				<td>조회수</td>
+			<%for(CommunityDto cdto : list) { %>
+				<th><%=cdto.getCommu_no()%></th>
+				<td>
+					<a href="<%=request.getContextPath()%>/community/content.jsp?commu_no=<%=cdto.getCommu_no()%>">
+					[<%=cdto.getCommu_head()%>]<%=cdto.getCommu_title()%>
+					</a>
+				</td>
+				<%MemberDto mdto = cdao.getWriter(cdto.getMember_no());%>
+				<td><%=mdto.getMember_nick()%></td>
+				<td><%=cdto.getCommu_auto()%></td>
+				<td><%=cdto.getCommu_read()%></td>
+			<%}%>
 			</tr>
 		</tbody>
 		

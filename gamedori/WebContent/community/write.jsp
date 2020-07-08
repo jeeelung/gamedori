@@ -12,7 +12,7 @@
 				<tr>
 					<td>
 						<%if(request.getParameter("commu_super_no") != null) {%>
-						<input type="hidden" name="super_no" value="<%=request.getParameter("commu_super_no")%>">
+						<input type="hidden" name="commu_super_no" value="<%=request.getParameter("commu_super_no")%>">
 						<%}%>
 						<input type="hidden" name="member_no" value="<%=mdto.getMember_no()%>">
 					</td>
@@ -22,8 +22,8 @@
 					<td>
 						<Select name="commu_head">
 							<option value="">말머리 선택</option>
-							<option>정보</option>
-							<option>공지</option>
+							<option>자유</option>
+							<option>공략</option>
 							<option>유머</option>
 						</Select>
 					</td>
@@ -31,7 +31,7 @@
 				<tr>
 					<th>제목</th>
 					<td>
-						<input type="text" name="commu_title" maxlength="100" size="50" required>
+						<input  type="text" name="commu_title" maxlength="100" size="50" required>
 					</td>
 				</tr>
 			</thead>
