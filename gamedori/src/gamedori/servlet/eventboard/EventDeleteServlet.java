@@ -13,7 +13,7 @@ import gamedori.beans.dao.EventboardDao;
 
 
 
-@WebServlet(urlPatterns = "")
+@WebServlet(urlPatterns = "/eventboard/delete.do")
 public class EventDeleteServlet extends HttpServlet {
 
 	@Override

@@ -52,7 +52,6 @@ public class MemberCheckServlet extends HttpServlet {
 		e.printStackTrace();
 		resp.sendError(500);
 	}
-	
+	}
 
-}
 }
