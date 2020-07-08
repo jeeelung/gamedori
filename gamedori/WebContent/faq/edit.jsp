@@ -8,7 +8,7 @@
 	- 정보를 표시해줘야 하기 때문에 PK(FAQ_no)가 필요하다
 -->
 <%
-	int FAQ_no = Integer.parseInt(request.getParameter("FAQ_no"));
+	int FAQ_no = Integer.parseInt(request.getParameter("faq_no"));
 	FAQDao fdao = new FAQDao();
 	FAQDto fdto = fdao.get(FAQ_no);
 %>

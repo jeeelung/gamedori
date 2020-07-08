@@ -1,4 +1,3 @@
-
 <%@page import="gamedori.beans.dto.FAQFileDto"%>
 <%@page import="gamedori.beans.dao.MemberDao"%>
 <%@page import="gamedori.beans.dao.FAQFileDao"%>
@@ -11,9 +10,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	FAQDao fdao = new FAQDao();
+	
 	int faq_no = Integer.parseInt(request.getParameter("faq_no"));
 	FAQDto fdto = fdao.get(faq_no);
-	MemberDto mdto = fdao.getWriter();
+	MemberDto mdto = fdao.getWriter(fdto.getMember_no());
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>

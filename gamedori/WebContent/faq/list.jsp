@@ -1,5 +1,4 @@
-<%@page import="gamedori.beans.dao.FAQNickDao"%>
-<%@page import="gamedori.beans.dto.FAQNickDto"%>
+
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@page import="gamedori.beans.dao.FAQDao"%>
 <%@page import="gamedori.beans.dto.FAQDto"%>
@@ -54,7 +53,7 @@
 	int finishBlock = startBlock + blockSize - 1;
 
 	FAQDao fdao = new FAQDao();
-	FAQNickDao fndao = new FAQNickDao();
+
 	//(주의!) 다음 버튼의 경우 계산을 통하여 페이지 개수를 구해야 출력 여부 판단이 가능
 	//int count = 목록개수 or 검색개수;
 	int count;
@@ -76,9 +75,6 @@
 	} else {
 		list = fdao.getList();
 	}
-	List<FAQNickDto> listNick;
-	listNick = fndao.getList();
-	
 %>
 
 
@@ -122,43 +118,35 @@
 		</thead>
 		<tbody align="center">
 			<%-- list의 데이터를 하나하나 fdto라는 이름으로 접근하여 출력 --%>
-			
-			<%
-				for (FAQNickDto fndto : listNick) {
-			%>
+
 			<tr>
-				<td><%=fndto.getFaq_no()%></td>
+				<%
+					for (FAQDto fdto : list) {
+				%>
+				<td><%=fdto.getFaq_no()%></td>
 				<td align="left">
 					<!-- 
 						답글은 띄어쓰기 구현
 						- 답글인 경우는 super_no > 0 , depth > 0 
-					-->
-					<%
-						if (fndto.getFaq_head() != null) {
-					%>
-					<!-- 말머리는 있을 경우만 출력 -->
-					<font color="gray"> [<%=fndto.getFaq_head()%>]
-					</font>
-					<%
-						}
-					%>
-					<!-- 게시글 제목 -->
-					<a href="content.jsp?FAQ_no=<%=fndto.getFaq_no()%>">
-						<%=fndto.getFaq_title()%>
-					</a>
+					--> <%
+ 	if (fdto.getFaq_head() != null) {
+ 										%> <!-- 말머리는 있을 경우만 출력 --> <font color="gray"> [<%=fdto.getFaq_head()%>]
+				</font> <%
+ 	}
+ %> <!-- 게시글 제목 --> <a href="<%=request.getContextPath()%>/faq/content.jsp?faq_no=<%=fdto.getFaq_no()%>"> <%=fdto.getFaq_title()%>
+				</a>
 				</td>
+				<%
+					MemberDto mdto = fdao.getWriter(fdto.getMember_no());
+				%>
 				<td>
 					<%
-						if (fndto.getMember_nick() != null) {
-					%>
-					<%=fndto.getMember_nick()%>
-					<%
-						} else {
-					%>
-					<font color="gray">탈퇴한 사용자</font>
-					<%
-						}
-					%>
+						if (mdto.getMember_nick() != null) {
+					%> <%=mdto.getMember_nick()%> <%
+ 	} else {
+ %> <font color="gray">탈퇴한 사용자</font> <%
+ 	}
+ %>
 				</td>
 			</tr>
 			<%
@@ -168,11 +156,8 @@
 
 		<tfoot>
 			<tr>
-				<td colspan="8" align="right">
-					<a href="write.jsp">
-						<input type="button" value="글쓰기">
-					</a>
-				</td>
+				<td colspan="8" align="right"><a href="write.jsp"> <input type="button" value="글쓰기">
+				</a></td>
 			</tr>
 		</tfoot>
 	</table>
@@ -245,8 +230,6 @@
 		<a href="list.jsp?page=<%=finishBlock + 1%>&type=<%=type%>&keyword=<%=keyword%>">[다음]</a>
 		<%
 			}
-		%>
-		<%
 			}
 		%>
 	</h4>
@@ -255,7 +238,7 @@
 	<form action="list.jsp" method="get">
 		<!-- 검색분류 -->
 		<select name="type">
-			<option value="FAQ_title">제목만</option>
+			<option value="faq_title">제목만</option>
 			<option value="member_no">글작성자</option>
 		</select>
 

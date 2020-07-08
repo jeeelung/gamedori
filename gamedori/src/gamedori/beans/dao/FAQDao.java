@@ -12,6 +12,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import gamedori.beans.dto.FAQDto;
+import gamedori.beans.dto.MemberDto;
 
 public class FAQDao {
 	
@@ -73,7 +74,7 @@ public class FAQDao {
 		Connection con = getConnection();
 		
 		String sql = 
-							"SELECT * FROM FAQ "
+								"SELECT * FROM FAQ "
 								+ "WHERE instr(#1, ?) > 0 "
 								+ "ORDER BY FAQ_no ASC";
 		sql = sql.replace("#1", type);
@@ -197,5 +198,15 @@ public class FAQDao {
 		con.close();
 		
 		return count;
+	}
+	public MemberDto getWriter(int member_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "select m.* from member m inner join faq f on m.member_no = f.member_no where f.member_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, member_no);
+		ResultSet rs = ps.executeQuery();
+		MemberDto mdto = rs.next()? new MemberDto(rs): null;
+		con.close();
+		return mdto;
 	}
 }

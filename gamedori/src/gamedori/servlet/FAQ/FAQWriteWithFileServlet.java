@@ -22,7 +22,7 @@ import gamedori.beans.dto.FAQDto;
 import gamedori.beans.dto.FAQFileDto;
 import gamedori.beans.dto.FilesDto;
 
-@WebServlet(urlPatterns = "/FAQ/write.do")
+@WebServlet(urlPatterns = "/faq/write.do")
 public class FAQWriteWithFileServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

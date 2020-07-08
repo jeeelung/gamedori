@@ -17,10 +17,10 @@
 	<!-- 게시글 전송 폼 -->
 	<form action="write.do" method="post" enctype="multipart/form-data">
 	
-		<%if(request.getParameter("FAQ_no") != null){ %>
+		<%if(request.getParameter("faq_no") != null){ %>
 		<!-- 원본글번호가 넘어온다면(즉, 답글이라면) 원본글번호를 hidden으로 첨부 -->
-		<input type="hidden" name="FAQ_no" 
-						value="<%=request.getParameter("FAQ_no")%>">
+		<input type="hidden" name="faq_no" 
+						value="<%=request.getParameter("faq_no")%>">
 		<%} %>
 		
 		<table border="1">
@@ -40,14 +40,14 @@
 					<th>제목</th>
 					<td>
 						<!-- 제목은 일반 입력창으로 구현 -->
-						<input type="text" name="FAQ_title" size="70" required>
+						<input type="text" name="faq_title" size="70" required>
 					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
 					<td>
 						<!-- 내용은 textarea로 구현 -->
-						<textarea name="FAQ_content" required rows="15" cols="72"></textarea>
+						<textarea name="faq_content" required rows="15" cols="72"></textarea>
 					</td>  
 				</tr>
 				
@@ -55,7 +55,7 @@
 				<tr>
 					<th>첨부파일</th>
 					<td>
-						<input type="file" name="FAQ_file" multiple accept=".jpg, .png, .gif">
+						<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif">
 					</td>
 				</tr>
 			</tbody>
