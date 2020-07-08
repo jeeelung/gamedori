@@ -26,7 +26,7 @@
 	<a href="#">커뮤니티</a>
 	<a href="#">이벤트</a>
 	<a href="#">FAQ</a>
-	<a href="#">1:1문의</a>	
+	<a href="<%=rootPath%>/qna/qna_list.jsp">1:1문의</a>	
 	<%}else{ %>
 <!-- 	로그인 상태가 아닐 경우 -->
 	<a href="<%=rootPath%>/guest/join.jsp">회원가입</a>
@@ -35,5 +35,5 @@
 	<a href="#">커뮤니티</a>
 	<a href="#">이벤트</a>
 	<a href="#">FAQ</a>
-	<a href="#">1:1문의</a>	
+	<a href="<%=rootPath%>/qna/qna_list.jsp">1:1문의</a>	
 	<%}%>

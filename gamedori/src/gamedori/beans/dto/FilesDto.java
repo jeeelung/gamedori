@@ -1,5 +1,7 @@
 package gamedori.beans.dto;
 
+import java.sql.ResultSet;
+
 public class FilesDto {
 	private int file_no;
 	private String file_name;
@@ -9,7 +11,14 @@ public class FilesDto {
 	public FilesDto() {
 		super();
 	}
+	public FilesDto(ResultSet rs) throws Exception{
+		this.setFile_no(rs.getInt("file_no"));
+		this.setFile_name(rs.getString("file_name"));
+		this.setFile_size(rs.getLong("file_size"));
+		this.setFile_type(rs.getString("file_type"));
+	}
 
+	
 	public int getFile_no() {
 		return file_no;
 	}

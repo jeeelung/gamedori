@@ -153,7 +153,7 @@
 		<tfoot>
 			<tr>
 				<td colspan="8" align="right">
-					<a href="write.jsp">
+					<a href="qna_write.jsp">
 						<input type="button" value="글쓰기">
 					</a>
 				</td>
