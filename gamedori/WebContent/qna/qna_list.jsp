@@ -1,11 +1,10 @@
+<%@page import="gamedori.beans.dto.MemberDto"%>
+<%@page import="gamedori.beans.dao.QnaDao"%>
 <%@page import="gamedori.beans.dto.QnaDto"%>
 <%@page import="java.util.List"%>
-<%@page import="gamedori.beans.dao.QnaDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- 
-	/board/list.jsp : 게시판 목록 겸 검색 페이지
- -->
+
 
 <%
 	//이 페이지를 출력하기 위한 프로그래밍 처리
@@ -20,9 +19,8 @@
 	
 	boolean isSearch = type != null && keyword != null;
 	
-	////////////////////////////////////////////////////////////
 	// 페이지 계산 코드
-	////////////////////////////////////////////////////////////
+
 	int pageSize = 10;//한 페이지에 표시할 데이터 개수
 	
 	//page 번호를 계산하기 위한 코드
@@ -44,13 +42,18 @@
 	int finish = pageNo * pageSize;
 	int start = finish - (pageSize - 1);
 	
-	//////////////////////////////////////////////////////////////////
+
 	// 페이지 네비게이터 계산 코드
-	//////////////////////////////////////////////////////////////////
+
 	int blockSize = 10;//이 페이지에는 네비게이터 블록을 10개씩 배치하겠다!
 	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
 	int finishBlock = startBlock + blockSize - 1;
+	
+	
 	QnaDao qdao = new QnaDao();
+	QnaDto qdto =new QnaDto();
+	
+	MemberDto mdto =qdao.getWriter(qdto.getMember_no());
 	
 	//(주의!) 다음 버튼의 경우 계산을 통하여 페이지 개수를 구해야 출력 여부 판단이 가능
 	//int count = 목록개수 or 검색개수;
@@ -68,7 +71,7 @@
 	}
 	
 	
-// 	List<BoardDto> list = 목록 or 검색;
+// 	List<QnaDto> list = 목록 or 검색;
 	List<QnaDto> list;
 	if(isSearch){
 		list = qdao.search(type, keyword, start, finish); 
@@ -94,65 +97,57 @@
 				<th>번호</th>
 				<th width="40%">제목</th>
 				<th>작성자</th>
+				<th>이메일</th>
 				<th>작성일</th>
-				<th>조회수</th>
 			
 			</tr>
 		</thead>
 		<tbody align="center">
-			<%-- list의 데이터를 하나하나 qdto라는 이름으로 접근하여 출력 --%>
-			<%for(QnaDto bdto : list){ %>
+			<%for(QnaDto qldto : list){ %>
 			<tr>
 			
-				<td><%=bdto.getQna_no()%></td>
+				<td><%=qldto.getQna_no()%></td>
 				<td align="left">
 				
 					<!-- 
 						답글은 띄어쓰기 구현
 						- 답글인 경우는 super_no > 0 , depth > 0 
 					-->
-					<%if(bdto.getDepth() > 0){ %>
-						<%for(int i=0; i < bdto.getDepth(); i++){ %>
+					<%if(qldto.getQna_depth() > 0){ %>
+						<%for(int i=0; i < qldto.getQna_depth(); i++){ %>
 							&nbsp;&nbsp;&nbsp;&nbsp;
 						<%} %>
 						<img src="<%=request.getContextPath()%>/image/reply.png"
 							width="20" height="15">
 					<%} %>
 				
-					<%if(bdto.getBoard_head() != null){ %>
+					<%if(qldto.getQna_head() != null){ %>
 						<!-- 말머리는 있을 경우만 출력 -->
 						<font color="gray">
-						[<%=bdto.getBoard_head()%>]
+						[<%=qldto.getQna_head()%>]
 						</font>
 					<%} %>
 					
 					<!-- 게시글 제목 -->
-					<a href="content.jsp?board_no=<%=bdto.getBoard_no()%>">
-						<%=bdto.getBoard_title()%>
+					<a href="content.jsp?qna_no=<%=qldto.getQna_no()%>">
+						<%=qldto.getQna_title()%>
 					</a>
-					
-					<%if(bdto.getBoard_replycount() > 0){ %>
-					<!-- 댓글 개수를 출력(있을 경우만) -->
-					[<%=bdto.getBoard_replycount()%>]
-					<%} %>
 					
 				</td>
 				<td>
-					<%if(bdto.getBoard_writer() != null){ %>
-						<%=bdto.getBoard_writer()%>
-					<%} else { %>
+						작성자
+						<%if(mdto != null) {%>
+						<%=mdto.getMember_nick()%> <font color="gray"><%=mdto.getMember_auth()%></font>
+						<%} else {%>
 						<font color="gray">탈퇴한 사용자</font>
-					<%} %>
+						<%}%>
 				</td>
-				<td><%=bdto.getBoard_autotime()%></td>
-				<td><%=bdto.getBoard_read()%></td>
-				
-				<!-- 테스트 항목 3개 출력 -->
-				<td><%=bdto.getSuper_no()%></td>
-				<td><%=bdto.getGroup_no()%></td>
-				<td><%=bdto.getDepth()%></td>
+				<td><%=qldto.getQna_email()%></td>
+				<td><%=qldto.getQna_date()%></td>
 			</tr>
 			<%} %>
+				
+			
 		</tbody>
 		
 		<tfoot>
@@ -183,10 +178,6 @@
 		
 	<%} %>
 	
-	<!-- 
-		이동 숫자에 반복문을 적용 
-		범위는 startBlock부터 finishBlock까지로 설정(상단에서 계산을 미리 해두었음)
-	-->
 	<%for(int i=startBlock; i <= finishBlock; i++){ %>
 		<%if(!isSearch){ %>
 		<!-- 목록일 경우 페이지 번호만 전달 -->
@@ -197,10 +188,6 @@
 		<%} %>
 	<%} %>
 	
-	<!-- 
-		다음 버튼을 누르면 finishBlock + 1 에 해당하는 페이지로 이동해야 한다
-		(주의!) 다음이 없는 경우에는 출력하지 않는다(pageCount <= finishBlock)
-	 -->
 	<%if(pageCount > finishBlock){ %>
 		<%if(!isSearch){ %> 
 			<a href="list.jsp?page=<%=finishBlock + 1%>">[다음]</a>
@@ -214,8 +201,8 @@
 	<form action="list.jsp" method="get">
 		<!-- 검색분류 -->
 		<select name="type">
-			<option value="board_title">제목만</option>
-			<option value="board_writer">글작성자</option>
+			<option value="board_title">제목</option>
+			<option value="board_writer">작성자</option>
 		</select>
 		
 		<!-- 검색어 -->

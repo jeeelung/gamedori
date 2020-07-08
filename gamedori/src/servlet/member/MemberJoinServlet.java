@@ -1,4 +1,4 @@
-package gamedori.servlet.member;
+package servlet.member;
 
 import java.io.IOException;
 
