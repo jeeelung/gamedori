@@ -41,12 +41,15 @@ public class FAQDao {
 	}
 	
 	//목록 메소드
-	public List<FAQDto> getList() throws Exception{
+	public List<FAQDto> getList(int start, int finish) throws Exception{
 		Connection con = getConnection();
 		
 
-		String sql = "SELECT * FROM FAQ order by faq_no desc";	
+		String sql = "select * from( select rownum rn, T.* from "
+				+ "(SELECT * FROM FAQ order by faq_no desc)T )where rn between ? and ?";	
 		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, start);
+		ps.setInt(2, finish);
 		ResultSet rs = ps.executeQuery();
 		List<FAQDto> list = new ArrayList<>();
 		while(rs.next()) {
@@ -59,16 +62,18 @@ public class FAQDao {
 	}
 	
 	//검색 메소드
-	public List<FAQDto> search(String type, String keyword) throws Exception{
+	public List<FAQDto> search(String type, String keyword, int start, int finish) throws Exception{
 		Connection con = getConnection();
 		
 		String sql = 
-								"SELECT * FROM FAQ "
+							" select * from (select rownum rn, T.* from(SELECT * FROM FAQ "
 								+ "WHERE instr(#1, ?) > 0 "
-								+ "ORDER BY FAQ_no ASC";
+								+ "ORDER BY FAQ_no desc)T )where rn between ? and ?";
 		sql = sql.replace("#1", type);
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);
+		ps.setInt(2, start);
+		ps.setInt(3, finish);
 		ResultSet rs = ps.executeQuery();
 		List<FAQDto> list = new ArrayList<>();
 		while(rs.next()) {

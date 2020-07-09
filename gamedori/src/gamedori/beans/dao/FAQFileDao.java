@@ -56,7 +56,35 @@ public class FAQFileDao {
 		con.close();
 		return list;
 	}
-	
-	
-	
+	public void delete(int faq_no) throws Exception{
+		Connection con = getConnection();
+		String sql = "delete from faq_file where faq_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, faq_no);
+		ps.execute();
+		con.close();
+	}
+	public void deleteFile(int file_no) throws Exception{
+		Connection con = getConnection();
+		String sql = "delete from faq_file where file_no=?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, file_no);
+		ps.execute();
+		con.close();
+	}
+	public List<Integer> getFileNo(int faq_no) throws Exception{
+		Connection con = getConnection();
+		String sql = "select file_no from faq_file where faq_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, faq_no);
+		ResultSet rs = ps.executeQuery();
+		List<Integer> list = new ArrayList<>();
+		while(rs.next()) {
+			int file_no = rs.getInt("file_no");
+			list.add(file_no);
+		}
+		con.close();
+		return list;
+	}
+
 }

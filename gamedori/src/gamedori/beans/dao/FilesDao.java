@@ -57,5 +57,11 @@ public class FilesDao {
 		con.close();
 		return filesdto;
 	}
-
+	public void delete(int file_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "delete from files where file_no=? ";
+		PreparedStatement ps =con.prepareStatement(sql);
+		ps.setInt(1, file_no);
+		con.close();
+	}
 }

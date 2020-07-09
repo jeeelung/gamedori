@@ -66,9 +66,9 @@
 	// 	List<FAQDto> list = 목록 or 검색;
 	List<FAQDto> list;
 	if (isSearch) {
-		list = fdao.search(type, keyword);
+		list = fdao.search(type, keyword, start, finish);
 	} else {
-		list = fdao.getList();
+		list = fdao.getList(start, finish);
 	}
 %>
 
@@ -122,13 +122,13 @@
 					<!-- 
 						답글은 띄어쓰기 구현
 						- 답글인 경우는 super_no > 0 , depth > 0 
-					--> <%
- 	if (fdto.getFaq_head() != null) {
- 										%> <!-- 말머리는 있을 경우만 출력 --> <font color="gray"> [<%=fdto.getFaq_head()%>]
-				</font> <%
- 	}
- %> <!-- 게시글 제목 --> <a href="<%=request.getContextPath()%>/faq/content.jsp?faq_no=<%=fdto.getFaq_no()%>"> <%=fdto.getFaq_title()%>
-				</a>
+					--> <%if (fdto.getFaq_head() != null) {%> <!-- 말머리는 있을 경우만 출력 --> <font color="gray"> 
+					[<%=fdto.getFaq_head()%>]
+				</font> 
+				<%}%> 
+ 	<!-- 게시글 제목 --> 
+ 	<a href="<%=request.getContextPath()%>/faq/content.jsp?faq_no=<%=fdto.getFaq_no()%>"> 
+ 				<%=fdto.getFaq_title()%></a>
 				</td>
 				<%
 					MemberDto mdto = fdao.getWriter(fdto.getMember_no());
@@ -187,12 +187,8 @@
 		이동 숫자에 반복문을 적용 
 		범위는 startBlock부터 finishBlock까지로 설정(상단에서 계산을 미리 해두었음)
 	-->
-		<%
-			for (int i = startBlock; i <= finishBlock; i++) {
-		%>
-		<%
-			if (!isSearch) {
-		%>
+		<%for (int i = startBlock; i <= finishBlock; i++) {%>
+		<%if (!isSearch) {%>
 		<!-- 목록일 경우 페이지 번호만 전달 -->
 		<a href="list.jsp?page=<%=i%>"><%=i%></a>
 		<%
@@ -233,7 +229,7 @@
 		<!-- 검색분류 -->
 		<select name="type">
 			<option value="faq_title">제목만</option>
-			<option value="member_no">글작성자</option>
+			<option value="member_no">글닉네임</option>
 		</select>
 		<!-- 검색어 -->
 		<input type="text" name="keyword" required>

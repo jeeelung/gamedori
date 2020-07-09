@@ -1,3 +1,7 @@
+<%@page import="gamedori.beans.dto.FilesDto"%>
+<%@page import="java.util.List"%>
+<%@page import="gamedori.beans.dao.FAQFileDao"%>
+<%@page import="gamedori.beans.dto.MemberDto"%>
 <%@page import="gamedori.beans.dto.FAQDto"%>
 <%@page import="gamedori.beans.dao.FAQDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -8,9 +12,12 @@
 	- 정보를 표시해줘야 하기 때문에 PK(FAQ_no)가 필요하다
 -->
 <%
+	MemberDto mdto = (MemberDto) session.getAttribute("userinfo") ;
 	int faq_no = Integer.parseInt(request.getParameter("faq_no"));
 	FAQDao fdao = new FAQDao();
 	FAQDto fdto = fdao.get(faq_no);
+	FAQFileDao ffdao = new FAQFileDao();
+	List<FilesDto> fileList = ffdao.getList(faq_no);
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -26,6 +33,12 @@
 		<input type="hidden" name="faq_no" value="<%=faq_no%>">
 		
 		<table border="1">
+		<thead>
+		<tr>
+		<td>
+		</td>
+		</tr>
+		</thead>
 			<tbody>
 				<tr>
 					<th>말머리</th>
@@ -33,9 +46,8 @@
 						<!-- 말머리는 select로 구현 -->
 						<select name="faq_head">
 							<option value="">말머리 선택</option>
-							<option value="정보">정보</option>
-							<option value="공지">공지</option>
-							<option value="유머">유머</option>
+							<option value="게임문의">게임문의</option>
+							<option value="회원문의">회원문의</option>
 						</select>
 					</td>
 				</tr>
@@ -43,7 +55,7 @@
 					<th>제목</th>
 					<td>
 						<!-- 제목은 일반 입력창으로 구현 -->
-						<input type="text" name="faq_title" size="70" required
+						<input type="text" name="faq_title" size="50" maxlength="100" required
 								value="<%=fdto.getFaq_title()%>">
 					</td>
 				</tr>
@@ -52,9 +64,25 @@
 					<td>
 						<!-- 내용은 textarea로 구현 -->
 						<textarea name="faq_content" required 
-							rows="15" cols="72"><%=fdto.getFaq_content()%></textarea>
+							rows="20" cols="100" maxlength="4000" name="faq_content"><%=fdto.getFaq_content()%></textarea>
 					</td>  
+				
+				<th>첨부파일</th>
+				<td>
+				<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif">
+				</td>
 				</tr>
+				<tr>	
+				<td>
+				<ul>
+				<%for(FilesDto filesdto : fileList){ %>
+					<li><%=filesdto.getFile_name() %> (<%=filesdto.getFile_size() %> bytes) 
+					<a href="<%=request.getContextPath() %>/faq/fileDelete.do?file_no=<%=filesdto.getFile_no()%>&faq_no=<%=faq_no %>">
+					 <input type="button" value="삭제"></a>
+					</li>
+				<%} %>
+				</ul>
+				</td></tr>
 			</tbody>
 			<tfoot>
 				<tr>

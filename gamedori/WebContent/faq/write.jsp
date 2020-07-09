@@ -19,7 +19,7 @@
 					<td>
 						<!-- 말머리는 select로 구현 --> 
 						<select name="faq_head">
-							<option value="말머리 선택">말머리 선택</option>
+							<option value="">말머리 선택</option>
 							<option value="회원문의">회원문의</option>
 							<option value="게임문의">게임문의</option>
 					</select>
