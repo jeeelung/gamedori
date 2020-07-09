@@ -155,7 +155,7 @@
 	<select name="type">
 		<option value="commu_title">제목만</option>
 		<option value="commu_content">내용만</option>
-		<option value="member_no">글작성자</option>
+		<option value="member_nick">글작성자</option>
 	</select>
 		<input type="text" name="keyword" placeholder="검색어를 입력하세요" required>
 		<input type="submit" value="검색">

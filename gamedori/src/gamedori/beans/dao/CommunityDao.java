@@ -164,7 +164,21 @@ public class CommunityDao {
 	// 검색 서블릿
 	public List<CommunityDto> search(String type, String keyword, int start, int finish) throws Exception {
 		Connection con = getConnection();
-		String sql = "SELECT * FROM( "
+		String sql;
+		boolean isNick = type.equals("member_nick");
+		if(isNick) {
+			sql = "SELECT * FROM("
+					+ "SELECT ROWNUM rn, T.* FROM("
+					+ "SELECT c.*, m.MEMBER_NICK FROM COMMUNITY c INNER JOIN MEMBER m "
+					+ "ON c.MEMBER_NO = m.MEMBER_NO "
+					+ "WHERE m.MEMBER_NICK = ?"
+					+ "CONNECT BY PRIOR commu_no = commu_super_no "
+					+ "START WITH commu_super_no IS NULL "
+					+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
+					+ ")T"
+					+ ") WHERE rn BETWEEN ? and ?";
+		} else {			
+			sql = "SELECT * FROM( "
 					+ "SELECT ROWNUM rn, T.* FROM("
 						+"SELECT * FROM community "
 						+ "WHERE instr(#1, ?) > 0 "
@@ -173,11 +187,13 @@ public class CommunityDao {
 						+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
 						+ ")T"
 					+ ") WHERE rn BETWEEN ? and ?";
-		sql = sql.replace("#1", type);
+			sql = sql.replace("#1", type);
+		}
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);
 		ps.setInt(2, start);
 		ps.setInt(3, finish);
+		
 		ResultSet rs = ps.executeQuery();
 		
 		List<CommunityDto> list = new ArrayList<CommunityDto>();
@@ -204,8 +220,17 @@ public class CommunityDao {
 	
 	public int getCount(String type, String keyword) throws Exception {
 		Connection con = getConnection();
-		String sql = "SELECT COUNT(*) FROM community WHERE instr(#1, ?) > 0";
-		sql = sql.replace("#1", type);
+		String sql;
+		if(type.equals("member_nick")) {
+			sql = "SELECT count(*) FROM ("
+					+ "SELECT c.*, m.MEMBER_NICK FROM COMMUNITY c INNER JOIN MEMBER m "
+					+ "ON c.MEMBER_NO = m.MEMBER_NO "
+					+ "WHERE m.MEMBER_NICK = ?"
+					+ ")";
+		} else {
+			sql = "SELECT COUNT(*) FROM community WHERE instr(#1, ?) > 0";
+			sql = sql.replace("#1", type);
+		}
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);
 		ResultSet rs = ps.executeQuery();
