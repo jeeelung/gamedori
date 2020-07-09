@@ -15,10 +15,10 @@
 		<table align="center">
 			<thead>
 				<tr>
+				<th>말머리</th>
 					<td>
-					<th>말머리</th>
-					<td>
-						<!-- 말머리는 select로 구현 --> <select name="faq_head">
+						<!-- 말머리는 select로 구현 --> 
+						<select name="faq_head">
 							<option value="말머리 선택">말머리 선택</option>
 							<option value="회원문의">회원문의</option>
 							<option value="게임문의">게임문의</option>
@@ -28,7 +28,8 @@
 				<tr>
 					<th>제목</th>
 					<td>
-						<!-- 제목은 일반 입력창으로 구현 --> <input type="text" name="faq_title" maxlength="100" size="70" required>
+						<!-- 제목은 일반 입력창으로 구현 --> 
+						<input type="text" name="faq_title" maxlength="100" size="70" required>
 					</td>
 				</tr>
 			</thead>
@@ -57,9 +58,4 @@
 		</table>
 	</form>
 </div>
-
 <jsp:include page="/template/footer.jsp"></jsp:include>
-
-
-
-

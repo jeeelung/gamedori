@@ -3,7 +3,6 @@ package gamedori.beans.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.sql.SQLException;
 
 import javax.naming.Context;
@@ -195,7 +194,7 @@ public class MemberDao {
 		public MemberDto get(int member_no) throws Exception {
 			Connection con = getConnection();
 
-			String sql = "select*from member where member_no=?";
+			String sql = "select * from member where member_no=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, member_no);
 			ResultSet rs = ps.executeQuery();

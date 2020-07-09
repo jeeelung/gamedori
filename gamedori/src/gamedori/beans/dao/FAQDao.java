@@ -44,18 +44,7 @@ public class FAQDao {
 	public List<FAQDto> getList() throws Exception{
 		Connection con = getConnection();
 		
-//		String sql = "SELECT * FROM FAQ ORDER BY FAQ_no DESC";
-		
-//		트리 정렬 : 상하 관계로 연결되어 있는 구조의 데이터를 불러오기 위한 정렬방식
-//		- CONNECT BY PRIOR를 이용하여 항목을 연결하며 상하관계를 알려준다
-//		- START WITH 를 이용하여 시작 지점을 알려준다
-//		- ORDER SIBLINGS BY를 이용하여 정렬 순서를 알려준다
-		
-//		아래의 구문은 다음의 뜻을 가진다.
-//		"게시글들을 
-//		FAQ_no와 super_no가 같으면 연결되어 있는 것으로 생각하고
-//		super_no가 NULL인 항목부터 시작해서 추출해라.
-//		이렇게 추출되는 글 그룹들을 그룹번호 내림차순, 글번호 오름차순으로 정렬해라!"
+
 		String sql = "SELECT * FROM FAQ order by faq_no desc";	
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();

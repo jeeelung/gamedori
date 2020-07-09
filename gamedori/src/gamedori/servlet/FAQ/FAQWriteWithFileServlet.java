@@ -21,6 +21,7 @@ import gamedori.beans.dao.FilesDao;
 import gamedori.beans.dto.FAQDto;
 import gamedori.beans.dto.FAQFileDto;
 import gamedori.beans.dto.FilesDto;
+import gamedori.beans.dto.MemberDto;
 
 @WebServlet(urlPatterns = "/faq/write.do")
 public class FAQWriteWithFileServlet extends HttpServlet{
@@ -28,7 +29,6 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 //			목표 : multipart/form-data 방식으로 전송되는 게시글 + 파일을 해석 및 저장
-			
 //			1. 해석을 위한 도구를 생성할 옵션을 설정
 			String charset = "UTF-8";//해석할 인코딩 방식
 			int limit = 10 * 1024  * 1024;//최대 허용 용량
@@ -48,15 +48,17 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 			Map<String, List<FileItem>> map = utility.parseParameterMap(req);
 			
 //			5. 해석한 데이터에서 필요한 정보들을 추출
-			FAQDto fdto = new FAQDto();
-			fdto.setMember_no(Integer.parseInt(map.get("member_no").get(0).getString()));
+			FAQDto fdto = new FAQDto();	
+			System.out.println(map.get("faq_head"));
 			fdto.setFaq_head(map.get("faq_head").get(0).getString());			
 			fdto.setFaq_title(map.get("faq_title").get(0).getString());
 			fdto.setFaq_content(map.get("faq_content").get(0).getString());
 //			6.
 //			MemberDto user = (MemberDto) req.getSession().getAttribute("userinfo");
 //			fdto.getMember_no(Integer.parseInt(user.getMember_no()));
-			
+			MemberDto user =(MemberDto) req.getSession().getAttribute("userinfo");
+			fdto.setMember_no((user.getMember_no()));
+
 //			7. 작성할 게시글의 번호를 미리 가져온다.
 			FAQDao fdao = new FAQDao();
 			int faq_no = fdao.getSequence();
@@ -87,8 +89,8 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 					filesdao.save(filesdto);
 					
 					FAQFileDto ffdto = new FAQFileDto();
-					ffdto.setFaq_no(faq_no);//파일번호
-					ffdto.setFile_no(file_no);//파일명
+					ffdto.setFaq_no(faq_no);//글번호
+					ffdto.setFile_no(file_no);//파일번호
 					
 					FAQFileDao ffdao = new FAQFileDao();
 					ffdao.save(ffdto);

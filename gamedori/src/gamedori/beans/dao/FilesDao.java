@@ -28,7 +28,7 @@ public class FilesDao {
 	}
 	public int getSequence() throws Exception{
 		Connection con = getConnection();
-		String sql = "select file_seq.nextval form dual";
+		String sql = "select file_seq.nextval from dual";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		rs.next();
