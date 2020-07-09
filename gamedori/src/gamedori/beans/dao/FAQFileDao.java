@@ -44,7 +44,7 @@ public class FAQFileDao {
 	}
 	public List<FilesDto> getList(int faq_no) throws Exception{
 		Connection con = getConnection();
-		String sql = "select * from files inner join faq_file on faq.file_no = files.file_no where faq.faq_no = ? order by files.file_no asc";
+		String sql = "select files.* from files inner join faq_file on faq.file_no = files.file_no where faq.faq_no = ? order by files.file_no asc";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, faq_no);
 		ResultSet rs = ps.executeQuery();
