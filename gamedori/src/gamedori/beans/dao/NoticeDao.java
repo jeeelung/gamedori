@@ -139,7 +139,7 @@ public class NoticeDao {
 		Connection con = getConnection();
 
 		// 아래와 같이 작성하면 미 작성된 항목들은 default 값이 적용
-		String sql = "INSERT INTO board" + "(" + "notice_no, " + "member_no, " + "notice_title," 
+		String sql = "INSERT INTO notice" + "(" + "notice_no, " + "member_no, " + "notice_title," 
 				+ "notice_content," + "super_no, " + "group_no, " + "depth" + ") " + "VALUES(?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, ndto.getNotice_no());

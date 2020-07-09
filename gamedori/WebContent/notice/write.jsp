@@ -34,11 +34,22 @@
 						<textarea name="notice_content" required rows="15" cols="72"></textarea>
 					</td>  
 				</tr>
+				
+				<!-- 첨부파일 -->
+				<tr>
+					<th>첨부파일</th>
+					<td>
+						<input type="file" name="notice_file" multiple accept=".jpg, .png, .gif">
+					</td>
+				</tr>
+			</tbody>
 			</tbody>
 			<tfoot>
 				<tr>
 					<td colspan="2" align="center">
+						<a href="content.jsp">
 						<input type="submit" value="작성">
+						</a>
 					</td>
 				</tr>
 			</tfoot>

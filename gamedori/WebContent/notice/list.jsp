@@ -1,5 +1,6 @@
-<%@page import="gamedori.beans.dto.NoticeDto"%>
 <%@page import="java.util.List"%>
+<%@page import="gamedori.beans.dto.NoticeDto"%>
+
 <%@page import="gamedori.beans.dao.NoticeDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -22,63 +23,8 @@
 	
 	boolean isSearch = type != null && keyword != null;
 	
-	////////////////////////////////////////////////////////////
-	// 페이지 계산 코드
-	////////////////////////////////////////////////////////////
-	int pageSize = 10;//한 페이지에 표시할 데이터 개수
 	
-	//page 번호를 계산하기 위한 코드
-	// - 이상한 값은 전부다 1로 변경
-	// - 멀쩡한 값은 그대로 숫자로 변환
-	String pageStr = request.getParameter("page");
-	int pageNo;
-	try{
-		pageNo = Integer.parseInt(pageStr);
-		if(pageNo <= 0){
-			throw new Exception();
-		}
-	}
-	catch(Exception e){ 
-		pageNo = 1;
-	}
-	
-	//시작 글 순서와 종료 글 순서를 계산
-	int finish = pageNo * pageSize;
-	int start = finish - (pageSize - 1);
-	
-	//////////////////////////////////////////////////////////////////
-	// 페이지 네비게이터 계산 코드
-	//////////////////////////////////////////////////////////////////
-	int blockSize = 10;//이 페이지에는 네비게이터 블록을 10개씩 배치하겠다!
-	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
-	int finishBlock = startBlock + blockSize - 1;
-	NoticeDao ndao = new NoticeDao();
-	
-	//(주의!) 다음 버튼의 경우 계산을 통하여 페이지 개수를 구해야 출력 여부 판단이 가능
-	//int count = 목록개수 or 검색개수;
-	int count;
-	if(isSearch){//검색
-		count = ndao.getCount(type, keyword); 
-	}
-	else{//목록
-		count = ndao.getCount();
-	}
-	int pageCount = (count + pageSize - 1) / pageSize;
-	//만약 finishBlock이 pageCount보다 크다면 수정해야 한다
-	if(finishBlock > pageCount){
-		finishBlock = pageCount;
-	}
-	
-	
-// 	List<BoardDto> list = 목록 or 검색;
-	List<NoticeDto> list;
-	if(isSearch){
-		list = ndao.search(type, keyword, start, finish); 
-	}
-	else{
-		list = ndao.getList(start, finish); 
-	}
-%> 
+%>
  
  
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -91,18 +37,7 @@
 		keyword = <%=keyword%>,
 		isSearch = <%=isSearch%>
 	</h3>
-	<h3>
-		pageStr = <%=pageStr%>, 
-		pageNo = <%=pageNo%>,
-		start = <%=start%>,
-		finish = <%=finish%>	
-	</h3>
-	<h3>
-		count = <%=count%>,
-		pageCount = <%=pageCount%>,
-		startBlock = <%=startBlock%>,
-		finishBlock = <%=finishBlock%>
-	</h3>
+	
 	
 	<!-- 제목 -->
 	<h2>공지사항</h2>
@@ -116,63 +51,26 @@
 				<th>작성자</th>
 				<th>작성일</th>
 				<th>조회수</th>
-				<!-- 테스트를 위해 항목 3개를 추가 -->
-				<th>super_no</th>
-				<th>group_no</th>
-				<th>depth</th>
+			
+				
 			</tr>
 		</thead>
 		<tbody align="center">
-			<%-- list의 데이터를 하나하나 bdto라는 이름으로 접근하여 출력 --%>
-			<%for(NoticeDto ndto : list){ %>
-			<tr>
-				<td><%=ndto.getNotice_no()%></td>
+			
 				<td align="left">
 				
 					<!-- 
 						답글은 띄어쓰기 구현
 						- 답글인 경우는 super_no > 0 , depth > 0 
 					-->
-					<%if(ndto.getDepth() > 0){ %>
-						<%for(int i=0; i < ndto.getDepth(); i++){ %>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-						<%} %>
-						<img src="<%=request.getContextPath()%>/image/reply.png"
-							width="20" height="15">
-					<%} %>
-														
-					<!-- 게시글 제목 -->
-					<a href="content.jsp?notice_no=<%=ndto.getNotice_no()%>">
-						<%=ndto.getNotice_title()%>
-					</a>
-					
-					<%if(ndto.getNotice_replycount() > 0){ %>
-					<!-- 댓글 개수를 출력(있을 경우만) -->
-					[<%=ndto.getNotice_replycount()%>]
-					<%} %>
-					
+			
 				</td>
-				<td>
-					<%if(mdto.getMember_no() != null){ %>
-						<%=mdto.getMember_no()%>
-					<%} else { %>
-						<font color="gray">탈퇴한 사용자</font>
-					<%} %>
-				</td>
-				<td><%=ndto.getNotice_autotime()%></td>
-				<td><%=ndto.getNotice_read()%></td>
-				
-				<!-- 테스트 항목 3개 출력 -->
-				<td><%=ndto.getSuper_no()%></td>
-				<td><%=ndto.getGroup_no()%></td>
-				<td><%=ndto.getDepth()%></td>
-			</tr>
-			<%} %>
-		</tbody>
+							
+						</tbody>
 		
 		<tfoot>
-			<tr>
-				<td colspan="8" align="right">
+			<tr align="center">
+				<td colspan="8" align="center">
 					<a href="write.jsp">
 						<input type="button" value="글쓰기">
 					</a>
@@ -188,42 +86,19 @@
 		이전 버튼을 누르면 startBlock - 1 에 해당하는 페이지로 이동해야 한다
 		(주의) startBlock이 1인 경우에는 출력하지 않는다
 	 -->
-	<%if(startBlock > 1){ %>
 	
-		<%if(!isSearch){ %> 
-			<a href="list.jsp?page=<%=startBlock-1%>">[이전]</a>
-		<%}else{ %>
-			<a href="list.jsp?page=<%=startBlock-1%>&type=<%=type%>&keyword=<%=keyword%>">[이전]</a>
-		<%} %>
-		
-	<%} %>
 	
 	<!-- 
 		이동 숫자에 반복문을 적용 
 		범위는 startBlock부터 finishBlock까지로 설정(상단에서 계산을 미리 해두었음)
 	-->
-	<%for(int i=startBlock; i <= finishBlock; i++){ %>
-		<%if(!isSearch){ %>
-		<!-- 목록일 경우 페이지 번호만 전달 -->
-		<a href="list.jsp?page=<%=i%>"><%=i%></a>
-		<%}else{ %>
-		<!-- 검색일 경우 페이지 번호와 검색 분류(type), 검색어(keyword)를 전달 -->
-		<a href="list.jsp?page=<%=i%>&type=<%=type%>&keyword=<%=keyword%>"><%=i%></a>
-		<%} %>
-	<%} %>
+	
 	
 	<!-- 
 		다음 버튼을 누르면 finishBlock + 1 에 해당하는 페이지로 이동해야 한다
 		(주의!) 다음이 없는 경우에는 출력하지 않는다(pageCount <= finishBlock)
 	 -->
-	<%if(pageCount > finishBlock){ %>
-		<%if(!isSearch){ %> 
-			<a href="list.jsp?page=<%=finishBlock + 1%>">[다음]</a>
-		<%}else{ %>
-			<a href="list.jsp?page=<%=finishBlock + 1%>&type=<%=type%>&keyword=<%=keyword%>">[다음]</a>
-		<%} %>
-	<%} %>
-	</h4>
+	
 	
 	<!-- 검색창 -->
 	<form action="list.jsp" method="get">

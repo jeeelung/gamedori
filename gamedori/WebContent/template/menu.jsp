@@ -31,7 +31,7 @@
 <!-- 	로그인 상태가 아닐 경우 -->
 	<a href="<%=rootPath%>/guest/join.jsp">회원가입</a>
 	<a href="<%=rootPath%>/guest/login.jsp">로그인</a>
-	<a href="#">공지사항</a>
+	<a href="<%=rootPath%>/notice/list.jsp">공지사항</a>
 	<a href="#">커뮤니티</a>
 	<a href="#">이벤트</a>
 	<a href="#">FAQ</a>
