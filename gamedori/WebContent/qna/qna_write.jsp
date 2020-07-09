@@ -1,3 +1,4 @@
+<%@page import="gamedori.beans.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- 
@@ -7,29 +8,31 @@
 	
 	- 첨부파일을 추가할 수 있도록 구현(이미지만 허용)
  -->
- 
+ <%
+ 		MemberDto mdto=(MemberDto)session.getAttribute("userinfo");
+ %>
 <jsp:include page="/template/header.jsp"></jsp:include>
 
-<div align="center">
 	
+		<div align="center">
 	<h2>문의글 작성</h2>
 	
 	<!-- 게시글 전송 폼 -->
 	<form action="write.do" method="post" enctype="multipart/form-data">
+		<table align="center" border="1">
+						<%if(request.getParameter("qna_super_no") != null) {%>
+						<input type="hidden" name="qna_super_no" value="<%=request.getParameter("qna_super_no")%>">
+						<%}%>
+						<input type="hidden" name="member_no" value="<%=mdto.getMember_no()%>">
 	
-		<%if(request.getParameter("qna_no") != null){ %>
-		<!-- 원본글번호가 넘어온다면(즉, 답글이라면) 원본글번호를 hidden으로 첨부 -->
-		<input type="hidden" name="qna_no" 
-						value="<%=request.getParameter("qna_no")%>">
-		<%} %>
+
 		
-		<table border="1">
-			<tbody>
+		<thead>
 				<tr>
 					<th>말머리</th>
 					<td>
 						<!-- 말머리는 select로 구현 -->
-						<select name="board_head">
+						<select name="qna_head">
 							<option value="">말머리 선택</option>
 							<option value="회원">회원</option>
 							<option value="게임">게임</option>
@@ -41,22 +44,29 @@
 					<th>제목</th>
 					<td>
 						<!-- 제목은 일반 입력창으로 구현 -->
-						<input type="text" name="board_title" size="70" required>
+						<input type="text" name="qna_title" size="70" required>
 					</td>
 				</tr>
 				<tr>
+					</thead>
+					<tbody>
 					<th>내용</th>
 					<td>
 						<!-- 내용은 textarea로 구현 -->
-						<textarea name="board_content" required rows="15" cols="72"></textarea>
+						<textarea name="qna_content" required rows="15" cols="72"></textarea>
 					</td>  
 				</tr>
-				
+				<tr>
+					<th>이메일</th>
+					<td>
+						<input type="text" name="qna_email" size="70" required>
+					</td>
+				</tr>
 				<!-- 첨부파일 -->
 				<tr>
 					<th>첨부파일</th>
 					<td>
-						<input type="file" name="board_file" multiple accept=".jpg, .png, .gif">
+						<input type="file" name="qna_file" multiple accept=".jpg, .png, .gif">
 					</td>
 				</tr>
 			</tbody>

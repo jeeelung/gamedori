@@ -16,11 +16,13 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import gamedori.beans.dao.FilesDao;
+import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dao.QnaDao;
 import gamedori.beans.dao.QnaFileDao;
 import gamedori.beans.dto.QnaDto;
 import gamedori.beans.dto.QnaFileDto;
 import gamedori.beans.dto.FilesDto;
+import gamedori.beans.dto.MemberDto;
 @WebServlet(urlPatterns="/qna/write.do")
 public class QnaWriteWithFileServlet extends HttpServlet{
 @Override
@@ -32,22 +34,26 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 		File baseDir = new File("D:/upload/qna");
 		baseDir.mkdirs();
 		
+		
 		DiskFileItemFactory factory = new DiskFileItemFactory(limit, baseDir);
 		factory.setDefaultCharset(charset);
 		
 		ServletFileUpload utility = new ServletFileUpload(factory);
+		MemberDto user =(MemberDto) req.getSession().getAttribute("userinfo");
 		
 		Map<String, List<FileItem>> map = utility.parseParameterMap(req);
-		
+	
 		QnaDto qdto = new QnaDto();
 		qdto.setMember_no(Integer.parseInt(map.get("member_no").get(0).getString()));
 		qdto.setQna_head(map.get("qna_head").get(0).getString());
 		qdto.setQna_title(map.get("qna_title").get(0).getString());
 		qdto.setQna_content(map.get("qna_content").get(0).getString());
+		qdto.setQna_email(map.get("qna_email").get(0).getString());
 		
 		if(map.containsKey("qna_super_no")) {
 			qdto.setQna_super_no(Integer.parseInt(map.get("qna_super_no").get(0).getString()));
 		}
+		
 		
 		QnaDao qdao = new QnaDao();
 		int qna_no = qdao.getSequence();
@@ -85,7 +91,7 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 			}
 		}
 		
-		resp.sendRedirect("content.jsp?qna_no="+qna_no);
+		resp.sendRedirect("qna_content.jsp?qna_no="+qna_no);
 		
 	} catch (Exception e) {
 		// TODO Auto-generated catch block

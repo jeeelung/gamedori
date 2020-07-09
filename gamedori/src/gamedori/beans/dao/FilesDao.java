@@ -47,12 +47,11 @@ public class FilesDao {
 	// 파일정보 업로드 메소드
 	public void save(FilesDto fdto) throws Exception{
 		Connection con = getConnection();
-		String sql = "INSERT INTO files value(?, ?, ?, ?)";
+		String sql = "INSERT INTO files value(file_seq.nextval, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, fdto.getFile_no());
-		ps.setString(2, fdto.getFile_name());
-		ps.setLong(3, fdto.getFile_size());
-		ps.setString(4, fdto.getFile_type());
+		ps.setString(1, fdto.getFile_name());
+		ps.setLong(2, fdto.getFile_size());
+		ps.setString(3, fdto.getFile_type());
 		
 		ps.execute();
 		

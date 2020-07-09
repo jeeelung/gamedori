@@ -6,6 +6,7 @@
     pageEncoding="UTF-8"%>
 
 
+
 <%
 	//이 페이지를 출력하기 위한 프로그래밍 처리
 	//1. 준비물(입력) : 검색창의 입력값 - type, keyword (둘다 있으면 검색)
@@ -51,9 +52,6 @@
 	
 	
 	QnaDao qdao = new QnaDao();
-	QnaDto qdto =new QnaDto();
-	
-	MemberDto mdto =qdao.getWriter(qdto.getMember_no());
 	
 	//(주의!) 다음 버튼의 경우 계산을 통하여 페이지 개수를 구해야 출력 여부 판단이 가능
 	//int count = 목록개수 or 검색개수;
@@ -103,47 +101,43 @@
 			</tr>
 		</thead>
 		<tbody align="center">
-			<%for(QnaDto qldto : list){ %>
+			<%for(QnaDto qdto : list){ %>
+		<% MemberDto mdto=qdao.getWriter(qdto.getMember_no());%>	
 			<tr>
-			
-				<td><%=qldto.getQna_no()%></td>
+				<td><%=qdto.getQna_no()%></td>
 				<td align="left">
 				
-					<!-- 
-						답글은 띄어쓰기 구현
-						- 답글인 경우는 super_no > 0 , depth > 0 
-					-->
-					<%if(qldto.getQna_depth() > 0){ %>
-						<%for(int i=0; i < qldto.getQna_depth(); i++){ %>
+					<%if(qdto.getQna_depth() > 0){ %>
+						<%for(int i=0; i < qdto.getQna_depth(); i++){ %>
 							&nbsp;&nbsp;&nbsp;&nbsp;
 						<%} %>
+					
 						<img src="<%=request.getContextPath()%>/image/reply.png"
 							width="20" height="15">
 					<%} %>
 				
-					<%if(qldto.getQna_head() != null){ %>
+					<%if(qdto.getQna_head() != null){ %>
 						<!-- 말머리는 있을 경우만 출력 -->
 						<font color="gray">
-						[<%=qldto.getQna_head()%>]
+						[<%=qdto.getQna_head()%>]
 						</font>
 					<%} %>
 					
 					<!-- 게시글 제목 -->
-					<a href="content.jsp?qna_no=<%=qldto.getQna_no()%>">
-						<%=qldto.getQna_title()%>
+					<a href="qna_content.jsp?qna_no=<%=qdto.getQna_no()%>">
+						<%=qdto.getQna_title()%>
 					</a>
 					
 				</td>
 				<td>
-						작성자
 						<%if(mdto != null) {%>
 						<%=mdto.getMember_nick()%> <font color="gray"><%=mdto.getMember_auth()%></font>
 						<%} else {%>
 						<font color="gray">탈퇴한 사용자</font>
 						<%}%>
 				</td>
-				<td><%=qldto.getQna_email()%></td>
-				<td><%=qldto.getQna_date()%></td>
+				<td><%=qdto.getQna_email()%></td>
+				<td><%=qdto.getQna_date()%></td>
 			</tr>
 			<%} %>
 				
@@ -171,9 +165,9 @@
 	<%if(startBlock > 1){ %>
 	
 		<%if(!isSearch){ %> 
-			<a href="list.jsp?page=<%=startBlock-1%>">[이전]</a>
+			<a href="qna_list.jsp?page=<%=startBlock-1%>">[이전]</a>
 		<%}else{ %>
-			<a href="list.jsp?page=<%=startBlock-1%>&type=<%=type%>&keyword=<%=keyword%>">[이전]</a>
+			<a href="qna_list.jsp?page=<%=startBlock-1%>&type=<%=type%>&keyword=<%=keyword%>">[이전]</a>
 		<%} %>
 		
 	<%} %>
@@ -181,24 +175,24 @@
 	<%for(int i=startBlock; i <= finishBlock; i++){ %>
 		<%if(!isSearch){ %>
 		<!-- 목록일 경우 페이지 번호만 전달 -->
-		<a href="list.jsp?page=<%=i%>"><%=i%></a>
+		<a href="qna_list.jsp?page=<%=i%>"><%=i%></a>
 		<%}else{ %>
 		<!-- 검색일 경우 페이지 번호와 검색 분류(type), 검색어(keyword)를 전달 -->
-		<a href="list.jsp?page=<%=i%>&type=<%=type%>&keyword=<%=keyword%>"><%=i%></a>
+		<a href="qna_list.jsp?page=<%=i%>&type=<%=type%>&keyword=<%=keyword%>"><%=i%></a>
 		<%} %>
 	<%} %>
 	
 	<%if(pageCount > finishBlock){ %>
 		<%if(!isSearch){ %> 
-			<a href="list.jsp?page=<%=finishBlock + 1%>">[다음]</a>
+			<a href="qna_list.jsp?page=<%=finishBlock + 1%>">[다음]</a>
 		<%}else{ %>
-			<a href="list.jsp?page=<%=finishBlock + 1%>&type=<%=type%>&keyword=<%=keyword%>">[다음]</a>
+			<a href="qna_list.jsp?page=<%=finishBlock + 1%>&type=<%=type%>&keyword=<%=keyword%>">[다음]</a>
 		<%} %>
 	<%} %>
 	</h4>
 	
 	<!-- 검색창 -->
-	<form action="list.jsp" method="get">
+	<form action="qna_list.jsp" method="get">
 		<!-- 검색분류 -->
 		<select name="type">
 			<option value="board_title">제목</option>

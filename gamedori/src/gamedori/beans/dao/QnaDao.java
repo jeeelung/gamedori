@@ -118,32 +118,30 @@ public class QnaDao {
 		}
 		
 		//등록 메소드 
-		public void write(QnaDto qdto) throws Exception {
-			if(qdto.getQna_super_no() == 0) {//새글이면
+		// 게시물 등록 메소드
+		public void write(QnaDto qdto) throws Exception{
+			if(qdto.getQna_super_no() == 0) {
 				qdto.setQna_group_no(qdto.getQna_no());
-			}
-			else {//답글이면
-				QnaDto find = this.get(qdto.getQna_super_no());//상위글 정보 불러오기
-				
+			} else {
+				QnaDto find = this.get(qdto.getQna_super_no());
 				qdto.setQna_group_no(find.getQna_group_no());
-				qdto.setQna_depth(find.getQna_depth() + 1);
+				qdto.setQna_depth(find.getQna_depth()+1);
 			}
-			Connection con = getConnection();
 			
-			String sql = "INSERT INTO Qna"
-									+ "("
-										+ "qna_no, "
-										+ "member_no, "
-										+ "qna_head, "
-										+ "qna_title, "
-										+ "qna_content, "
-										+ "qna_email, "
-										+ "qna_date, "
-										+ "super_no, "
-										+ "group_no, "
-										+ "depth"
-									+ ") "
-							+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+			Connection con = getConnection();
+			String sql = "INSERT INTO qna"
+					+ "("
+					+ "qna_no, "
+					+ "member_no, "
+					+ "qna_head, "
+					+ "qna_title, "
+					+ "qna_content, "
+					+ "qna_email, "
+					+ "qna_super_no, "
+					+ "qna_group_no, "
+					+ "qna_depth "
+					+ ") "
+					+ "values(?,?, ?, ?, ?, ?, ?, ?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, qdto.getQna_no());
 			ps.setInt(2, qdto.getMember_no());
@@ -151,17 +149,15 @@ public class QnaDao {
 			ps.setString(4, qdto.getQna_title());
 			ps.setString(5, qdto.getQna_content());
 			ps.setString(6, qdto.getQna_email());
-			ps.setString(7, qdto.getQna_date());
-			if(qdto.getQna_super_no() == 0) {//새글이면 NULL을 설정
-				ps.setNull(8, Types.INTEGER);
-			}
-			else {//답글이면 번호를 설정
-				ps.setInt(8, qdto.getQna_super_no());
-			}
-			ps.setInt(9, qdto.getQna_group_no());
-			ps.setInt(10, qdto.getQna_depth());
-			ps.execute();
 			
+			if(qdto.getQna_super_no() == 0) {
+				ps.setNull(7, Types.INTEGER);
+			} else {
+				ps.setInt(7, qdto.getQna_super_no());
+			}
+			ps.setInt(8, qdto.getQna_group_no());
+			ps.setInt(9, qdto.getQna_depth());
+			ps.execute();
 			con.close();
 		}
 	
@@ -169,7 +165,7 @@ public class QnaDao {
 		public void delete(int qna_no) throws Exception {
 			Connection con = getConnection();
 
-			String sql = "DELETE board WHERE qna_no = ?";
+			String sql = "DELETE qna WHERE qna_no = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, qna_no);
 			ps.execute();
