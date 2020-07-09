@@ -28,8 +28,24 @@
 	int finish = pageNo * pageSize;
 	int start = finish - (pageSize-1);
 	
-	// 검색 또는 목록
+	// 페이지 네비게이터 계산
+	int blockSize = 10;
+	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
+	int finishBlock = startBlock + blockSize - 1;
+	
 	CommunityDao cdao = new CommunityDao();
+	
+	// 페이지 개수 
+	int count;
+	if(isSearch) {
+		count = cdao.getCount(type, keyword);
+	} else {
+		count = cdao.getCount();
+	}
+	int pageCount = (count + pageSize -1) / pageSize;
+	
+	
+	// 검색 또는 목록
 	List<CommunityDto> list;
 	
 	if(isSearch){
@@ -49,8 +65,8 @@
 	start = <%=start%>
 	finish = <%=finish%>
 <%-- 	pageCount = <%=pageCount%> --%>
-<%-- 	startblock = <%=startBlock%> --%>
-<%-- 	finishblock = <%=finishBlock%> --%>
+	startBlock = <%=startBlock%>
+	finishBlock = <%=finishBlock%>
 	</h5>
 	
 	<h2></h2>
@@ -109,13 +125,29 @@
 		</tfoot>
 	</table>
 	<!-- 네비게이터 -->
-	<%for(int i=0; i<pageSize; i++) { %>
+	<h6>
+<%if(startBlock > 1) {%>	
+	<%if(!isSearch) { %>
+		<a href="list.jsp?page=<%=startBlock-1%>">[이전]</a>
+	<%} else {%>
+		<a href="list.jsp?page=<%=startBlock-1%>&type=<%=type%>&keyword=<%=keyword%>">[이전]</a>
+	<%}%>
+<%}%>
+
+	<%for(int i=startBlock; i<finishBlock; i++) { %>
 		<%if(!isSearch) {%>
 			<a href="list.jsp?page=<%=i%>"><%=i%></a>
 		<%} else {%>
 			<a href="list.jsp?page=<%=i%>&type=<%=type%>&keyword=<%=keyword%>"><%=i%></a>
 		<%}%>
 	<%}%>
+<% %>	
+	<%if(!isSearch) { %>
+		<a href="list.jsp?page=<%=finishBlock+1%>">[다음]</a>
+	<%} else {%>
+		<a href="list.jsp?page=<%=finishBlock+1%>&type=<%=type%>&keyword=<%=keyword%>">[다음]</a>
+	<%}%>
+	</h6>
 	<!-- 검색창 -->
 	<select name="type">
 		<option value="commu_title">제목만</option>

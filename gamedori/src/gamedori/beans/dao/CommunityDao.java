@@ -124,14 +124,14 @@ public class CommunityDao {
 	// 게시물 목록 메소드
 	public List<CommunityDto> getList(int start, int finish) throws Exception{
 		Connection con = getConnection();
-		String sql = "SELECT * FROM("
-				+ "SELECT ROWNUM rn, T.* FROM("
-				+ "SELECT * FROM community "
-				+ "CONNECT BY PRIOR commu_no = commu_super_no "  
-				+ "START WITH commu_super_no IS NULL " 
-				+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
-				+ ")T"
-			+ ") WHERE rn BETWEEN ? and ?";
+		String sql = "SELECT * FROM( "
+					+ "SELECT ROWNUM rn, T.* FROM( "
+					+ "SELECT * FROM community "
+					+ "CONNECT BY PRIOR commu_no = commu_super_no "  
+					+ "START WITH commu_super_no IS NULL " 
+					+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
+					+ ")T"
+				+ ") WHERE rn BETWEEN ? and ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, start);
 		ps.setInt(2, finish);
@@ -164,8 +164,8 @@ public class CommunityDao {
 	// 검색 서블릿
 	public List<CommunityDto> search(String type, String keyword, int start, int finish) throws Exception {
 		Connection con = getConnection();
-		String sql = "SELECT * FROM("
-				+ "SELECT ROWNUM rn, T.* FROM("
+		String sql = "SELECT * FROM( "
+					+ "SELECT ROWNUM rn, T.* FROM("
 						+"SELECT * FROM community "
 						+ "WHERE instr(#1, ?) > 0 "
 						+ "CONNECT BY PRIOR commu_no = commu_super_no "  
@@ -189,6 +189,30 @@ public class CommunityDao {
 		
 		con.close();
 		return list;
+	}
+	
+	public int getCount() throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT COUNT(*) FROM community";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		con.close();
+		return count;
+	}
+	
+	public int getCount(String type, String keyword) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT COUNT(*) FROM community WHERE instr(#1, ?) > 0";
+		sql = sql.replace("#1", type);
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		con.close();
+		return count;
 	}
 
 }
