@@ -68,7 +68,7 @@
 				</tr>
 				<tr>
 					<td>
-					<%=edto.getEventboard_autotime() %>
+					<%=edto.getEvent_date() %>
 					조회 
 					<%=edto.getEvent_read() %>
 						
@@ -92,21 +92,19 @@
 		</table>
 		<br>
 		<a href="EventBoardWrite.jsp">
-			<input type="submit" value="글쓰기">
+			<input type="button" value="글쓰기">
 		</a>
-		<a href="EventBoardWrite.jsp?super_no=<%=event_no%>">
-			<input type="button" value="답글">
-		</a>
+	
 		<%if(isAdmin || isMine){%>
 		<a href="EventEdit.jsp?event_no=<%=event_no%>">
-			<input type="submit" value="수정">
+			<input type="button" value="수정">
 		</a>
 		<a href="<%=request.getContextPath()%>/member/check.jsp?go=<%=request.getContextPath()%>/eventboard/delete.do?event_no=<%=event_no%>">
-			<input type="submit" value="삭제">
+			<input type="button" value="삭제">
 		</a>
 		<%}%>
 		<a href="event_list.jsp">
-			<input type="submit" value="목록으로">
+			<input type="button" value="목록으로">
 		</a>
 	</form>
 </div>

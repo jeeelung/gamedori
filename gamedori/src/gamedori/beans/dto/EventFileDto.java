@@ -3,19 +3,19 @@ package gamedori.beans.dto;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EventboardFileDto {
+public class EventFileDto {
 
 	private int event_no;
 	private int file_no;
 	
 	
 	
-	public EventboardFileDto(ResultSet rs) throws SQLException {
+	public EventFileDto(ResultSet rs) throws SQLException {
 		this.setEvent_no(rs.getInt("event_no"));
 		this.setFile_no(rs.getInt("file_no"));
 	}
 	
-	public EventboardFileDto() {
+	public EventFileDto() {
 		super();
 		
 	}

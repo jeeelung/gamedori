@@ -23,37 +23,43 @@ import gamedori.beans.dto.EventboardDto;
 import gamedori.beans.dto.FilesDto;
 import gamedori.beans.dto.MemberDto;
 
-
-
-@WebServlet(urlPatterns = "/eventboard/eventedit.do")
-public class EventEditServlet extends HttpServlet{
+@WebServlet(urlPatterns = "/eventboard/eventwrite.do")
+public class EventWriteWithFileServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-try {
+		
+		try {
+			String charset = "UTF-8";
+			int limit = 10*1024*1024;
+			File baseDir= new File("D:/eventupload/board");
+			baseDir.mkdirs();
 			
-			String charset = "UTF-8"; // 해석할 인코딩 방식
-			int limit = 10 * 1024 * 1024; // 최대 허용 용량
-			File baseDir = new File("D:/upload/community");
-			
-			DiskFileItemFactory factory = new DiskFileItemFactory(limit, baseDir);
+			DiskFileItemFactory factory = new DiskFileItemFactory();
 			factory.setDefaultCharset(charset);
 			
+			
 			ServletFileUpload utility = new ServletFileUpload(factory);
-			
+			//데이터를 해석하도록 지시
 			Map<String, List<FileItem>> map = utility.parseParameterMap(req);
-			
+			//정보 추출
 			EventboardDto edto = new EventboardDto();
-			edto.setEvent_title(map.get("Event_title").get(0).getString());
-			edto.setEvent_content(map.get("Event_content").get(0).getString());
 			
+			edto.setEvent_title(map.get("event_title").get(0).getString());
+			edto.setEvent_content(map.get("event_content").get(0).getString());
+			
+			MemberDto user = (MemberDto) req.getSession().getAttribute("userinfo");
+			
+			edto.setMember_no(user.getMember_no());
+			
+			System.out.println(edto.getEvent_title());
 			EventboardDao edao = new EventboardDao();
-			int event_no = Integer.parseInt(map.get("event_no").get(0).getString());
+			int event_no = edao.getSequence();
 			edto.setEvent_no(event_no);
 			
-			edao.edit(edto);
+			edao.write(edto);
+			
 			
 			List<FileItem> fileList = map.get("event_file");
-			
 			for(FileItem item : fileList) {
 				
 				if(item.getSize() > 0) { // 파일이 있는 경우
@@ -78,14 +84,17 @@ try {
 					File target = new File(baseDir, String.valueOf(file_no));
 					item.write(target);
 				}
+				
 			}
 			
-			resp.sendRedirect("Eventcontent.jsp?event_no=" + event_no);
+			resp.sendRedirect("Eventcontent.jsp?event_no="+event_no);
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		}catch(Exception e){
 			e.printStackTrace();
 			resp.sendError(500);
+			
 		}
+		
 	}
+
 }

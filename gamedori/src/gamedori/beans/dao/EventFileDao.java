@@ -11,7 +11,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import gamedori.beans.dto.EventboardFileDto;
+import gamedori.beans.dto.EventFileDto;
+import gamedori.beans.dto.FilesDto;
+
 
 
 public class EventFileDao {
@@ -48,7 +50,7 @@ public class EventFileDao {
 	
 	//저장 메소드
 	// - 시퀀스 번호까지 이미 뽑혀 있으므로 자동 생성할 데이터가 없다
-	public void save(EventboardFileDto efdto) throws Exception {
+	public void save(EventFileDto efdto) throws Exception {
 		Connection con = getConnection();
 		
 		String sql = "INSERT INTO event_file VALUES(?, ?)";
@@ -61,45 +63,63 @@ public class EventFileDao {
 		con.close();
 	}
 	
-	//게시글 첨부파일 조회(댓글 조회와 동일)
-	public List<EventboardFileDto> getList(int event_no) throws Exception {
+
+	// 게시물 파일 정보 불러오는 메소드
+	public List<FilesDto> getList(int event_no) throws Exception{
 		Connection con = getConnection();
-		String sql = "SELECT * FROM event_file "
-							+ "WHERE file_no = ? "
-							+ "ORDER BY event_no ASC";
+		String sql = "SELECT f.* "
+				+ "FROM files f INNER JOIN event_file e "
+				+ "ON e.file_no = f.file_no "
+				+ "WHERE e.event_no = ? "
+				+ "ORDER BY f.file_no ASC";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, event_no);
 		ResultSet rs = ps.executeQuery();
-		List<EventboardFileDto> list = new ArrayList<>();
+		List<FilesDto> list = new ArrayList<FilesDto>();
 		while(rs.next()) {
-			EventboardFileDto efdto = new EventboardFileDto(rs);
-			list.add(efdto);
+			FilesDto fdto = new FilesDto(rs);
+			list.add(fdto);
 		}
 		con.close();
 		return list;
 	}
 	
-	//단일조회 기능
-	public EventboardFileDto get(int event_no) throws Exception {
+	public void delete(int event_no) throws Exception {
 		Connection con = getConnection();
-		
-		String sql = "SELECT * FROM event_file WHERE event_no = ?";
+		String sql = "DELETE FROM event WHERE event_no = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, event_no);
-		ResultSet rs = ps.executeQuery();
-		
-		EventboardFileDto efdto;
-		if(rs.next()) {
-			efdto = new EventboardFileDto(rs);
-		}
-		else {
-			efdto = null;
-		}
-		
+		ps.execute();
 		con.close();
-		return efdto;
 	}
+	
+	public void deleteFile(int file_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "DELETE FROM event_file WHERE file_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, file_no);
+		ps.execute();
+		con.close();
+	}
+	
+	// 게시물에 해당하는 파일 번호 전부 가져오기
+	public List<Integer> getfileNo(int event_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT file_no FROM event_file WHERE event_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, event_no);
+		
+		ResultSet rs = ps.executeQuery();
+		List<Integer> list = new ArrayList<>();
+		
+		while(rs.next()) {
+			int file_no = rs.getInt("file_no");
+			
+			list.add(file_no);
+		}
+		con.close();
+		return list;
+	}
+	
+	
 }
-	
-	
-

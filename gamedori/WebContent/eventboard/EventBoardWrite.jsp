@@ -13,7 +13,7 @@
 	<h2>이벤트 게시글 작성</h2>
 
 
-	<form action="eventwrite.do" method="get">
+	<form action="eventwrite.do" method="post" enctype="multipart/form-data" >
 
 		<table border="1">
 
@@ -36,8 +36,8 @@
 
 			<tr>
 				<th>첨부파일</th>
-				<!-- <td><input type="file" name="event_file multiple accept=".jpg, .png, .gif">
-				</td> -->
+				<<td><input type="file" name="event_file" multiple accept=".jpg, .png, .gif">
+				</td>
 			</tbody>
 			<tfoot>
 				<tr>

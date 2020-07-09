@@ -1,3 +1,7 @@
+<%@page import="gamedori.beans.dto.FilesDto"%>
+<%@page import="java.util.List"%>
+<%@page import="gamedori.beans.dao.EventFileDao"%>
+<%@page import="gamedori.beans.dto.MemberDto"%>
 <%@page import="gamedori.beans.dto.EventboardDto"%>
 
 <%@page import="gamedori.beans.dao.EventboardDao"%>
@@ -7,9 +11,13 @@
 	
 -->
 <%
+	MemberDto mdto= (MemberDto)session.getAttribute("userinfo");
 	int event_no = Integer.parseInt(request.getParameter("event_no"));
 	EventboardDao edao = new EventboardDao();
 	EventboardDto edto = edao.get(event_no);
+	
+	EventFileDao efdao = new EventFileDao();
+	List<FilesDto> fileList = efdao.getList(event_no);
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -17,9 +25,9 @@
 <div align="center">
 	
 	<h2>게시글 수정</h2>
-	
+<!-- enctype="multipart/form-data" -->
 	<!-- 게시글 전송 폼 -->
-	<form action="Eventedit.do" method="post">
+	<form action="eventedit.do" method="get">
 	
 		<!-- 수정이 가능하도록 PK를 숨김 첨부한다 -->
 		<input type="hidden" name="event_no" value="<%=event_no%>">

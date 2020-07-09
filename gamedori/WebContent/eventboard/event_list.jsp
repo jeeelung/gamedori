@@ -1,4 +1,5 @@
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@page import="gamedori.beans.dto.EventboardDto"%>
 <%@page import="java.util.List"%>
@@ -9,13 +10,20 @@
 
 <% 
 
+String type = request.getParameter("type");
+String keyword=request.getParameter("keyword");
 
+boolean isSearch= type != null && keyword !=null;
 
-//	List<BoardDto> list = 목록 or 검색;
-EventboardDao edao= new EventboardDao();
-List<EventboardDto> list=edao.getList();
+EventboardDao edao = new EventboardDao();
+List<EventboardDto> list;
 
-  
+if(isSearch){
+	list=edao.search(type, keyword);
+}
+else{
+	list= edao.getList();
+}
 %>
  
  
@@ -62,15 +70,12 @@ List<EventboardDto> list=edao.getList();
 					<a href="Eventcontent.jsp?event_no=<%=edto.getEvent_no() %>">
 					<%=edto.getEvent_title() %>
 					</a>
-					<%if (edto.getEventboard_replycount() > 0){ %>
-						<!-- 댓글 개수를 출력(있을 경우만) -->
-						[<%=edto.getEventboard_replycount()%>]
-						<%} %>
+					
 						
 					</td>
 					<%MemberDto mdto = edao.getWriter(edto.getMember_no()); %>
 					<td><%=mdto.getMember_nick() %></td>
-					<td><%=edto.getEventboard_autotime() %></td>
+					<td><%=edto.getEvent_date() %></td>
 					<td><%=edto.getEvent_read() %></td>
 					
 				</tr>

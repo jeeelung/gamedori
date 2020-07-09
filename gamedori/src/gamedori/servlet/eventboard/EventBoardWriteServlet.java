@@ -15,7 +15,7 @@ import gamedori.beans.dto.EventboardDto;
 import gamedori.beans.dto.MemberDto;
 
 
-	@WebServlet(urlPatterns = "/eventboard/eventwrite.do")
+	//@WebServlet(urlPatterns = "/eventboard/eventwrite.do")
 	public class EventBoardWriteServlet extends HttpServlet{
 		@Override
 		protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,7 +33,7 @@ import gamedori.beans.dto.MemberDto;
 				
 				edto.setEvent_title(event_title);
 				edto.setEvent_content(event_content);
-				edto.setMember_id(member_id);
+				
 				edto.setMember_no(mdto.getMember_no());
 
 				// 번호를 알아야 그 번호에 맞춰서 수정 가능
@@ -46,7 +46,7 @@ import gamedori.beans.dto.MemberDto;
 				//번호를 설정한 뒤
 				edao.write(edto);//등록
 				
-				resp.sendRedirect("Eventcontent.jsp?event_no="+event_no);
+				resp.sendRedirect("eventcontent.jsp?event_no="+event_no);
 			}
 			catch(Exception e) {
 				e.printStackTrace();
