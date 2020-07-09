@@ -26,12 +26,12 @@
 	
 	// 시작 글 순서와 종료 글 순서 계산
 	int finish = pageNo * pageSize;
-	int start = finish - (pageSize-1);
+	int start = finish - (pageSize - 1);
 	
 	// 페이지 네비게이터 계산
 	int blockSize = 10;
 	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
-	int finishBlock = startBlock + blockSize - 1;
+	int finishBlock = startBlock + 9;
 	
 	CommunityDao cdao = new CommunityDao();
 	
@@ -44,7 +44,9 @@
 	}
 	int pageCount = (count + pageSize -1) / pageSize;
 	
-	
+	if(finishBlock > pageCount) {
+		finishBlock = pageCount;	
+	}
 	// 검색 또는 목록
 	List<CommunityDto> list;
 	
@@ -64,7 +66,7 @@
 	pageNo = <%=pageNo%>,
 	start = <%=start%>
 	finish = <%=finish%>
-<%-- 	pageCount = <%=pageCount%> --%>
+	pageCount = <%=pageCount%>
 	startBlock = <%=startBlock%>
 	finishBlock = <%=finishBlock%>
 	</h5>
@@ -134,19 +136,20 @@
 	<%}%>
 <%}%>
 
-	<%for(int i=startBlock; i<finishBlock; i++) { %>
+	<%for(int i=startBlock; i<=finishBlock; i++) { %>
 		<%if(!isSearch) {%>
 			<a href="list.jsp?page=<%=i%>"><%=i%></a>
 		<%} else {%>
 			<a href="list.jsp?page=<%=i%>&type=<%=type%>&keyword=<%=keyword%>"><%=i%></a>
 		<%}%>
 	<%}%>
-<% %>	
+<%if(pageCount > finishBlock) {%>	
 	<%if(!isSearch) { %>
 		<a href="list.jsp?page=<%=finishBlock+1%>">[다음]</a>
 	<%} else {%>
 		<a href="list.jsp?page=<%=finishBlock+1%>&type=<%=type%>&keyword=<%=keyword%>">[다음]</a>
 	<%}%>
+<%}%>
 	</h6>
 	<!-- 검색창 -->
 	<select name="type">
