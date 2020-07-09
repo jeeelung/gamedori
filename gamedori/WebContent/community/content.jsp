@@ -97,12 +97,10 @@
 							<!-- ol은 순서가 있는거 / ul은 순서가 없는거 -->
 							<%for(FilesDto fdto : fileList){%>
 							<li>
-								<%=fdto.getFile_name()%>
-								(<%=fdto.getFile_size()%> bytes)
-								<!-- 다운로드 버튼을 누른다면 해당 파일을 다운로드 할 수 있도록 링크 -->
 								<a href="download.do?file_no=<%=fdto.getFile_no()%>">
-									<input type="button" value="다운로드">
+								<%=fdto.getFile_name()%>
 								</a>
+								(<%=fdto.getFile_size()%> bytes)
 							</li>
 							<%}%>
 						</ul>

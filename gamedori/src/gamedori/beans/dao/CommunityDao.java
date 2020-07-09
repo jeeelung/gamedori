@@ -214,5 +214,33 @@ public class CommunityDao {
 		con.close();
 		return count;
 	}
+	
+	// 게시글 수정 메소드
+	public void edit(CommunityDto cdto) throws Exception {
+		Connection con = getConnection();
+		String sql = "UPDATE community "
+					+ "SET commu_head = ?, "
+					+ "commu_title = ?,"
+					+ "commu_content = ?"
+					+ "WHERE commu_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, cdto.getCommu_head());
+		ps.setString(2, cdto.getCommu_title());
+		ps.setString(3, cdto.getCommu_content());
+		ps.setInt(4, cdto.getCommu_no());
+		ps.execute();
+		con.close();
+	}
+		
+	// 게시글 삭제 메소드
+	public void delete(int commu_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "DELETE FROM community WHERE commu_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, commu_no);
+		ps.execute();
+		con.close();
+	}
+	
 
 }
