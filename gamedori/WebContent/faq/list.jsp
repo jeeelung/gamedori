@@ -160,25 +160,13 @@
 		이전 버튼을 누르면 startBlock - 1 에 해당하는 페이지로 이동해야 한다
 		(주의) startBlock이 1인 경우에는 출력하지 않는다
 	 	-->
-		<%
-			if (startBlock > 1) {
-		%>
-
-		<%
-			if (!isSearch) {
-		%>
+		<%if (startBlock > 1) {%>
+		<%if (!isSearch) {%>
 		<a href="list.jsp?page=<%=startBlock - 1%>">[이전]</a>
-		<%
-			} else {
-		%>
+		<%} else {%>
 		<a href="list.jsp?page=<%=startBlock - 1%>&type=<%=type%>&keyword=<%=keyword%>">[이전]</a>
-		<%
-			}
-		%>
-
-		<%
-			}
-		%>
+			<%}%>
+		<%}%>
 
 		<!-- 
 		이동 숫자에 반복문을 적용 
@@ -193,12 +181,8 @@
 		%>
 		<!-- 검색일 경우 페이지 번호와 검색 분류(type), 검색어(keyword)를 전달 -->
 		<a href="list.jsp?page=<%=i%>&type=<%=type%>&keyword=<%=keyword%>"><%=i%></a>
-		<%
-			}
-		%>
-		<%
-			}
-		%>
+			<%}%>
+		<%}%>
 
 		<!-- 
 		다음 버튼을 누르면 finishBlock + 1 에 해당하는 페이지로 이동해야 한다
@@ -226,7 +210,7 @@
 		<!-- 검색분류 -->
 		<select name="type">
 			<option value="faq_title">제목만</option>
-			<option value="member_no">글닉네임</option>
+			<option value="member_no">닉네임</option>
 		</select>
 		<!-- 검색어 -->
 		<input type="text" name="keyword" required>

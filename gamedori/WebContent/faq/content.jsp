@@ -29,7 +29,7 @@
 <form>
 	<h2>FAQ</h2>
 	<!-- 테이블에 글 정보를 출력 -->
-	<table border="1" width="60%">
+	<table border="1" width="80%">
 		<tbody align="left" align="top">
 			<tr>
 			<th>제목</th>
@@ -45,7 +45,7 @@
 				<th>
 					<!-- 작성자 --> <%if (mdto != null) {%> 
 					<%=mdto.getMember_nick()%>
-					 <font color="gray" ><%=mdto.getMember_auth() %></font>
+					 <font color="gray" >[<%=mdto.getMember_auth()%>]</font>
 					  <%} else {%> <font color="gray">탈퇴한 사용자</font>
 					<%} %>
 				</th>
@@ -73,7 +73,7 @@
 		<!-- 각종 버튼들 구현 -->
 		<tfoot>
 			<tr align="center">
-				<td><a href="write.jsp"> <input type="button" value="글쓰기"></a>
+				<td colspan="2"><a href="write.jsp"> <input type="button" value="글쓰기"></a>
 				  <%if(isAdmin || isMine){ %>
 					  <a href="edit.jsp?faq_no=<%=faq_no %>"><input type="button" value="수정"></a> 
 					  <a href="<%=request.getContextPath()%>/member/check.jsp?go=<%=request.getContextPath()%>/faq/delete.do?faq_no=<%=faq_no%>">
