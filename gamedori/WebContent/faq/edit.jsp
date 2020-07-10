@@ -64,25 +64,21 @@
 					<td>
 						<!-- 내용은 textarea로 구현 -->
 						<textarea name="faq_content" required 
-							rows="20" cols="100" maxlength="4000" name="faq_content"><%=fdto.getFaq_content()%></textarea>
+							rows="20" cols="100" maxlength="4000" ><%=fdto.getFaq_content()%></textarea>
 					</td>  
 				
 				<th>첨부파일</th>
 				<td>
 				<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif">
+				<%for(FilesDto filesdto : fileList){ %>
+					<%=filesdto.getFile_name() %>(<%=filesdto.getFile_size() %> bytes)
+					 <a href="<%=request.getContextPath() %>/faq/fileDelete.do?file_no=<%=filesdto.getFile_no()%>&faq_no=<%=faq_no %>">
+					  <input type="button" value="삭제">
+					 </a>
+					<%} %>
 				</td>
 				</tr>
-				<tr>	
-				<td>
-				<ul>
-				<%for(FilesDto filesdto : fileList){ %>
-					<li><%=filesdto.getFile_name() %> (<%=filesdto.getFile_size() %> bytes) 
-					<a href="<%=request.getContextPath() %>/faq/fileDelete.do?file_no=<%=filesdto.getFile_no()%>&faq_no=<%=faq_no %>">
-					 <input type="button" value="삭제"></a>
-					</li>
-				<%} %>
-				</ul>
-				</td></tr>
+				
 			</tbody>
 			<tfoot>
 				<tr>
@@ -92,9 +88,7 @@
 				</tr>
 			</tfoot>
 		</table>
-		
 	</form>
-	
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

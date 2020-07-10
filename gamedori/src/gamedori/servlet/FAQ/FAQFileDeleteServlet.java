@@ -23,12 +23,12 @@ public class FAQFileDeleteServlet extends HttpServlet{
 			filesdao.delete(file_no);
 			
 			// 2	
-			File target = new File("D:/upload/community", String.valueOf(file_no));
+			File target = new File("D:/upload/faq", String.valueOf(file_no));
 			target.delete();
 			
 			// 3
-			FAQFileDao cfdao = new FAQFileDao();
-			cfdao.deleteFile(file_no);
+			FAQFileDao ffdao = new FAQFileDao();
+			ffdao.deleteFile(file_no);
 			
 			resp.sendRedirect("edit.jsp?faq_no="+faq_no);
 		}catch(Exception e) {

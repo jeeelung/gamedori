@@ -24,12 +24,12 @@ import gamedori.beans.dto.FilesDto;
 import gamedori.beans.dto.MemberDto;
 
 @WebServlet(urlPatterns = "/faq/edit.do")
-public class FAQEditServlet extends HttpServlet{
+public class FAQEditServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 //			입력 : faq_head, faq_title, faq_content, faq_no -> faqDto
-			//1. 
+			// 1.
 			String charset = "UTF-8";
 			int limit = 10 * 1024 * 1024;
 			File baseDir = new File("D:/upload/faq");
@@ -39,51 +39,50 @@ public class FAQEditServlet extends HttpServlet{
 			factory.setDefaultCharset(charset);
 			factory.setSizeThreshold(limit);
 			factory.setRepository(baseDir);
-			
+
 			ServletFileUpload utility = new ServletFileUpload(factory);
-			
+
 			Map<String, List<FileItem>> map = utility.parseParameterMap(req);
-			System.out.println(map.get("faq_no"));
 			FAQDto fdto = new FAQDto();
-			fdto.setFaq_no(Integer.parseInt(map.get("faq_no").get(0).getString()));
 			fdto.setFaq_head(map.get("faq_head").get(0).getString());
 			fdto.setFaq_title(map.get("faq_title").get(0).getString());
 			fdto.setFaq_content(map.get("faq_content").get(0).getString());
+			
 			MemberDto user = (MemberDto) req.getSession().getAttribute("userinfo");
 			fdto.setMember_no(user.getMember_no());
+
 			FAQDao fdao = new FAQDao();
 			int faq_no = Integer.parseInt(map.get("faq_no").get(0).getString());
 			fdto.setFaq_no(faq_no);
 			fdao.edit(fdto);
-			
 			List<FileItem> fileList = map.get("faq_file");
-			for(FileItem item : fileList) {
-				if(item.getSize()>0) {
-					if(item.getSize()>0) {
-						FilesDao filesdao = new FilesDao();
-						FilesDto filesdto = new FilesDto();
-						int file_no = fdao.getSequence();
-						filesdto.setFile_no(file_no);
-						filesdto.setFile_name(item.getName());
-						filesdto.setFile_size(item.getSize());
-						filesdto.setFile_type(item.getContentType());
-						filesdao.save(filesdto);
-						FAQFileDto ffdto = new FAQFileDto();
-						ffdto.setFaq_no(faq_no);
-						ffdto.setFile_no(file_no);
-						
-						FAQFileDao ffdao = new FAQFileDao();
-						ffdao.save(ffdto);
-						
-						File target = new File(baseDir, String.valueOf(file_no));
-						item.write(target);
-					}
+			
+			for (FileItem item : fileList) {
+				if (item.getSize() > 0) {
+					FilesDao filesdao = new FilesDao();
+					FilesDto filesdto = new FilesDto();
+					int file_no = Integer.parseInt(map.get("file_no").get(0).getString());
+					filesdto.setFile_no(file_no);
+					filesdto.setFile_name(item.getName());
+					filesdto.setFile_size(item.getSize());
+					filesdto.setFile_type(item.getContentType());
+					filesdao.save(filesdto);
+					FAQFileDto ffdto = new FAQFileDto();
+					ffdto.setFaq_no(faq_no);
+					ffdto.setFile_no(file_no);
+
+					FAQFileDao ffdao = new FAQFileDao();
+					ffdao.save(ffdto);
+
+					File target = new File(baseDir, String.valueOf(file_no));
+					item.write(target);
 				}
 			}
-//			출력 : 
-			resp.sendRedirect("content.jsp?faq_no="+fdto.getFaq_no());
-		}
-		catch(Exception e) {
+			
+
+//			출력  
+			resp.sendRedirect("content.jsp?faq_no=" + faq_no);
+		} catch (Exception e) {
 			e.printStackTrace();
 			resp.sendError(500);
 		}

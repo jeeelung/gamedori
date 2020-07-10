@@ -164,7 +164,7 @@ public class FAQDao {
 	}
 	
 
-	//개수 조회 메소드 x 2
+	//개수 조회 메소드
 	public int getCount() throws Exception{
 		Connection con = getConnection();
 		
@@ -178,6 +178,7 @@ public class FAQDao {
 		
 		return count;
 	}
+	//검색
 	public int getCount(String type, String keyword) throws Exception{
 		Connection con = getConnection();
 		

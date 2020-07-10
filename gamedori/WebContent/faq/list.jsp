@@ -119,10 +119,7 @@
 			<tr>
 				<td><%=fdto.getFaq_no()%></td>
 				<td align="left">
-					<!-- 
-						답글은 띄어쓰기 구현
-						- 답글인 경우는 super_no > 0 , depth > 0 
-					--> <%if (fdto.getFaq_head() != null) {%> <!-- 말머리는 있을 경우만 출력 --> <font color="gray"> 
+					 <%if (fdto.getFaq_head() != null) {%> <!-- 말머리는 있을 경우만 출력 --> <font color="gray"> 
 					[<%=fdto.getFaq_head()%>]
 				</font> 
 				<%}%> 

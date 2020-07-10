@@ -49,7 +49,7 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 			
 //			5. 해석한 데이터에서 필요한 정보들을 추출
 			FAQDto fdto = new FAQDto();	
-			System.out.println(map.get("faq_head"));
+			//System.out.println(map.get("faq_head"));
 			fdto.setFaq_head(map.get("faq_head").get(0).getString());			
 			fdto.setFaq_title(map.get("faq_title").get(0).getString());
 			fdto.setFaq_content(map.get("faq_content").get(0).getString());

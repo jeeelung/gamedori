@@ -27,7 +27,7 @@ public class MemberCheckServlet extends HttpServlet {
 			String member_pw =req.getParameter("member_pw"); 
 			MemberDto mdto = (MemberDto) req.getSession().getAttribute("userinfo");
 			String member_id =mdto.getMember_id();
-			
+			//System.out.println(member_id);
 			MemberDao mdao=new MemberDao();
 			MemberDto user=new MemberDto(); //새로운 DTO를 만들고
 			user.setMember_id(member_id);

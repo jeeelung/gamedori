@@ -49,9 +49,7 @@
 			<tfoot>
 				<tr align="center">
 					<td colspan="2" align="center">
-					<input type="button" value="임시저장">
-					<input type="button" value="미리보기">
-					<input type="submit" value="확인">
+					<input type="submit" value="작성완료">
 					</td>
 				</tr>
 			</tfoot>
