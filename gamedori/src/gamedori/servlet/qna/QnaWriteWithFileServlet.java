@@ -35,12 +35,14 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 		baseDir.mkdirs();
 		
 		
+		
 		DiskFileItemFactory factory = new DiskFileItemFactory(limit, baseDir);
 		factory.setDefaultCharset(charset);
 		
 		ServletFileUpload utility = new ServletFileUpload(factory);
 		MemberDto user =(MemberDto) req.getSession().getAttribute("userinfo");
 		
+
 		Map<String, List<FileItem>> map = utility.parseParameterMap(req);
 	
 		QnaDto qdto = new QnaDto();
@@ -49,10 +51,9 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 		qdto.setQna_title(map.get("qna_title").get(0).getString());
 		qdto.setQna_content(map.get("qna_content").get(0).getString());
 		qdto.setQna_email(map.get("qna_email").get(0).getString());
+		qdto.setQna_answer(map.get("qna_answer").get(0).getString());
 		
-		if(map.containsKey("qna_super_no")) {
-			qdto.setQna_super_no(Integer.parseInt(map.get("qna_super_no").get(0).getString()));
-		}
+		
 		
 		
 		QnaDao qdao = new QnaDao();

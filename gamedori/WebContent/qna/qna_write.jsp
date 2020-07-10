@@ -10,6 +10,7 @@
  -->
  <%
  		MemberDto mdto=(MemberDto)session.getAttribute("userinfo");
+ 		boolean isAdmin = mdto.getMember_auth().equals("관리자");
  %>
 <jsp:include page="/template/header.jsp"></jsp:include>
 
@@ -18,6 +19,7 @@
 	<h2>문의글 작성</h2>
 	
 	<!-- 게시글 전송 폼 -->
+
 	<form action="write.do" method="post" enctype="multipart/form-data">
 		<table align="center" border="1">
 						<%if(request.getParameter("qna_super_no") != null) {%>
@@ -28,6 +30,7 @@
 
 		
 		<thead>
+
 				<tr>
 					<th>말머리</th>
 					<td>
@@ -40,6 +43,7 @@
 						</select>
 					</td>
 				</tr>
+
 				<tr>
 					<th>제목</th>
 					<td>
@@ -69,11 +73,23 @@
 						<input type="file" name="qna_file" multiple accept=".jpg, .png, .gif">
 					</td>
 				</tr>
+				
+				<%if(isAdmin){ %>
+				<tr>
+					<th>답변</th>
+					<td>
+						<input type="text" name="qna_answer" size="70" required>
+					</td>
+				</tr>
+
+				<%}else{ %>
+							
+				<%} %>
 			</tbody>
 			<tfoot>
 				<tr>
 					<td colspan="2" align="center">
-						<input type="submit" value="작성">
+						<input type="submit" value="문의하기">
 					</td>
 				</tr>
 			</tfoot>
@@ -82,5 +98,4 @@
 	</form>
 	
 </div>
-
 <jsp:include page="/template/footer.jsp"></jsp:include>

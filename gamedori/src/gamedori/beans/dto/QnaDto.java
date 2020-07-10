@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class QnaDto {
-	private int qna_no, member_no,qna_super_no,qna_group_no,qna_depth;
-	private String qna_head,qna_title,qna_content,qna_email,qna_date;
+	private int qna_no, member_no;
+	private String qna_head,qna_title,qna_content,qna_email,qna_date,qna_answer;
 	public QnaDto() {
 		super();
 	}
@@ -17,32 +17,10 @@ public class QnaDto {
 	this.setQna_content(rs.getString("qna_content"));
 	this.setQna_email(rs.getString("qna_email"));
 	this.setQna_date(rs.getString("qna_date"));
-	this.setQna_super_no(rs.getInt("qna_super_no"));
-	this.setQna_group_no(rs.getInt("qna_group_no"));
-	this.setQna_depth(rs.getInt("qna_depth"));
+	this.setQna_answer(rs.getString("qna_answer"));
 
 	}
 	
-	
-
-	public int getQna_super_no() {
-		return qna_super_no;
-	}
-	public void setQna_super_no(int qna_super_no) {
-		this.qna_super_no = qna_super_no;
-	}
-	public int getQna_group_no() {
-		return qna_group_no;
-	}
-	public void setQna_group_no(int qna_group_no) {
-		this.qna_group_no = qna_group_no;
-	}
-	public int getQna_depth() {
-		return qna_depth;
-	}
-	public void setQna_depth(int qna_depth) {
-		this.qna_depth = qna_depth;
-	}
 	public int getQna_no() {
 		return qna_no;
 	}
@@ -85,6 +63,13 @@ public class QnaDto {
 	public void setQna_date(String qna_date) {
 		this.qna_date = qna_date;
 	}
+	public String getQna_answer() {
+		return qna_answer;
+	}
+	public void setQna_answer(String qna_answer) {
+		this.qna_answer = qna_answer;
+	}
+	
 	
 	
 

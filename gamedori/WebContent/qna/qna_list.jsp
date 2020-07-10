@@ -18,7 +18,10 @@
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
 	
+	MemberDto user=(MemberDto)session.getAttribute("userinfo");
+	
 	boolean isSearch = type != null && keyword != null;
+	boolean isAdmin = user.getMember_auth().equals("관리자");
 	
 	// 페이지 계산 코드
 
@@ -72,10 +75,10 @@
 // 	List<QnaDto> list = 목록 or 검색;
 	List<QnaDto> list;
 	if(isSearch){
-		list = qdao.search(type, keyword, start, finish); 
+		list = qdao.search(type, keyword); 
 	}
 	else{
-		list = qdao.getList(start, finish); 
+		list = qdao.getList(); 
 	}
 %> 
  
@@ -107,14 +110,6 @@
 				<td><%=qdto.getQna_no()%></td>
 				<td align="left">
 				
-					<%if(qdto.getQna_depth() > 0){ %>
-						<%for(int i=0; i < qdto.getQna_depth(); i++){ %>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-						<%} %>
-					
-						<img src="<%=request.getContextPath()%>/image/reply.png"
-							width="20" height="15">
-					<%} %>
 				
 					<%if(qdto.getQna_head() != null){ %>
 						<!-- 말머리는 있을 경우만 출력 -->
@@ -136,7 +131,7 @@
 						<font color="gray">탈퇴한 사용자</font>
 						<%}%>
 				</td>
-				<td><%=qdto.getQna_email()%></td>
+				<td><%=qdto.getQna_email()%></td>s
 				<td><%=qdto.getQna_date()%></td>
 			</tr>
 			<%} %>
@@ -145,16 +140,17 @@
 		</tbody>
 		
 		<tfoot>
-			<tr>
-				<td colspan="8" align="right">
-					<a href="qna_write.jsp">
-						<input type="button" value="글쓰기">
-					</a>
-				</td>
-			</tr>
+			
 		</tfoot>
 	</table>
-	
+						<%if(!isAdmin){ %>
+						<div>
+					<br>
+					<a href="qna_write.jsp" >
+						<input type="button"  style="WIDTH: 100pt; HEIGHT: 30pt" value="1:1 문의하기" >
+					</a>
+</div>
+	<%} %>
 	<!-- 네비게이터 -->
 	<h4>
 	

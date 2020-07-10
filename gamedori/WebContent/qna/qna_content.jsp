@@ -20,7 +20,8 @@
 <jsp:include page="/template/header.jsp"></jsp:include>
 <div>
 	<form>
-		<h2>게시글 상세보기</h2>
+	
+	<div align="center"><h2>고객 지원센터</h2></div>
 		<table align="center" border="1" width="60%">
 			<thead>
 				<tr>
@@ -63,27 +64,34 @@
 						<input type="file" name="qna_file" multiple accept=".jpg,.png,.gif">
 					</td>
 				</tr>
+				<tr>
+					<!--답변 -->
+					<td><%=qdto.getQna_answer()%></td>
+				</tr>
+				
 			</tbody>
 			
 		</table>
 		<br>
+		<%if(!isAdmin){ %>
 		<a href="qna_write.jsp">
-			<input type="submit" value="글쓰기">
+			<input type="button" value="글쓰기">
 		</a>
-		<a href="qna_write.jsp?qna_super_no=<%=qna_no%>">
-			<input type="button" value="답글">
-		</a>
+		<% }%>
+		
+		
 		<%if(isAdmin || isMine){%>
 		<a href="qna_edit.jsp?qna_no=<%=qna_no%>">
-			<input type="submit" value="수정">
+			<input type="button" value="수정">
 		</a>
 		<a href="<%=request.getContextPath()%>/member/check.jsp?go=<%=request.getContextPath()%>/qna/delete.do?qna_no=<%=qna_no%>">
-			<input type="submit" value="삭제">
+			<input type="button" value="삭제">
 		</a>
 		<%}%>
 		<a href="qna_list.jsp">
-			<input type="submit" value="목록으로">
+			<input type="button" value="목록으로">
 		</a>
+		
 	</form>
 </div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

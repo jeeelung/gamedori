@@ -36,12 +36,14 @@ public class QnaDao {
 	}
 	
 	//목록 메소드
-		public List<QnaDto> getList(int start,int finish) throws Exception{
+		public List<QnaDto> getList() throws Exception{
 			Connection con = getConnection();
 			
-			String sql = "SELECT * FROM Qna ORDER BY Qna_no DESC";
+			String sql = 
+					"SELECT * FROM qna order by qna_no desc";
 			
 			PreparedStatement ps = con.prepareStatement(sql);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			List<QnaDto> list = new ArrayList<>();
@@ -55,23 +57,16 @@ public class QnaDao {
 		}
 		
 		//검색 메소드
-		public List<QnaDto> search(String type, String keyword ,int start,int finish) throws Exception{
+		public List<QnaDto> search(String type, String keyword) throws Exception{
 			Connection con = getConnection();
 			
 			String sql = "SELECT * FROM("
-					+ "SELECT ROWNUM rn, T.* FROM("
-					+ "SELECT * FROM qna "
 					+ "WHERE instr(#1, ?) > 0 "
-					+ "CONNECT BY PRIOR qna_no = super_no "
-					+ "START WITH super_no IS NULL "
-					+ "ORDER SIBLINGS BY group_no DESC, qna_no ASC"
-				+ ")T"
-			+ ") WHERE rn BETWEEN ? AND ?";
+					+ "order by qna_no desc";
+					
 			sql = sql.replace("#1", type);
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, keyword);
-			ps.setInt(2, start);
-			ps.setInt(3,finish);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -80,7 +75,6 @@ public class QnaDao {
 				QnaDto qdto = new QnaDto(rs);
 				list.add(qdto);
 			}
-			
 			con.close();
 			return list;
 		}
@@ -117,17 +111,8 @@ public class QnaDao {
 			return seq;
 		}
 		
-		//등록 메소드 
 		// 게시물 등록 메소드
 		public void write(QnaDto qdto) throws Exception{
-			if(qdto.getQna_super_no() == 0) {
-				qdto.setQna_group_no(qdto.getQna_no());
-			} else {
-				QnaDto find = this.get(qdto.getQna_super_no());
-				qdto.setQna_group_no(find.getQna_group_no());
-				qdto.setQna_depth(find.getQna_depth()+1);
-			}
-			
 			Connection con = getConnection();
 			String sql = "INSERT INTO qna"
 					+ "("
@@ -137,11 +122,9 @@ public class QnaDao {
 					+ "qna_title, "
 					+ "qna_content, "
 					+ "qna_email, "
-					+ "qna_super_no, "
-					+ "qna_group_no, "
-					+ "qna_depth "
+					+ "qna_answer, "
 					+ ") "
-					+ "values(?,?, ?, ?, ?, ?, ?, ?,?)";
+					+ "values(?,?, ?, ?, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, qdto.getQna_no());
 			ps.setInt(2, qdto.getMember_no());
@@ -149,17 +132,14 @@ public class QnaDao {
 			ps.setString(4, qdto.getQna_title());
 			ps.setString(5, qdto.getQna_content());
 			ps.setString(6, qdto.getQna_email());
+			ps.setString(7, qdto.getQna_answer());
 			
-			if(qdto.getQna_super_no() == 0) {
-				ps.setNull(7, Types.INTEGER);
-			} else {
-				ps.setInt(7, qdto.getQna_super_no());
-			}
-			ps.setInt(8, qdto.getQna_group_no());
-			ps.setInt(9, qdto.getQna_depth());
 			ps.execute();
 			con.close();
 		}
+		
+		//관리자 문의 답변 메소드
+		
 	
 		//게시글 삭제
 		public void delete(int qna_no) throws Exception {
