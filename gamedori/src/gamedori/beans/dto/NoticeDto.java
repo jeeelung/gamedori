@@ -21,10 +21,7 @@ public class NoticeDto {
 		this.setNotice_content(rs.getString("notice_content"));
 		this.setNotice_date(rs.getString("notice_date"));
 		this.setNotice_read(rs.getInt("notice_read"));
-		this.setNotice_replycount(rs.getInt("notice_replycount"));
-		this.setSuper_no(rs.getInt("super_no"));
-		this.setGroup_no(rs.getInt("group_no"));
-		this.setDepth(rs.getInt("depth"));
+		
 	}
 
 	public int getNotice_no() {
@@ -79,23 +76,23 @@ public class NoticeDto {
 	// [1] getBoard_time() : 시간을 반환하는 메소드
 	// [2] getBoard_day() : 날짜를 반환하는 메소드
 	// [3] getBoard_autotime() : 자동으로 오늘날짜에는 시간을, 아닌 경우는 날짜를 반환
-	public String getBoard_time() {
+	public String getNotice_time() {
 		return notice_date.substring(11, 16);
 	}
 
-	public String getBoard_day() {
+	public String getNotice_day() {
 		return notice_date.substring(0, 10);
 	}
 
-	public String getBoard_autotime() {
+	public String getNotice_auto() {
 //			Date d = new Date();
 //			Format f = new SimpleDateFormat("yyyy-MM-dd");
 //			String today = f.format(d);
 		String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-		if (getBoard_day().equals(today)) {// 오늘 작성한 글이라면
-			return getBoard_time();
+		if (getNotice_day().equals(today)) {// 오늘 작성한 글이라면
+			return getNotice_time();
 		} else {// 아니라면
-			return getBoard_day();
+			return getNotice_day();
 		}
 	}
 

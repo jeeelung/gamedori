@@ -1,3 +1,6 @@
+<%@page import="gamedori.beans.dto.NoticeFileDto"%>
+<%@page import="java.util.List"%>
+<%@page import="gamedori.beans.dao.NoticeFileDao"%>
 <%@page import="gamedori.beans.dao.MemberDao"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@page import="gamedori.beans.dao.NoticeDao"%>
@@ -13,13 +16,6 @@
 	NoticeDto ndto = ndao.get(notice_no);
 	
 	
-	//첨부파일 불러오는 코드 
-	NoticeFileDao bfdao = new NoticeFileDao();
-	List<NoticeFileDto> fileList = nfdao.getList(notice_no);
-
-
-
-
 %>     
 
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -62,28 +58,7 @@
 				</td>
 			</tr>
 			
-			<!-- 첨부파일 출력 영역 : 첨부파일이 있는 경우만 출력 -->
-			<%if(!fileList.isEmpty()){ %>
-			<tr>
-				<td>
-					첨부파일 목록
-					<ul>
-						<%for(BoardFileDto bfdto : fileList){ %>
-						<li>
-						<%=bfdto.getBoard_file_name()%>
-						(<%=bfdto.getBoard_file_size()%> bytes)
-						<!-- 다운로드 버튼을 누른다면 해당 파일을 다운로드 할 수 있도록 링크 -->
-						<a href="download.do?board_file_no=<%=bfdto.getBoard_file_no()%>">다운로드</a>
-						
-						<!-- 다운로드 주소를 img 태그로 지정하면 미리보가 가능 -->
-						<img src="download.do?board_file_no=<%=bfdto.getBoard_file_no()%>" width="50" height="50">
-						
-						</li>
-						<%} %>
-					</ul>
-				</td>
-			</tr>
-			<%} %>
+			
 			
 			<!-- 댓글 작성 영역 -->
 			<tr>

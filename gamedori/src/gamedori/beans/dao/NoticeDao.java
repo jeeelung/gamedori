@@ -15,6 +15,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.NoticeDto;
 
 public class NoticeDao {
@@ -38,6 +39,24 @@ public class NoticeDao {
 		return src.getConnection();
 	}
 
+	// 작성자 메소드
+		public MemberDto getWriter(int member_no) throws Exception {
+			Connection con = getConnection();
+			String sql = "SELECT m.* "
+					+ "FROM member m INNER JOIN notice n "
+					+ "ON m.member_no = n.member_no "
+					+ "WHERE n.member_no = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, member_no);
+			ResultSet rs = ps.executeQuery();
+			
+			MemberDto mdto = rs.next()? new MemberDto(rs): null;
+			
+			con.close();
+			
+			return mdto;
+		}
+		
 	// 목록 메소드
 	public List<NoticeDto> getList() throws Exception {
 		Connection con = getConnection();
@@ -183,5 +202,31 @@ public class NoticeDao {
 
 		con.close();
 	}
+	
+	public int getCount() throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT COUNT(*) FROM notice";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		con.close();
+		return count;
+	}
+	
+	public int getCount(String type, String keyword) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT COUNT(*) FROM notice WHERE instr(#1, ?) > 0";
+		sql = sql.replace("#1", type);
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		con.close();
+		return count;
+	}
+	
+	
 
 }
