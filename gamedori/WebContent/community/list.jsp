@@ -7,7 +7,9 @@
 <%
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
+	String head = request.getParameter("head");
 	
+	boolean isHead = head != null;
 	boolean isSearch = type != null && keyword != null;
 	
 	// 페이지 번호 계산 코드
@@ -39,8 +41,10 @@
 	int count;
 	if(isSearch) {
 		count = cdao.getCount(type, keyword);
+	} else if(isHead){
+		count = cdao.getCount(head);
 	} else {
-		count = cdao.getCount();
+		count = cdao.getCount();		
 	}
 	int pageCount = (count + pageSize -1) / pageSize;
 	
@@ -52,10 +56,26 @@
 	
 	if(isSearch){
 		list = cdao.search(type, keyword, start, finish);
+	} else if(isHead){
+		list = cdao.headSort(head, start, finish);
 	} else {
 		list = cdao.getList(start, finish);
 	}
+	
+	
+	
 %>
+
+<script>
+	function headSort() {
+    	var headvalue = document.querySelector("select[name=commu_head]").value;
+    	<%if(isSearch) {%>
+    		location.href = "list.jsp?type="<%=type%>"&keyword="<%=keyword%>"&head="+headvalue;
+    	<%} else {%>
+    		location.href = "list.jsp?head="+headvalue;
+    	<%}%>
+	}
+</script>
     
 <jsp:include page="/template/header.jsp"></jsp:include>
 <div align="center">
@@ -78,7 +98,7 @@
 		<thead>
 			<tr>
 				<th>
-					<select name="commu_head">
+					<select name="commu_head" onchange="headSort();">
 						<option value="">전체보기</option>
 						<option>자유</option>
 						<option>유머</option>

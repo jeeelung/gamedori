@@ -119,6 +119,7 @@ public class CommunityDao {
 		con.close();
 		
 		return mdto;
+
 	}
 	
 	// 게시물 목록 메소드
@@ -207,6 +208,34 @@ public class CommunityDao {
 		return list;
 	}
 	
+	// 말머리 정렬 메소드
+	public List<CommunityDto> headSort(String head, int start, int finish) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT * FROM( "
+				+ "SELECT ROWNUM rn, T.* FROM("
+				+"SELECT * FROM community "
+				+ "WHERE commu_head = ? "
+				+ "CONNECT BY PRIOR commu_no = commu_super_no "  
+				+ "START WITH commu_super_no IS NULL " 
+				+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
+				+ ")T"
+			+ ") WHERE rn BETWEEN ? and ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, head);
+		ps.setInt(2, start);
+		ps.setInt(3, finish);
+		ResultSet rs = ps.executeQuery();
+		
+		List<CommunityDto> list = new ArrayList<CommunityDto>();
+		
+		while(rs.next()) {
+			CommunityDto cdto = new CommunityDto(rs);
+			list.add(cdto);
+		}
+		con.close();
+		return list;
+	}
+	
 	public int getCount() throws Exception {
 		Connection con = getConnection();
 		String sql = "SELECT COUNT(*) FROM community";
@@ -233,6 +262,18 @@ public class CommunityDao {
 		}
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		con.close();
+		return count;
+	}
+	
+	public int getCount(String head) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT COUNT(*) FROM community WHERE commu_head = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, head);
 		ResultSet rs = ps.executeQuery();
 		rs.next();
 		int count = rs.getInt(1);
