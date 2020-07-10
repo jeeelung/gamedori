@@ -93,7 +93,7 @@ public class EventFileDao {
 		con.close();
 	}
 	
-	public void deleteFile(int file_no) throws Exception {
+	public void deletefile(int file_no) throws Exception {
 		Connection con = getConnection();
 		String sql = "DELETE FROM event_file WHERE file_no = ?";
 		PreparedStatement ps = con.prepareStatement(sql);

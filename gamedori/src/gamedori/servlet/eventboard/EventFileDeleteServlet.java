@@ -29,9 +29,9 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 	
 	// 3
 	EventFileDao efdao = new EventFileDao();
-	efdao.deleteFile(file_no);
+	efdao.deletefile(file_no);
 	
-	resp.sendRedirect("Eventedit.jsp?evnet_no="+event_no);
+	resp.sendRedirect("EventEdit.jsp?event_no="+event_no);
 
 } 
 	catch (Exception e) {

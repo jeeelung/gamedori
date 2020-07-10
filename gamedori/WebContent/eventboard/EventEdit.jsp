@@ -66,8 +66,7 @@
 							<li>
 								<%=fdto.getFile_name()%>
 								(<%=fdto.getFile_size()%> bytes)
-								<a href="<%=request.getContextPath()%>/eventboard/fileDelete.do?
-								file_no=<%=fdto.getFile_no()%>&event_no=<%=event_no%>">
+								<a href="<%=request.getContextPath()%>/eventboard/filedelete.do?file_no=<%=fdto.getFile_no()%>&event_no=<%=event_no%>">
 									<input type="button" value="삭제">
 								</a>
 							</li>
