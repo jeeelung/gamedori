@@ -22,9 +22,7 @@
 
 	<form action="write.do" method="post" enctype="multipart/form-data">
 		<table align="center" border="1">
-						<%if(request.getParameter("qna_super_no") != null) {%>
-						<input type="hidden" name="qna_super_no" value="<%=request.getParameter("qna_super_no")%>">
-						<%}%>
+						<input type="hidden" name="qna_no" value="<%=request.getParameter("qna_no")%>">
 						<input type="hidden" name="member_no" value="<%=mdto.getMember_no()%>">
 	
 
@@ -78,7 +76,7 @@
 				<tr>
 					<th>답변</th>
 					<td>
-						<input type="text" name="qna_answer" size="70" required>
+						<textarea name="qna_answer" required rows="15" cols="72"></textarea>
 					</td>
 				</tr>
 

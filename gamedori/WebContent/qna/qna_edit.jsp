@@ -62,8 +62,22 @@
 								value="<%=qdto.getQna_email()%>">
 					</td>
 				</tr>
-				
+					<!-- 첨부파일 -->
+				<tr>
+					<th>첨부파일</th>
+					<td>
+						<input type="file" name="qna_file" multiple accept=".jpg,.png,.gif">
+					</td>
+				</tr>
+				<tr>
+					<th>답변</th>
+					<td>
+						<textarea name="qna_answer" required 
+							rows="15" cols="72"><%=qdto.getQna_answer()%></textarea>
+					</td>  
+				</tr>
 			</tbody>
+			
 			<tfoot>
 				<tr>
 					<td colspan="2" align="center">

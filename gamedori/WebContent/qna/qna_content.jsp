@@ -78,8 +78,12 @@
 			<input type="button" value="글쓰기">
 		</a>
 		<% }%>
+		<%if(isAdmin){ %>
+			<a href=" qna_edit.jsp?qna_no=<%=qdto.getQna_no() %>">
+				<input type="button" value=" 답변하기">
+			</a>
 		
-		
+		<%} %>		
 		<%if(isAdmin || isMine){%>
 		<a href="qna_edit.jsp?qna_no=<%=qna_no%>">
 			<input type="button" value="수정">
