@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import gamedori.beans.dto.EventFileDto;
 import gamedori.beans.dto.EventboardDto;
 import gamedori.beans.dto.MemberDto;
 
@@ -35,7 +36,7 @@ public class EventboardDao {
 		return src.getConnection();
 	}
 	
-	// community_no 추출 메소드
+	
 	public int getSequence() throws Exception{
 		Connection con = getConnection();
 		String sql = "SELECT event_seq.nextval FROM dual";
@@ -62,6 +63,22 @@ public class EventboardDao {
 		
 		return edto;
 	}
+	
+	
+	//이벤트 파일 단일 조회 매소드
+	public EventFileDto getfile(int event_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT * FROM event_file WHERE event_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, event_no);
+		ResultSet rs = ps.executeQuery();
+		
+		EventFileDto efdto = rs.next()? new EventFileDto(rs): null;
+		con.close();
+		
+		return efdto;
+	}
+	
 	
 	// 게시물 등록 메소드
 	 		public void write(EventboardDto edto) throws Exception {
@@ -125,7 +142,7 @@ public class EventboardDao {
 	
 	public int getCount(String type, String keyword) throws Exception {
 		Connection con = getConnection();
-		String sql = "SELECT COUNT(*) FROM community WHERE instr(#1, ?) > 0";
+		String sql = "SELECT COUNT(*) FROM event WHERE instr(#1, ?) > 0";
 		sql = sql.replace("#1", type);
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);

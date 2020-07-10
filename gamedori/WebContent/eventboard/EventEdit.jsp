@@ -27,7 +27,7 @@
 	<h2>게시글 수정</h2>
 <!-- enctype="multipart/form-data" -->
 	<!-- 게시글 전송 폼 -->
-	<form action="eventedit.do" method="get">
+	<form action="eventedit.do" method="post" enctype="multipart/form-data">
 	
 		<!-- 수정이 가능하도록 PK를 숨김 첨부한다 -->
 		<input type="hidden" name="event_no" value="<%=event_no%>">
@@ -50,6 +50,33 @@
 							rows="15" cols="72"><%=edto.getEvent_content()%></textarea>
 					</td>  
 				</tr>
+				<!-- 첨부파일 -->
+				<tr>
+					<th>첨부파일</th>
+					<td>
+						<input type="file" name="event_file" multiple accept=".jpg,.png,.gif">
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td>
+						<ul>
+							<!-- ol은 순서가 있는거 / ul은 순서가 없는거 -->
+							<%for(FilesDto fdto : fileList){%>
+							<li>
+								<%=fdto.getFile_name()%>
+								(<%=fdto.getFile_size()%> bytes)
+								<a href="<%=request.getContextPath()%>/eventboard/fileDelete.do?
+								file_no=<%=fdto.getFile_no()%>&event_no=<%=event_no%>">
+									<input type="button" value="삭제">
+								</a>
+							</li>
+							<%}%>
+						</ul>
+					</td>
+				</tr>
+				
+				
 			</tbody>
 			<tfoot>
 				<tr>

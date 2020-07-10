@@ -18,6 +18,42 @@ boolean isSearch= type != null && keyword !=null;
 EventboardDao edao = new EventboardDao();
 List<EventboardDto> list;
 
+//페이지 네비게이터 계산코드
+
+int pageSize =10;
+String pageStr= request.getParameter("page");
+int pageNo;
+try{
+	pageNo=Integer.parseInt(pageStr);
+	
+	if(pageNo <=0){
+		throw new Exception();
+	}
+} catch(Exception e){
+	pageNo=1;
+}
+
+int finish= pageNo* pageSize;
+int start = finish-(pageSize -1);
+
+int blockSize = 10;
+int startBlock = (pageNo-1)/blockSize*blockSize +1;
+int finishBlock=startBlock + blockSize -1;
+
+//
+int count;
+if(isSearch){
+	count=edao.getCount(type, keyword);
+}
+else{
+	count=edao.getCount();
+}
+
+int pageCount = (count+pageSize -1)/pageSize;
+if(finishBlock > pageCount){
+	finishBlock = pageCount;
+}
+
 if(isSearch){
 	list=edao.search(type, keyword);
 }
@@ -94,10 +130,33 @@ else{
 	</table>
 	
 	<!-- 페이지 네비게이터 -->
-	<div class="row center pagination">
-		
-	</div>
+	<h6 align="center">
+	<!-- 이전 -->
+	<%if(startBlock >1){ %>
+	<%if(!isSearch){ %>
+	<a href = "event_list.jsp?page=<%=startBlock -1 %>">[이전]</a>
+	<%}else{ %>
+	<a href = "event_list.jsp?page=<%=startBlock -1 %>& type=<%=type %> & keyword=<%=keyword %>">다음</a>
+	<%} %>
+	<%} %>
 	
+	<%for(int i=startBlock; i<=finishBlock; i++) {%>
+	
+	<% if(!isSearch){%>
+	<a href="event_list.jsp?page=<%=i %>"><%=i %></a>
+	<% }else{%>
+	<a href="event_list.jsp?page=<%=i%> & type=<%=type %> & keyword=<%=keyword %>"><%=i %></a>
+	<%} %>
+	<%} %>
+	
+	<%if(pageCount > finishBlock){ %>
+	<%if(!isSearch){ %>
+	<a href = "event_list.jsp?page=<%=finishBlock +1 %>">[이후]</a>
+	<%}else{ %>
+	<a href = "event_list.jsp?page=<%=finishBlock +1 %>& type=<%=type %> & keyword=<%=keyword %>">다음</a>
+	<%} %>
+	<%} %>
+	</h6>
 	<!-- 검색창 -->
 	<div class="row center">
 	
