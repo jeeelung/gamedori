@@ -61,7 +61,8 @@ public class FAQEditServlet extends HttpServlet {
 				if (item.getSize() > 0) {
 					FilesDao filesdao = new FilesDao();
 					FilesDto filesdto = new FilesDto();
-					int file_no = Integer.parseInt(map.get("file_no").get(0).getString());
+					
+					int file_no = filesdao.getSequence();
 					filesdto.setFile_no(file_no);
 					filesdto.setFile_name(item.getName());
 					filesdto.setFile_size(item.getSize());
@@ -78,8 +79,6 @@ public class FAQEditServlet extends HttpServlet {
 					item.write(target);
 				}
 			}
-			
-
 //			출력  
 			resp.sendRedirect("content.jsp?faq_no=" + faq_no);
 		} catch (Exception e) {

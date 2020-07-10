@@ -11,7 +11,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	FAQDao fdao = new FAQDao();
-	
 	int faq_no = Integer.parseInt(request.getParameter("faq_no"));
 	MemberDto user = (MemberDto)session.getAttribute("userinfo");
 	//faq_no를 이용하여 faqdto를 얻어냄.
@@ -22,7 +21,6 @@
 	boolean isMine = user.getMember_id().equals(mdto.getMember_id());
 	FAQFileDao ffdao = new FAQFileDao();
 	List<FilesDto> fileList = ffdao.getList(faq_no);
-	
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -31,29 +29,29 @@
 <form>
 	<h2>FAQ</h2>
 	<!-- 테이블에 글 정보를 출력 -->
-	<table align="center">
-	
-		<thead>
+	<table border="1" width="60%">
+		<tbody align="left" align="top">
 			<tr>
+			<th>제목</th>
 				<th>
 					<%
 						if (fdto.getFaq_head() != null) {
 					%> <!-- 말머리는 있을 경우만 출력 --> [<%=fdto.getFaq_head()%>] <%}%>
-					 <%=fdto.getFaq_title()%></th>
+					 <%=fdto.getFaq_title()%>
+				</th>	
 			</tr>
 			<tr>
+			<th>작성자</th>
 				<th>
 					<!-- 작성자 --> <%if (mdto != null) {%> 
 					<%=mdto.getMember_nick()%>
-					 <font color="gray"><%=mdto.getMember_auth() %></font>
+					 <font color="gray" ><%=mdto.getMember_auth() %></font>
 					  <%} else {%> <font color="gray">탈퇴한 사용자</font>
 					<%} %>
 				</th>
 			</tr>
-		</thead>
-		<tbody align="left" valign="top">
-			<tr height="400">
-				<td><%=fdto.getFaq_content() %></td>
+			<td>내용</td>
+				<td valign="top"><%=fdto.getFaq_content() %></td>
 			</tr>
 			<%if(!fileList.isEmpty()){ %>
 			<tr>
@@ -69,7 +67,6 @@
 						<%} %>
 					</ul>
 				</td>
-
 			</tr>
 			<%} %>
 		</tbody>

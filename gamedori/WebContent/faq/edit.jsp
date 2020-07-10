@@ -27,7 +27,7 @@
 	<h2>FAQ 수정</h2>
 	
 	<!-- 게시글 전송 폼 -->
-	<form action="edit.do" method="post">
+	<form action="edit.do" method="post" enctype="multipart/form-data">
 	
 		<!-- 수정이 가능하도록 PK를 숨김 첨부한다 -->
 		<input type="hidden" name="faq_no" value="<%=faq_no%>">
@@ -71,6 +71,8 @@
 				<td>
 				<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif">
 				<%for(FilesDto filesdto : fileList){ %>
+				<input type="hidden" name="faq_no" value="<%=faq_no%>">
+				
 					<%=filesdto.getFile_name() %>(<%=filesdto.getFile_size() %> bytes)
 					 <a href="<%=request.getContextPath() %>/faq/fileDelete.do?file_no=<%=filesdto.getFile_no()%>&faq_no=<%=faq_no %>">
 					  <input type="button" value="삭제">
