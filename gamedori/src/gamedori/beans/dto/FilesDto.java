@@ -51,8 +51,4 @@ public class FilesDto {
 		this.file_type = file_type;
 	}
 	
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> refs/remotes/origin/master

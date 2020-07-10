@@ -45,8 +45,4 @@ public class MemberLoginServlet extends HttpServlet {
 			resp.sendError(500);
 		}
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> refs/remotes/origin/master
