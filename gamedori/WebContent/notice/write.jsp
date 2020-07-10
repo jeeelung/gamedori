@@ -1,3 +1,5 @@
+<%@page import="gamedori.beans.dto.NoticeDto"%>
+<%@page import="gamedori.beans.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -7,19 +9,28 @@
 	- 입력 항목은 2개 : notice_title, notice_content
 	- 작성자는 회원정보가 자동으로 설정
  -->
+<%
+MemberDto mdto = (MemberDto)session.getAttribute("userinfo");
+MemberDto mdto2= new MemberDto();
+NoticeDto ndto= new NoticeDto();
+%>
  
 <jsp:include page="/template/header.jsp"></jsp:include>
+<!-- 게시글 전송 폼 -->
 
 <div align="center">
+<form action="write.do" method="post" enctype="multipart/form-data">
+<input type="hidden" name="notice_no" value="<%=ndto.getNotice_no()%>">
+<input type="hidden" name="member_no" value="<%=mdto2.getMember_no()%>">
+
+
 	
 	<h2>공지사항 작성</h2>
 	
-	<!-- 게시글 전송 폼 -->
-	<form action="write.do" method="post">
-		
-		<table border="1">
-			<tbody>
 				
+		<table border="1">
+			<tbody>				
+			
 				<tr>
 					<th>제목</th>
 					<td>

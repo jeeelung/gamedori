@@ -63,6 +63,7 @@ public class NoticeDao {
 
 		String sql = "SELECT * FROM notice ORDER BY notice_no DESC";
 		PreparedStatement ps = con.prepareStatement(sql);
+
 		ResultSet rs = ps.executeQuery();
 
 		List<NoticeDto> list = new ArrayList<>();
@@ -152,26 +153,16 @@ public class NoticeDao {
 			ndto.setGroup_no(find.getGroup_no());
 			ndto.setDepth(find.getDepth() + 1);
 		}
-
-		// 위의 코드를 지나면 bdto에는 총 ?개의 정보가 들어간다.
-
+		
 		Connection con = getConnection();
 
 		// 아래와 같이 작성하면 미 작성된 항목들은 default 값이 적용
-		String sql = "INSERT INTO notice" + "(" + "notice_no, " + "member_no, " + "notice_title," 
-				+ "notice_content," + "super_no, " + "group_no, " + "depth" + ") " + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO notice notice_no,member_no,notice_title,notice_content VALUES(?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, ndto.getNotice_no());
 		ps.setInt(2, ndto.getMember_no());
 		ps.setString(3, ndto.getNotice_title());		
-		ps.setString(4, ndto.getNotice_content());
-		if (ndto.getSuper_no() == 0) {// 새글이면 NULL을 설정
-			ps.setNull(5, Types.INTEGER);
-		} else {// 답글이면 번호를 설정
-			ps.setInt(5, ndto.getSuper_no());
-		}
-		ps.setInt(6, ndto.getGroup_no());
-		ps.setInt(7, ndto.getDepth());
+		ps.setString(4, ndto.getNotice_content());		
 		ps.execute();
 
 		con.close();
@@ -203,30 +194,36 @@ public class NoticeDao {
 		con.close();
 	}
 	
-	public int getCount() throws Exception {
-		Connection con = getConnection();
-		String sql = "SELECT COUNT(*) FROM notice";
-		PreparedStatement ps = con.prepareStatement(sql);
-		ResultSet rs = ps.executeQuery();
-		rs.next();
-		int count = rs.getInt(1);
-		con.close();
-		return count;
-	}
+		//개수 조회 메소드 x 2
+		public int getCount() throws Exception{
+			Connection con = getConnection();
+			
+			String sql = "SELECT count(*) FROM notice";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			rs.next();//데이터 무조건 1개 나오므로 이동
+			int count = rs.getInt(1);//또는 rs.getInt("count(*)");
+			
+			con.close();
+			
+			return count;
+		}
+		
+		// 개수 조회 
+		public int getCount(String type, String keyword) throws Exception{
+			Connection con = getConnection();
+			
+			String sql = "SELECT count(*) FROM notice WHERE instr(#1, ?) > 0";
+			sql = sql.replace("#1", type);
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, keyword);
+			ResultSet rs = ps.executeQuery();
+			rs.next();//데이터 무조건 1개 나오므로 이동
+			int count = rs.getInt(1);//또는 rs.getInt("count(*)");
+			
+			con.close();
+			
+			return count;
+		}
 	
-	public int getCount(String type, String keyword) throws Exception {
-		Connection con = getConnection();
-		String sql = "SELECT COUNT(*) FROM notice WHERE instr(#1, ?) > 0";
-		sql = sql.replace("#1", type);
-		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setString(1, keyword);
-		ResultSet rs = ps.executeQuery();
-		rs.next();
-		int count = rs.getInt(1);
-		con.close();
-		return count;
-	}
-	
-	
-
 }

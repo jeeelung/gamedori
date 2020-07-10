@@ -15,7 +15,9 @@ import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import gamedori.beans.dao.FilesDao;
 import gamedori.beans.dao.NoticeDao;
+import gamedori.beans.dto.FilesDto;
 import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.NoticeDto;
 import gamedori.beans.dto.NoticeFileDto;
@@ -31,7 +33,7 @@ public class NoticeWriteServlet extends HttpServlet {
 
 			String charset = "UTF-8"; // 해석할 인코딩 방식
 			int limit = 10 * 1024 * 1024; // 최대 허용 용량
-			File baseDir = new File("D:/upload/community");
+			File baseDir = new File("D:/upload/notice");
 			baseDir.mkdirs();
 			
 			DiskFileItemFactory factory = new DiskFileItemFactory(limit, baseDir);
