@@ -58,7 +58,6 @@ public class FilesDao {
 		
 		con.close();
 	}
-	
 	public FilesDto get(int file_no) throws Exception {
 		Connection con = getConnection();
 		String sql = "SELECT * FROM files WHERE file_no = ?";
@@ -70,4 +69,13 @@ public class FilesDao {
 		con.close();
 		return fdto;
 	}
+	public void delete(int file_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "DELETE FROM files WHERE file_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, file_no);
+		ps.execute();
+		con.close();
+	}
+	
 }

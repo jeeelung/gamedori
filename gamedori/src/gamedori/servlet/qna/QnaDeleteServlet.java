@@ -21,7 +21,7 @@ public class QnaDeleteServlet extends HttpServlet{
 		QnaDao qdao =new QnaDao();
 		qdao.delete(qna_no); // 삭제
 //		출력 : list.jsp로 redirect
-		resp.sendRedirect("list.jsp");
+		resp.sendRedirect("qna_list.jsp");
 	}
 	catch(Exception e) {
 		e.printStackTrace();
