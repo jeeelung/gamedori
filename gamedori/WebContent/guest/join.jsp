@@ -40,6 +40,15 @@
 						<input type="text" name="member_phone" required placeholder="- 제외">
 					</td>
 				</tr>
+				<tr>
+					<th>관심 분야</th>
+					<td>
+						<input type="checkbox" name="member_favorite" value="">
+						
+			
+				</tr>
+				
+				
 			</tbody>
 			<tfoot>
 				<tr>
