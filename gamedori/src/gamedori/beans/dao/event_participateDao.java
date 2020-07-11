@@ -74,7 +74,7 @@ public class event_participateDao {
 	      }
 
 	      // 응모하게 될 시 insert문
-	       public void writeEvent(event_participateDto epdto) throws Exception {
+	       public void joinEvent(event_participateDto epdto) throws Exception {
 
 	         Connection con = getConnection();
 	         String sql = "INSERT INTO event_paricipate (member_no, event_no, event_parici_date) VALUES (?, ?, SYSDATE)";
@@ -97,4 +97,17 @@ public class event_participateDao {
 
 	         ps.execute();
 	         con.close();
-	      }}
+	      }
+	       public int getSequence() throws Exception{
+	   		Connection con = getConnection();
+	   		String sql = "SELECT event_partici_seq.nextval FROM dual";
+	   		PreparedStatement ps = con.prepareStatement(sql);
+	   		ResultSet rs = ps.executeQuery();
+	   		
+	   		rs.next();
+	   		int seq = rs.getInt(1);
+	   		
+	   		con.close();
+	   		return seq;
+	   	} 
+}

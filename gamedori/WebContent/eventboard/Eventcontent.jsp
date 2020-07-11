@@ -1,3 +1,4 @@
+<%@page import="gamedori.beans.dao.event_participateDao"%>
 <%@page import="gamedori.beans.dto.FilesDto"%>
 <%@page import="gamedori.beans.dao.EventFileDao"%>
 <%@page import="java.util.List"%>
@@ -12,7 +13,8 @@
 <%
 EventboardDao edao = new EventboardDao();
 int event_no = Integer.parseInt(request.getParameter("event_no"));
-
+event_participateDao epdao= new event_participateDao();
+int event_partici_no = Integer.parseInt(request.getParameter("event_partici_no"));
 // 조회수 계산
 //- session에 memory라는 저장소 정보를 추출한다 (없을 수도 있으므로)
 Set<Integer> memory = (Set<Integer>)session.getAttribute("memory");
@@ -51,6 +53,15 @@ boolean isMine = user.getMember_id().equals(mdto.getMember_id());
 
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
+<script language="event">
+function bu(){
+
+		alert('이벤트에 참여하셨습니다.');
+
+	}
+</script>
+
+
 <div align="center">
 <form>
 	<h2>게시글 상세보기</h2>
@@ -115,8 +126,11 @@ boolean isMine = user.getMember_id().equals(mdto.getMember_id());
 					<a href="EventBoardWrite.jsp">
 						<input type="button" value="글쓰기">
 					</a>
-					
+			
 				<%if(isAdmin || isMine){%>
+					
+					<a href="<%=request.getContextPath() %>/eventboard/partici.do?event_partici_no=<%=event_partici_no %>" >
+					
 					<a href="EventEdit.jsp?event_no=<%=event_no%>">
 						<input type="button" value="수정">
 					</a>
@@ -124,6 +138,7 @@ boolean isMine = user.getMember_id().equals(mdto.getMember_id());
 					go=<%=request.getContextPath()%>/eventboard/delete.do?event_no=<%=event_no%>">
 						<input type="button" value="삭제">
 					</a>
+					
 				<%}%>
 					<a href="event_list.jsp">
 						<input type="button" value="목록으로">

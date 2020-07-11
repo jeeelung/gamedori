@@ -16,7 +16,6 @@ import gamedori.beans.dao.FilesDao;
 
 
 
-
 @WebServlet(urlPatterns = "/eventboard/delete.do")
 public class EventDeleteServlet extends HttpServlet {
 
