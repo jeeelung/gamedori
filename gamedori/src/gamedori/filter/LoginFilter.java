@@ -7,7 +7,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,10 +14,10 @@ import gamedori.beans.dto.MemberDto;
 
 // 패턴이 없으므로 일일이 입력
 // - 비회원 기능(guest) 과 회원 기능(member)으로 폴더를 나눠서 폴더 전체(/폴더/*)로 입력해도 됨
-@WebFilter(urlPatterns = {"/member/info.jsp", "/member/change_password.jsp", 
-		"/member/change_password_result.jsp", "/member/change_info.jsp", "/member/check.jsp", 
-		"/member/logout.do", "/member/change_password.do", "/member/exit.do", 
-		"/member/change_info.do", "/member/check.do", "/admin/*"})
+//@WebFilter(urlPatterns = {"/member/info.jsp", "/member/change_password.jsp", 
+//		"/member/change_password_result.jsp", "/member/change_info.jsp", "/member/check.jsp", 
+//		"/member/logout.do", "/member/change_password.do", "/member/exit.do", 
+//		"/member/change_info.do", "/member/check.do", "/admin/*"})
 public class LoginFilter implements Filter{
 // 목표 : 현재 요청을 보내고 있는 사용자(누군지는 모름)가 로그인 상태인 지 판정
 // 정보 :

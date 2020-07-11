@@ -11,6 +11,7 @@ public class FilesDto {
 	public FilesDto() {
 		super();
 	}
+	
 	public FilesDto(ResultSet rs) throws Exception{
 		this.setFile_no(rs.getInt("file_no"));
 		this.setFile_name(rs.getString("file_name"));
@@ -18,7 +19,6 @@ public class FilesDto {
 		this.setFile_type(rs.getString("file_type"));
 	}
 
-	
 	public int getFile_no() {
 		return file_no;
 	}

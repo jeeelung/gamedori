@@ -1,19 +1,23 @@
 package gamedori.beans.dao;
 
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import gamedori.beans.dto.CommunityFileDto;
 import gamedori.beans.dto.FilesDto;
 
-public class FilesDao {
-
+public class CommunityFileDao {
+	
 	private static DataSource src;
 	static {
 		try {
@@ -30,44 +34,34 @@ public class FilesDao {
 		return src.getConnection();
 	}
 	
-	// 파일번호 시퀀스
-	public int getSequence() throws Exception {
+	// 등록 메소드
+	public void save(CommunityFileDto cfdto) throws Exception{
 		Connection con = getConnection();
-		String sql = "SELECT file_seq.nextval FROM dual";
+		String sql = "INSERT INTO community_file VALUES(?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ResultSet rs = ps.executeQuery();
-		rs.next();
-		int seq = rs.getInt(1);
-		
-		con.close();
-		
-		return seq;
-	}
-	
-	// 파일정보 업로드 메소드
-	public void save(FilesDto fdto) throws Exception{
-		Connection con = getConnection();
-		String sql = "INSERT INTO files values(?, ?, ?, ?)";
-		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, fdto.getFile_no());
-		ps.setString(2, fdto.getFile_name());
-		ps.setLong(3, fdto.getFile_size());
-		ps.setString(4, fdto.getFile_type());
-		
+		ps.setInt(1, cfdto.getCommu_no());
+		ps.setInt(2, cfdto.getFile_no());
 		ps.execute();
 		
 		con.close();
 	}
 	
-	public FilesDto get(int file_no) throws Exception {
+	public List<FilesDto> getList(int commu_no) throws Exception{
 		Connection con = getConnection();
-		String sql = "SELECT * FROM files WHERE file_no = ?";
+		String sql = "SELECT f.* "
+				+ "FROM files f INNER JOIN Community_file c "
+				+ "ON c.file_no = f.file_no "
+				+ "WHERE c.commu_no = ? "
+				+ "ORDER BY f.file_no ASC";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, file_no);
+		ps.setInt(1, commu_no);
 		ResultSet rs = ps.executeQuery();
-		
-		FilesDto fdto = rs.next()? new FilesDto(rs): null;
+		List<FilesDto> list = new ArrayList<FilesDto>();
+		while(rs.next()) {
+			FilesDto fdto = new FilesDto(rs);
+			list.add(fdto);
+		}
 		con.close();
-		return fdto;
+		return list;
 	}
 }
