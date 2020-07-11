@@ -1,5 +1,9 @@
+<%@page import="gamedori.beans.dto.FilesDto"%>
+<%@page import="java.util.List"%>
+<%@page import="gamedori.beans.dao.QnaFileDao"%>
 <%@page import="gamedori.beans.dto.QnaDto"%>
 <%@page import="gamedori.beans.dao.QnaDao"%>
+<%@page import="gamedori.beans.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- 
@@ -12,6 +16,13 @@
 	int qna_no = Integer.parseInt(request.getParameter("qna_no"));
 	QnaDao qdao = new QnaDao();
 	QnaDto qdto = qdao.get(qna_no);
+	QnaFileDao qfdao = new QnaFileDao();
+	List<FilesDto> FilesList=qfdao.getList(qna_no);
+	
+	MemberDto user = (MemberDto)session.getAttribute("userinfo");
+	
+	// 권한 확인
+	boolean isAdmin = user.getMember_auth().equals("관리자");
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -21,7 +32,7 @@
 	<h2>게시글 수정</h2>
 	
 	<!-- 게시글 전송 폼 -->
-	<form action="edit.do" method="post">
+	<form action="edit.do" method="post" enctype="multipart/form-data">
 	
 		<!-- 수정이 가능하도록 PK를 숨김 첨부한다 -->
 		<input type="hidden" name="qna_no" value="<%=qna_no%>">
@@ -66,16 +77,30 @@
 				<tr>
 					<th>첨부파일</th>
 					<td>
-						<input type="file" name="qna_file" multiple accept=".jpg,.png,.gif">
+						첨부파일 목록
+						<!-- ol은 순서가 있는거 / ul은 순서가 없는거 -->
+							<%for(FilesDto fdto : FilesList){%>
+							<li>
+								<%=fdto.getFile_name()%>
+								(<%=fdto.getFile_size()%> bytes)
+								<a href="<%=request.getContextPath()%>/qna/fileDelete.do?
+								file_no=<%=fdto.getFile_no()%>&qna_no=<%=qna_no%>">
+									<input type="button" value="삭제">
+								</a>
+							</li>
+							<%}%>
+							<input type="file" name="qna_file" multiple accept=".jpg, .png, .gif">
 					</td>
 				</tr>
+				<%if(isAdmin){ %>
 				<tr>
 					<th>답변</th>
 					<td>
 						<textarea name="qna_answer" required 
-							rows="15" cols="72"><%=qdto.getQna_answer()%></textarea>
-					</td>  
+							rows="15" cols="72"><%=qdto.getQna_answer() == null? "": qdto.getQna_answer()%></textarea>
+					</td>
 				</tr>
+				<%}%>
 			</tbody>
 			
 			<tfoot>

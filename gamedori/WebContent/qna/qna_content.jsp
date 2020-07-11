@@ -1,3 +1,7 @@
+<%@page import="gamedori.beans.dto.FilesDto"%>
+<%@page import="java.util.List"%>
+<%@page import="gamedori.beans.dao.QnaFileDao"%>
+<%@page import="gamedori.beans.dto.QnaFileDto"%>
 <%@page import="java.util.HashSet"%>
 <%@page import="java.util.Set"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>
@@ -16,6 +20,10 @@
 	// 권한 확인
 	boolean isAdmin = user.getMember_auth().equals("관리자");
 	boolean isMine = user.getMember_id().equals(mdto.getMember_id());
+	
+	QnaFileDao qfdao = new QnaFileDao();
+	List<FilesDto> fileList = qfdao.getList(qna_no);
+	
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
 <div>
@@ -27,7 +35,7 @@
 				<tr>
 					<!-- 말머리 및 제목 -->
 					<th>
-						[<%=qdto.getQna_head()%>]<%=qdto.getQna_title()%>
+						<%=qdto.getQna_head() == null? "":"["+qdto.getQna_head()+"]"%><%=qdto.getQna_title()%>
 					</th>
 				</tr>
 				<tr>
@@ -58,17 +66,35 @@
 					<td><%=qdto.getQna_content()%></td>
 				</tr>
 				<!-- 첨부파일 -->
+				<!-- 첨부파일 출력 영역 : 첨부파일이 있는 경우만 출력 -->
+				<%if(!fileList.isEmpty()){%>
 				<tr>
 					<th>첨부파일</th>
+				</tr>							
+				<tr height="100">
 					<td>
-						<input type="file" name="qna_file" multiple accept=".jpg,.png,.gif">
+						첨부파일 목록
+						<ul>
+							<!-- ol은 순서가 있는거 / ul은 순서가 없는거 -->
+							<%for(FilesDto fdto : fileList){%>
+							<li>
+								<%=fdto.getFile_name()%>
+								(<%=fdto.getFile_size()%> bytes)
+								<!-- 다운로드 버튼을 누른다면 해당 파일을 다운로드 할 수 있도록 링크 -->
+								<a href="download.do?file_no=<%=fdto.getFile_no()%>">
+									<input type="button" value="다운로드">
+								</a>
+							</li>
+							<%}%>
+						</ul>
 					</td>
 				</tr>
+				<%}if(!qdto.getQna_answer().equals("null")){ %>
 				<tr>
 					<!--답변 -->
 					<td><%=qdto.getQna_answer()%></td>
 				</tr>
-				
+				<%} %>
 			</tbody>
 			
 		</table>

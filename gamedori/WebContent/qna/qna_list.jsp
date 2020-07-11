@@ -22,7 +22,8 @@
 	
 	boolean isSearch = type != null && keyword != null;
 	boolean isAdmin = user.getMember_auth().equals("관리자");
-	
+	String auth = user.getMember_auth();
+	int member_no = user.getMember_no();
 	// 페이지 계산 코드
 
 	int pageSize = 10;//한 페이지에 표시할 데이터 개수
@@ -60,7 +61,7 @@
 	//int count = 목록개수 or 검색개수;
 	int count;
 	if(isSearch){//검색
-		count = qdao.getCount(type, keyword); 
+		count = qdao.getCount(type, keyword,member_no,auth); 
 	}
 	else{//목록
 		count = qdao.getCount();
@@ -75,12 +76,12 @@
 // 	List<QnaDto> list = 목록 or 검색;
 	List<QnaDto> list;
 	if(isSearch){
-		list = qdao.search(type, keyword); 
+		list = qdao.search(type, auth, keyword, member_no, start, finish); 
 	}
 	else{
-		list = qdao.getList(); 
+		list = qdao.getList(member_no,auth,start ,finish); 
 	}
-%> 
+ %>
  
  
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -131,7 +132,7 @@
 						<font color="gray">탈퇴한 사용자</font>
 						<%}%>
 				</td>
-				<td><%=qdto.getQna_email()%></td>s
+				<td><%=qdto.getQna_email()%></td>
 				<td><%=qdto.getQna_date()%></td>
 			</tr>
 			<%} %>
@@ -158,7 +159,7 @@
 		이전 버튼을 누르면 startBlock - 1 에 해당하는 페이지로 이동해야 한다
 		(주의) startBlock이 1인 경우에는 출력하지 않는다
 	 -->
-	<%if(startBlock > 1){ %>
+	<% if(startBlock > 1){ %>
 	
 		<%if(!isSearch){ %> 
 			<a href="qna_list.jsp?page=<%=startBlock-1%>">[이전]</a>
@@ -191,8 +192,8 @@
 	<form action="qna_list.jsp" method="get">
 		<!-- 검색분류 -->
 		<select name="type">
-			<option value="board_title">제목</option>
-			<option value="board_writer">작성자</option>
+			<option value="q.qna_title">제목</option>
+			<option value="m.MEMBER_NICK">작성자</option>
 		</select>
 		
 		<!-- 검색어 -->
@@ -202,5 +203,6 @@
 		<input type="submit" value="검색">
 	</form>
 </div>
-
+<script>
+</script>
 <jsp:include page="/template/footer.jsp"></jsp:include>

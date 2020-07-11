@@ -1,3 +1,4 @@
+<%@page import="gamedori.beans.dto.QnaDto"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -11,6 +12,7 @@
  <%
  		MemberDto mdto=(MemberDto)session.getAttribute("userinfo");
  		boolean isAdmin = mdto.getMember_auth().equals("관리자");
+ 		QnaDto qdto=new QnaDto();
  %>
 <jsp:include page="/template/header.jsp"></jsp:include>
 
@@ -24,8 +26,7 @@
 		<table align="center" border="1">
 						<input type="hidden" name="qna_no" value="<%=request.getParameter("qna_no")%>">
 						<input type="hidden" name="member_no" value="<%=mdto.getMember_no()%>">
-	
-
+						<input type="hidden" name="qna_answer" value="<%=qdto.getQna_answer() %>">
 		
 		<thead>
 
@@ -75,14 +76,11 @@
 				<%if(isAdmin){ %>
 				<tr>
 					<th>답변</th>
-					<td>
+					 <td>
 						<textarea name="qna_answer" required rows="15" cols="72"></textarea>
 					</td>
 				</tr>
-
-				<%}else{ %>
-							
-				<%} %>
+				<%}%>
 			</tbody>
 			<tfoot>
 				<tr>

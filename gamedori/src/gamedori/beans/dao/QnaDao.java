@@ -36,13 +36,23 @@ public class QnaDao {
 	}
 	
 	//목록 메소드
-		public List<QnaDto> getList() throws Exception{
+		public List<QnaDto> getList(int member_no, String auth, int start , int finish) throws Exception{
 			Connection con = getConnection();
-			
-			String sql = 
-					"SELECT * FROM qna order by qna_no desc";
-			
+			String sql = "SELECT * FROM( "
+					+ "SELECT ROWNUM rn, T.* FROM( "
+					+ "SELECT * FROM qna q INNER JOIN MEMBER m ON q.MEMBER_NO = m.MEMBER_NO "
+					+ "WHERE (q.member_no=? OR '관리자' = ? ) "
+					+ "ORDER BY qna_no desc "
+					+ ")T "
+				+ ") WHERE rn BETWEEN ? and ?";
 			PreparedStatement ps = con.prepareStatement(sql);
+			
+			ps.setInt(1, member_no);
+			ps.setString(2, auth);
+			ps.setInt(3, start);
+			ps.setInt(4, finish);
+			
+		
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -57,16 +67,24 @@ public class QnaDao {
 		}
 		
 		//검색 메소드
-		public List<QnaDto> search(String type, String keyword) throws Exception{
+		public List<QnaDto> search(String type, String auth, String keyword, int member_no, int start, int finish) throws Exception{
 			Connection con = getConnection();
 			
-			String sql = "SELECT * FROM("
-					+ "WHERE instr(#1, ?) > 0 "
-					+ "order by qna_no desc";
+			String sql = "SELECT * FROM( "
+					+ "SELECT ROWNUM rn, T.* FROM( "
+					+ "SELECT * FROM qna q INNER JOIN MEMBER m ON q.MEMBER_NO = m.MEMBER_NO "
+					+ "WHERE instr(#1, ?) > 0 and (q.member_no=? OR '관리자' = ?) " 
+					+ "ORDER BY qna_no desc "
+					+ ")T "
+				+ ") WHERE rn BETWEEN ? and ?";
 					
 			sql = sql.replace("#1", type);
-			PreparedStatement ps = con.prepareStatement(sql);
+			PreparedStatement ps = con.prepareStatement(sql);			
 			ps.setString(1, keyword);
+			ps.setInt(2, member_no);
+			ps.setString(3,auth);
+			ps.setInt(4, start);
+			ps.setInt(5, finish);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -122,7 +140,7 @@ public class QnaDao {
 					+ "qna_title, "
 					+ "qna_content, "
 					+ "qna_email, "
-					+ "qna_answer, "
+					+ "qna_answer "
 					+ ") "
 					+ "values(?,?, ?, ?, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -150,6 +168,7 @@ public class QnaDao {
 			ps.setInt(1, qna_no);
 			ps.execute();
 			
+			
 			con.close();
 		}
 		
@@ -159,14 +178,14 @@ public class QnaDao {
 			
 			String sql = "UPDATE qna SET "
 								+ "qna_head=?, qna_title=?, qna_content=?, "
-								+ "qna_email "
+								+ "qna_email=?, qna_answer=? " 
 								+ "where qna_no=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, qdto.getQna_head());
 			ps.setString(2, qdto.getQna_title());
 			ps.setString(3, qdto.getQna_content());
 			ps.setString(4, qdto.getQna_email());	
-			ps.setString(5, qdto.getQna_date());
+			ps.setString(5, qdto.getQna_answer());				
 			ps.setInt(6, qdto.getQna_no());
 			ps.execute();
 			
@@ -185,13 +204,19 @@ public class QnaDao {
 			return count;
 		}
 		
-		public int getCount(String type,String keyword) throws Exception{
+		public int getCount(String type,String keyword,int member_no, String auth) throws Exception{
 			Connection con = getConnection();
-			
-			String sql = "select count (*) from qna where instr(#1,?)>0";
-			sql=sql.replace("#1", type);
+			String sql = "SELECT count (*)  FROM qna q INNER JOIN MEMBER m ON q.member_no = m.member_no "
+					+ "WHERE instr(#1, ?) > 0 and (q.member_no= ? or '관리자'=?) "
+					+ "order by qna_no desc";
+					
+			sql = sql.replace("#1", type);
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, keyword);
+			ps.setInt(2, member_no);
+			ps.setString(3, auth);
+			
+			
 			ResultSet rs= ps.executeQuery();
 			rs.next();
 			int count = rs.getInt(1); //또는 rs.getInt("count(*));
@@ -216,3 +241,5 @@ public class QnaDao {
 			return mdto;
 		}
 }
+
+
