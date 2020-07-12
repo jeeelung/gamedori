@@ -32,7 +32,7 @@ import gamedori.beans.dto.FilesDto;
 				}
 				
 				resp.setHeader("Content-Type", "application/octet-stream; charset=UTF-8");
-				resp.setHeader("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(fdto.getFile_name(), "UTF-8")+"\"");
+				resp.setHeader("Content-Disposition", "inline; filename=\""+URLEncoder.encode(fdto.getFile_name(), "UTF-8")+"\"");
 				resp.setHeader("Content-Length", String.valueOf(fdto.getFile_size()));
 				
 				File target = new File("D:/upload/qna", String.valueOf(fdto.getFile_no()));

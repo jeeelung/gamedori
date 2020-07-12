@@ -37,16 +37,17 @@ public class GenreDao {
 	
 	public List<GenreDto> getList() throws Exception{
 		Connection con = getConnection();
-		String sql = "select *from genre ";
+		String sql = "select genre_no, genre_type  from genre ";
 		PreparedStatement ps = con.prepareStatement(sql);
 		
 		ResultSet rs = ps.executeQuery();
 		
 		List<GenreDto> list = new ArrayList<>();
-		while(rs.next()) {
-			GenreDto gdto = new GenreDto(rs);
+		
+		while(rs.next()) {			
+			GenreDto gdto = new GenreDto(rs);			
 			list.add(gdto);
-		}
+		}	
 		
 		con.close();
 		return list;

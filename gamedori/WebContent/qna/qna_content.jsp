@@ -81,6 +81,8 @@
 								<%=fdto.getFile_name()%>
 								(<%=fdto.getFile_size()%> bytes)
 								<!-- 다운로드 버튼을 누른다면 해당 파일을 다운로드 할 수 있도록 링크 -->
+								
+								<embed src="<%=request.getContextPath()%>/resource/game/1.swf" width="100%" height="" allowscriptaccess="never"/>
 								<a href="download.do?file_no=<%=fdto.getFile_no()%>">
 									<input type="button" value="다운로드">
 								</a>

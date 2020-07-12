@@ -31,7 +31,7 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 		
 		String charset = "UTF-8"; // 해석할 인코딩 방식
 		int limit = 10 * 1024 * 1024; // 최대 허용 용량
-		File baseDir = new File("D:/upload/qna");
+		File baseDir = new File("WebContent/resource/game/");
 		baseDir.mkdirs();
 		
 		
@@ -40,11 +40,11 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 		factory.setDefaultCharset(charset);
 		
 		ServletFileUpload utility = new ServletFileUpload(factory);
-		MemberDto user =(MemberDto) req.getSession().getAttribute("userinfo");
+		MemberDto user =(MemberDto) req.getSession().getAttribute("userinfo");		
 		
-
+		
 		Map<String, List<FileItem>> map = utility.parseParameterMap(req);
-	
+		
 		QnaDto qdto = new QnaDto();
 		qdto.setMember_no(Integer.parseInt(map.get("member_no").get(0).getString()));
 		qdto.setQna_head(map.get("qna_head").get(0).getString());
@@ -52,10 +52,7 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 		qdto.setQna_content(map.get("qna_content").get(0).getString());
 		qdto.setQna_email(map.get("qna_email").get(0).getString());
 		qdto.setQna_answer(map.get("qna_answer").get(0).getString());
-		
-		
-		
-		
+				
 		QnaDao qdao = new QnaDao();
 		int qna_no = qdao.getSequence();
 		qdto.setQna_no(qna_no);
