@@ -22,7 +22,7 @@ public class ReplyInsertServlet extends HttpServlet {
 
 		
 			try {
-//				입력 : reply_writer(세션) , reply_content(파라미터) , reply_origin(파라미터)
+//				입력 : member_no(세션) , reply_content(파라미터) 
 				MemberDto user = (MemberDto) req.getSession().getAttribute("userinfo");
 				
 				ReplyDto rdto = new ReplyDto();

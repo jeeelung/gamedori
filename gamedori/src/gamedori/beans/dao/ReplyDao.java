@@ -103,19 +103,20 @@ private static DataSource src;
 					+ "reply_group_no, "
 					+ "reply_depth"
 					+ ") "
-					+ "values(?, ?, ?, sysdate, ?, ?, ?)";
+					+ "values(reply_seq.nextval, ?, ?, sysdate, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, rdto.getReply_no());
-			ps.setInt(2, rdto.getMember_no());
-			ps.setString(3, rdto.getReply_content());
+			ps.setInt(1, rdto.getMember_no());
+			ps.setString(2, rdto.getReply_content());
+			
 			
 			if(rdto.getReply_super_no() == 0) {
-				ps.setNull(4, Types.INTEGER);
+				ps.setNull(3, Types.INTEGER);
 			} else {
-				ps.setInt(4, rdto.getReply_super_no());
+				ps.setInt(3, rdto.getReply_super_no());
 			}
-			ps.setInt(5, rdto.getReply_group_no());
-			ps.setInt(6, rdto.getReply_depth());
+			ps.setInt(4, rdto.getReply_group_no());
+			ps.setInt(5, rdto.getReply_depth());
+			
 			ps.execute();
 			con.close();
 		}
@@ -131,6 +132,7 @@ private static DataSource src;
 			
 			con.close();
 		}
+		//리스트 조회
 		public List<ReplyDto> getList(int start, int finish) throws Exception{
 			Connection con = getConnection();
 			String sql = "SELECT * FROM( "
