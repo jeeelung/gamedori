@@ -11,8 +11,7 @@
  -->
 <%
 MemberDto mdto = (MemberDto)session.getAttribute("userinfo");
-MemberDto mdto2= new MemberDto();
-NoticeDto ndto= new NoticeDto();
+
 %>
  
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -20,8 +19,7 @@ NoticeDto ndto= new NoticeDto();
 
 <div align="center">
 <form action="write.do" method="post" enctype="multipart/form-data">
-<input type="hidden" name="notice_no" value="<%=ndto.getNotice_no()%>">
-<input type="hidden" name="member_no" value="<%=mdto2.getMember_no()%>">
+
 
 
 	
@@ -56,11 +54,11 @@ NoticeDto ndto= new NoticeDto();
 			</tbody>
 			</tbody>
 			<tfoot>
-				<tr>
-					<td colspan="2" align="center">
-						<a href="content.jsp">
-						<input type="submit" value="작성">
-						</a>
+				<tr align="center" >
+					<td colspan="2">
+						<input type="button" value="임시저장">
+						<input type="button" value="미리보기">
+						<input type="submit" value="확인">
 					</td>
 				</tr>
 			</tfoot>

@@ -17,7 +17,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import gamedori.beans.dao.CommunityDao;
 import gamedori.beans.dao.CommunityFileDao;
-import gamedori.beans.dao.NoticeFilesDao;
+import gamedori.beans.dao.FilesDao;
 import gamedori.beans.dto.CommunityDto;
 import gamedori.beans.dto.CommunityFileDto;
 import gamedori.beans.dto.FilesDto;
@@ -62,7 +62,7 @@ public class CommunityWriteServlet extends HttpServlet{
 				
 				if(item.getSize() > 0) { // 파일이 있는 경우
 					
-					NoticeFilesDao fdao = new NoticeFilesDao();
+					FilesDao fdao = new FilesDao();
 					FilesDto fdto = new FilesDto();
 					
 					int file_no = fdao.getSequence();
