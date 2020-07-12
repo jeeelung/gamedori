@@ -66,7 +66,7 @@ public class FAQDao {
 		Connection con = getConnection();
 		
 		String sql = 
-							" select * from (select rownum rn, T.* from(SELECT * FROM FAQ "
+							" select * from (select rownum rn, T.* from(SELECT f.*, m.member_nick FROM FAQ f  inner join member m on f.member_no = m.member_no "
 								+ "WHERE instr(#1, ?) > 0 "
 								+ "ORDER BY FAQ_no desc)T )where rn between ? and ?";
 		sql = sql.replace("#1", type);
@@ -182,7 +182,7 @@ public class FAQDao {
 	public int getCount(String type, String keyword) throws Exception{
 		Connection con = getConnection();
 		
-		String sql = "SELECT count(*) FROM FAQ WHERE instr(#1, ?) > 0";
+		String sql = "SELECT count(*) FROM FAQ f inner join member m on f.member_no = m.member_no WHERE instr(#1, ?) > 0";
 		sql = sql.replace("#1", type);
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);

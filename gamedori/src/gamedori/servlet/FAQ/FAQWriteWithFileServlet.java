@@ -57,6 +57,7 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 //			MemberDto user = (MemberDto) req.getSession().getAttribute("userinfo");
 //			fdto.getMember_no(Integer.parseInt(user.getMember_no()));
 			MemberDto user =(MemberDto) req.getSession().getAttribute("userinfo");
+			System.out.println(user.getMember_no());
 			fdto.setMember_no((user.getMember_no()));
 
 //			7. 작성할 게시글의 번호를 미리 가져온다.

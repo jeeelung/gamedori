@@ -210,7 +210,7 @@
 		<!-- 검색분류 -->
 		<select name="type">
 			<option value="faq_title">제목만</option>
-			<option value="member_no">닉네임</option>
+			<option value="member_nick">닉네임</option>
 		</select>
 		<!-- 검색어 -->
 		<input type="text" name="keyword" required>
