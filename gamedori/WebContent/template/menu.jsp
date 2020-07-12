@@ -22,7 +22,7 @@
 	<%} %>
 
 	<a href="#">공지사항</a>
-	<a href="#">커뮤니티</a>
+	<a href="<%=rootPath%>/community/list.jsp">커뮤니티</a>
 	<a href="#">이벤트</a>
 	<a href="<%=rootPath%>/faq/list.jsp">FAQ</a>
 	<a href="#">1:1문의</a>	

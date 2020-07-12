@@ -20,15 +20,13 @@
 
 %>
 
-
-
 <jsp:include page="/template/header.jsp"></jsp:include>
 
 <div align="center">
 
 	<h2>내정보</h2>
 
-	<table border="1" width="500">
+	<table width="400">
 
 		<tbody>
 		<tr>
@@ -68,7 +66,7 @@
 		</tbody>
 	</table>
 	
-	<h5><a href="logout.do">로그 아웃</a></h5>
+	<h5><a href="logout.do">로그아웃</a></h5>
 	
 <!-- 	check.jsp 로 보낼 때에는 최종 목적지를 go 라는 이름의 파라미터로 추가해야 한다 -->
 	
