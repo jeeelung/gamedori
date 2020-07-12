@@ -12,7 +12,11 @@ public class ReplyDto {
 	private int reply_super_no;
 	private int reply_group_no;
 	private int reply_depth;
+
 	
+	
+
+
 	public int getReply_no() {
 		return reply_no;
 	}
@@ -67,7 +71,7 @@ public class ReplyDto {
 		this.setReply_super_no(rs.getInt("reply_super_no"));
 		this.setReply_group_no(rs.getInt("reply_group_no"));
 		this.setReply_depth(rs.getInt("reply_depth"));
-	
+		
 	}
 	
 	
