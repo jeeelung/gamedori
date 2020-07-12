@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 
 import gamedori.beans.dao.CommunityFileDao;
-import gamedori.beans.dao.FilesDao;
+import gamedori.beans.dao.NoticeFilesDao;
 import gamedori.beans.dto.FilesDto;
 @WebServlet(urlPatterns = "/community/download.do")
 public class CommunityFileDownloadServlet extends HttpServlet{
@@ -23,7 +23,7 @@ public class CommunityFileDownloadServlet extends HttpServlet{
 		try {
 			int file_no = Integer.parseInt(req.getParameter("file_no"));
 			
-			FilesDao fdao = new FilesDao();
+			NoticeFilesDao fdao = new NoticeFilesDao();
 			FilesDto fdto = fdao.get(file_no);
 			
 			if(fdto == null) {

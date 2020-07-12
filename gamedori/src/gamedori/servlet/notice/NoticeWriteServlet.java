@@ -15,12 +15,12 @@ import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
-import gamedori.beans.dao.FilesDao;
+import gamedori.beans.dao.NoticeFilesDao;
 import gamedori.beans.dao.NoticeDao;
 import gamedori.beans.dto.FilesDto;
 import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.NoticeDto;
-import gamedori.beans.dto.NoticeFileDto;
+import gamedori.beans.dto.NoticeFilesDto;
 
 @WebServlet(urlPatterns = "/notice/write.do")
 public class NoticeWriteServlet extends HttpServlet {
@@ -62,7 +62,7 @@ public class NoticeWriteServlet extends HttpServlet {
 				
 				if(item.getSize() > 0) { // 파일이 있는 경우
 					
-					FilesDao fdao = new FilesDao();
+					NoticeFilesDao fdao = new NoticeFilesDao();
 					FilesDto fdto = new FilesDto();
 					
 					int file_no = fdao.getSequence();
@@ -72,7 +72,7 @@ public class NoticeWriteServlet extends HttpServlet {
 					fdto.setFile_type(item.getContentType());
 					fdao.save(fdto);
 					
-					NoticeFileDto nfdto = new NoticeFileDto();
+					NoticeFilesDto nfdto = new NoticeFilesDto();
 					nfdto.setNotice_no(notice_no);
 					nfdto.setFile_no(file_no);
 					

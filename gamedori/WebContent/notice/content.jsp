@@ -1,4 +1,4 @@
-<%@page import="gamedori.beans.dto.NoticeFileDto"%>
+<%@page import="gamedori.beans.dto.NoticeFilesDto"%>
 <%@page import="java.util.List"%>
 <%@page import="gamedori.beans.dao.MemberDao"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>

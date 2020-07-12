@@ -11,8 +11,9 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import gamedori.beans.dto.FilesDto;
+import gamedori.beans.dto.NoticeFilesDto;
 
-public class FilesDao {
+public class NoticeFilesDao {
 
 	private static DataSource src;
 	static {
@@ -45,14 +46,14 @@ public class FilesDao {
 	}
 	
 	// 파일정보 업로드 메소드
-	public void save(FilesDto fdto) throws Exception{
+	public void save(NoticeFilesDto nfdto) throws Exception{
 		Connection con = getConnection();
 		String sql = "INSERT INTO files values(?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, fdto.getFile_no());
-		ps.setString(2, fdto.getFile_name());
-		ps.setLong(3, fdto.getFile_size());
-		ps.setString(4, fdto.getFile_type());
+		ps.setInt(1, nfdto.getFile_no());
+		ps.setString(2, nfdto.getFile_name());
+		ps.setLong(3, nfdto.getFile_size());
+		ps.setString(4, nfdto.getFile_type());
 		
 		ps.execute();
 		

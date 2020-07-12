@@ -3,16 +3,16 @@ package gamedori.beans.dto;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class NoticeFileDto {
+public class NoticeFilesDto {
 	private int notice_no;
 	private int file_no;
 	
 
-	public NoticeFileDto() {
+	public NoticeFilesDto() {
 		super();
 	}
 	
-	public NoticeFileDto(ResultSet rs) throws SQLException {
+	public NoticeFilesDto(ResultSet rs) throws SQLException {
 		this.setNotice_no(rs.getInt("notice_no"));
 		this.setFile_no(rs.getInt("file_no"));
 	}
