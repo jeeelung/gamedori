@@ -66,7 +66,7 @@ public class FAQFileDao {
 	}
 	public void deleteFile(int file_no) throws Exception{
 		Connection con = getConnection();
-		String sql = "delete from faq_file where file_no=?";
+		String sql = "delete from files where file_no=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, file_no);
 		ps.execute();
