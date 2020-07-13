@@ -15,8 +15,8 @@ import org.apache.commons.io.FileUtils;
 import gamedori.beans.dao.FilesDao;
 import gamedori.beans.dao.GameFileDao;
 import gamedori.beans.dto.FilesDto;
-@WebServlet(urlPatterns = "/game/download.do")
-public class GameDownloadServlet extends HttpServlet{
+@WebServlet(urlPatterns = "/game/fileDownload.do")
+public class GameFileDownloadServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
@@ -37,7 +37,7 @@ public class GameDownloadServlet extends HttpServlet{
 			resp.setHeader("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(fdto.getFile_name(), "UTF-8")+"\"");
 			resp.setHeader("Content-Length", String.valueOf(fdto.getFile_size()));
 			
-			File target = new File("D:/upload/game", String.valueOf(fdto.getFile_no()));
+			File target = new File("D:/upload/game/file", String.valueOf(fdto.getFile_no()));
 			byte[] data = FileUtils.readFileToByteArray(target);
 			resp.getOutputStream().write(data); // 사용자에게 전송
 			

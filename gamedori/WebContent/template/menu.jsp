@@ -50,7 +50,7 @@
 </div>
 <%}%>
 <ul class="menu">
-	<li><a href="#">최신게임</a></li>
+	<li><a href="<%=rootPath%>/game/latestlist.jsp">최신게임</a></li>
 	<li><a href="#">인기게임</a></li>
 	<li><a href="#">장르별</a></li>
 	<li><a href="#">브랜드별</a>

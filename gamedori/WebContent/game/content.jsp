@@ -38,7 +38,7 @@
             </div>
 			<div class="row-empty"></div>
 			<div class="row">
-				<embed width="80%" height="500" src="download.do?game_no=<%=game_no%>" quality="high" align="middle">
+				<embed width="80%" height="500" src="fileDownload.do?game_no=<%=game_no%>" quality="high" align="middle">
 				</embed>
 			</div>
         </article>
