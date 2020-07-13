@@ -81,26 +81,26 @@
                 <div class="row left">
                     <label for="game_file">게임 파일</label> <span>*</span>
                 </div>
-                <div class="left">
+                <div class="file-wrap left">
                     <input type="file" id="game_file" name="game_file" accept=".swf">
                 </div>
-                <hr>
+                <hr class="line">
                 <div class="row-empty"></div>
                 <!-- 게임 이미지 파일 업로드 -->
                 <div class="row left">
                     <label for="game_img">게임 이미지</label> <span>*</span>
                 </div>
-                <div class="row left">
+                <div class="file-wrap row left">
                     <input type="file" id="game_img" name="game_img" accept=".jpg, .png, .gif" onchange="preview();">
                     <!-- 이미지 미리보기가 추가될 영역 -->
                 <div class="preview-wrap"></div>
                 </div>
-                <hr>
+                <hr class="line">
                 <div class="row-empty"></div>
                 <div class="row-empty"></div>
                 <div class="row center">
                     <input type="hidden" name="member_no" value="<%=mdto.getMember_no()%>">
-                    <input type="submit" value="등록">
+                    <input class="form-btn" type="submit" value="등 록">
                     <!-- 작성자 정보 전송 -->
                 </div>
             </article>
