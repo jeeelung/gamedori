@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import gamedori.beans.dto.EventFileDto;
 import gamedori.beans.dto.EventboardDto;
 import gamedori.beans.dto.MemberDto;
+import gamedori.beans.dto.event_participateDto;
 
 
 public class EventboardDao {
@@ -112,7 +113,27 @@ public class EventboardDao {
 	 		return mdto;
 	 		}
 
-	
+	 	//이벤트 참여
+		public EventboardDto getPartici_no(int event_no) throws Exception {
+	 		Connection con = getConnection();
+	 		String sql = "SELECT e.* " + "FROM event e INNER JOIN event_partici ep " + "ON e.event_no = ep.event_no "
+	 					+ "WHERE ep.event_no = ?";
+	 		PreparedStatement ps = con.prepareStatement(sql);
+	 		ps.setInt(1, event_no);
+	 		ResultSet rs = ps.executeQuery();
+
+	 		EventboardDto edto = rs.next() ? new EventboardDto(rs) : null;
+
+	 		con.close();
+
+	 		return edto;
+	 		}
+
+
+	 	
+	 	
+	 	
+	 	
 	
 	// 조회수 서블릿
 	 	public void plusReadcount(int event_no, int member_no) throws Exception {

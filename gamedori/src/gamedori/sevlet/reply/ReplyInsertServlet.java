@@ -30,10 +30,8 @@ public class ReplyInsertServlet extends HttpServlet {
 				
 				rdto.setMember_no(user.getMember_no());
 				rdto.setReply_content(req.getParameter("reply_content"));
+				rdto.setOrigin_no(Integer.parseInt(req.getParameter("origin_no")));
 				
-				if(req.getParameter("reply_no") != null) {
-					rdto.setReply_super_no(Integer.parseInt(req.getParameter("reply_no")));
-				}
 				
 				
 				ReplyDao rdao = new ReplyDao();
@@ -44,7 +42,7 @@ public class ReplyInsertServlet extends HttpServlet {
 				
 				
 //				출력 : 
-				resp.sendRedirect("content.jsp?board_no="+rdto.getReply_no());
+				resp.sendRedirect("content.jsp?community_no="+rdto.getOrigin_no());
 			}
 			catch(Exception e) {
 				e.printStackTrace();

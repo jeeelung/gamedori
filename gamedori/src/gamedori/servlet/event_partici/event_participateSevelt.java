@@ -19,9 +19,7 @@ import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.event_participateDto;
 
 
-
-
-@WebServlet(urlPatterns = "/eventboard/partici.do")
+@WebServlet(urlPatterns = "/eventboard/event.do")
 public class event_participateSevelt extends HttpServlet {
 
 @Override
@@ -29,20 +27,22 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 
 		try {
 			
+			String go = req.getParameter("io"); 
+			
 			event_participateDto epdto = new event_participateDto();
-			
-			MemberDto mdto = (MemberDto) req.getSession().getAttribute("no");
-			EventboardDto edto= (EventboardDto) req.getSession().getAttribute("event");
-			
-			edto.setEvent_no(edto.getEvent_no());
-			mdto.setMember_no(mdto.getMember_no());
-			
 			event_participateDao epdao= new event_participateDao();
-			int event_partici_no = epdao.getSequence();
-			epdto.setEvent_partici_no(event_partici_no);
+			
+			MemberDto mdto = (MemberDto) req.getSession().getAttribute("userinfo");
+			mdto.setMember_no(Integer.parseInt("member_no"));
+			 
+			EventboardDto edto= new EventboardDto();
+			edto.setEvent_no(Integer.parseInt("event_no"));
 			
 			epdao.joinEvent(epdto);
 			
+			resp.sendRedirect("Eventresult.jsp");
+		
+					
 		}
 		
 		catch (Exception e ) {

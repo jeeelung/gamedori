@@ -48,7 +48,7 @@ private static DataSource src;
 			con.close();
 			return seq;
 		}
-	//단일 조화
+	//단일 조회
 		public ReplyDto get(int reply_no) throws Exception {
 			Connection con = getConnection();
 			String sql = "SELECT * FROM reply WHERE reply_no = ?";
@@ -84,13 +84,7 @@ private static DataSource src;
 	
 		// 게시물 등록 메소드
 		public void write(ReplyDto rdto) throws Exception{
-			if(rdto.getReply_super_no() == 0) {
-				rdto.setReply_group_no(rdto.getReply_no());
-			} else {
-				ReplyDto find = this.get(rdto.getReply_super_no());
-				rdto.setReply_group_no(find.getReply_group_no());
-				rdto.setReply_depth(find.getReply_depth()+1);
-			}
+		
 			
 			Connection con = getConnection();
 			String sql = "INSERT INTO reply"
@@ -99,23 +93,14 @@ private static DataSource src;
 					+ "member_no, "
 					+ "reply_content, "
 					+ "reply_date, "
-					+ "reply_super_no, "
-					+ "reply_group_no, "
-					+ "reply_depth"
+					+ "origin_no"
 					+ ") "
-					+ "values(reply_seq.nextval, ?, ?, sysdate, ?, ?, ?)";
+					+ "values(?, ?, ?, sysdate, ?)";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, rdto.getMember_no());
-			ps.setString(2, rdto.getReply_content());
-			
-			
-			if(rdto.getReply_super_no() == 0) {
-				ps.setNull(3, Types.INTEGER);
-			} else {
-				ps.setInt(3, rdto.getReply_super_no());
-			}
-			ps.setInt(4, rdto.getReply_group_no());
-			ps.setInt(5, rdto.getReply_depth());
+			ps.setInt(1, rdto.getReply_no());
+			ps.setInt(2, rdto.getMember_no());
+			ps.setString(3, rdto.getReply_content());
+			ps.setInt(4, rdto.getOrigin_no());
 			
 			ps.execute();
 			con.close();
@@ -133,27 +118,30 @@ private static DataSource src;
 			con.close();
 		}
 		//리스트 조회
-		public List<ReplyDto> getList(int start, int finish) throws Exception{
+		public List<ReplyDto> getList(int reply_origin) throws Exception{
 			Connection con = getConnection();
-			String sql = "SELECT * FROM( "
-						+ "SELECT ROWNUM rn, T.* FROM( "
-						+ "SELECT * FROM reply "
-						+ "CONNECT BY PRIOR reply_no = reply_super_no "  
-						+ "START WITH reply_super_no IS NULL " 
-						+ "ORDER SIBLINGS BY reply_group_no DESC, reply_no ASC"
-						+ ")T"
-					+ ") WHERE rn BETWEEN ? and ?";
+			
+			String sql = "SELECT * FROM reply "
+								+ "WHERE reply_origin=? "
+								+ "ORDER BY reply_no ASC";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, start);
-			ps.setInt(2, finish);
+			ps.setInt(1, reply_origin);
 			ResultSet rs = ps.executeQuery();
 			
-			List<ReplyDto> list = new ArrayList<ReplyDto>();
+			List<ReplyDto> list = new ArrayList<>();
 			while(rs.next()) {
+//				ReplyDto rdto = new ReplyDto();
+//				rdto.setReply_no(rs.getInt("reply_no"));
+//				rdto.setMember_no(rs.getInt("Member_no"));
+//				rdto.setReply_content(rs.getString("reply_content"));
+//				rdto.setReply_date(rs.getString("reply_date"));
+//				rdto.setReply_origin(rs.getInt("reply_origin"));
 				ReplyDto rdto = new ReplyDto(rs);
-				list.add(rdto);
+				list.add(rdto);			
 			}
+			
 			con.close();
+			
 			return list;
 		}
 }

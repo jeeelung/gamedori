@@ -1,3 +1,4 @@
+<%@page import="gamedori.beans.dto.event_participateDto"%>
 <%@page import="gamedori.beans.dao.event_participateDao"%>
 <%@page import="gamedori.beans.dto.FilesDto"%>
 <%@page import="gamedori.beans.dao.EventFileDao"%>
@@ -13,8 +14,10 @@
 <%
 EventboardDao edao = new EventboardDao();
 int event_no = Integer.parseInt(request.getParameter("event_no"));
-event_participateDao epdao= new event_participateDao();
-int event_partici_no = Integer.parseInt(request.getParameter("event_partici_no"));
+
+event_participateDao epdao =new event_participateDao();
+
+
 // 조회수 계산
 //- session에 memory라는 저장소 정보를 추출한다 (없을 수도 있으므로)
 Set<Integer> memory = (Set<Integer>)session.getAttribute("memory");
@@ -27,6 +30,8 @@ if(memory == null){
 boolean isFirst = memory.add(event_no);
 //System.out.println(memory);
 session.setAttribute("memory", memory);
+//- memory에 현재 event_parti 번호 저장.
+event_participateDto epdto= new event_participateDto();
 
 // Board_no를 이용하여 조회수를 증가시킨다
 // 반드시 BoardDto 를 가져오기 전에 증가시켜야 함
@@ -37,6 +42,7 @@ if(isFirst){
 }
 // 번호에 맞는 게시물 정보 불러오기
 EventboardDto edto = edao.get(event_no);
+
 
 // 작성자 정보 불러오기
 //System.out.println(cdto);
@@ -54,11 +60,7 @@ boolean isMine = user.getMember_id().equals(mdto.getMember_id());
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
 <script language="event">
-function bu(){
 
-		alert('이벤트에 참여하셨습니다.');
-
-	}
 </script>
 
 
@@ -127,9 +129,12 @@ function bu(){
 						<input type="button" value="글쓰기">
 					</a>
 			
-				<%if(isAdmin || isMine){%>
 					
-					<a href="<%=request.getContextPath() %>/eventboard/partici.do?event_partici_no=<%=event_partici_no %>" >
+				<%if(isAdmin || isMine){%>
+					<a href = "<%=request.getContextPath()%>/eventboard/Eventresult.jsp? io=<%=request.getContextPath() %>/eventboard/event.do?event_no=<%=edto.getEvent_no() %>">
+					<input type = "button" value= "이벤트 참여">
+					</a>
+					
 					
 					<a href="EventEdit.jsp?event_no=<%=event_no%>">
 						<input type="button" value="수정">

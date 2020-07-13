@@ -214,5 +214,24 @@ public class CommunityDao {
 		con.close();
 		return count;
 	}
+	
+	//댓글 카운트
+	public void editReplycount(int community_no) throws Exception {
+		Connection con = getConnection();
+		
+		String sql = "UPDATE community "
+							+ "SET community_replycount = ("
+								+ "SELECT count(*) FROM reply WHERE reply_origin = ?"
+							+ ") "
+							+ "WHERE community_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, community_no);
+		ps.setInt(2, community_no);
+		ps.execute();
+		
+		con.close();
+	}
+	
+	
 
 }

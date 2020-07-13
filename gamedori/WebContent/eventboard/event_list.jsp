@@ -163,8 +163,8 @@ else{
 		<form action="event_list.jsp" method="get">
 			<!-- 검색분류 -->
 			<select class="form-input form-inline" name="type">
-				<option value="event_title">제목만</option>
-				<option value="member_id">글작성자</option>
+				<option value="event_title">제목</option>
+			
 			</select>
 			
 			<!-- 검색어 -->
