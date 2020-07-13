@@ -83,11 +83,11 @@ public class CommunityDto {
 	
 	// 날짜 자동 변환 메소드
 	public String getCommu_time() {
-		return commu_date.substring(0, 10);
+		return commu_date.substring(11, 16);
 	}
 	
 	public String getCommu_day() {
-		return commu_date.substring(11, 16);
+		return commu_date.substring(0, 10);
 	}
 	
 	public String getCommu_auto() {
