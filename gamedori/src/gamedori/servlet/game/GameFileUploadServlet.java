@@ -25,28 +25,31 @@ import gamedori.beans.dto.GameFileDto;
 import gamedori.beans.dto.GameImgDto;
 
 @WebServlet(urlPatterns = "/game/upload.do")
-public class GameUploadServlet extends HttpServlet{
+public class GameFileUploadServlet extends HttpServlet{
 protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
 		
 		try {
 			
 			String charset = "UTF-8"; // 해석할 인코딩 방식
 			int limit = 10 * 1024 * 1024; // 최대 허용 용량
-			File baseDir = new File("D:/upload/game");
-			baseDir.mkdirs();
+			File fileBaseDir = new File("D:/upload/game");
+			fileBaseDir.mkdirs();
 			
-			DiskFileItemFactory factory = new DiskFileItemFactory(limit, baseDir);
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			factory.setSizeThreshold(limit);
 			factory.setDefaultCharset(charset);
+			factory.setRepository(fileBaseDir);
 			
-			ServletFileUpload utility = new ServletFileUpload(factory);
+			ServletFileUpload utility = new ServletFileUpload();
+			utility.setFileItemFactory(factory);			
 			
 			Map<String, List<FileItem>> map = utility.parseParameterMap(req);
 			
+			// 게임 테이블에 정보 전송
 			GameDto gdto = new GameDto();
 			gdto.setMember_no(Integer.parseInt(map.get("member_no").get(0).getString()));
 			gdto.setGame_name(map.get("game_name").get(0).getString());
 			gdto.setGame_intro(map.get("game_intro").get(0).getString());
-			
 			
 			GameDao gdao = new GameDao();
 			int game_no = gdao.getSequence();
@@ -54,7 +57,7 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 			
 			gdao.write(gdto);
 			
-			// 게임 파일 업로드
+			// 게임 파일 꺼내기
 			List<FileItem> fileList = map.get("game_file");
 			
 			for(FileItem item : fileList) {
@@ -78,11 +81,16 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 					GameFileDao gfdao = new GameFileDao();
 					gfdao.save(gfdto);
 					
-					File target = new File(baseDir, String.valueOf(file_no));
+					File target = new File(fileBaseDir+"/file", String.valueOf(file_no));
 					item.write(target);
 				}
 			}
 			
+			// 이미지 파일 경로 설정
+			File imgBaseDir = new File("D:/upload/game/img");
+			imgBaseDir.mkdirs();
+			
+			// 이미지 파일 꺼내기
 			List<FileItem> imgList = map.get("game_img");
 			
 			for(FileItem item : imgList) {
@@ -100,12 +108,11 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 					gidto.setGame_img_type(item.getContentType());
 					gidao.save(gidto);
 					
-					File target = new File(baseDir, String.valueOf(game_img_no));
+					File target = new File(fileBaseDir+"/img", String.valueOf(game_img_no));
 					item.write(target);
 				}
 			}
-			//resp.sendRedirect("content.jsp?commu_no="+commu_no);
-			System.out.println("성공");
+			resp.sendRedirect("content.jsp?game_no="+game_no);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

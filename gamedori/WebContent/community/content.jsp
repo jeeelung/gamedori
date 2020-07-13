@@ -101,6 +101,7 @@
 								<%=fdto.getFile_name()%>
 								</a>
 								(<%=fdto.getFile_size()%> bytes)
+								<img src="download.do?file_no=<%=fdto.getFile_no()%>" width="50" height="50">
 							</li>
 							<%}%>
 						</ul>

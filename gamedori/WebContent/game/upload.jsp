@@ -79,7 +79,7 @@
                 <div class="row-empty"></div>
                 <!-- 게임파일 업로드 -->
                 <div class="row left">
-                    <label for="game_img">게임 파일</label> <span>*</span>
+                    <label for="game_file">게임 파일</label> <span>*</span>
                 </div>
                 <div class="left">
                     <input type="file" id="game_file" name="game_file" accept=".swf">
