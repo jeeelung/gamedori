@@ -58,5 +58,4 @@ public class GameDao {
 		ps.execute();
 		con.close();
 	}
-	
 }

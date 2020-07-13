@@ -59,4 +59,15 @@ public class GameImgDao {
 			
 			con.close();
 		}
+		public GameImgDto get(int game_img_no) throws Exception {
+			Connection con = getConnection();
+			String sql = "SELECT * FROM game_img WHERE game_img_no = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, game_img_no);
+			ResultSet rs = ps.executeQuery();
+			
+			GameImgDto gidto = rs.next()? new GameImgDto(rs): null;
+			con.close();
+			return gidto;
+		}
 }

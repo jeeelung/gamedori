@@ -1,6 +1,8 @@
 package gamedori.beans.dto;
 
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GameWriterDto {
 	private int game_no;
@@ -53,6 +55,23 @@ public class GameWriterDto {
 
 	public String getGame_date() {
 		return game_date;
+	}
+	
+	public String getGame_time() {
+		return game_date.substring(11, 16);
+	}
+	
+	public String getGame_day() {
+		return game_date.substring(0, 10);
+	}
+	
+	public String getGame_auto() {
+		String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		if(getGame_day().equals(today)) {
+			return getGame_time();
+		} else {
+			return getGame_day();
+		}
 	}
 
 	public void setGame_date(String game_date) {
