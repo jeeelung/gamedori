@@ -31,7 +31,7 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 		
 		String charset = "UTF-8"; // 해석할 인코딩 방식
 		int limit = 10 * 1024 * 1024; // 최대 허용 용량
-		File baseDir = new File("WebContent/resource/game/");
+		File baseDir = new File("D:/upload/image");
 		baseDir.mkdirs();
 		
 		

@@ -46,8 +46,7 @@ public class QnaDao {
 					+ ")T "
 				+ ") WHERE rn BETWEEN ? and ?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			
-			ps.setInt(1, member_no);
+			ps.setInt(1,member_no);
 			ps.setString(2, auth);
 			ps.setInt(3, start);
 			ps.setInt(4, finish);
@@ -192,10 +191,13 @@ public class QnaDao {
 			con.close();
 		}
 		//개수 조회 메소드
-		public int getCount() throws Exception{
+		public int getCount(int member_no,String auth) throws Exception{
 			Connection con = getConnection();
-			String sql="select count(*) from qna";
+			String sql="select count(*) from qna q inner join member m ON m.member_no=q.Member_no WHERE (q.member_no=? OR '관리자'=?)";
+
 			PreparedStatement ps=con.prepareStatement(sql);
+			ps.setInt(1, member_no);
+			ps.setString(2,auth);
 			ResultSet rs= ps.executeQuery();
 			rs.next();
 			int count =rs.getInt(1); //또는 rs.getInt ("count(*)");

@@ -20,6 +20,8 @@
 	
 	MemberDto user=(MemberDto)session.getAttribute("userinfo");
 	
+	
+	boolean isMine = user.getMember_id().equals(user.getMember_id());
 	boolean isSearch = type != null && keyword != null;
 	boolean isAdmin = user.getMember_auth().equals("관리자");
 	String auth = user.getMember_auth();
@@ -64,7 +66,7 @@
 		count = qdao.getCount(type, keyword,member_no,auth); 
 	}
 	else{//목록
-		count = qdao.getCount();
+		count = qdao.getCount(member_no,auth);
 	}
 	int pageCount = (count + pageSize - 1) / pageSize;
 	//만약 finishBlock이 pageCount보다 크다면 수정해야 한다
@@ -90,7 +92,7 @@
 	
 	
 	<!-- 제목 -->
-	<h2>문의 게시판</h2>
+	<h2>나의 문의 내역</h2>
 	
 	<!-- 테이블 -->
 	<table border="1" width="90%">
@@ -104,6 +106,7 @@
 			
 			</tr>
 		</thead>
+		<%if(isMine){ %>
 		<tbody align="center">
 			<%for(QnaDto qdto : list){ %>
 		<% MemberDto mdto=qdao.getWriter(qdto.getMember_no());%>	
@@ -144,14 +147,12 @@
 			
 		</tfoot>
 	</table>
-						<%if(!isAdmin){ %>
 						<div>
 					<br>
 					<a href="qna_write.jsp" >
 						<input type="button"  style="WIDTH: 100pt; HEIGHT: 30pt" value="1:1 문의하기" >
 					</a>
 </div>
-	<%} %>
 	<!-- 네비게이터 -->
 	<h4>
 	
@@ -186,6 +187,9 @@
 			<a href="qna_list.jsp?page=<%=finishBlock + 1%>&type=<%=type%>&keyword=<%=keyword%>">[다음]</a>
 		<%} %>
 	<%} %>
+	<%} %>
+	
+	
 	</h4>
 	
 	<!-- 검색창 -->

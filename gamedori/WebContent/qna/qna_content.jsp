@@ -33,39 +33,46 @@
 		<table align="center" border="1" width="60%">
 			<thead>
 				<tr>
-					<!-- 말머리 및 제목 -->
-					<th>
-						<%=qdto.getQna_head() == null? "":"["+qdto.getQna_head()+"]"%><%=qdto.getQna_title()%>
+						<th Colspan="2">
+						<%if(qdto.getQna_head() != null){ %>
+					<!-- 말머리는 있을 경우만 출력 -->
+						[<%=qdto.getQna_head()%>]<%=qdto.getQna_title() %>
+						<%} %>
 					</th>
 				</tr>
 				<tr>
 					<!-- 작성자 및 권한 -->
 					<th>
 						작성자
-						<%if(user != null) {%>
+					<td>	<%if(user != null) {%>
 						<%=user.getMember_nick()%>
 						 <font color="gray"><%=mdto.getMember_auth()%></font>
 						
 						<%} else { %>
 						<font color="gray">탈퇴한 사용자</font>
-						<%}%>
+						<%}%> 
 						
+						</td>
 					</th>
 				</tr>
 				<tr>
-					<!-- 작성 일 -->
 					<th>
-						작성 일<%=qdto.getQna_date()%>
+						작성 일<td><%=qdto.getQna_date()%></td>
 					</th>
 				</tr>
 				
-			</thead>
+				<tr>
+					<th>이메일</th>
+					<td>
+						 <%=qdto.getQna_email()%>
+					</td>
+				</tr>
+				</thead>
 			<tbody>
 				<tr>
 					<!-- 게시물 내용 -->
 					<td><%=qdto.getQna_content()%></td>
 				</tr>
-				<!-- 첨부파일 -->
 				<!-- 첨부파일 출력 영역 : 첨부파일이 있는 경우만 출력 -->
 				<%if(!fileList.isEmpty()){%>
 				<tr>
@@ -82,7 +89,6 @@
 								(<%=fdto.getFile_size()%> bytes)
 								<!-- 다운로드 버튼을 누른다면 해당 파일을 다운로드 할 수 있도록 링크 -->
 								
-								<embed src="<%=request.getContextPath()%>/resource/game/1.swf" width="100%" height="" allowscriptaccess="never"/>
 								<a href="download.do?file_no=<%=fdto.getFile_no()%>">
 									<input type="button" value="다운로드">
 								</a>
@@ -93,12 +99,10 @@
 				</tr>
 				<%}if(!qdto.getQna_answer().equals("null")){ %>
 				<tr>
-					<!--답변 -->
 					<td><%=qdto.getQna_answer()%></td>
 				</tr>
 				<%} %>
 			</tbody>
-			
 		</table>
 		<br>
 		<%if(!isAdmin){ %>
@@ -107,7 +111,7 @@
 		</a>
 		<% }%>
 		<%if(isAdmin){ %>
-			<a href=" qna_edit.jsp?qna_no=<%=qdto.getQna_no() %>">
+			<a href=" qna_answer.jsp?qna_no=<%=qdto.getQna_no() %>">
 				<input type="button" value=" 답변하기">
 			</a>
 		
