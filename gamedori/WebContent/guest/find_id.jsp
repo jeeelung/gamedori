@@ -9,33 +9,27 @@
 	
 	<form action="find_id.do" method="post">
 		<table border="0">
-			<tbody>
+		
 				<tr>
 					<th>이름</th>
 					<td>
-						<input type="text" name="member_name" required>
+						<input type="text" name="member_name">
 					</td>
 				</tr>
+				
 				<tr>
 					<th>전화번호</th>
 					<td>
 						<input type="text" name="member_phone" required>
 					</td>
 				</tr>
-				<tr>
-					<th>닉네임</th>
-					<td>
-						<input type="text" name="member_nick" required>
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
+			
 				<tr>
 					<td align="center" colspan="2">
 						<input type="submit" value="찾기">
 					</td>
 				</tr>
-			</tfoot>
+
 		</table>
 	</form>
 	

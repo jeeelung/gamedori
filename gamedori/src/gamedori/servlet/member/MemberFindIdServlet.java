@@ -11,21 +11,37 @@ import javax.servlet.http.HttpServletResponse;
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dto.MemberDto;
 
+
+
+
+
 @WebServlet(urlPatterns = "/guest/find_id.do")
 public class MemberFindIdServlet extends HttpServlet{
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		try {
-			//입력 : member_nick , member_phone , member_birth  -----> MemberDto
+		
 			req.setCharacterEncoding("UTF-8");
 			MemberDto mdto = new MemberDto();
-			mdto.setMember_nick(req.getParameter("member_nick"));
-			mdto.setMember_phone(req.getParameter("member_phone"));
+			
 			mdto.setMember_name(req.getParameter("member_name"));
+			mdto.setMember_phone(req.getParameter("member_phone"));
+			
+			System.out.println("member_name = " + req.getParameter("member_name"));
+			System.out.println("mamber_phone = " + req.getParameter("member_phone"));
 			
 			//처리
 			MemberDao mdao = new MemberDao();
+			
 			String member_id = mdao.findId(mdto);
+			
+			
+			
+			System.out.println("아이디 = " + member_id);
+		
+			
 			
 			//출력
 			if(member_id != null) {//결과가 있으면(정보가 맞다면)
@@ -42,5 +58,10 @@ public class MemberFindIdServlet extends HttpServlet{
 			e.printStackTrace();
 			resp.sendError(500);
 		}
+		
 	}
+		
+		
+		
+	
 }

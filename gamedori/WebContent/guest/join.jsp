@@ -7,7 +7,7 @@
 	
 	<h2>회원가입</h2>
 	
-	<form action="join.do">
+	<form action="join.do" method="post">
 		<table border="0">
 			<tbody>
 			<tr>

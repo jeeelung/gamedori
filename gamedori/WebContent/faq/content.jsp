@@ -24,7 +24,19 @@
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
-
+<style>
+.line{
+	border: 1px solid black;
+}
+.content{
+	width: 100%;
+	text-align: center;
+	margin: auto;
+}
+.h-170 {
+	height: 170px;
+}
+</style>
 <div align="center">
 <form>
 	<h2>FAQ</h2>
@@ -61,8 +73,8 @@
 						<%for(FilesDto filesdto : fileList) {%>
 						<li><%=filesdto.getFile_name() %> (<%=filesdto.getFile_size() %>bytes) 
 						<a href="download.do?file_no=<%=filesdto.getFile_no() %>"><input type="button" value="다운로드"> 
-						<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif"> 
 						</a>
+						<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif"> 
 						</li>
 						<%} %>
 					</ul>
