@@ -20,123 +20,128 @@ import gamedori.beans.dto.event_participateDto;
 
 public class event_participateDao {
 
-		private static DataSource src;
-		static {
-			try {
-				Context ctx = new InitialContext();
-				Context env = (Context) ctx.lookup("java:/comp/env");
-				src = (DataSource) env.lookup("jdbc/oracle");
-			} catch (NamingException e) {
-				e.printStackTrace();
-			}
+	private static DataSource src;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			Context env = (Context) ctx.lookup("java:/comp/env");
+			src = (DataSource) env.lookup("jdbc/oracle");
+		} catch (NamingException e) {
+			e.printStackTrace();
 		}
+	}
+
+	// 연결 메소드
+	public Connection getConnection() throws ClassNotFoundException, SQLException {
+		return src.getConnection();
+	}
+
+	// 회원 포인트
+	public MemberDto getPoint(int member_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT m.* " + "FROM member m INNER JOIN event_partici e " + "ON m.member_no = e.member_no "
+				+ "WHERE e.member_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, member_no);
+		ResultSet rs = ps.executeQuery();
+
+		MemberDto mdto = rs.next() ? new MemberDto(rs) : null;
+
+		con.close();
+
+		return mdto;
+	}
+
+	// 이벤트번호와 회원번호로 단일 조회 쿼리
+	public List<event_participateDto> eventSearch(int member_no, int event_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT * FROM event_partici WHERE member_no = ? AND event_no=?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, member_no);
+		ps.setInt(2, event_no);
+
+		ResultSet rs = ps.executeQuery();
+
+		List<event_participateDto> list = new ArrayList<event_participateDto>();
+
+		while (rs.next()) {
+			event_participateDto epdto = new event_participateDto(rs);
+			list.add(epdto);
+		}
+
+		con.close();
+		return list;
+	}
+
+	// 응모하게 될 시 insert문
+	public void EventInfo(event_participateDto epdto) throws Exception {
+
+		Connection con = getConnection();
+		String sql = "INSERT INTO event_partici VALUES (event_partici_seq.nextval, ?, ?, SYSDATE)";
+		PreparedStatement ps = con.prepareStatement(sql);
 		
-		// 연결 메소드
-		public Connection getConnection() throws ClassNotFoundException, SQLException {
-			return src.getConnection();
-		}	
+		ps.setInt(1, epdto.getMember_no());
+		ps.setInt(2, epdto.getEvent_no());
+
+		ps.execute();
 		
-		//회원 포인트
-		public MemberDto getPoint(int member_no) throws Exception {
-	 		Connection con = getConnection();
-	 		String sql = "SELECT m.* " + "FROM member m INNER JOIN event_partici e " + "ON m.member_no = e.member_no "
-	 					+ "WHERE e.member_no = ?";
-	 		PreparedStatement ps = con.prepareStatement(sql);
-	 		ps.setInt(1, member_no);
-	 		ResultSet rs = ps.executeQuery();
+		con.close();
+	}
 
-	 		MemberDto mdto = rs.next() ? new MemberDto(rs) : null;
+	// 응모내역 DELETE문
+	public void deleteEvent(event_participateDto epdto) throws Exception {
 
-	 		con.close();
+		Connection con = getConnection();
+		String sql = "DELETE FROM event_partici WHERE member_no =? and event_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, epdto.getMember_no());
+		ps.setInt(2, epdto.getEvent_no());
 
-	 		return mdto;
-	 		}
-		
-	     // 이벤트번호와 회원번호로 단일 조회 쿼리
-	      public List<event_participateDto> eventSearch(int member_no, int event_no) throws Exception {
-	         Connection con = getConnection();
-	         String sql = "SELECT * FROM event_parici WHERE member_no = ? AND event_no=?";
-	         PreparedStatement ps = con.prepareStatement(sql);
-	         ps.setInt(1, member_no);	 
-	         ps.setInt(2, event_no);
-	         
-	         ResultSet rs = ps.executeQuery();
-	         
-	         List<event_participateDto> list = new ArrayList<event_participateDto>();
-	         
-	         while(rs.next()) {
-	        	 event_participateDto epdto = new event_participateDto(rs);
-	            list.add(epdto);
-	         }
-	         
-	         con.close();
-	         return list;
-	      }
+		ps.execute();
+		con.close();
+	}
 
-	      // 응모하게 될 시 insert문
-	       public void joinEvent(event_participateDto epdto) throws Exception {
+	public int getSequence() throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT event_partici_seq.nextval FROM dual";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
 
-	         Connection con = getConnection();
-	         String sql = "INSERT INTO event_parici ( event_partici_no ,member_no, event_no, event_parici_date) VALUES (event_partici_seq.nextval, ?, ?, SYSDATE)";
-	         PreparedStatement ps = con.prepareStatement(sql);
-	         ps.setInt(1, epdto.getMember_no());
-	         ps.setInt(2, epdto.getEvent_no());
+		rs.next();
+		int seq = rs.getInt(1);
 
-	         ps.execute();
-	         con.close();
-	      }
+		con.close();
+		return seq;
+	}
 
-	      // 응모내역 DELETE문
-	       public void deleteEvent(event_participateDto epdto) throws Exception {
+	// 이벤트 참여
+	public EventboardDto ejoin(int event_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT e.* FROM event e INNER JOIN event_partici ep ON e.event_no = ep.event_no "
+				+ "WHERE ep.event_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, event_no);
+		ResultSet rs = ps.executeQuery();
 
-	         Connection con = getConnection();
-	         String sql = "DELETE FROM event_parici WHERE member_no =? and event_no = ?";
-	         PreparedStatement ps = con.prepareStatement(sql);
-	         ps.setInt(1, epdto.getMember_no());
-	         ps.setInt(2, epdto.getEvent_no());
+		EventboardDto edto = rs.next() ? new EventboardDto(rs) : null;
 
-	         ps.execute();
-	         con.close();
-	      }
-	       public int getSequence() throws Exception{
-	   		Connection con = getConnection();
-	   		String sql = "SELECT event_partici_seq.nextval FROM dual";
-	   		PreparedStatement ps = con.prepareStatement(sql);
-	   		ResultSet rs = ps.executeQuery();
-	   		
-	   		rs.next();
-	   		int seq = rs.getInt(1);
-	   		
-	   		con.close();
-	   		return seq;
-	   	} 
-	   	//이벤트 참여
-			public EventboardDto ejoin(int event_no) throws Exception {
-		 		Connection con = getConnection();
-		 		String sql = "SELECT e.* FROM event e INNER JOIN event_partici ep ON e.event_no = ep.event_no "
-		 				+ "WHERE ep.event_no = ?";
-		 		PreparedStatement ps = con.prepareStatement(sql);
-		 		ps.setInt(1, event_no);
-		 		ResultSet rs = ps.executeQuery();
+		con.close();
 
-		 		EventboardDto edto = rs.next() ? new EventboardDto(rs) : null;
+		return edto;
+	}
 
-		 		con.close();
+	// 단일조회
+	public event_participateDto get(int event_partici_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT * FROM event_partici WHERE event_partici_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, event_partici_no);
+		ResultSet rs = ps.executeQuery();
 
-		 		return edto;
-		 		}
-			//단일조회
-			public event_participateDto get(int event_partici_no) throws Exception {
-				Connection con = getConnection();
-				String sql = "SELECT * FROM event_partici WHERE event_partici_no = ?";
-				PreparedStatement ps = con.prepareStatement(sql);
-				ps.setInt(1, event_partici_no);
-				ResultSet rs = ps.executeQuery();
-				
-				event_participateDto epdto = rs.next()? new event_participateDto(rs): null;
-				con.close();
-				
-				return epdto;
-			}	
+		event_participateDto epdto = rs.next() ? new event_participateDto(rs) : null;
+		con.close();
+
+		return epdto;
+	}
 
 }

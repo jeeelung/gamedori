@@ -131,7 +131,7 @@ boolean isMine = user.getMember_id().equals(mdto.getMember_id());
 			
 					
 				<%if(isAdmin || isMine){%>
-					<a href = "<%=request.getContextPath()%>/eventboard/Eventresult.jsp? io=<%=request.getContextPath() %>/eventboard/event.do?event_no=<%=edto.getEvent_no() %>">
+					<a href = "event.do?event_no=<%=event_no%>">
 					<input type = "button" value= "이벤트 참여">
 					</a>
 					
