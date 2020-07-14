@@ -24,6 +24,10 @@
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/faq/list.jsp">자주 묻는 질문</a>
 	</h5>
+	<h5>｜</h5>
+	<h5 class="menu-font">
+		<a href="<%=rootPath%>/qna/qna_list.jsp">1:1 문의</a>
+	</h5>
 </div>
 <!--  	로그인 상태일 경우 -->
 <%
@@ -31,7 +35,7 @@
 %>
 <div class="member-wrap">
 	<h5 class="menu-font">
-		<a href="<%=rootPath%>/guest/logout.jsp">로그아웃</a>
+		<a href="<%=rootPath%>/member/logout.do">로그아웃</a>
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">

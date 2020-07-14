@@ -1,3 +1,5 @@
+<%@page import="gamedori.beans.dao.PointHistoryDao"%>
+<%@page import="gamedori.beans.dto.PointHistoryDto"%>
 <%@page import="gamedori.beans.dao.PointDao"%>
 <%@page import="gamedori.beans.dto.PointDto"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>
@@ -58,7 +60,7 @@
 	
 	
 	PointDao pdao = new PointDao();
-	
+	PointHistoryDao phdao=new PointHistoryDao();
 	//(주의!) 다음 버튼의 경우 계산을 통하여 페이지 개수를 구해야 출력 여부 판단이 가능
 	//int count = 목록개수 or 검색개수;
 	int count;
@@ -84,6 +86,8 @@
 	else{
 		list = pdao.getList(auth,start ,finish); 
 	}
+
+	
 	
 	
  %>

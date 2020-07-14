@@ -1,4 +1,4 @@
-package gamedori.beans.dto;
+	package gamedori.beans.dto;
 
 import java.sql.ResultSet;
 

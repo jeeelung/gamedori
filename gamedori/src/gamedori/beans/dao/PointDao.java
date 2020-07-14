@@ -122,7 +122,7 @@ public class PointDao {
 				public int getPoint(int member_no) throws Exception{
 					Connection con = getConnection();
 					
-					String sql = "SELECT SUM(POINT_SCORE) AS point_score from POINT where member_no=?";
+					String sql = "SELECT SUM(point_score) AS point_score FROM point p INNER JOIN point_history ph ON p.point_no=ph.point_no WHERE member_no=?";
 					PreparedStatement ps = con.prepareStatement(sql);
 					
 					ps.setInt(1, member_no);
@@ -143,9 +143,9 @@ public class PointDao {
 					String sql = "SELECT * FROM(SELECT ROWNUM rn, T.* FROM(SELECT * FROM point WHERE ('관리자' = ? )ORDER BY point_no asc)T ) WHERE rn BETWEEN ? and ?";
 					PreparedStatement ps = con.prepareStatement(sql);
 					
-					ps.setString(2, auth);
-					ps.setInt(3, start);
-					ps.setInt(4, finish);
+					ps.setString(1, auth);
+					ps.setInt(2, start);
+					ps.setInt(3, finish);
 					
 					ResultSet rs = ps.executeQuery();
 					List<PointDto> list = new ArrayList<>();
