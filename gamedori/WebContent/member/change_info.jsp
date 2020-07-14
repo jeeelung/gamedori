@@ -1,5 +1,11 @@
+<%@page import="gamedori.beans.dto.GenreDto"%>
+<%@page import="gamedori.beans.dao.GenreDao"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <%@page import="gamedori.beans.dao.MemberDao"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>
+<%@page import="gamedori.beans.dao.MemberFavoriteDao"%>
+<%@page import="gamedori.beans.dto.MemberFavoriteDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -10,6 +16,9 @@
 	String member_id = mdto.getMember_id();
 	MemberDao mdao = new MemberDao();
 	MemberDto user = mdao.get(member_id); // member_id(P.K)를 이용한 단일 조회 수행
+	MemberFavoriteDao mfdao = new MemberFavoriteDao();
+	
+	List<Map<String,Object>> fList = mfdao.getList(mdto.getMember_no());
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
 
@@ -53,10 +62,22 @@
 						value="<%=user.getMember_phone()%>">
 					</td>
 				</tr>
+				<tr>
+					<th>관심 분야</th>
+					<td>
+					<%for( Map<String,Object> g :fList){%>
+						<input type="checkbox" name="member_favorite"
+						<%if((Integer)g.get("member_favorite_no") != 0){ %>checked<%} %>
+						id="mf<%=g.get("genre_no") %>" value="<%=g.get("genre_no") %>">						
+						<label for="mf<%=g.get("genre_no")%>"><%=g.get("genre_type")%></label>
+					<%} %>	
+					</td>	
+				</tr>
 			</tbody>
 			<tfoot>
 				<tr>
 					<th colspan="2">
+						<input type="hidden" name="member_no" value="<%=user.getMember_no() %>">
 						<input type="submit" value="변경">
 					</th>
 				</tr>

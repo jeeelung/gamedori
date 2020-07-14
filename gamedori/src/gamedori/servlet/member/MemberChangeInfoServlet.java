@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import gamedori.beans.dao.MemberDao;
+import gamedori.beans.dao.MemberFavoriteDao;
 import gamedori.beans.dto.MemberDto;
+import gamedori.beans.dto.MemberFavoriteDto;
 @WebServlet(urlPatterns = "/member/change_info.do")
 public class MemberChangeInfoServlet extends HttpServlet {
 
@@ -31,6 +33,23 @@ public class MemberChangeInfoServlet extends HttpServlet {
 			// 처리
 			MemberDao mdao = new MemberDao();
 			mdao.changeInfo(user);
+			
+			int member_no = Integer.parseInt(req.getParameter("member_no"));
+			MemberFavoriteDto mfdto = new MemberFavoriteDto();
+			
+			mfdto.setMember_no(member_no);
+			
+			MemberFavoriteDao mfdao = new MemberFavoriteDao();
+			mfdao.delete(member_no);
+			
+			String []genre_no = req.getParameterValues("member_favorite");
+			
+			for (int i = 0; i < genre_no.length; i++) {
+				mfdto.setGenre_no(Integer.parseInt(genre_no[i]));
+				mfdto.setMember_no(member_no);
+				
+				mfdao.choice(mfdto);				
+			}
 			
 			// 출력
 			resp.sendRedirect("info.jsp");
