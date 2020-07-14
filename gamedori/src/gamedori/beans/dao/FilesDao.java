@@ -70,6 +70,7 @@ public class FilesDao {
 		con.close();
 		return fdto;
 	}
+<<<<<<< HEAD
 
 	public void delete(int file_no) throws Exception {
 		Connection con = getConnection();
@@ -81,5 +82,16 @@ public class FilesDao {
 
 }
 
+=======
+	
+	public void delete(int file_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "DELETE FROM files WHERE file_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, file_no);
+		ps.execute();
+		con.close();
+	}
+>>>>>>> refs/remotes/origin/master
 }
 

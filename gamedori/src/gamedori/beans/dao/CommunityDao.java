@@ -119,6 +119,7 @@ public class CommunityDao {
 		con.close();
 		
 		return mdto;
+
 	}
 	
 	// 게시물 목록 메소드
@@ -164,7 +165,21 @@ public class CommunityDao {
 	// 검색 서블릿
 	public List<CommunityDto> search(String type, String keyword, int start, int finish) throws Exception {
 		Connection con = getConnection();
-		String sql = "SELECT * FROM( "
+		String sql;
+		boolean isNick = type.equals("member_nick");
+		if(isNick) {
+			sql = "SELECT * FROM("
+					+ "SELECT ROWNUM rn, T.* FROM("
+					+ "SELECT c.*, m.MEMBER_NICK FROM COMMUNITY c INNER JOIN MEMBER m "
+					+ "ON c.MEMBER_NO = m.MEMBER_NO "
+					+ "WHERE m.MEMBER_NICK = ?"
+					+ "CONNECT BY PRIOR commu_no = commu_super_no "
+					+ "START WITH commu_super_no IS NULL "
+					+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
+					+ ")T"
+					+ ") WHERE rn BETWEEN ? and ?";
+		} else {			
+			sql = "SELECT * FROM( "
 					+ "SELECT ROWNUM rn, T.* FROM("
 						+"SELECT * FROM community "
 						+ "WHERE instr(#1, ?) > 0 "
@@ -173,9 +188,40 @@ public class CommunityDao {
 						+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
 						+ ")T"
 					+ ") WHERE rn BETWEEN ? and ?";
-		sql = sql.replace("#1", type);
+			sql = sql.replace("#1", type);
+		}
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);
+		ps.setInt(2, start);
+		ps.setInt(3, finish);
+		
+		ResultSet rs = ps.executeQuery();
+		
+		List<CommunityDto> list = new ArrayList<CommunityDto>();
+		
+		while(rs.next()) {
+			CommunityDto cdto = new CommunityDto(rs);
+			list.add(cdto);
+		}
+		
+		con.close();
+		return list;
+	}
+	
+	// 말머리 정렬 메소드
+	public List<CommunityDto> headSort(String head, int start, int finish) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT * FROM( "
+				+ "SELECT ROWNUM rn, T.* FROM("
+				+"SELECT * FROM community "
+				+ "WHERE commu_head = ? "
+				+ "CONNECT BY PRIOR commu_no = commu_super_no "  
+				+ "START WITH commu_super_no IS NULL " 
+				+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
+				+ ")T"
+			+ ") WHERE rn BETWEEN ? and ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, head);
 		ps.setInt(2, start);
 		ps.setInt(3, finish);
 		ResultSet rs = ps.executeQuery();
@@ -186,7 +232,6 @@ public class CommunityDao {
 			CommunityDto cdto = new CommunityDto(rs);
 			list.add(cdto);
 		}
-		
 		con.close();
 		return list;
 	}
@@ -204,8 +249,17 @@ public class CommunityDao {
 	
 	public int getCount(String type, String keyword) throws Exception {
 		Connection con = getConnection();
-		String sql = "SELECT COUNT(*) FROM community WHERE instr(#1, ?) > 0";
-		sql = sql.replace("#1", type);
+		String sql;
+		if(type.equals("member_nick")) {
+			sql = "SELECT count(*) FROM ("
+					+ "SELECT c.*, m.MEMBER_NICK FROM COMMUNITY c INNER JOIN MEMBER m "
+					+ "ON c.MEMBER_NO = m.MEMBER_NO "
+					+ "WHERE m.MEMBER_NICK = ?"
+					+ ")";
+		} else {
+			sql = "SELECT COUNT(*) FROM community WHERE instr(#1, ?) > 0";
+			sql = sql.replace("#1", type);
+		}
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, keyword);
 		ResultSet rs = ps.executeQuery();
@@ -215,6 +269,7 @@ public class CommunityDao {
 		return count;
 	}
 	
+<<<<<<< HEAD
 	//댓글 카운트
 	public void editReplycount(int community_no) throws Exception {
 		Connection con = getConnection();
@@ -232,6 +287,46 @@ public class CommunityDao {
 		con.close();
 	}
 	
+=======
+	public int getCount(String head) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT COUNT(*) FROM community WHERE commu_head = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, head);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		con.close();
+		return count;
+	}
+	
+	// 게시글 수정 메소드
+	public void edit(CommunityDto cdto) throws Exception {
+		Connection con = getConnection();
+		String sql = "UPDATE community "
+					+ "SET commu_head = ?, "
+					+ "commu_title = ?,"
+					+ "commu_content = ?"
+					+ "WHERE commu_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, cdto.getCommu_head());
+		ps.setString(2, cdto.getCommu_title());
+		ps.setString(3, cdto.getCommu_content());
+		ps.setInt(4, cdto.getCommu_no());
+		ps.execute();
+		con.close();
+	}
+		
+	// 게시글 삭제 메소드
+	public void delete(int commu_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "DELETE FROM community WHERE commu_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, commu_no);
+		ps.execute();
+		con.close();
+	}
+>>>>>>> refs/remotes/origin/master
 	
 
 }
