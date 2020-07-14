@@ -148,7 +148,7 @@
 	</table>
 	<!-- 네비게이터 -->
 	<h6>
-<%if(startBlock > 1) {%>	
+<%if(startBlock > 1) {%>
 	<%if(!isSearch) { %>
 		<a href="list.jsp?page=<%=startBlock-1%>">[이전]</a>
 	<%} else {%>
