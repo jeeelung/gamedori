@@ -75,21 +75,12 @@
 
 <jsp:include page="/template/header.jsp"></jsp:include>
 
-<div align="center">
 <style>
 .div {font-family: arcadeclassic;}
 .font-game {
 	font-family: arcadeclassic;
 	font-size: 30px;
 	color: #20639B;
-}
-.line {
-	border: 1px solid #20639B;
-}
-.gameNo{
-	font-family: arcadeclassic;
-	font-size: 20px;
-	color:#20639B;
 }
 .wrap {
 	border-top: 3px solid #20639B;
@@ -146,6 +137,8 @@
         
 </style>
 
+<div align="center">
+
 	<!-- 제목 -->
 	<article>
 	<div class="font-game">
@@ -153,7 +146,7 @@
 	</div>
 	<div class="row today-wrap"><div class="row-empty"></div>
 	</article>
-	<div class="row right">
+	<div class="right">
 	<a href="write.jsp"><input class="form-btn form-inline" type="button" value="글쓰기">
 	</a>
 	</div>
@@ -166,7 +159,7 @@
 				<th>작성자</th>
 			</tr>
 		</thead>
-		<tbody align="center">
+		<tbody align="">
 			<%-- list의 데이터를 하나하나 fdto라는 이름으로 접근하여 출력 --%>
 				<%
 					for (FAQDto fdto : list) {
@@ -174,26 +167,24 @@
 			<tr>
 				<td><%=fdto.getFaq_no()%></td>
 				<td class="left">
-					 <%if (fdto.getFaq_head() != null) {%> <!-- 말머리는 있을 경우만 출력 --> <font color="gray"> 
+					 <%if (fdto.getFaq_head() != null) {%> 
+					 <!-- 말머리는 있을 경우만 출력 --> 
+					 <font color="gray"> 
 					[<%=fdto.getFaq_head()%>]
-				</font> 
-				<%}%> 
- 	<!-- 게시글 제목 --> 
- 	<a href="<%=request.getContextPath()%>/faq/content.jsp?faq_no=<%=fdto.getFaq_no()%>"> 
- 				<%=fdto.getFaq_title()%></a>
+					</font>
+					<%}%> 
+ 						<!-- 게시글 제목 --> 
+ 					<a href="<%=request.getContextPath()%>/faq/content.jsp?faq_no=<%=fdto.getFaq_no()%>"> 
+ 						<%=fdto.getFaq_title()%></a>
 				</td>
-				<%
-					MemberDto mdto = fdao.getWriter(fdto.getMember_no());
-				%>
+					<%MemberDto mdto = fdao.getWriter(fdto.getMember_no());%>
 				<td>
-					<%
-						if (mdto.getMember_nick() != null) {
-					%> <%=mdto.getMember_nick()%> <%
- 							} else {
- 						%> <font color="gray">탈퇴한 사용자</font> <%}%>
+						<%if (mdto.getMember_nick() != null) {%> <%=mdto.getMember_nick()%>
+						<%} else {%> 
+						<font color="gray">탈퇴한 사용자</font> <%}%>
 				</td>
 			</tr>
-			<%}%>
+				<%}%>
 		</tbody>
 		<tfoot>
 		</tfoot>
