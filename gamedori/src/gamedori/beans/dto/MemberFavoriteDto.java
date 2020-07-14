@@ -44,7 +44,4 @@ public class MemberFavoriteDto {
 		this.member_no = member_no;
 	}
 	
-	
-	
-
 }

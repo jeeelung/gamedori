@@ -31,7 +31,7 @@
 %>
 <div class="member-wrap">
 	<h5 class="menu-font">
-		<a href="<%=rootPath%>/guest/logout.jsp">로그아웃</a>
+		<a href="<%=rootPath%>/member/logout.do">로그아웃</a>
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">
@@ -51,7 +51,7 @@
 <%}%>
 <ul class="menu">
 	<li><a href="<%=rootPath%>/game/latestlist.jsp">최신게임</a></li>
-	<li><a href="#">인기게임</a></li>
+	<li><a href="<%=rootPath%>/game/popularlist.jsp">인기게임</a></li>
 	<li><a href="#">장르별</a></li>
 	<li><a href="#">브랜드별</a>
 		<ul class="menu-sec">

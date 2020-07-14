@@ -7,10 +7,11 @@
 <%
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
-	String head = request.getParameter("head");
+	String head = request.getParameter("commu_head");
 	
 	boolean isHead = head != null;
 	boolean isSearch = type != null && keyword != null;
+	boolean isList = !isHead && !isSearch;
 	
 	// 페이지 번호 계산 코드
 	int pageSize = 10;
@@ -39,13 +40,16 @@
 	
 	// 페이지 개수 
 	int count;
-	if(isSearch) {
-		count = cdao.getCount(type, keyword);
-	} else if(isHead){
+	if(isHead && !isSearch) {
 		count = cdao.getCount(head);
+	} else if(!isHead && isSearch){
+		count = cdao.getCount(type, keyword);
+	} else if(isHead && isSearch) {
+		count = cdao.getCount(head, type, keyword);
 	} else {
-		count = cdao.getCount();		
+		count = cdao.getCount();
 	}
+	
 	int pageCount = (count + pageSize -1) / pageSize;
 	
 	if(finishBlock > pageCount) {
@@ -54,34 +58,43 @@
 	// 검색 또는 목록
 	List<CommunityDto> list;
 	
-	if(isSearch){
-		list = cdao.search(type, keyword, start, finish);
-	} else if(isHead){
-		list = cdao.headSort(head, start, finish);
+	if(isHead && !isSearch) {
+		list = cdao.search(head, start, finish);	
+	} else if(!isHead && isSearch){
+		list = cdao.search(type, keyword, start, finish);			
+	} else if(isHead && isSearch) {
+		list = cdao.search(head, type, keyword, start, finish);
 	} else {
 		list = cdao.getList(start, finish);
 	}
 	
-	
-	
 %>
 
 <script>
-	function headSort() {
-    	var headvalue = document.querySelector("select[name=commu_head]").value;
-    	<%if(isSearch) {%>
-    		location.href = "list.jsp?type="<%=type%>"&keyword="<%=keyword%>"&head="+headvalue;
-    	<%} else {%>
-    		location.href = "list.jsp?head="+headvalue;
-    	<%}%>
+	function sendForm(){
+		document.querySelector("form").submit();
 	}
+	
+	//a는 전송된 값이 선택되어 있도록 유지
+	window.onload = function(){
+		var head = document.querySelector("[name=commu_head]");
+		var type = document.querySelector("[name=type]");
+		var keyword = document.querySelector("[name=keyword]");
+		if(head.value === null){
+			head.value = "";
+		} else {			
+			head.value = "<%=request.getParameter("commu_head")%>";
+		}
+		type.value = "<%=request.getParameter("type")%>";
+		keyword.value = "<%=request.getParameter("keyword")%>";
+	};
 </script>
     
 <jsp:include page="/template/header.jsp"></jsp:include>
 <div align="center">
 
 	<!-- 계산한 데이터를 확인하기 위해 출력 -->
-	<h5>
+	<%-- <h5>
 	pageStr = <%=pageStr%>, 
 	pageNo = <%=pageNo%>,
 	start = <%=start%>
@@ -89,7 +102,7 @@
 	pageCount = <%=pageCount%>
 	startBlock = <%=startBlock%>
 	finishBlock = <%=finishBlock%>
-	</h5>
+	</h5> --%>
 	
 	<h2></h2>
 	<form action="list.jsp" method="get">
@@ -98,7 +111,7 @@
 		<thead>
 			<tr>
 				<th>
-					<select name="commu_head" onchange="headSort();">
+					<select name="commu_head" onchange="sendForm();">
 						<option value="">전체보기</option>
 						<option>자유</option>
 						<option>유머</option>

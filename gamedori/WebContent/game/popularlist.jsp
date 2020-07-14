@@ -92,6 +92,9 @@
     <article>
         <div class="font-game">
         	<h3>TO D A Y　N E W　G A M E</h3>
+        	<select>
+        		<option></option>
+        	</select>
         </div>
         <div class="row today-wrap">
         <div class="row-empty"></div>

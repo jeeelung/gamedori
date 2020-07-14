@@ -532,21 +532,15 @@ textarea.form-input {
   !important: 기존의 스타일과 충돌이 발생할 경우 먼저 적용되도록 중요하다고 표시
 */
 .center {
-	text-align: center;
-	!
-	important;
+	text-align: center !important;
 }
 
 .left {
-	text-align: left;
-	!
-	important;
+	text-align: left !important;
 }
 
 .right {
-	text-align: right;
-	!
-	important;
+	text-align: right !important;
 }
 
 a.deco {

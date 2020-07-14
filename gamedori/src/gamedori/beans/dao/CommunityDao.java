@@ -208,8 +208,54 @@ public class CommunityDao {
 		return list;
 	}
 	
-	// 말머리 정렬 메소드
-	public List<CommunityDto> headSort(String head, int start, int finish) throws Exception {
+	// 말머리 && 검색 서블릿
+	public List<CommunityDto> search(String head, String type, String keyword, int start, int finish) throws Exception {
+		Connection con = getConnection();
+		String sql;
+		boolean isNick = type.equals("member_nick");
+		if(isNick) {
+			sql = "SELECT * FROM("
+					+ "SELECT ROWNUM rn, T.* FROM("
+					+ "SELECT c.*, m.MEMBER_NICK FROM COMMUNITY c INNER JOIN MEMBER m "
+					+ "ON c.MEMBER_NO = m.MEMBER_NO "
+					+ "WHERE m.MEMBER_NICK = ? AND commu_head = ? "
+					+ "CONNECT BY PRIOR commu_no = commu_super_no "
+					+ "START WITH commu_super_no IS NULL "
+					+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
+					+ ")T"
+					+ ") WHERE rn BETWEEN ? and ?";
+		} else {			
+			sql = "SELECT * FROM( "
+					+ "SELECT ROWNUM rn, T.* FROM("
+					+"SELECT * FROM community "
+					+ "WHERE instr(#1, ?) > 0 AND commu_head = ? "
+					+ "CONNECT BY PRIOR commu_no = commu_super_no "  
+					+ "START WITH commu_super_no IS NULL " 
+					+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
+					+ ")T"
+					+ ") WHERE rn BETWEEN ? and ?";
+			sql = sql.replace("#1", type);
+		}
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ps.setString(2, head);
+		ps.setInt(3, start);
+		ps.setInt(4, finish);
+		
+		ResultSet rs = ps.executeQuery();
+		
+		List<CommunityDto> list = new ArrayList<CommunityDto>();
+		
+		while(rs.next()) {
+			CommunityDto cdto = new CommunityDto(rs);
+			list.add(cdto);
+		}
+		
+		con.close();
+		return list;
+	}
+	
+	public List<CommunityDto> search(String head, int start, int finish) throws Exception {
 		Connection con = getConnection();
 		String sql = "SELECT * FROM( "
 				+ "SELECT ROWNUM rn, T.* FROM("
@@ -274,6 +320,33 @@ public class CommunityDao {
 		String sql = "SELECT COUNT(*) FROM community WHERE commu_head = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, head);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		con.close();
+		return count;
+	}
+	
+	public int getCount(String head, String type, String keyword) throws Exception {
+		Connection con = getConnection();
+		String sql = null;
+		if(type.equals("member_nick")) {
+			sql = "SELECT count(*) FROM ("
+					+ "SELECT c.*, m.MEMBER_NICK FROM COMMUNITY c INNER JOIN MEMBER m "
+					+ "ON c.MEMBER_NO = m.MEMBER_NO "
+					+ "WHERE m.MEMBER_NICK = ? AND c.commu_head = ?"
+					+ ")";
+		}
+		
+		if(!type.equals("member_nick")) {
+			sql = "SELECT COUNT(*) FROM community WHERE instr(#1, ?) > 0 AND commu_head = ?";
+			sql = sql.replace("#1", type);
+		}
+		
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, keyword);
+		ps.setString(2, head);
+		
 		ResultSet rs = ps.executeQuery();
 		rs.next();
 		int count = rs.getInt(1);
