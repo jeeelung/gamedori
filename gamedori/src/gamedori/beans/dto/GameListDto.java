@@ -6,6 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class GameListDto {
+	private int genre_no;
+	private String genre_type;
+	private int member_no;
+
 	private String member_nick;
 	private String game_name;
 	private String game_date;
@@ -20,6 +24,9 @@ public class GameListDto {
 	}
 	
 	public GameListDto(ResultSet rs) throws SQLException {
+		this.setGenre_no(rs.getInt("genre_no"));
+		this.setGenre_type(rs.getString("genre_type"));
+		this.setMember_no(rs.getInt("member_no"));
 		this.setMember_nick(rs.getString("member_nick"));
 		this.setGame_name(rs.getString("game_name"));
 		this.setGame_date(rs.getString("game_date"));
@@ -30,6 +37,31 @@ public class GameListDto {
 		this.setGame_img_size(rs.getLong("game_img_size"));
 	}
 
+	
+	public int getGenre_no() {
+		return genre_no;
+	}
+
+	public void setGenre_no(int genre_no) {
+		this.genre_no = genre_no;
+	}
+
+	public String getGenre_type() {
+		return genre_type;
+	}
+
+	public void setGenre_type(String genre_type) {
+		this.genre_type = genre_type;
+	}
+
+	public int getMember_no() {
+		return member_no;
+	}
+
+	public void setMember_no(int member_no) {
+		this.member_no = member_no;
+	}
+	
 	public String getGame_date() {
 		return game_date;
 	}

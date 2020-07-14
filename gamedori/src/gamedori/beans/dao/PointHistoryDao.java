@@ -32,7 +32,7 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 }
 
 // 등록
-	public void insert(PointHistoryDto phdto ) throws Exception {
+	public void insert(PointHistoryDto phdto ,int member_no) throws Exception {
 		Connection con = getConnection();
 		String sql = "INSERT INTO Point_history VALUES(point_his_no_seq.nextval, ? , ? , sysdate)";
 		PreparedStatement ps = con.prepareStatement(sql);

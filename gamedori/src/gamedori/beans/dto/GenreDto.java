@@ -3,15 +3,12 @@ package gamedori.beans.dto;
 import java.sql.ResultSet;
 
 public class GenreDto {
-	
 	private int genre_no;
 	private String genre_type;
-
 	
 	public GenreDto() {
 		super();
 	}
-	
 	public GenreDto(ResultSet rs)  throws Exception{
 		this.setGenre_no(rs.getInt("genre_no"));
 		this.setGenre_type(rs.getString("genre_type"));
@@ -32,6 +29,4 @@ public class GenreDto {
 	public void setGenre_type(String genre_type) {
 		this.genre_type = genre_type;
 	}
-	
-	
 }

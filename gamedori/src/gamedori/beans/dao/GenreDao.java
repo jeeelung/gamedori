@@ -13,8 +13,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import gamedori.beans.dto.GenreDto;
-import gamedori.beans.dto.QnaDto;
-import gamedori.beans.dto.QnaFileDto;
 
 public class GenreDao {
 
@@ -35,20 +33,19 @@ public class GenreDao {
 	}
 	
 	
-	public List<GenreDto> getList() throws Exception{
+	public List<GenreDto> getList() throws Exception {
 		Connection con = getConnection();
-		String sql = "select genre_no, genre_type  from genre ";
+		String sql = "SELECT * FROM genre";
 		PreparedStatement ps = con.prepareStatement(sql);
-		
 		ResultSet rs = ps.executeQuery();
-		
-		List<GenreDto> list = new ArrayList<>();
-		
-		while(rs.next()) {			
-			GenreDto gdto = new GenreDto(rs);			
+		List<GenreDto> list = new ArrayList<GenreDto>();
+		while(rs.next()) {
+			GenreDto gdto = new GenreDto();
+			gdto.setGenre_no(rs.getInt("genre_no"));
+			gdto.setGenre_type(rs.getString("genre_type"));
+			
 			list.add(gdto);
-		}	
-		
+		}
 		con.close();
 		return list;
 	}
@@ -89,5 +86,5 @@ public class GenreDao {
 
 		con.close();
 	}
-
 }
+

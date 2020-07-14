@@ -84,6 +84,9 @@
 	right:0;
 	bottom:40%;
 }
+.genre {
+	margin: 0;
+}
 
 </style>
     <article>
@@ -102,6 +105,7 @@
 	finishBlock = <%=finishBlock%>
 </h5> --%>
 
+<!-- 오늘의 게임 이전 버튼 생성 -->
 <%if(pageNo != 1) {%>
 	<a class="arrow-left" href="latestlist.jsp?page=<%=pageNo-1%>">
 		<img src="<%=request.getContextPath()%>/image/left.png" width="50" height="50">
@@ -111,14 +115,31 @@
 		<img src="<%=request.getContextPath()%>/image/left.png" width="50" height="50">
 	</a>
 <%}%>
-
-<%for(GameListDto gldto : todayList){ %>
+<!-- 오늘의 게임 이미지 생성 -->
+<%if(!todayList.isEmpty()) {%>
+	<%for(GameListDto gldto : todayList){ %>
 	<div class="row game-wrap">
 		<img width="150" height="150" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
-		<h5 class="gameName"><%=gldto.getGame_name()%></h5>
+		<div>
+			<h5 class="gameName"><%=gldto.getGame_name()%></h5>
+			<h6 class="genre">장르 : <%=gldto.getGenre_type()%></h6>
+		</div>
 	</div>
+	<%}%>
+<%} else {%>
+	<%List<GameListDto> top5 = gldao.getLatestList(5);%>
+	<%for(GameListDto gldto : top5) {%>
+	<div class="row game-wrap">
+        <img width="150" height="150" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
+        <div>
+			<h5 class="gameName"><%=gldto.getGame_name()%></h5>
+			<h6 class="genre">장르 : <%=gldto.getGenre_type()%></h6>
+		</div>
+    </div>
+	<%}%>
 <%}%>
 
+<!-- 오늘의 게임 다음 버튼 생성 -->
 <%if(pageCount != pageNo) {%>
 	<a class="arrow-right" href="latestlist.jsp?page=<%=pageNo+1%>">
 		<img src="<%=request.getContextPath()%>/image/right.png" width="50" height="50">
@@ -141,7 +162,8 @@
             <%for(GameListDto gldto : list) { %>
             <div class="row game-wrap">
                 <img width="150" height="150" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
-                <h5 class="gameName"><span class="gameNo"><%=gameCount+=1%>.</span>  <%=gldto.getGame_name()%></h5>
+                <h5 class="gameName"><span class="gameNo"><%=gameCount+=1%>.</span><%=gldto.getGame_name()%></h5>
+                <h6 class="genre">장르 : <%=gldto.getGenre_type()%></h6>
             </div>
             <%}%>
         <div class="row-empty"></div>

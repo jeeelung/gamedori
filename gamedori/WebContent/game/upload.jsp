@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="gamedori.beans.dao.GenreDao"%>
+<%@page import="gamedori.beans.dto.GenreDto"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -20,6 +23,10 @@
         label + span {
             color: red;
         }
+        
+        .game_genre:focus .one {
+			border-color: #ff9b71;
+		}
         
 </style>
 <script>
@@ -53,6 +60,8 @@
     </script>
 <%
 	MemberDto mdto = (MemberDto)session.getAttribute("userinfo");
+	GenreDao gdao = new GenreDao();
+	List<GenreDto> list = gdao.getList();
 			
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -76,6 +85,19 @@
                 <div class="row left">
                     <textarea class="form-input" name="game_intro" id="game_intro"></textarea>
                 </div>
+                <div class="row-empty"></div>
+                <!-- 게임 장르 선택란 -->
+                <div class="row left">
+                	<label for="game_genre">게임 장르</label> <span>*</span>
+                </div>
+                <div class="row left">
+                	<select id="game_genre" name="game_genre">
+                	<%for(GenreDto gdto : list) {%>
+                		<option value="<%=gdto.getGenre_no()%>"><%=gdto.getGenre_type()%></option>
+                	<%}%>
+                	</select>
+                </div>
+                <hr class="line one">
                 <div class="row-empty"></div>
                 <!-- 게임파일 업로드 -->
                 <div class="row left">

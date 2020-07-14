@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dao.MemberFavoriteDao;
 import gamedori.beans.dao.PointDao;
+import gamedori.beans.dao.PointHistoryDao;
 import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.MemberFavoriteDto;
 import gamedori.beans.dto.PointDto;
+import gamedori.beans.dto.PointHistoryDto;
 
 @WebServlet(urlPatterns = "/guest/join.do")
 public class MemberJoinServlet extends HttpServlet {
@@ -47,15 +49,6 @@ public class MemberJoinServlet extends HttpServlet {
 				MemberFavoriteDao mfdao = new MemberFavoriteDao();
 				mfdao.choice(mfdto);
 			}
-			//회원포인트적립 로직 필요.
-			PointDao pdao = new PointDao();
-			PointDto pdto = new PointDto();
-			pdto.setPoint_type("신규가입");
-			pdto.setPoint_score(5000);
-			
-			pdao.insert(pdto,member_no);
-			
-			//pointDao에 있는 insert
 			
 			// 출력 : 이곳에서 하는 것이 아니라 다른 JSP 파일로 강제 이동
 			resp.sendRedirect("join_result.jsp");

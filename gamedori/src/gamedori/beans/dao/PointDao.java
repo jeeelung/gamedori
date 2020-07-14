@@ -34,7 +34,7 @@ public class PointDao {
 	}
 	
 	// 등록
-		public void insert(PointDto pdto ) throws Exception {
+		public void point(PointDto pdto ) throws Exception {
 			Connection con = getConnection();
 			String sql = "INSERT INTO Point VALUES(point_seq.nextval , ? , ?)";
 			
