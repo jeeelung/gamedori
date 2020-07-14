@@ -55,12 +55,11 @@
 					<td colspan="2">
 						<input type="button" value="임시저장">
 						<input type="button" value="미리보기">
-						<input type="submit" value="확인">
+						<input type="submit" value="등록">
 					</td>
 				</tr>
 			</tfoot>
 		</table>
-		
 	</form>
 </div>
 <jsp:include page="/template/footer.jsp"></jsp:include>

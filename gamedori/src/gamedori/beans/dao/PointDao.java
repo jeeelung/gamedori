@@ -34,15 +34,13 @@ public class PointDao {
 	}
 	
 	// 등록
-		public void insert(PointDto pdto ,int member_no) throws Exception {
+		public void insert(PointDto pdto ) throws Exception {
 			Connection con = getConnection();
-			String sql = "INSERT INTO Point VALUES(point_seq.nextval , ? , ?, ? , sysdate)";
+			String sql = "INSERT INTO Point VALUES(point_seq.nextval , ? , ?)";
 			
 			PreparedStatement ps = con.prepareStatement(sql);
-			
-			ps.setInt(1, member_no);
-			ps.setString(2, pdto.getPoint_type());
-			ps.setInt(3, pdto.getPoint_score());			
+			ps.setString(1, pdto.getPoint_type());
+			ps.setInt(2, pdto.getPoint_score());			
 			ps.execute();
 
 			con.close();
@@ -52,10 +50,11 @@ public class PointDao {
 		public void edit(PointDto pdto) throws Exception {
 			Connection con = getConnection();
 
-			String sql = "UPDATE point SET " + "point_no=?, point_type=? where point_no=?";
+			String sql = "UPDATE point SET point_no=?, point_type=? ,point_score where point_no=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, pdto.getPoint_no());
 			ps.setString(2, pdto.getPoint_type());
+			ps.setInt(3, pdto.getPoint_score());
 			ps.execute();
 
 			con.close();
@@ -101,17 +100,14 @@ public class PointDao {
 					return count;
 				}
 				
-				public int getCount(String type,String keyword,int member_no, String auth) throws Exception{
+				public int getCount(String type,String keyword, String auth) throws Exception{
 					Connection con = getConnection();
-					String sql = "SELECT count (*)  FROM point p  INNER JOIN MEMBER m ON p.member_no = m.member_no "
-							+ "WHERE instr(#1, ?) > 0 and (p.member_no= ? or '관리자'=?) "
-							+ "order by point_no desc";
+					String sql ="SELECT count (*)  FROM point WHERE instr('#1',?) > 0 and '관리자'= ? order by point_no DESC";
 							
 					sql = sql.replace("#1", type);
 					PreparedStatement ps = con.prepareStatement(sql);
 					ps.setString(1, keyword);
-					ps.setInt(2, member_no);
-					ps.setString(3, auth);
+					ps.setString(2, auth);
 					
 					
 					ResultSet rs= ps.executeQuery();
@@ -142,18 +138,11 @@ public class PointDao {
 				}
 				
 				//목록 메소드
-				public List<PointDto> getList(int member_no, String auth, int start , int finish) throws Exception{
+				public List<PointDto> getList(String auth, int start , int finish) throws Exception{
 					Connection con = getConnection();
-					String sql = "SELECT * FROM( "
-							+ "SELECT ROWNUM rn, T.* FROM( "
-							+ "SELECT * FROM point p INNER JOIN MEMBER m ON p.MEMBER_NO = m.MEMBER_NO "
-							+ "WHERE (p.member_no=? OR '관리자' = ? ) "
-							+ "ORDER BY point_no desc "
-							+ ")T "
-						+ ") WHERE rn BETWEEN ? and ?";
+					String sql = "SELECT * FROM(SELECT ROWNUM rn, T.* FROM(SELECT * FROM point WHERE ('관리자' = ? )ORDER BY point_no asc)T ) WHERE rn BETWEEN ? and ?";
 					PreparedStatement ps = con.prepareStatement(sql);
 					
-					ps.setInt(1, member_no);
 					ps.setString(2, auth);
 					ps.setInt(3, start);
 					ps.setInt(4, finish);
@@ -170,24 +159,17 @@ public class PointDao {
 					return list;
 				}
 				
-				public List<PointDto> search(String type, String auth, String keyword, int member_no, int start, int finish) throws Exception{
+				public List<PointDto> search(String type, String auth, String keyword,int start, int finish) throws Exception{
 					Connection con = getConnection();
 					
-					String sql = "SELECT * FROM( "
-							+ "SELECT ROWNUM rn, T.* FROM( "
-							+ "SELECT * FROM point p INNER JOIN MEMBER m ON p.MEMBER_NO = m.MEMBER_NO "
-							+ "WHERE instr(#1, ?) > 0 and (p.member_no=? OR '관리자' = ?) " 
-							+ "ORDER BY point_no desc "
-							+ ")T "
-						+ ") WHERE rn BETWEEN ? and ?";
+					String sql = "SELECT * FROM(SELECT ROWNUM rn, T.* FROM(SELECT * FROM point WHERE ('관리자' = ? )ORDER BY point_no asc)T ) WHERE rn BETWEEN ? and ?;";
 							
 					sql = sql.replace("#1", type);
 					PreparedStatement ps = con.prepareStatement(sql);			
 					ps.setString(1, keyword);
-					ps.setInt(2, member_no);
-					ps.setString(3,auth);
-					ps.setInt(4, start);
-					ps.setInt(5, finish);
+					ps.setString(2,auth);
+					ps.setInt(3, start);
+					ps.setInt(4, finish);
 					
 					ResultSet rs = ps.executeQuery();
 					

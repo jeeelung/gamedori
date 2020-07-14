@@ -69,7 +69,7 @@ public class GenreDao {
 	public void edit(GenreDto gdto) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "UPDATE qna SET " + "genre_no=?, genre_type=? where genre_no=?";
+		String sql = "UPDATE qna SET genre_no=?, genre_type=? where genre_no=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, gdto.getGenre_no());
 		ps.setString(2, gdto.getGenre_type());

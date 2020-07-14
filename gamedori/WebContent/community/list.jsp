@@ -7,7 +7,9 @@
 <%
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
+	String head = request.getParameter("head");
 	
+	boolean isHead = head != null;
 	boolean isSearch = type != null && keyword != null;
 	
 	// 페이지 번호 계산 코드
@@ -26,12 +28,12 @@
 	
 	// 시작 글 순서와 종료 글 순서 계산
 	int finish = pageNo * pageSize;
-	int start = finish - (pageSize-1);
+	int start = finish - (pageSize - 1);
 	
 	// 페이지 네비게이터 계산
 	int blockSize = 10;
 	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
-	int finishBlock = startBlock + blockSize - 1;
+	int finishBlock = startBlock + 9;
 	
 	CommunityDao cdao = new CommunityDao();
 	
@@ -39,21 +41,41 @@
 	int count;
 	if(isSearch) {
 		count = cdao.getCount(type, keyword);
+	} else if(isHead){
+		count = cdao.getCount(head);
 	} else {
-		count = cdao.getCount();
+		count = cdao.getCount();		
 	}
 	int pageCount = (count + pageSize -1) / pageSize;
 	
-	
+	if(finishBlock > pageCount) {
+		finishBlock = pageCount;	
+	}
 	// 검색 또는 목록
 	List<CommunityDto> list;
 	
 	if(isSearch){
 		list = cdao.search(type, keyword, start, finish);
+	} else if(isHead){
+		list = cdao.headSort(head, start, finish);
 	} else {
 		list = cdao.getList(start, finish);
 	}
+	
+	
+	
 %>
+
+<script>
+	function headSort() {
+    	var headvalue = document.querySelector("select[name=commu_head]").value;
+    	<%if(isSearch) {%>
+    		location.href = "list.jsp?type="<%=type%>"&keyword="<%=keyword%>"&head="+headvalue;
+    	<%} else {%>
+    		location.href = "list.jsp?head="+headvalue;
+    	<%}%>
+	}
+</script>
     
 <jsp:include page="/template/header.jsp"></jsp:include>
 <div align="center">
@@ -64,7 +86,7 @@
 	pageNo = <%=pageNo%>,
 	start = <%=start%>
 	finish = <%=finish%>
-<%-- 	pageCount = <%=pageCount%> --%>
+	pageCount = <%=pageCount%>
 	startBlock = <%=startBlock%>
 	finishBlock = <%=finishBlock%>
 	</h5>
@@ -76,7 +98,7 @@
 		<thead>
 			<tr>
 				<th>
-					<select name="commu_head">
+					<select name="commu_head" onchange="headSort();">
 						<option value="">전체보기</option>
 						<option>자유</option>
 						<option>유머</option>
@@ -134,25 +156,26 @@
 	<%}%>
 <%}%>
 
-	<%for(int i=startBlock; i<finishBlock; i++) { %>
+	<%for(int i=startBlock; i<=finishBlock; i++) { %>
 		<%if(!isSearch) {%>
 			<a href="list.jsp?page=<%=i%>"><%=i%></a>
 		<%} else {%>
 			<a href="list.jsp?page=<%=i%>&type=<%=type%>&keyword=<%=keyword%>"><%=i%></a>
 		<%}%>
 	<%}%>
-<% %>	
+<%if(pageCount > finishBlock) {%>	
 	<%if(!isSearch) { %>
 		<a href="list.jsp?page=<%=finishBlock+1%>">[다음]</a>
 	<%} else {%>
 		<a href="list.jsp?page=<%=finishBlock+1%>&type=<%=type%>&keyword=<%=keyword%>">[다음]</a>
 	<%}%>
+<%}%>
 	</h6>
 	<!-- 검색창 -->
 	<select name="type">
 		<option value="commu_title">제목만</option>
 		<option value="commu_content">내용만</option>
-		<option value="member_no">글작성자</option>
+		<option value="member_nick">글작성자</option>
 	</select>
 		<input type="text" name="keyword" placeholder="검색어를 입력하세요" required>
 		<input type="submit" value="검색">

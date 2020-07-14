@@ -63,7 +63,7 @@
 	//int count = 목록개수 or 검색개수;
 	int count;
 	if(isSearch){//검색
-		count = pdao.getCount(type, keyword,member_no,auth); 
+		count = pdao.getCount(type, keyword,auth); 
 	}
 	else{//목록
 		count = pdao.getCount();
@@ -79,10 +79,10 @@
 	List<PointDto> list;
 	
 	if(isSearch){
-		list = pdao.search(type, auth, keyword, member_no, start, finish); 
+		list = pdao.search(type, auth, keyword, start, finish); 
 	}
 	else{
-		list = pdao.getList(member_no,auth,start ,finish); 
+		list = pdao.getList(auth,start ,finish); 
 	}
 	
 	
@@ -102,24 +102,18 @@
 		<thead>
 			<tr>
 				<th>번호</th>
-				<th>닉네임</th>
 				<th>유형</th>
 				<th>포인트 점수</th>
-				<th>적립 시간</th>
 			</tr>
 		</thead>
 		<tbody align="center">
 			<%for(PointDto pdto : list){ %>
 			<tr>
 				<td><%=pdto.getPoint_no()%></td>
-				<td align="left">
-					<%=pdto.getMember_nick()%>
-				</td>
 				<td>
 					<%=pdto.getPoint_type()%>
 				</td>
 				<td><%=pdto.getPoint_score()%></td>
-				<td><%=pdto.getPoint_date()%></td>
 			</tr>
 			<%} %>
 		</tbody>
@@ -135,9 +129,9 @@
 	<% if(startBlock > 1){ %>
 	
 		<%if(!isSearch){ %> 
-			<a href="qna_list.jsp?page=<%=startBlock-1%>">[이전]</a>
+			<a href="MemberPointList.jsp?page=<%=startBlock-1%>">[이전]</a>
 		<%}else{ %>
-			<a href="qna_list.jsp?page=<%=startBlock-1%>&type=<%=type%>&keyword=<%=keyword%>">[이전]</a>
+			<a href="MemberPointList.jsp?page=<%=startBlock-1%>&type=<%=type%>&keyword=<%=keyword%>">[이전]</a>
 		<%} %>
 		
 	<%} %>
@@ -145,18 +139,18 @@
 	<%for(int i=startBlock; i <= finishBlock; i++){ %>
 		<%if(!isSearch){ %>
 		<!-- 목록일 경우 페이지 번호만 전달 -->
-		<a href="qna_list.jsp?page=<%=i%>"><%=i%></a>
+		<a href="MemberPointList.jsp?page=<%=i%>"><%=i%></a>
 		<%}else{ %>
 		<!-- 검색일 경우 페이지 번호와 검색 분류(type), 검색어(keyword)를 전달 -->
-		<a href="qna_list.jsp?page=<%=i%>&type=<%=type%>&keyword=<%=keyword%>"><%=i%></a>
+		<a href="MemberPointList?page=<%=i%>&type=<%=type%>&keyword=<%=keyword%>"><%=i%></a>
 		<%} %>
 	<%} %>
 	
 	<%if(pageCount > finishBlock){ %>
 		<%if(!isSearch){ %> 
-			<a href="qna_list.jsp?page=<%=finishBlock + 1%>">[다음]</a>
+			<a href="MemberPointList.jsp?page=<%=finishBlock + 1%>">[다음]</a>
 		<%}else{ %>
-			<a href="qna_list.jsp?page=<%=finishBlock + 1%>&type=<%=type%>&keyword=<%=keyword%>">[다음]</a>
+			<a href="MemberPointList.jsp?page=<%=finishBlock + 1%>&type=<%=type%>&keyword=<%=keyword%>">[다음]</a>
 		<%} %>
 	<%} %>
 	</h4>
