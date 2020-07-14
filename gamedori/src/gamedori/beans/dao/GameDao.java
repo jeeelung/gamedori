@@ -10,9 +10,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import gamedori.beans.dto.FilesDto;
+import gamedori.beans.dto.GameDto;
 
-public class FilesDao {
+public class GameDao {
 
 	private static DataSource src;
 	static {
@@ -30,53 +30,32 @@ public class FilesDao {
 		return src.getConnection();
 	}
 	
-	// 파일번호 시퀀스
 	public int getSequence() throws Exception {
 		Connection con = getConnection();
-		String sql = "SELECT file_seq.nextval FROM dual";
+		String sql = "SELECT game_seq.nextval FROM dual";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		rs.next();
 		int seq = rs.getInt(1);
-		
 		con.close();
-		
 		return seq;
 	}
 	
-	// 파일정보 업로드 메소드
-	public void save(FilesDto fdto) throws Exception{
+	public void write(GameDto gdto) throws Exception {
 		Connection con = getConnection();
-		String sql = "INSERT INTO files values(?, ?, ?, ?)";
+		String sql = "INSERT INTO GAME("
+				+ "game_no, "
+				+ "member_no, "
+				+ "game_name, "
+				+ "game_intro"
+				+ ") "
+				+ "VALUES (?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, fdto.getFile_no());
-		ps.setString(2, fdto.getFile_name());
-		ps.setLong(3, fdto.getFile_size());
-		ps.setString(4, fdto.getFile_type());
-		
-		ps.execute();
-		
-		con.close();
-	}
-	
-	public FilesDto get(int file_no) throws Exception {
-		Connection con = getConnection();
-		String sql = "SELECT * FROM files WHERE file_no = ?";
-		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, file_no);
-		ResultSet rs = ps.executeQuery();
-		
-		FilesDto fdto = rs.next()? new FilesDto(rs): null;
-		con.close();
-		return fdto;
-	}	
-	public void delete(int file_no) throws Exception {
-		Connection con = getConnection();
-		String sql = "DELETE FROM files WHERE file_no = ?";
-		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, file_no);
+		ps.setInt(1, gdto.getGame_no());
+		ps.setInt(2, gdto.getMember_no());
+		ps.setString(3, gdto.getGame_name());
+		ps.setString(4, gdto.getGame_intro());
 		ps.execute();
 		con.close();
 	}
 }
-

@@ -1,27 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
 
-<title>겜도리</title>
+    <meta charset="UTF-8">
+    <title>GAMEDORI</title>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/base.css">
+    <style>
+        main {
+            width: 1100px;
+            margin: auto;
+        }
+        .menu {
+            text-align: center;
+        }
+        
+        .font-game {
+            font-family: ARCADECLASSIC;
+            font-size: 70px;
+            
+        }
+        .foot {
+            color: gray;
+            text-align: center;
+        }
+        .intro {
+            color: black;
+            font-weight: 900;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-	<div align="center">
-		<table border="1" width="1000">
-			<tbody>
-				<!-- 상단(header) 영역 -->
-				<tr height="100">
-					<td align="center"><h1>어서와 겜도리 칭긔칭긔~~</h1></td>
-				</tr>
-				<!-- 메뉴(navigation) 영역 -->
-				<tr>
 
-					<td><jsp:include page="/template/menu.jsp"></jsp:include></td>
+    <main class="center">
+        <header>
+            
+            <div class="row center">
+                <a href="<%=request.getContextPath()%>/index.jsp"><img class="logo" src="<%=request.getContextPath()%>/image/logo.png"></a>
+            </div>
+        </header>
 
-				</tr>
-				<!-- 본문(section) 영역 -->
-
-				<tr height="350">
-					<td valign="top">
+        <nav>
+        	<jsp:include page="/template/menu.jsp"></jsp:include>
+        </nav>
+        	<section>
