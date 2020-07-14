@@ -126,11 +126,10 @@
 							width="20" height="15">
 					<%}%>
 					<a href="<%=request.getContextPath()%>/community/content.jsp?commu_no=<%=cdto.getCommu_no()%>">
-					[<%=cdto.getCommu_head()%>]<%=cdto.getCommu_title()%><%if(cdto.getCommu_replycount() > 0){ %>
-						<!-- 댓글 개수를 출력(있을 경우만) -->
-						[<%=cdto.getCommu_replycount()%>]
-						<%} %>
+					[<%=cdto.getCommu_head()%>]<%=cdto.getCommu_title()%>
 						</a>
+					[<%=cdto.getCommu_replycount() %>]
+					
 				</td>
 				<td><%=mdto.getMember_nick()%></td>
 				<td><%=cdto.getCommu_auto()%></td>

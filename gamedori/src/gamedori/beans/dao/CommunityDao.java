@@ -308,13 +308,13 @@ public class CommunityDao {
 		con.close();
 	}
 	
-	//리플라이 카운트
+	//리플라이(댓글 카운트)
 	public void editReplycount(int commu_no) throws Exception {
 		Connection con = getConnection();
 		
-		String sql = "UPDATE board "
-							+ "SET board_replycount = ("
-								+ "SELECT count(*) FROM reply WHERE reply_origin = ?"
+		String sql = "UPDATE community "
+							+ "SET commu_replycount = ("
+								+ "SELECT count(*) FROM reply WHERE origin_no = ?"
 							+ ") "
 							+ "WHERE commu_no = ?";
 		PreparedStatement ps = con.prepareStatement(sql);

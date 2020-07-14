@@ -38,7 +38,7 @@ private static DataSource src;
 	//  reply추출 메소드
 		public int getSequence() throws Exception{
 			Connection con = getConnection();
-			String sql = "SELECT reply_.nextval FROM dual";
+			String sql = "SELECT reply_seq.nextval FROM dual";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
@@ -93,7 +93,7 @@ private static DataSource src;
 					+ "member_no, "
 					+ "reply_content, "
 					+ "reply_date, "
-					+ "origin_no"
+					+ "origin_no "
 					+ ") "
 					+ "values(?, ?, ?, sysdate, ?)";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -118,14 +118,14 @@ private static DataSource src;
 			con.close();
 		}
 		//리스트 조회
-		public List<ReplyDto> getList(int reply_origin) throws Exception{
+		public List<ReplyDto> getList(int origin_no) throws Exception{
 			Connection con = getConnection();
 			
 			String sql = "SELECT * FROM reply "
-								+ "WHERE reply_origin=? "
+								+ "WHERE origin_no=? "
 								+ "ORDER BY reply_no ASC";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, reply_origin);
+			ps.setInt(1, origin_no);
 			ResultSet rs = ps.executeQuery();
 			
 			List<ReplyDto> list = new ArrayList<>();
@@ -135,7 +135,7 @@ private static DataSource src;
 //				rdto.setMember_no(rs.getInt("Member_no"));
 //				rdto.setReply_content(rs.getString("reply_content"));
 //				rdto.setReply_date(rs.getString("reply_date"));
-//				rdto.setReply_origin(rs.getInt("reply_origin"));
+//				
 				ReplyDto rdto = new ReplyDto(rs);
 				list.add(rdto);			
 			}
