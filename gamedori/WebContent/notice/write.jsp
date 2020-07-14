@@ -11,7 +11,6 @@
  -->
 <%
 MemberDto mdto = (MemberDto)session.getAttribute("userinfo");
-
 %>
  
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -20,8 +19,9 @@ MemberDto mdto = (MemberDto)session.getAttribute("userinfo");
 <div align="center">
 <form action="write.do" method="post" enctype="multipart/form-data">
 
-
-
+<input type="hidden" name="notice_no" value="<%=request.getParameter("notice_no")%>">
+<input type="hidden" name="member_no" value="<%=mdto.getMember_no()%>">
+ 
 	
 	<h2>공지사항 작성</h2>
 	
@@ -38,10 +38,9 @@ MemberDto mdto = (MemberDto)session.getAttribute("userinfo");
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td>
-						<!-- 내용은 textarea로 구현 -->
-						<textarea name="notice_content" required rows="15" cols="72"></textarea>
-					</td>  
+					<td align="left" valign="top">
+						<textarea rows="20" cols="100" maxlength="4000" name="notice_content" required></textarea>
+					</td>
 				</tr>
 				
 				<!-- 첨부파일 -->

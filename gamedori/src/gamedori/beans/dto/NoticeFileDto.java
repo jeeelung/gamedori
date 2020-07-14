@@ -3,7 +3,7 @@ package gamedori.beans.dto;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class NoticeFilesDto {
+public class NoticeFileDto {
 	
 	private int Notice_no;
 	public int getNotice_no() {
@@ -24,11 +24,11 @@ public class NoticeFilesDto {
 
 	private int file_no;
 	
-	public NoticeFilesDto() {
+	public NoticeFileDto() {
 		super();
 	}
 	
-	public NoticeFilesDto(ResultSet rs) throws SQLException {
+	public NoticeFileDto(ResultSet rs) throws SQLException {
 		this.setNotice_no(rs.getInt("notice_no"));
 		this.setFile_no(rs.getInt("file_no"));
 	}

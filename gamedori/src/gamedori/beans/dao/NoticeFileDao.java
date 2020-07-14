@@ -13,7 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import gamedori.beans.dto.FilesDto;
-import gamedori.beans.dto.NoticeFilesDto;
+import gamedori.beans.dto.NoticeFileDto;
 
 public class NoticeFileDao {
 	
@@ -34,7 +34,7 @@ public class NoticeFileDao {
 	}
 	
 	// 등록 메소드
-	public void save(NoticeFilesDto nfdto) throws Exception{
+	public void save(NoticeFileDto nfdto) throws Exception{
 		Connection con = getConnection();
 		String sql = "INSERT INTO notice_file VALUES(?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
@@ -42,6 +42,14 @@ public class NoticeFileDao {
 		ps.setInt(2, nfdto.getFile_no());
 		ps.execute();
 		
+		con.close();
+	}
+	public void deleteFile(int file_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "DELETE FROM notice_file WHERE file_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, file_no);
+		ps.execute();
 		con.close();
 	}
 	
@@ -55,6 +63,7 @@ public class NoticeFileDao {
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, notice_no);
 		ResultSet rs = ps.executeQuery();
+		
 		List<FilesDto> list = new ArrayList<FilesDto>();
 		while(rs.next()) {
 			FilesDto fdto = new FilesDto(rs);

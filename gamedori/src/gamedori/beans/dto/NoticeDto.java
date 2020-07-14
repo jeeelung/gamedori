@@ -107,33 +107,6 @@ public class NoticeDto {
 		this.notice_replycount = notice_replycount;
 	}
 
-//		계층형 게시판을 위해 추가한 데이터 구현(변수 + setter/getter)
-	private int super_no;
-	private int group_no;
-	private int depth;
 
-	public int getSuper_no() {
-		return super_no;
-	}
-
-	public void setSuper_no(int super_no) {
-		this.super_no = super_no;
-	}
-
-	public int getGroup_no() {
-		return group_no;
-	}
-
-	public void setGroup_no(int group_no) {
-		this.group_no = group_no;
-	}
-
-	public int getDepth() {
-		return depth;
-	}
-
-	public void setDepth(int depth) {
-		this.depth = depth;
-	}
 
 }

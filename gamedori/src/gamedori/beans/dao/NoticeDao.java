@@ -143,26 +143,17 @@ public class NoticeDao {
 
 	// 등록 메소드
 	public void write(NoticeDto ndto) throws Exception {
-		if (ndto.getSuper_no() == 0) {// 새글이면
-			ndto.setGroup_no(ndto.getNotice_no());
-		} else {// 답글이면
 				
-			NoticeDto find = this.get(ndto.getSuper_no());// 상위글 정보 불러오기
-
-			// - find를 이용하여 ndto에 그룹번호와 차수를 설정
-			ndto.setGroup_no(find.getGroup_no());
-			ndto.setDepth(find.getDepth() + 1);
-		}
-		
 		Connection con = getConnection();
 
 		// 아래와 같이 작성하면 미 작성된 항목들은 default 값이 적용
-		String sql = "INSERT INTO notice notice_no,member_no,notice_title,notice_content VALUES(?, ?, ?, ?)";
+		String sql = "INSERT INTO notice (notice_no,member_no,notice_title,notice_content) VALUES(?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, ndto.getNotice_no());
 		ps.setInt(2, ndto.getMember_no());
 		ps.setString(3, ndto.getNotice_title());		
 		ps.setString(4, ndto.getNotice_content());		
+		
 		ps.execute();
 
 		con.close();

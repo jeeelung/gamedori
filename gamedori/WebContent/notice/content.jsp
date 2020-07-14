@@ -1,4 +1,4 @@
-<%@page import="gamedori.beans.dto.NoticeFilesDto"%>
+<%@page import="gamedori.beans.dto.NoticeFileDto"%>
 <%@page import="gamedori.beans.dto.FilesDto"%>
 <%@page import="java.util.List"%>
 <%@page import="gamedori.beans.dao.NoticeFileDao"%>
@@ -56,7 +56,7 @@
 		<table border="1" width="900" >
 			<thead align="left">
 				<tr>
-					<!-- 말머리 및 제목 -->
+					<!-- 제목 -->
 					<th><h2>
 						<%=ndto.getNotice_title()%>
 					</h2></th>
@@ -76,7 +76,7 @@
 				<tr>
 					<td>
 						<%=ndto.getNotice_auto()%>
-						조회 <%=ndto.getNotice_read()%>
+						<%=ndto.getNotice_read()%>
 					</td>
 				</tr>
 			</thead>
@@ -116,11 +116,11 @@
 						</a>
 						
 					<%if(isAdmin || isMine){%>
-						<a href="edit.jsp?commu_no=<%=notice_no%>">
+						<a href="edit.jsp?notice_no=<%=notice_no%>">
 							<input type="button" value="수정">
 						</a>
 						<a href="<%=request.getContextPath()%>/member/check.jsp?
-						go=<%=request.getContextPath()%>/community/delete.do?commu_no=<%=notice_no%>">
+						go=<%=request.getContextPath()%>/notice/delete.do?notice_no=<%=notice_no%>">
 							<input type="button" value="삭제">
 						</a>
 					<%}%>
