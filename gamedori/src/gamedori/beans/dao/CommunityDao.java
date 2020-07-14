@@ -119,7 +119,6 @@ public class CommunityDao {
 		con.close();
 		
 		return mdto;
-
 	}
 	
 	// 게시물 목록 메소드
@@ -269,7 +268,6 @@ public class CommunityDao {
 		return count;
 	}
 	
-<<<<<<< HEAD
 	//댓글 카운트
 	public void editReplycount(int community_no) throws Exception {
 		Connection con = getConnection();
@@ -287,7 +285,8 @@ public class CommunityDao {
 		con.close();
 	}
 	
-=======
+	
+	
 	public int getCount(String head) throws Exception {
 		Connection con = getConnection();
 		String sql = "SELECT COUNT(*) FROM community WHERE commu_head = ?";
@@ -326,7 +325,6 @@ public class CommunityDao {
 		ps.execute();
 		con.close();
 	}
->>>>>>> refs/remotes/origin/master
 	
 
 }
