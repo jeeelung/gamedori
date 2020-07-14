@@ -56,7 +56,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 			//event_participateDao epdao = new event_participateDao();
 			//epdao.EventInfo(epdto);
 			
-			resp.sendRedirect(req.getContextPath());
+			resp.sendRedirect("Eventresult.jsp?=event_no="+event_no);
 			
 			
 //			String io = req.getParameter("io"); 

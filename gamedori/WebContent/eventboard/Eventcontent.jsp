@@ -130,12 +130,19 @@ boolean isMine = user.getMember_id().equals(mdto.getMember_id());
 					</a>
 			
 					
-				<%if(isAdmin || isMine){%>
+				<%if (isMine){%>
 					<a href = "event.do?event_no=<%=event_no%>">
 					<input type = "button" value= "이벤트 참여">
 					</a>
 					
+					<a href="event_list.jsp">
+						<input type="button" value="목록으로">
+					</a>
 					
+					
+					
+					<%} %>
+					<%if(isAdmin){%>
 					<a href="EventEdit.jsp?event_no=<%=event_no%>">
 						<input type="button" value="수정">
 					</a>
@@ -145,9 +152,7 @@ boolean isMine = user.getMember_id().equals(mdto.getMember_id());
 					</a>
 					
 				<%}%>
-					<a href="event_list.jsp">
-						<input type="button" value="목록으로">
-					</a>
+					
 					<br><br>
 				</td>
 			</tr>
