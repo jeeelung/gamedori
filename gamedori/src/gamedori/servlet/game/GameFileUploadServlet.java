@@ -18,10 +18,12 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import gamedori.beans.dao.FilesDao;
 import gamedori.beans.dao.GameDao;
 import gamedori.beans.dao.GameFileDao;
+import gamedori.beans.dao.GameGenreDao;
 import gamedori.beans.dao.GameImgDao;
 import gamedori.beans.dto.FilesDto;
 import gamedori.beans.dto.GameDto;
 import gamedori.beans.dto.GameFileDto;
+import gamedori.beans.dto.GameGenreDto;
 import gamedori.beans.dto.GameImgDto;
 
 @WebServlet(urlPatterns = "/game/upload.do")
@@ -56,6 +58,17 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 			gdto.setGame_no(game_no);
 			
 			gdao.write(gdto);
+			
+			// 게임 장르 테이블에 정보 전송
+			GameGenreDto ggdto = new GameGenreDto();
+			ggdto.setGame_no(game_no);
+			ggdto.setGenre_no(Integer.parseInt(map.get("game_genre").get(0).getString()));
+			
+			GameGenreDao ggdao = new GameGenreDao();
+			int game_genre_no = ggdao.getSeq();
+			ggdto.setGame_genre_no(game_genre_no);
+			
+			ggdao.write(ggdto);
 			
 			// 게임 파일 꺼내기
 			List<FileItem> fileList = map.get("game_file");
