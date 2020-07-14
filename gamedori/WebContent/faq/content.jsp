@@ -117,10 +117,12 @@
 						<%for(FilesDto filesdto : fileList) {%>
 						<li><%=filesdto.getFile_name() %> (<%=filesdto.getFile_size() %>bytes) 
 						<a href="download.do?file_no=<%=filesdto.getFile_no() %>"><input type="button" value="다운로드"> 
+						<!-- 다운로드 미리보기 -->
+						<span class="preview-text">미리보기<img class="preview" src="dowload.do?file_no="<%=filesdto.getFile_no() %>"width="150"></span>
 						</a>
-						<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif"> 
 						</li>
 						<%} %>
+						<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif"> 
 					</ul>
 				</td>
 			</tr>
@@ -129,13 +131,13 @@
 		<!-- 각종 버튼들 구현 -->
 		<tfoot>
 			<tr align="center">
-				<td colspan="4"><a href="write.jsp"> <input type="button" value="글쓰기"></a>
+				<td colspan="4"><a href="write.jsp"> <input class="form-btn form-inline"  type="button" value="글쓰기"></a>
 				  <%if(isAdmin || isMine){ %>
-					  <a href="edit.jsp?faq_no=<%=faq_no %>"><input type="button" value="수정"></a> 
+					  <a href="edit.jsp?faq_no=<%=faq_no %>"><input class="form-btn form-inline" type="button" value="수정"></a> 
 					  <a href="<%=request.getContextPath()%>/member/check.jsp?go=<%=request.getContextPath()%>/faq/delete.do?faq_no=<%=faq_no%>">
-					  <input type="button" value="삭제"></a>
+					  <input class="form-btn form-inline" type="button" value="삭제"></a>
 				  <%} %>
-				<a href="list.jsp"><input type="button" value="목록으로"></a><br><br>
+				<a href="list.jsp"><input class="form-btn form-inline" type="button" value="목록으로"></a><br><br>
 				</td>
 			</tr>
 		</tfoot>
