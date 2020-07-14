@@ -31,14 +31,6 @@
 	font-size: 30px;
 	color: #20639B;
 }
-.line {
-	border: 1px solid #20639B;
-}
-.gameNo{
-	font-family: arcadeclassic;
-	font-size: 20px;
-	color:#20639B;
-}
 .wrap {
 	border-top: 3px solid #20639B;
 	border-bottom : 3px solid #20639B;
@@ -106,7 +98,7 @@
 				</th>
 			</tr>
 			<tr height="500px">
-			<th width="10%" height>내용</th>
+			<th width="10%">내용</th>
 				<td valign="top" colspan="3"><%=fdto.getFaq_content() %></td>
 			</tr>
 			<%if(!fileList.isEmpty()){ %>

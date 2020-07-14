@@ -21,28 +21,86 @@
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
-
-<div align="center">
+<style>
+.div {font-family: arcadeclassic;}
+.font-game {
+	font-family: arcadeclassic;
+	font-size: 30px;
+	color: #20639B;
+}
+.wrap {
+	border-top: 3px solid #20639B;
+	border-bottom : 3px solid #20639B;
+}
+.today-wrap {
+	border-top: 3px solid #20639B;
+	border-bottom : 3px solid #20639B;
+	position : relative;
+}
+.table{
 	
-	<h2>FAQ 수정</h2>
+}
+.table.table-border {
+	/* 테이블에 테두리를 부여*/
+	border: 3px solid #20639B;
+	/* 테두리 병합 */
+	border-collapse: collapse;
+}
+.table.table-border > thead > tr > th,
+        .table.table-border > thead > tr > td,
+        .table.table-border > tbody > tr > th,
+        .table.table-border > tbody > tr > td,
+        .table.table-border > tfoot > tr > th,
+        .table.table-border > tfoot > tr > td {
+            /* 칸에 테두리를 부여 */
+            border:2px solid #20639B;
+   				color:dodgerblue;
+        }
+.table.table-border > thead > tr > th,
+        .table.table-border > thead > tr > td > a,
+        .table.table-border > tbody > tr > th > a,
+        .table.table-border > tbody > tr > td > a,
+        .table.table-border > tfoot > tr > th > a,
+        .table.table-border > tfoot > tr > td > a{
+            text-decoration : none;
+             color:dodgerblue;
+        }
+select{
+border: 2px solid dodgerblue;
+}
+
+textarea{
+display:incline-block;
+postion : absolute;
+align:left;
+resize:none;
+width:100%;
+height: 478px;
+border-width:0px;
+}
+textarea:focus{
+border-width:0px;
+}
+
+</style>
+<div>
+<article>
+<div class="font-game">
+	<h3>FAQ 수정</h3>
+</div>
+</article>	
 	
 	<!-- 게시글 전송 폼 -->
 	<form action="edit.do" method="post" enctype="multipart/form-data">
-	
+		
 		<!-- 수정이 가능하도록 PK를 숨김 첨부한다 -->
 		<input type="hidden" name="faq_no" value="<%=faq_no%>">
 		
-		<table border="1">
+		<table class="table table-border" width="80%">
 		<thead>
-		<tr>
-		<td>
-		</td>
-		</tr>
-		</thead>
-			<tbody>
 				<tr>
 					<th>말머리</th>
-					<td>
+					<td class="left">
 						<!-- 말머리는 select로 구현 -->
 						<select name="faq_head">
 							<option value="">말머리 선택</option>
@@ -50,7 +108,9 @@
 							<option value="회원문의">회원문의</option>
 						</select>
 					</td>
-				</tr>
+				</tr>		
+		</thead>
+			<tbody>
 				<tr>
 					<th>제목</th>
 					<td>

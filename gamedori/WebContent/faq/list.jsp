@@ -108,7 +108,7 @@
         .table.table-border > tfoot > tr > td {
             /* 칸에 테두리를 부여 */
             border:2px solid #20639B;
-             color:dodgerblue
+             color:dodgerblue;
             
         }
 .table.table-border > thead > tr > th,
@@ -179,17 +179,17 @@
 				</td>
 					<%MemberDto mdto = fdao.getWriter(fdto.getMember_no());%>
 				<td>
-						<%if (mdto.getMember_nick() != null) {%> <%=mdto.getMember_nick()%>
-						<%} else {%> 
-						<font color="gray">탈퇴한 사용자</font> <%}%>
+					<%if (mdto.getMember_nick() != null) {%> <%=mdto.getMember_nick()%> 
+					<%} else {%> <font color="gray">탈퇴한 사용자</font> 
+					<%}%>
 				</td>
 			</tr>
 				<%}%>
 		</tbody>
-		<tfoot>
-		</tfoot>
-	</table>
-<div class="row right">
+	<tfoot>
+</tfoot>
+</table>
+<div class="right">
 <a href="write.jsp">
 <input class="form-btn form-inline" type="button" value="글쓰기">
 </a>
@@ -252,7 +252,7 @@
 	</div>
 
 	<!-- 검색창 -->
-	<div class="row center">
+	<div class="center">
 	<form action="list.jsp" method="get">
 		<!-- 검색분류 -->
 		<select class="form-input form-inline" name="type">
