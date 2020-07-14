@@ -119,6 +119,7 @@ public class CommunityDao {
 		con.close();
 		
 		return mdto;
+
 	}
 	
 	// 게시물 목록 메소드
@@ -268,25 +269,6 @@ public class CommunityDao {
 		return count;
 	}
 	
-	//댓글 카운트
-	public void editReplycount(int community_no) throws Exception {
-		Connection con = getConnection();
-		
-		String sql = "UPDATE community "
-							+ "SET community_replycount = ("
-								+ "SELECT count(*) FROM reply WHERE reply_origin = ?"
-							+ ") "
-							+ "WHERE community_no = ?";
-		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, community_no);
-		ps.setInt(2, community_no);
-		ps.execute();
-		
-		con.close();
-	}
-	
-	
-	
 	public int getCount(String head) throws Exception {
 		Connection con = getConnection();
 		String sql = "SELECT COUNT(*) FROM community WHERE commu_head = ?";
@@ -323,6 +305,23 @@ public class CommunityDao {
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, commu_no);
 		ps.execute();
+		con.close();
+	}
+	
+	//리플라이 카운트
+	public void editReplycount(int commu_no) throws Exception {
+		Connection con = getConnection();
+		
+		String sql = "UPDATE board "
+							+ "SET board_replycount = ("
+								+ "SELECT count(*) FROM reply WHERE reply_origin = ?"
+							+ ") "
+							+ "WHERE commu_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, commu_no);
+		ps.setInt(2, commu_no);
+		ps.execute();
+		
 		con.close();
 	}
 	

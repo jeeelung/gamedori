@@ -118,7 +118,7 @@
 				<%MemberDto mdto = cdao.getWriter(cdto.getMember_no());%>
 				<th><%=cdto.getCommu_no()%></th>
 				<td>
-					<%if(cdto.getCommu_super_no() > 0){ %>
+					<%if(cdto.getCommu_depth() > 0){ %>
 						<%for(int i=0; i<cdto.getCommu_depth(); i++) {%>
 							&nbsp;&nbsp;&nbsp;&nbsp;
 						<%}%>
@@ -126,8 +126,11 @@
 							width="20" height="15">
 					<%}%>
 					<a href="<%=request.getContextPath()%>/community/content.jsp?commu_no=<%=cdto.getCommu_no()%>">
-					[<%=cdto.getCommu_head()%>]<%=cdto.getCommu_title()%>
-					</a>
+					[<%=cdto.getCommu_head()%>]<%=cdto.getCommu_title()%><%if(cdto.getCommu_replycount() > 0){ %>
+						<!-- 댓글 개수를 출력(있을 경우만) -->
+						[<%=cdto.getCommu_replycount()%>]
+						<%} %>
+						</a>
 				</td>
 				<td><%=mdto.getMember_nick()%></td>
 				<td><%=cdto.getCommu_auto()%></td>
