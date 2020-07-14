@@ -34,9 +34,8 @@
 %>
 <div class="member-wrap">
 	<h5 class="menu-font">
-		<a href="<%=rootPath%>/guest/logout.jsp">로그아웃</a>
+		<a href="<%=rootPath%>/member/logout.do">로그아웃</a>
 	</h5>
-	<h5>｜</h5>
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/member/info.jsp">마이페이지</a>
 	</h5>

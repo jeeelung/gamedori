@@ -18,8 +18,7 @@
         
         .font-game {
             font-family: ARCADECLASSIC;
-            font-size: 70px;
-            
+            font-size: 70px;   
         }
         .foot {
             color: gray;
