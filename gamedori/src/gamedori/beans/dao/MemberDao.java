@@ -1,7 +1,6 @@
 package gamedori.beans.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,9 +27,9 @@ public class MemberDao {
 
 	// 연결 메소드
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
-		Class.forName("oracle.jdbc.OracleDriver");
-		return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "c##gamedori", "c##gamedori");
-//		return src.getConnection();
+//		Class.forName("oracle.jdbc.OracleDriver");
+//		return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "c##gamedori", "c##gamedori");
+		return src.getConnection();
 	}
 
 	// 로그인
@@ -58,7 +57,6 @@ public class MemberDao {
 		} else {
 			user = null;
 		}
-		System.out.println(user);
 		con.close();
 
 		return user;
@@ -97,7 +95,6 @@ public class MemberDao {
 		}
 
 		con.close();
-		System.out.println(member_id);
 		return member_id;
 	}
 
@@ -232,9 +229,6 @@ public class MemberDao {
 		} else {
 			mdto = null;
 		}
-		
-		}
-
 		con.close();
 		return mdto;
 	}
@@ -252,4 +246,5 @@ public class MemberDao {
 	}
 	
 }
+
 
