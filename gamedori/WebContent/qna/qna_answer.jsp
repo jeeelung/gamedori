@@ -30,24 +30,19 @@
 	<h2>문의글 답변</h2>
 	
 	<!-- 게시글 전송 폼 -->
-	<form action="answer.do" method="post" enctype="multipart/form-data">
+	<form action="edit.do" method="post" enctype="multipart/form-data">
 	
 		<!-- 수정이 가능하도록 PK를 숨김 첨부한다 -->
 		<input type="hidden" name="qna_no" value="<%=qna_no%>">
 		
 		<table border="1">
 			<tbody>
-				<tr>
-					<th>말머리</th>
-					<td>
-						<!-- 말머리는 select로 구현 -->
-						<select name="qna_head">
-							<option value="">말머리</option>
-							<option value="회원">회원</option>
-							<option value="게임">게임</option>
-							<option value="포인트">포인트</option>
-						</select>
-					</td>
+					
+						<th><Colspan="2">말머리
+						<%if(qdto.getQna_head() != null){ %>
+					<!-- 말머리는 있을 경우만 출력 -->
+					[<%=qdto.getQna_head()%>]<%=qdto.getQna_title() %>
+						<%} %></th>
 				</tr>
 				<tr>
 					<th>제목</th>
@@ -83,7 +78,7 @@
 								<!-- 다운로드 버튼을 누른다면 해당 파일을 다운로드 할 수 있도록 링크 -->
 								
 								<a href="download.do?file_no=<%=fdto.getFile_no()%>">
-									<input type="button" value="다운로드">
+									<input type="button" value="다운로드">	
 								</a>
 							</li>
 							<%}%>

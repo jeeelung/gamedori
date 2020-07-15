@@ -124,11 +124,15 @@
 			<%} %>
 		</tbody>
 		<tfoot>
-		<div align = "center">
-		<form action="point.do" method ="post">
-		<table border="0">
-		<h5>유형 등록</h5>
-		<tbody>
+		</tfoot>
+		</table>
+
+
+
+		<form action="adminpoint.do" method ="get">
+		<table border="1">
+	
+		<h3>유형 등록</h3>
 		<tr>
 		<th>유형</th>
 		<td>
@@ -141,19 +145,16 @@
 			<input type="text" name ="point_score">
 		</td>
 		</tr>
-		</tbody>
-		<tfoot>
 		<tr>
 		<th colspan="2">
 			<input type="submit" value="등록">
 		</th>
+		<a href="<%=request.getContextPath()%>/member/pointdelete.do">
+			<input type="button" value="삭제">
+		</a>
 		</tr>
-		
-		</tfoot>
-		</table>
+			</table>	
 		</form>
-		</tfoot>
-	</table>	
 	</div>
 	<h4>	
 	<!-- 
@@ -203,7 +204,6 @@
 		<!-- 전송버튼 -->
 		<input type="submit" value="검색">
 	</form>
-</div>
 <script>
 </script>
 <jsp:include page="/template/footer.jsp"></jsp:include>
