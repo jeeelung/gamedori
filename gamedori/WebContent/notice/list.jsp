@@ -13,7 +13,7 @@
 	MemberDto user=(MemberDto)session.getAttribute("userinfo");
 	
 	int member_no = user.getMember_no();	
-	
+	boolean isAdmin= user.getMember_auth().equals("관리자");
 	boolean isSearch = type != null && keyword != null;
 	// 페이지 번호 계산 코드
 	int pageSize = 10;
@@ -102,7 +102,7 @@
 			<%}%>
 				
 		</tbody>
-		
+		<%if(isAdmin){ %>
 		<tfoot>
 			<tr align="right">
 				<td colspan="5" align="right">
@@ -112,6 +112,7 @@
 				</td>
 			</tr>
 		</tfoot>
+		<%} %>
 	</table>
 	<!-- 네비게이터 -->
 	<h6>

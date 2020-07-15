@@ -11,6 +11,8 @@
  -->
 <%
 MemberDto mdto = (MemberDto)session.getAttribute("userinfo");
+
+
 %>
  
 <jsp:include page="/template/header.jsp"></jsp:include>
