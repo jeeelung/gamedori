@@ -23,6 +23,11 @@
     src: url(font/ARCADECLASSIC.TTF);
 }
 
+@font-face{
+	font-family: DungGeunMo;
+	src: url(font/DungGeunMo.ttf);
+}
+
 /*
     이미지 관련 스타일
     - 기본 스타일은 .img
@@ -271,6 +276,9 @@
 	/* .menu > li > a */
 	color: white;
 	text-decoration: none;
+	font-family: DungGeunMo;
+	font-size: 17px;
+	font-weight: 300;
 }
 
 .menu li:hover a {
@@ -340,8 +348,9 @@ main {
 	left: 10px;
 }
 
-.menu-font:hover {
-	
+.menu-font > a{
+	font-family: DungGeunMo;
+	font-weight: 100;
 }
 
 .notice-wrap {

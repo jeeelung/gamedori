@@ -9,8 +9,8 @@
 	String keyword = request.getParameter("keyword");
 	String head = request.getParameter("commu_head");
 	
-	boolean isHead = head != null;
-	boolean isSearch = type != null && keyword != null;
+	boolean isHead = head != null && !head.isEmpty();
+	boolean isSearch = type != null && keyword != null && !keyword.isEmpty();
 	boolean isList = !isHead && !isSearch;
 	
 	// 페이지 번호 계산 코드
@@ -80,13 +80,9 @@
 		var head = document.querySelector("[name=commu_head]");
 		var type = document.querySelector("[name=type]");
 		var keyword = document.querySelector("[name=keyword]");
-		if(head.value === null){
-			head.value = "";
-		} else {			
-			head.value = "<%=request.getParameter("commu_head")%>";
-		}
-		type.value = "<%=request.getParameter("type")%>";
-		keyword.value = "<%=request.getParameter("keyword")%>";
+		head.value = "<%=request.getParameter("commu_head") == null? "":request.getParameter("commu_head")%>";
+		type.value = "<%=request.getParameter("type") == null? "commu_title":request.getParameter("type")%>";
+		keyword.value = "<%=request.getParameter("keyword") == null? "":request.getParameter("keyword")%>";
 	};
 </script>
     
