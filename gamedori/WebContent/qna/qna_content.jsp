@@ -30,39 +30,42 @@
 	<form>
 	
 	<div align="center"><h2>고객 지원센터</h2></div>
-		<table align="center" border="1" width="60%">
+		<table align="center" border="1" width="60%" >
 			<thead>
 				<tr>
-						<th Colspan="2">
-						<%if(qdto.getQna_head() != null){ %>
+						<td>분류</td>
+						<td></td>
+					<td colspan="3"><%if(qdto.getQna_head() != null){ %>
 					<!-- 말머리는 있을 경우만 출력 -->
-						[<%=qdto.getQna_head()%>]<%=qdto.getQna_title() %>
+						[<%=qdto.getQna_head()%>]    
+					</td>	
+					</tr>
+					<tr>
+						<td >제목</td>
+					<td colspan="3">	<%=qdto.getQna_title() %>
 						<%} %>
-					</th>
-				</tr>
+					</td>
+					</tr>
 				<tr>
 					<!-- 작성자 및 권한 -->
-					<th>
+					<td>
 						작성자
-					<td>	<%if(user != null) {%>
+					</td>	
+					<td colspan="3">	<%if(user != null) {%>
 						<%=user.getMember_nick()%>
 						 <font color="gray"><%=mdto.getMember_auth()%></font>
-						
 						<%} else { %>
 						<font color="gray">탈퇴한 사용자</font>
 						<%}%> 
-						
-						</td>
-					</th>
-				</tr>
+					</td>
+					</tr>
 				<tr>
-					<th>
-						작성 일<td><%=qdto.getQna_date()%></td>
-					</th>
+					<td>작성 일</td>
+					<td><%=qdto.getQna_date()%></td>
 				</tr>
 				
 				<tr>
-					<th>이메일</th>
+					<td>이메일</td>
 					<td>
 						 <%=qdto.getQna_email()%>
 					</td>
@@ -70,8 +73,9 @@
 				</thead>
 			<tbody>
 				<tr>
+					<td>문의내용</td>
 					<!-- 게시물 내용 -->
-					<td><%=qdto.getQna_content()%></td>
+					<td width="100" height="100"><%=qdto.getQna_content()%></td>
 				</tr>
 				<!-- 첨부파일 출력 영역 : 첨부파일이 있는 경우만 출력 -->
 				<%if(!fileList.isEmpty()){%>
