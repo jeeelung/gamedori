@@ -22,67 +22,106 @@
 
 <jsp:include page="/template/header.jsp"></jsp:include>
 <style>
-.div {font-family: arcadeclassic;}
+.div {
+	font-family: arcadeclassic;
+}
+
 .font-game {
 	font-family: arcadeclassic;
 	font-size: 30px;
 	color: #20639B;
 }
+
 .wrap {
 	border-top: 3px solid #20639B;
-	border-bottom : 3px solid #20639B;
+	border-bottom: 3px solid #20639B;
 }
+
 .today-wrap {
 	border-top: 3px solid #20639B;
-	border-bottom : 3px solid #20639B;
-	position : relative;
+	border-bottom: 3px solid #20639B;
+	position: relative;
 }
-.table{
+
+.table {
 	
 }
+
 .table.table-border {
 	/* 테이블에 테두리를 부여*/
 	border: 3px solid #20639B;
 	/* 테두리 병합 */
 	border-collapse: collapse;
 }
-.table.table-border > thead > tr > th,
-        .table.table-border > thead > tr > td,
-        .table.table-border > tbody > tr > th,
-        .table.table-border > tbody > tr > td,
-        .table.table-border > tfoot > tr > th,
-        .table.table-border > tfoot > tr > td {
-            /* 칸에 테두리를 부여 */
-            border:2px solid #20639B;
-   				color:black;
-        }
-.table.table-border > thead > tr > th,
-        .table.table-border > thead > tr > td > a,
-        .table.table-border > tbody > tr > th > a,
-        .table.table-border > tbody > tr > td > a,
-        .table.table-border > tfoot > tr > th > a,
-        .table.table-border > tfoot > tr > td > a{
-            text-decoration : none;
-             color:black;
-        }
-.faq_head{
-border: 2px solid dodgerblue;
+
+.table.table-border>thead>tr>th, .table.table-border>thead>tr>td, .table.table-border>tbody>tr>th,
+	.table.table-border>tbody>tr>td, .table.table-border>tfoot>tr>th,
+	.table.table-border>tfoot>tr>td {
+	/* 칸에 테두리를 부여 */
+	border: 2px solid #20639B;
+	color: black;
 }
 
-textarea{
-display:incline-block;
-postion : absolute;
-align:left;
-resize:none;
-width:100%;
-height: 478px;
-border-width:0px;
-}
-textarea:focus{
-border-width:0px;
+.table.table-border>thead>tr>th, .table.table-border>thead>tr>td>a,
+	.table.table-border>tbody>tr>th>a, .table.table-border>tbody>tr>td>a,
+	.table.table-border>tfoot>tr>th>a, .table.table-border>tfoot>tr>td>a {
+	text-decoration: none;
+	color: black;
 }
 
+.faq_head {
+	border: 2px solid dodgerblue;
+}
+
+textarea {
+	display: incline-block;
+	postion: absolute;
+	align: left;
+	resize: none;
+	width: 100%;
+	height: 478px;
+	border-width: 0px;
+}
+
+textarea:focus {
+	border-width: 0px;
+}
+
+.preview-wrap>img {
+	width: 100px;
+	height: 100px;
+	display: inline-block;
+}
 </style>
+    <script>
+        function preview(){
+            var fileTag = document.querySelector("input[name=f]");
+        
+					var divTag = document.querySelector(".preview-wrap");
+
+						if (fileTag.files.length > 0) {
+							//선택된 파일들을 다 읽어와서 이미지 생성 후 추가
+							//미리보기 전부 삭제
+							divTag.innerHTML = "";
+
+							for (var i = 0; i < fileTag.files.length; i++) {
+								var reader = new FileReader();
+								reader.onload = function(data) {
+									//img 생성 후 data.target.result 설정하여 추가
+									var imgTag = document.createElement("img");
+									imgTag.setAttribute("src",
+											data.target.result);
+									divTag.appendChild(imgTag);
+								};
+								reader.readAsDataURL(fileTag.files[i]);
+							}
+
+						} else {
+							//미리보기 전부 삭제
+							divTag.innerHTML = "";
+						}
+					}
+				</script>
 <div>
 <article>
 <div class="font-game">
@@ -141,7 +180,7 @@ border-width:0px;
 					 </a>
 				</li>
 					<%} %>
-				<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif">
+				<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif" onchange="preview();">
 				</ul>
 				</td>
 				</tr>

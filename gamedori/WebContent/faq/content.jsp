@@ -141,7 +141,7 @@
 						<span class="preview-text">미리보기<img class="preview" src="dowload.do?file_no="<%=filesdto.getFile_no() %>"width="150"></span>
 						</a>
 						</li>
-						<%} %>
+						<%}%>
 						<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif"> 
 					</ul>
 				</td>

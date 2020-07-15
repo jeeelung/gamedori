@@ -65,8 +65,41 @@ border-width:0px;
 textarea:focus{
 border-width:0px;
 }
-
+.preview-wrap > img {
+   width:100px;
+   height:100px;
+   display:inline-block;
+ }
 </style>
+    <script>
+        function preview(){
+            var fileTag = document.querySelector("input[name=f]");
+            
+            var divTag = document.querySelector(".preview-wrap");
+            
+            if(fileTag.files.length > 0){
+                //선택된 파일들을 다 읽어와서 이미지 생성 후 추가
+                //미리보기 전부 삭제
+                divTag.innerHTML = "";
+                
+                for(var i=0; i < fileTag.files.length; i++){
+                    var reader = new FileReader();
+                    reader.onload = function(data){
+                        //img 생성 후 data.target.result 설정하여 추가
+                        var imgTag = document.createElement("img");
+                        imgTag.setAttribute("src", data.target.result);
+                        divTag.appendChild(imgTag);
+                    };
+                    reader.readAsDataURL(fileTag.files[i]);
+                }
+                
+            }
+            else{
+                //미리보기 전부 삭제
+                divTag.innerHTML = "";
+            }
+        }
+    </script>
 <div>
 <article>
 <div class="font-game">
@@ -110,7 +143,8 @@ border-width:0px;
 			<!-- 첨부파일 -->
 			<tr>
 				<th>첨부파일</th>
-				<td><input type="file" name="faq_file" multiple accept=".jpg, .png, .gif"></td>
+				<td><input type="file" name="faq_file" multiple accept=".jpg, .png, .gif" onchange="preview();">
+					<div class="preview-wrap"></div></td>
 			</tr>
 			</tbody>
 			<tfoot>

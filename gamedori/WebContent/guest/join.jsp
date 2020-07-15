@@ -4,7 +4,7 @@
 <jsp:include page="/template/header.jsp"></jsp:include>
 
 <div align="center">
-	
+
 	<h2>회원가입</h2>
 	
 	<form action="join.do" method="post">
