@@ -68,14 +68,42 @@
             text-decoration : none;
              color:black;
         }
+.preview-wrap > img {
+	width:100px;
+	height:100px;
+	display:inline-block;
+ }
 </style>
+<script>
+	function preview() {
+		var fileTage = document.querySelector("input[name=f]");
+		var divTag = document.querySelelctor(".preview-wrap");
+		if(fileTag.files.length > 0){
+			divTag.innerHTML = "";
+			 for(var i=0; i < fileTag.files.length; i++){
+                 var reader = new FileReader();
+                 reader.onload = function(data){
+                     //img 생성 후 data.target.result 설정하여 추가
+                     var imgTag = document.createElement("img");
+                     imgTag.setAttribute("src", data.target.result);
+                     divTag.appendChild(imgTag);
+                 };
+                 reader.readAsDataURL(fileTag.files[i]);
+             }
+             
+         }else{
+             //미리보기 전부 삭제
+             divTag.innerHTML = "";
+         }
+	}
+</script>
 <div align="center">
 <form>
 <article>
 <div class="font-game">
 	<h3>FAQ</h3>
 </div>
-<div class="row today-wrap"><div class="row-empty"></div>
+<div class="row today-wrap"><div class="row-empty"></div></div>
 </article>
 	<!-- 테이블에 글 정보를 출력 -->
 	<table class="table table-border" width="80%">
@@ -99,7 +127,7 @@
 			</tr>
 			<tr height="500px">
 			<th width="10%">내용</th>
-				<td valign="top" colspan="3"><%=fdto.getFaq_content() %></td>
+				<td valign="top" colspan="3" class="left"><%=fdto.getFaq_content() %></td>
 			</tr>
 			<%if(!fileList.isEmpty()){ %>
 			<tr>

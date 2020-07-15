@@ -88,7 +88,7 @@ border-width:0px;
 <div class="font-game">
 	<h3>FAQ 수정</h3>
 </div>
-<div class="row today-wrap"><div class="row-empth"></div>
+<div class="row today-wrap"><div class="row-empty"></div></div>
 </article>	
 	
 	<!-- 게시글 전송 폼 -->
@@ -111,7 +111,7 @@ border-width:0px;
 					</td>
 				</tr>		
 		</thead>
-			<tbody text-align="left" align="top">
+			<tbody align="top">
 				<tr>
 					<th width="10%">제목</th>
 					<td class="left">
