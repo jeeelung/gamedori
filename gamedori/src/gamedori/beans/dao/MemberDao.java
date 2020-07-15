@@ -135,6 +135,8 @@ public class MemberDao {
 		ps.setString(5, mdto.getMember_nick());
 		ps.setString(6, mdto.getMember_phone());
 
+	
+
 		ps.execute();
 
 		con.close();
@@ -251,7 +253,3 @@ public class MemberDao {
 		
 		}
 
-<<<<<<< HEAD
-}
-=======
->>>>>>> refs/remotes/origin/master

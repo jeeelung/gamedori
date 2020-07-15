@@ -2,11 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
-<script>
 
-alert="로그인을 해주시기 바랍니다"
-
-</script>
 <%
 	//rootPath에는 프로젝트 root path(/home)가 자동으로 계산되어 저장된다. 이는 절대경로 작성 시 활용할 수 있다.
 	String rootPath = request.getContextPath();
@@ -26,7 +22,7 @@ alert="로그인을 해주시기 바랍니다"
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">
-		<a href="<%=rootPath%>/faq/list.jsp">자주 묻는 질문</a>
+		<a href="<%=rootPath%>/qna/qna_list.jsp">자주 묻는 질문</a>
 	</h5>
 </div>
 <!--  	로그인 상태일 경우 -->

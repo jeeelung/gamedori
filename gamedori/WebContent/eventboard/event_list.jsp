@@ -8,55 +8,20 @@
     pageEncoding="UTF-8"%>
     
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
-    <style>
-       .font-game {
+
+<style>
+.font-header {
+
 	font-family: arcadeclassic;
-	font-size: 25px;
+	font-size: 35px;
 	color: #20639B;
 }
-.line {
-	border: 1px solid #20639B;
-}
-.gametitle {
-	font-family: arcadeclassic;
-	font-size: 15px;
-	color:#e8eff5;
-}
-.wrap {
-	border-top: 3px solid #20639B;
-	border-bottom: 3px solid #20639B;
-}
-.today-wrap {
-	border-top: 3px solid #20639B;
-	border-bottom: 3px solid #20639B;
-	position: relative;
-}
-.arrow-left > img{
-	float:left;
-	position: absolute;
-	left:0;
-	bottom:40%;
-}
-.arrow-right > img{
-	float:right;
-	position: absolute;
-	right:0;
-	bottom:40%;
-}
 
-
-.table.table1-stripe>tbody>tr:nth-child(2n) {
-	/* RGB Hex String */
-	background-color: #20639B;
+.font_han{
+	font-family: DungGeunMo;
 }
-
-.table.table-stripe>thead>tr {
-	background-color: #79a1c3;
-}
-
     </style>
-<script>
-</script>
+
 
 <% 
 
@@ -132,8 +97,8 @@ else{
 
 
 	<!-- 제목 -->
-	<div class="font-game">
-		<h1>Event Board</h1>
+	<div>
+		<h1 class="font-header">Event Board</h1>
 	</div>
 	
 	<!-- 글쓰기 버튼 -->
@@ -147,14 +112,14 @@ else{
 	<div class="row">
 	
 		<!-- 테이블 -->
-		<table border="1" width="90%" class="table-stripe table-border table1-stripe table-hover" >
+		<table border="1" width="90%" class=" table table1-stripe table-border  table-hover" >
 			<thead>
-				<tr aling="center">
-					<th>번호</th>
-					<th width="40%">제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
-					<th>조회수</th>
+				<tr aling="center" >
+					<th class= "font_han">번호</th>
+					<th class= "font_han" width="40%">제목</th>
+					<th class= "font_han">작성자</th>
+					<th class= "font_han" >작성일</th>
+					<th class= "font_han" >조회수</th>
 				</tr>
 			</thead>
 			<tbody align="center">
@@ -162,22 +127,22 @@ else{
 				<%for(EventboardDto edto : list){ %>
 				<tr>
 				
-					<td><%=edto.getEvent_no()%></td>
+					<td class= "font_han"><%=edto.getEvent_no()%></td>
 					<td class="left">
 					
 					
 					
 					<!-- 게시글 제목 -->
-					<a class=gametitle href="Eventcontent.jsp?event_no=<%=edto.getEvent_no() %>">
+					<a href="Eventcontent.jsp?event_no=<%=edto.getEvent_no() %>">
 					<%=edto.getEvent_title() %>
 					</a>
 					
 						
 					</td>
 					<%MemberDto mdto = edao.getWriter(edto.getMember_no()); %>
-					<td><%=mdto.getMember_nick() %></td>
-					<td><%=edto.getEvent_date() %></td>
-					<td><%=edto.getEvent_read() %></td>
+					<td class= "font_han" ><%=mdto.getMember_nick() %></td>
+					<td class= "font_han" ><%=edto.getEvent_date() %></td>
+					<td class= "font_han" ><%=edto.getEvent_read() %></td>
 					
 				</tr>
 				<%} %>
@@ -227,13 +192,14 @@ else{
 	
 		<form action="event_list.jsp" method="get">
 			<!-- 검색분류 -->
-			<select class="form-input form-inline" name="type">
+			<select class="form-input form-inline1" name="type" style= "backgroun">
 				<option value="event_title">제목</option>
 			
 			</select>
 			
 			<!-- 검색어 -->
-			<input class="form-input form-inline" type="text" name="keyword" required>
+			<input class="form-input form-inline1" type="text" name="keyword" 
+			 required>
 			 
 			<!-- 전송버튼 -->
 			<input class="form-btn form-inline" type="submit" value="검색">
