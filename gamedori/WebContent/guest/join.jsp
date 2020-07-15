@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@page import="gamedori.beans.dto.GenreDto"%>
+<%@page import="gamedori.beans.dao.GenreDao"%>
+<%@page import="java.util.List"%>
 <jsp:include page="/template/header.jsp"></jsp:include>
+<%
 
+	GenreDao genre = new GenreDao();
+	List<GenreDto> genreList = genre.getList();
+%>
 <div align="center">
 
 	<h2>회원가입</h2>
@@ -40,6 +46,17 @@
 						<input type="text" name="member_phone" required placeholder="- 제외">
 					</td>
 				</tr>
+				<tr>
+					<th>관심 분야</th>
+					<td>
+					<%for( GenreDto g :genreList){%>
+						<input type="checkbox" name="member_favorite" id="mf<%=g.getGenre_no() %>" value="<%=g.getGenre_no() %>">						
+						<label for="mf<%=g.getGenre_no()%>"><%=g.getGenre_type()%></label>
+					<%} %>	
+					</td>	
+				</tr>
+				
+				
 			</tbody>
 			<tfoot>
 				<tr>

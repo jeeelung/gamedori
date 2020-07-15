@@ -1,4 +1,8 @@
 
+<%@page import="gamedori.beans.dao.PointDao"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
+<%@page import="gamedori.beans.dao.MemberFavoriteDao"%>
 <%@page import="gamedori.beans.dao.MemberDao"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -18,6 +22,12 @@
 	MemberDao mdao=new MemberDao();
 	MemberDto user=mdao.get(member_no);//member_id(P.K)를 이용한 단일조회 수행
 
+	MemberFavoriteDao mfdao = new MemberFavoriteDao();
+	
+	List<Map<String,Object>> fList = mfdao.getList(mdto.getMember_no());
+	
+	PointDao pdao = new PointDao();
+	int point_score = pdao.getPoint(member_no);
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -53,7 +63,7 @@
 	
 			<tr>
 				<th>포인트</th>
-				<td><%=user.getMember_point()%></td>
+				<td><%=point_score%> <a href="check.jsp?go=MemberPointList.jsp">포인트 내역확인</a></td>
 			</tr>
 			<tr>
  				<th>가입일</th>
@@ -62,6 +72,16 @@
  			<tr>
  				<th>최종 로그인 일시</th>
  				<td><%=user.getMember_login_date()%></td>
+ 			</tr>
+ 			<tr>
+ 				<th>관심 분야</th>
+				<td>
+				<%for( Map<String,Object> g :fList){%>
+					<%if((Integer)g.get("member_favorite_no") != 0){ %>
+						<%=g.get("genre_type")%>
+					<%} %>	
+				<%} %>	
+				</td>	
  			</tr>
 		</tbody>
 	</table>

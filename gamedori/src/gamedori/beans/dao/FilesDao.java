@@ -1,3 +1,4 @@
+
 package gamedori.beans.dao;
 
 import java.sql.Connection;
@@ -69,7 +70,8 @@ public class FilesDao {
 		FilesDto fdto = rs.next()? new FilesDto(rs): null;
 		con.close();
 		return fdto;
-	}	
+	}
+	
 	public void delete(int file_no) throws Exception {
 		Connection con = getConnection();
 		String sql = "DELETE FROM files WHERE file_no = ?";

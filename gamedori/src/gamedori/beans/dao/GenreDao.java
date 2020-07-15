@@ -26,13 +26,13 @@ public class GenreDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// 연결 메소드
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
 		return src.getConnection();
 	}
 	
-	// 장르 리스트 메소드
+	
 	public List<GenreDto> getList() throws Exception {
 		Connection con = getConnection();
 		String sql = "SELECT * FROM genre";
@@ -49,4 +49,42 @@ public class GenreDao {
 		con.close();
 		return list;
 	}
+
+	// 등록
+	public void choice(GenreDto gdto) throws Exception {
+		Connection con = getConnection();
+		String sql = "INSERT INTO Genre VALUES(?, ?)";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, gdto.getGenre_no());
+		ps.setString(2, gdto.getGenre_type());
+		ps.execute();
+
+		con.close();
+	}
+
+	// 장르 수정
+	public void edit(GenreDto gdto) throws Exception {
+		Connection con = getConnection();
+
+		String sql = "UPDATE qna SET genre_no=?, genre_type=? where genre_no=?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, gdto.getGenre_no());
+		ps.setString(2, gdto.getGenre_type());
+		ps.execute();
+
+		con.close();
+	}
+
+	// 삭제
+	public void delete(int genre_no) throws Exception {
+		Connection con = getConnection();
+
+		String sql = "DELETE genre WHERE genre_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, genre_no);
+		ps.execute();
+
+		con.close();
+	}
 }
+

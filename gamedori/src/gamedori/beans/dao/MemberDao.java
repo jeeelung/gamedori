@@ -128,20 +128,36 @@ public class MemberDao {
 	public void join(MemberDto mdto) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "INSERT INTO member VALUES(member_seq.nextval, ?, ?, ?, ?, ?, '일반',0, sysdate, null)";
+		String sql = "INSERT INTO member VALUES(?, ?, ?, ?, ?, ?, '일반',0, sysdate, null)";
 		PreparedStatement ps = con.prepareStatement(sql);
-
-		ps.setString(1, mdto.getMember_name());
-		ps.setString(2, mdto.getMember_id());
-		ps.setString(3, mdto.getMember_pw());
-		ps.setString(4, mdto.getMember_nick());
-		ps.setString(5, mdto.getMember_phone());
+		ps.setInt(1, mdto.getMember_no());
+		ps.setString(2, mdto.getMember_name());
+		ps.setString(3, mdto.getMember_id());
+		ps.setString(4, mdto.getMember_pw());
+		ps.setString(5, mdto.getMember_nick());
+		ps.setString(6, mdto.getMember_phone());
 
 		ps.execute();
 
 		con.close();
 	}
+	public int getMember_no() throws Exception{
+		Connection con = getConnection();
 
+		String sql = "SELECT CAST(member_seq.nextval as NUMBER) as member_no  FROM DUAL";
+		PreparedStatement ps = con.prepareStatement(sql);
+		int result = 0;
+		
+		ResultSet rs =ps.executeQuery();
+		if(rs.next()) {
+			result =rs.getInt("member_no"); 
+		}
+		con.close();
+		
+		return result;
+		
+	}
+//member_seq.nextval
 	// 정보 수정 메소드
 	public void changeInfo(MemberDto mdto) throws Exception {
 		Connection con = getConnection();
@@ -216,6 +232,8 @@ public class MemberDao {
 		} else {
 			mdto = null;
 		}
+		
+		}
 
 		con.close();
 		return mdto;
@@ -234,3 +252,4 @@ public class MemberDao {
 	}
 	
 }
+
