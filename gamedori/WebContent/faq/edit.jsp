@@ -54,7 +54,7 @@
         .table.table-border > tfoot > tr > td {
             /* 칸에 테두리를 부여 */
             border:2px solid #20639B;
-   				color:dodgerblue;
+   				color:black;
         }
 .table.table-border > thead > tr > th,
         .table.table-border > thead > tr > td > a,
@@ -63,9 +63,9 @@
         .table.table-border > tfoot > tr > th > a,
         .table.table-border > tfoot > tr > td > a{
             text-decoration : none;
-             color:dodgerblue;
+             color:black;
         }
-select{
+.faq_head{
 border: 2px solid dodgerblue;
 }
 
@@ -88,6 +88,7 @@ border-width:0px;
 <div class="font-game">
 	<h3>FAQ 수정</h3>
 </div>
+<div class="row today-wrap"><div class="row-empth"></div>
 </article>	
 	
 	<!-- 게시글 전송 폼 -->
@@ -102,7 +103,7 @@ border-width:0px;
 					<th>말머리</th>
 					<td class="left">
 						<!-- 말머리는 select로 구현 -->
-						<select name="faq_head">
+						<select name="faq_head" class="faq_head">
 							<option value="">말머리 선택</option>
 							<option value="게임문의">게임문의</option>
 							<option value="회원문의">회원문의</option>
@@ -110,42 +111,45 @@ border-width:0px;
 					</td>
 				</tr>		
 		</thead>
-			<tbody>
+			<tbody text-align="left" align="top">
 				<tr>
-					<th>제목</th>
-					<td>
+					<th width="10%">제목</th>
+					<td class="left">
 						<!-- 제목은 일반 입력창으로 구현 -->
-						<input type="text" name="faq_title" size="50" maxlength="100" required
+						<input type="text" name="faq_title" size="70" maxlength="100" required
 								value="<%=fdto.getFaq_title()%>">
 					</td>
 				</tr>
-				<tr>
-					<th>내용</th>
-					<td>
+				<tr height="500px">
+					<th width="10%">내용</th>
+					<td class="left">
 						<!-- 내용은 textarea로 구현 -->
 						<textarea name="faq_content" required 
 							rows="20" cols="100" maxlength="4000" ><%=fdto.getFaq_content()%></textarea>
-					</td>  
-				
+					</td>
+				</tr>
+				<tr>
 				<th>첨부파일</th>
-				<td>
-				<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif">
+				<td colspan="3">
+				<ul>
 				<%for(FilesDto filesdto : fileList){ %>
-				<input type="hidden" name="faq_no" value="<%=faq_no%>">
-				
+				<li>
 					<%=filesdto.getFile_name() %>(<%=filesdto.getFile_size() %> bytes)
 					 <a href="<%=request.getContextPath() %>/faq/fileDelete.do?file_no=<%=filesdto.getFile_no()%>&faq_no=<%=faq_no %>">
+				<input type="hidden" name="faq_no" value="<%=faq_no%>">
 					  <input type="button" value="삭제">
 					 </a>
+				</li>
 					<%} %>
+				<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif">
+				</ul>
 				</td>
 				</tr>
-				
 			</tbody>
 			<tfoot>
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="수정">
+				<tr align="center">
+					<td colspan="2">
+						<input class="form-btn form-inline" type="submit" value="수정">
 					</td>
 				</tr>
 			</tfoot>

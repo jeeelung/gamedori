@@ -115,12 +115,12 @@ border-width:0px;
 			</tbody>
 			<tfoot>
 				<tr align="center">
-					<td colspan="2" align="center">
-					<input class="form-btn form-inline" type="submit" value="작성완료">
+					<td colspan="2">
+						<input class="form-btn form-inline" type="submit" value="작성완료">
 					</td>
 				</tr>
 			</tfoot>
 		</table>
-</form>
+	</form>
 </div>
 <jsp:include page="/template/footer.jsp"></jsp:include>
