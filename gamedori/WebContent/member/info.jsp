@@ -1,4 +1,6 @@
 
+<%@page import="gamedori.beans.dto.PointHistoryDto"%>
+<%@page import="gamedori.beans.dao.PointHistoryDao"%>
 <%@page import="gamedori.beans.dao.PointDao"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
@@ -20,14 +22,15 @@
 //session에 들어있는 정보는 최신 정보가 아니므로 DB에서 다시 조회한 다음 출력하는것으로 변경!
 	int member_no=mdto.getMember_no();
 	MemberDao mdao=new MemberDao();
-	MemberDto user=mdao.get(member_no);//member_id(P.K)를 이용한 단일조회 수행
+	MemberDto user=mdao.get(member_no);//
 
 	MemberFavoriteDao mfdao = new MemberFavoriteDao();
 	
 	List<Map<String,Object>> fList = mfdao.getList(mdto.getMember_no());
+	PointHistoryDao phdao = new PointHistoryDao();
+	PointHistoryDto phdto = new PointHistoryDto();
 	
-	PointDao pdao = new PointDao();
-	int point_score = pdao.getPoint(member_no);
+	int point_score = phdao.getPoint(mdto.getMember_no());
 %>
 
 <jsp:include page="/template/header.jsp"></jsp:include>

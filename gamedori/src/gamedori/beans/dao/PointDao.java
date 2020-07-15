@@ -34,7 +34,7 @@ public class PointDao {
 	}
 	
 	// 등록
-		public void point(PointDto pdto ) throws Exception {
+		public void pointInsert(PointDto pdto ) throws Exception {
 			Connection con = getConnection();
 			String sql = "INSERT INTO Point VALUES(point_seq.nextval , ? , ?)";
 			
@@ -159,10 +159,10 @@ public class PointDao {
 					return list;
 				}
 				
-				public List<PointDto> search(String type, String auth, String keyword,int start, int finish) throws Exception{
+				public List<PointDto> search(String type,  String keyword,String auth,int start, int finish) throws Exception{
 					Connection con = getConnection();
 					
-					String sql = "SELECT * FROM(SELECT ROWNUM rn, T.* FROM(SELECT * FROM point WHERE ('관리자' = ? )ORDER BY point_no asc)T ) WHERE rn BETWEEN ? and ?;";
+					String sql = "SELECT * FROM(SELECT ROWNUM rn, T.* FROM(SELECT * FROM point WHERE (instr(#1, ?) > 0 and ('관리자' = ? )) )T ) WHERE rn BETWEEN ? and ?";
 							
 					sql = sql.replace("#1", type);
 					PreparedStatement ps = con.prepareStatement(sql);			
@@ -180,5 +180,21 @@ public class PointDao {
 					}
 					con.close();
 					return list;
+				}
+				public int getPoint_no() throws Exception{
+					Connection con = getConnection();
+
+					String sql = "SELECT CAST(point_seq.nextval as NUMBER) as point_no  FROM DUAL";
+					PreparedStatement ps = con.prepareStatement(sql);
+					int result = 0;
+					
+					ResultSet rs =ps.executeQuery();
+					if(rs.next()) {
+						result =rs.getInt("point_no"); 
+					}
+					con.close();
+					
+					return result;
+					
 				}
 }

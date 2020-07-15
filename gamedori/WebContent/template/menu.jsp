@@ -41,6 +41,13 @@
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/member/info.jsp">마이페이지</a>
 	</h5>
+	<%if(mdto.getMember_auth().equals("관리자")){ %>
+	<h5>｜</h5>
+	<h5 class="menu-font">
+		<a href="<%=rootPath%>/admin/home.jsp">관리페이지</a>
+	</h5>
+			<%} %>
+
 </div>
 <%} else { %>
 <div class="member-wrap">

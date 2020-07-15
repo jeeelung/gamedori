@@ -6,12 +6,24 @@ public class PointDto {
 	private int point_no;
 	private String point_type;
 	private int point_score;
+	private String point_his_date;
 	
 	
 	public PointDto() {
 		super();
 	}
 	
+	
+	public String getPoint_his_date() {
+		return point_his_date;
+	}
+
+
+	public void setPoint_his_date(String point_his_date) {
+		this.point_his_date = point_his_date;
+	}
+
+
 	public PointDto(ResultSet rs)throws Exception {
 		this.setPoint_no(rs.getInt("point_no"));
 		this.setPoint_type(rs.getString("point_type"));

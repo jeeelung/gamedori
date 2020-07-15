@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -126,19 +128,20 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 			public int getPoint(int member_no) throws Exception{
 				Connection con = getConnection();
 				
-				String sql = "SELECT SUM(point_score) AS point_score FROM point p INNER JOIN point_history ph ON p.point_no=ph.point_no WHERE member_no=?;";
+				String sql = "SELECT SUM(point_score) AS point_score FROM point p INNER JOIN point_history ph ON p.point_no=ph.point_no WHERE member_no=?";
 				PreparedStatement ps = con.prepareStatement(sql);
 				
 				ps.setInt(1, member_no);
 				
 				ResultSet rs = ps.executeQuery();
-				int result = 0;
+				int result=0;
 				while(rs.next()) {
 					result = rs.getInt("point_score");
 				}
 				con.close();
 				return result;
 			}
+			
 			//목록 메소드
 			public List<PointHistoryDto> getList(int member_no, String auth, int start , int finish) throws Exception{
 				Connection con = getConnection();
@@ -192,4 +195,5 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 				con.close();
 				return list;
 			}
+			
 }

@@ -30,7 +30,7 @@
 	<h2>문의글 답변</h2>
 	
 	<!-- 게시글 전송 폼 -->
-	<form action="edit.do" method="post" enctype="multipart/form-data">
+	<form action="answer.do" method="post" enctype="multipart/form-data">
 	
 		<!-- 수정이 가능하도록 PK를 숨김 첨부한다 -->
 		<input type="hidden" name="qna_no" value="<%=qna_no%>">

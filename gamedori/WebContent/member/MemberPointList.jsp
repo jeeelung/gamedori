@@ -75,13 +75,15 @@
 	if(finishBlock > pageCount){
 		finishBlock = pageCount;
 	}
+	PointHistoryDto phdto = new PointHistoryDto();
+	
 	
 	
 // 	List<PointDto> list = 목록 or 검색;
 	List<PointDto> list;
 	
 	if(isSearch){
-		list = pdao.search(type, auth, keyword, start, finish); 
+		list = pdao.search(type, keyword,auth,start, finish); 
 	}
 	else{
 		list = pdao.getList(auth,start ,finish); 
@@ -99,15 +101,15 @@
 	
 	
 	<!-- 제목 -->
-	<h2>포인트</h2>
+	<h2>POINT</h2>
 	
 	<!-- 테이블 -->
 	<table border="1" width="90%">
 		<thead>
 			<tr>
-				<th>번호</th>
-				<th>유형</th>
-				<th>포인트 점수</th>
+				<th>NO</th>
+				<th>TYPE</th>
+				<th>POINT SCORE</th>
 			</tr>
 		</thead>
 		<tbody align="center">
@@ -122,10 +124,38 @@
 			<%} %>
 		</tbody>
 		<tfoot>
+		<div align = "center">
+		<form action="point.do" method ="post">
+		<table border="0">
+		<h5>유형 등록</h5>
+		<tbody>
+		<tr>
+		<th>유형</th>
+		<td>
+			<input type="text" name ="point_type">
+		</td>
+		</tr>
+		<tr>
+		<th>포인트 점수</th>
+		<td>
+			<input type="text" name ="point_score">
+		</td>
+		</tr>
+		</tbody>
+		<tfoot>
+		<tr>
+		<th colspan="2">
+			<input type="submit" value="등록">
+		</th>
+		</tr>
+		
+		</tfoot>
+		</table>
+		</form>
 		</tfoot>
 	</table>	
-	<h4>
-	
+	</div>
+	<h4>	
 	<!-- 
 		이전 버튼을 누르면 startBlock - 1 에 해당하는 페이지로 이동해야 한다
 		(주의) startBlock이 1인 경우에는 출력하지 않는다
@@ -160,11 +190,11 @@
 	</h4>
 	
 	<!-- 검색창 -->
-	<form action="qna_list.jsp" method="get">
+	<form action="MemberPointList.jsp" method="get">
 		<!-- 검색분류 -->
 		<select name="type">
-			<option value="q.qna_title">제목</option>
-			<option value="m.MEMBER_NICK">작성자</option>
+			<option value="point_type">유형</option>
+			<option value="point_score">포인트 점수</option>
 		</select>
 		
 		<!-- 검색어 -->
