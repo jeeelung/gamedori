@@ -50,8 +50,7 @@ MemberDto mdto = edao.getWriter(edto.getMember_no());
 
 
 // 권한 확인
-boolean isAdmin = user.getMember_auth().equals("관리자");
-boolean isMine = user.getMember_id().equals(mdto.getMember_id());
+
 
 // 첨부파일 목록을 구해오는 코드
 	EventFileDao efdao = new EventFileDao ();
@@ -125,12 +124,13 @@ boolean isMine = user.getMember_id().equals(mdto.getMember_id());
 			<tr align="center">
 				<td>
 					<br>
-					<a href="EventBoardWrite.jsp">
-						<input type="button" value="글쓰기">
-					</a>
+				
 			
 					
-				<%if (isMine){%>
+				<%if(user !=null){
+					boolean isMine = user.getMember_id().equals(mdto.getMember_id());
+					if(isMine){
+				%>
 					<a href = "event.do?event_no=<%=event_no%>">
 					<input type = "button" value= "이벤트 참여">
 					</a>
@@ -138,11 +138,19 @@ boolean isMine = user.getMember_id().equals(mdto.getMember_id());
 					<a href="event_list.jsp">
 						<input type="button" value="목록으로">
 					</a>
-					
+					<%} %>
 					
 					
 					<%} %>
-					<%if(isAdmin){%>
+					<%if(user != null) {
+						boolean isAdmin = user.getMember_auth().equals("관리자");
+					
+ 						if (isAdmin) { %>
+ 					<a href="EventBoardWrite.jsp">
+						<input type="button" value="글쓰기">
+					</a>
+				
+ 						
 					<a href="EventEdit.jsp?event_no=<%=event_no%>">
 						<input type="button" value="수정">
 					</a>
@@ -150,7 +158,7 @@ boolean isMine = user.getMember_id().equals(mdto.getMember_id());
 					go=<%=request.getContextPath()%>/eventboard/delete.do?event_no=<%=event_no%>">
 						<input type="button" value="삭제">
 					</a>
-					
+					<%} %>
 				<%}%>
 					
 					<br><br>

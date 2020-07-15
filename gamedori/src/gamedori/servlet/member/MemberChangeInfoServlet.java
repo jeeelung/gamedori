@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dto.MemberDto;
-@WebServlet(urlPatterns = "/member/change_info.do")
+//@WebServlet(urlPatterns = "/member/change_info.do")
 public class MemberChangeInfoServlet extends HttpServlet {
 
 	@Override

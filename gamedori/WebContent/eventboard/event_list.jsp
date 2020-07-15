@@ -6,59 +6,122 @@
 <%@page import="gamedori.beans.dao.EventboardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
+    <style>
+       .font-game {
+	font-family: arcadeclassic;
+	font-size: 25px;
+	color: #20639B;
+}
+.line {
+	border: 1px solid #20639B;
+}
+.gametitle {
+	font-family: arcadeclassic;
+	font-size: 15px;
+	color:#e8eff5;
+}
+.wrap {
+	border-top: 3px solid #20639B;
+	border-bottom: 3px solid #20639B;
+}
+.today-wrap {
+	border-top: 3px solid #20639B;
+	border-bottom: 3px solid #20639B;
+	position: relative;
+}
+.arrow-left > img{
+	float:left;
+	position: absolute;
+	left:0;
+	bottom:40%;
+}
+.arrow-right > img{
+	float:right;
+	position: absolute;
+	right:0;
+	bottom:40%;
+}
 
+
+.table.table1-stripe>tbody>tr:nth-child(2n) {
+	/* RGB Hex String */
+	background-color: #20639B;
+}
+
+.table.table-stripe>thead>tr {
+	background-color: #79a1c3;
+}
+
+    </style>
+<script>
+</script>
 
 <% 
 
 String type = request.getParameter("type");
 String keyword=request.getParameter("keyword");
 
+
 boolean isSearch= type != null && keyword !=null;
+
 
 EventboardDao edao = new EventboardDao();
 List<EventboardDto> list;
 
 //페이지 네비게이터 계산코드
-
-int pageSize =10;
-String pageStr= request.getParameter("page");
-int pageNo;
-try{
-	pageNo=Integer.parseInt(pageStr);
+int pageSize = 10;//한 페이지에 표시할 데이터 개수
 	
-	if(pageNo <=0){
-		throw new Exception();
+	//page 번호를 계산하기 위한 코드
+	// - 이상한 값은 전부다 1로 변경
+	// - 멀쩡한 값은 그대로 숫자로 변환
+	String pageStr = request.getParameter("page");
+	int pageNo;
+	try{
+		pageNo = Integer.parseInt(pageStr);
+		if(pageNo <= 0){
+			throw new Exception();
+		}
 	}
-} catch(Exception e){
-	pageNo=1;
-}
+	catch(Exception e){ 
+		pageNo = 1;
+	}
 
 int finish= pageNo* pageSize;
 int start = finish-(pageSize -1);
 
-int blockSize = 10;
+int blockSize = 5;
 int startBlock = (pageNo-1)/blockSize*blockSize +1;
 int finishBlock=startBlock + blockSize -1;
 
-//
+//페이지 개수
 int count;
 if(isSearch){
-	count=edao.getCount(type, keyword);
-}
-else{
-	count=edao.getCount();
+	
+	count = edao.getCount(type, keyword);
 }
 
+else{
+	
+	count=edao.getCount();
+}
 int pageCount = (count+pageSize -1)/pageSize;
+
+
+
+
+
+
 if(finishBlock > pageCount){
 	finishBlock = pageCount;
 }
 
 if(isSearch){
-	list=edao.search(type, keyword);
+	list=edao.search(type, keyword, start, finish);
 }
 else{
-	list= edao.getList();
+	list= edao.getList(start, finish);
 }
 %>
  
@@ -66,9 +129,11 @@ else{
 <jsp:include page="/template/header.jsp"></jsp:include>
 
 <article class="w-90">
+
+
 	<!-- 제목 -->
-	<div class="row">
-		<h2>이벤트 게시판</h2>
+	<div class="font-game">
+		<h1>Event Board</h1>
 	</div>
 	
 	<!-- 글쓰기 버튼 -->
@@ -82,7 +147,7 @@ else{
 	<div class="row">
 	
 		<!-- 테이블 -->
-		<table border="1" width="90%" class="table table-border table-stripe table-hover" >
+		<table border="1" width="90%" class="table-stripe table-border table1-stripe table-hover" >
 			<thead>
 				<tr aling="center">
 					<th>번호</th>
@@ -103,7 +168,7 @@ else{
 					
 					
 					<!-- 게시글 제목 -->
-					<a href="Eventcontent.jsp?event_no=<%=edto.getEvent_no() %>">
+					<a class=gametitle href="Eventcontent.jsp?event_no=<%=edto.getEvent_no() %>">
 					<%=edto.getEvent_title() %>
 					</a>
 					
@@ -134,7 +199,7 @@ else{
 	<!-- 이전 -->
 	<%if(startBlock >1){ %>
 	<%if(!isSearch){ %>
-	<a href = "event_list.jsp?page=<%=startBlock -1 %>">[이전]</a>
+	<a class = "arrow-left"  href = "event_list.jsp?page=<%=startBlock -1 %>">[이전]</a>
 	<%}else{ %>
 	<a href = "event_list.jsp?page=<%=startBlock -1 %>& type=<%=type %> & keyword=<%=keyword %>">다음</a>
 	<%} %>
@@ -151,7 +216,7 @@ else{
 	
 	<%if(pageCount > finishBlock){ %>
 	<%if(!isSearch){ %>
-	<a href = "event_list.jsp?page=<%=finishBlock +1 %>">[이후]</a>
+	<a class="arrow-right" href = "event_list.jsp?page=<%=finishBlock +1 %>">[다음]</a>
 	<%}else{ %>
 	<a href = "event_list.jsp?page=<%=finishBlock +1 %>& type=<%=type %> & keyword=<%=keyword %>">다음</a>
 	<%} %>
