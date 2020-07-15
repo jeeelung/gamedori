@@ -22,12 +22,6 @@
 						<input type="text" name="member_phone" required>
 					</td>
 				</tr>
-				<tr>
-					<th>닉네임</th>
-					<td>
-						<input type="text" name="member_nick" required>
-					</td>
-				</tr>
 			</tbody>
 			<tfoot>
 				<tr>

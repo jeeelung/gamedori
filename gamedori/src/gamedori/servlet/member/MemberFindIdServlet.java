@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dto.MemberDto;
 
-@WebServlet(urlPatterns = "/guest/find_id.do")
+//@WebServlet(urlPatterns = "/guest/find_id.do")
 public class MemberFindIdServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -19,7 +19,7 @@ public class MemberFindIdServlet extends HttpServlet{
 			//입력 : member_nick , member_phone , member_birth  -----> MemberDto
 			req.setCharacterEncoding("UTF-8");
 			MemberDto mdto = new MemberDto();
-			mdto.setMember_nick(req.getParameter("member_nick"));
+
 			mdto.setMember_phone(req.getParameter("member_phone"));
 			mdto.setMember_name(req.getParameter("member_name"));
 			
