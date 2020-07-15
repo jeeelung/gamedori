@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="gamedori.beans.dao.NoticeFileDao"%>
+<%@page import="gamedori.beans.dto.MemberDto"%>
 <%@page import="gamedori.beans.dto.FilesDto"%>
 <%@page import="gamedori.beans.dto.NoticeDto"%>
 <%@page import="gamedori.beans.dao.NoticeDao"%>
@@ -6,9 +9,13 @@
     
     
 <%
+	MemberDto mdto = (MemberDto)session.getAttribute("userinfo");
 	int notice_no = Integer.parseInt(request.getParameter("notice_no"));
 	NoticeDao ndao = new NoticeDao();
 	NoticeDto ndto = ndao.get(notice_no);
+
+	NoticeFileDao nfdao = new NoticeFileDao();
+	List<FilesDto> fileList = nfdao.getList(notice_no);
 	
 %>
 
@@ -38,7 +45,7 @@
 				<tr>
 					<th>내용</th>
 					<td align="left" valign="top">
-						<textarea rows="20" cols="100" maxlength="4000" name="commu_content" required><%=ndto.getNotice_content()%></textarea>
+						<textarea rows="20" cols="100" maxlength="4000" name="notice_content" required><%=ndto.getNotice_content()%></textarea>
 					</td>
 				</tr>
 				<!-- 첨부파일 -->

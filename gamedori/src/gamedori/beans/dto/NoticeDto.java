@@ -7,8 +7,7 @@ import java.util.Date;
 
 public class NoticeDto {
 	private int notice_no, member_no, notice_read;
-	private String notice_title, notice_content, notice_date;
-
+	private String notice_title, notice_content, notice_date,member_nick;
 	public NoticeDto() {
 		super();
 	}
@@ -22,6 +21,15 @@ public class NoticeDto {
 		this.setNotice_date(rs.getString("notice_date"));
 		this.setNotice_read(rs.getInt("notice_read"));
 		
+	}
+	
+	
+	public String getMember_nick() {
+		return member_nick;
+	}
+
+	public void setMember_nick(String member_nick) {
+		this.member_nick = member_nick;
 	}
 
 	public int getNotice_no() {
@@ -106,7 +114,5 @@ public class NoticeDto {
 	public void setNotice_replycount(int notice_replycount) {
 		this.notice_replycount = notice_replycount;
 	}
-
-
 
 }

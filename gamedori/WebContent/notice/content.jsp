@@ -41,8 +41,8 @@
 	
 	
 	// 권한 확인
-	boolean isAdmin = user.getMember_auth().equals("관리자");
 	boolean isMine = user.getMember_id().equals(mdto.getMember_id());
+	boolean isAdmin = user.getMember_auth().equals("관리자");
 	
 	// 첨부파일 목록을 구해오는 코드
 		NoticeFileDao nfdao = new NoticeFileDao();
@@ -51,7 +51,7 @@
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
 <div align="center">
-	<form>
+	<form >
 		<h2>게시글 상세보기</h2>
 		<table border="1" width="900" >
 			<thead align="left">
@@ -96,6 +96,7 @@
 							<li>
 								<%=fdto.getFile_name()%>
 								(<%=fdto.getFile_size()%> bytes)
+								<img src="download.do?file_no=<%=fdto.getFile_no()%>" width="50" height="50">
 								<!-- 다운로드 버튼을 누른다면 해당 파일을 다운로드 할 수 있도록 링크 -->
 								<a href="download.do?file_no=<%=fdto.getFile_no()%>">
 									<input type="button" value="다운로드">

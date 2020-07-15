@@ -58,12 +58,16 @@ public class NoticeDao {
 		}
 		
 	// 목록 메소드
-	public List<NoticeDto> getList() throws Exception {
+	public List<NoticeDto> getList(int start,int finish) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "SELECT * FROM notice ORDER BY notice_no DESC";
+		String sql = "SELECT * FROM(SELECT ROWNUM rn, T.* FROM "
+				+ "( SELECT * FROM notice ORDER BY notice_no desc )T "
+				+ " ) WHERE rn BETWEEN ? and ?";
 		PreparedStatement ps = con.prepareStatement(sql);
-
+		ps.setInt(1, start);
+		ps.setInt(2, finish);
+		
 		ResultSet rs = ps.executeQuery();
 
 		List<NoticeDto> list = new ArrayList<>();
@@ -71,7 +75,6 @@ public class NoticeDao {
 			NoticeDto ndto = new NoticeDto(rs);
 			list.add(ndto);
 		}
-
 		con.close();
 		return list;
 	}
@@ -175,11 +178,14 @@ public class NoticeDao {
 	public void edit(NoticeDto ndto) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "UPDATE notice SET " + "notice_title=?, notice_content=?, where notice_no=?";
+		String sql = "UPDATE notice " 
+					+ "SET notice_title=?,"
+					+ "notice_content=?"
+					+ "where notice_no = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, ndto.getNotice_title());
 		ps.setString(2, ndto.getNotice_content());
-		ps.setInt(3, ndto.getMember_no());
+		ps.setInt(3, ndto.getNotice_no());
 		ps.execute();
 
 		con.close();

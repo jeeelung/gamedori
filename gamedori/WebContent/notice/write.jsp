@@ -33,7 +33,7 @@ MemberDto mdto = (MemberDto)session.getAttribute("userinfo");
 					<th>제목</th>
 					<td>
 						<!-- 제목은 일반 입력창으로 구현 -->
-						<input type="text" name="notice_title" size="70" required>
+						<input type="text" name="notice_title" maxlength="100" size="50" required>
 					</td>
 				</tr>
 				<tr>
@@ -57,7 +57,7 @@ MemberDto mdto = (MemberDto)session.getAttribute("userinfo");
 					<td colspan="2">
 						<input type="button" value="임시저장">
 						<input type="button" value="미리보기">
-						<input type="submit" value="확인">
+						<input type="submit" value="등록">
 					</td>
 				</tr>
 			</tfoot>

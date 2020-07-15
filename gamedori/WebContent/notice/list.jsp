@@ -10,8 +10,11 @@
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
 	
-	boolean isSearch = type != null && keyword != null;
+	MemberDto user=(MemberDto)session.getAttribute("userinfo");
 	
+	int member_no = user.getMember_no();	
+	
+	boolean isSearch = type != null && keyword != null;
 	// 페이지 번호 계산 코드
 	int pageSize = 10;
 	String pageStr = request.getParameter("page");
@@ -45,7 +48,10 @@
 		count = ndao.getCount();
 	}
 	int pageCount = (count + pageSize -1) / pageSize;
-	
+	//만약 finishBlock이 pageCount보다 크다면 수정해야 한다
+		if(finishBlock > pageCount){
+			finishBlock = pageCount;
+		}
 	
 	// 검색 또는 목록
 	List<NoticeDto> list;
@@ -53,23 +59,14 @@
 	if(isSearch){
 		list = ndao.search(type, keyword);
 	} else {
-		list = ndao.getList();
+		list =ndao.getList(start, finish);
+		
 	}
 %>
     
 <jsp:include page="/template/header.jsp"></jsp:include>
 <div align="center">
 
-	<!-- 계산한 데이터를 확인하기 위해 출력 -->
-	<h5>
-	pageStr = <%=pageStr%>, 
-	pageNo = <%=pageNo%>,
-	start = <%=start%>
-	finish = <%=finish%>
-	pageCount = <%=pageCount%>
-	startBlock = <%=startBlock%>
-	finishBlock = <%=finishBlock%>
-	</h5>
 	
 	<h2></h2>
 	<form action="list.jsp" method="get">
@@ -87,17 +84,18 @@
 		</thead>
 		
 		<tbody align="center"> 
-			<% for(NoticeDto ndto : list) { %>		
+			<% for(NoticeDto ndto : list) { %>
 			<tr>	
-			<%MemberDto mdto = ndao.getWriter(ndto.getMember_no());%>
+			<%MemberDto mdto = ndao.getWriter(member_no);%>
 				<th><%=ndto.getNotice_no()%></th>
 			<td>
 				<a href="content.jsp?notice_no=<%=ndto.getNotice_no()%>">
 					<%=ndto.getNotice_title()%>
+				
 				</a>
 			</td>
 			
-				<td><%=mdto.getMember_nick()%></td>
+				<td><%=user.getMember_nick()%></td>
 				<td><%=ndto.getNotice_auto()%></td>
 				<td><%=ndto.getNotice_read()%></td>
 			</tr>
@@ -142,8 +140,8 @@
 	</h6>
 	<!-- 검색창 -->
 	<select name="type">
-		<option value="commu_title">제목만</option>
-		<option value="commu_content">내용만</option>
+		<option value="notice_title">제목만</option>
+		<option value="notice_content">내용만</option>
 		<option value="member_nick">글작성자</option>
 	</select>
 		<input type="text" name="keyword" placeholder="검색어를 입력하세요" required>

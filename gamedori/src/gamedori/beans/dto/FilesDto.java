@@ -1,7 +1,7 @@
 package gamedori.beans.dto;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 
 public class FilesDto {
 	private int file_no;
