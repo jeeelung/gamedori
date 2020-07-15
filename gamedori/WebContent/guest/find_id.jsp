@@ -23,13 +23,14 @@
 						<input type="text" name="member_phone" required>
 					</td>
 				</tr>
-			
+			</tbody>
+			<tfoot>
 				<tr>
 					<td align="center" colspan="2">
 						<input type="submit" value="찾기">
 					</td>
 				</tr>
-
+			</tfoot>
 		</table>
 	</form>
 	
