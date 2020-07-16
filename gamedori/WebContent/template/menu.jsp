@@ -12,6 +12,7 @@
 	boolean isLogin = mdto != null;
 %>
 
+
 <div class="notice-wrap">
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/notice/list.jsp">공지사항</a>

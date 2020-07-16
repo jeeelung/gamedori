@@ -50,5 +50,5 @@ public class FilesDto {
 	public void setFile_type(String file_type) {
 		this.file_type = file_type;
 	}
-
+	
 }
