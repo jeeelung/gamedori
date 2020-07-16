@@ -139,6 +139,9 @@
         </div>
     </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> refs/remotes/origin/master
     모달을 보여주고 싶다면 .modal-wrap에 .on을 추가한다
     <div class="modal-wrap on">
         <div>
@@ -265,6 +268,7 @@
 	display: none;
 }
 
+<<<<<<< HEAD
 .modal-wrap.on {
 	display: block;
 }
@@ -348,6 +352,9 @@
 
 /*
     2단계 메뉴 설정
+=======
+
+>>>>>>> refs/remotes/origin/master
     1) 2단계 메뉴부터는 position을 absolute로 설정
     2) 처음에는 2단계 이후의 메뉴가 나오지 않도록 처리
 */
@@ -602,7 +609,11 @@ article h1, article h2, article h3, article h4, article h5, article h5,
 	padding: 0.5rem;
 	outline: none;
 	border: none;
+<<<<<<< HEAD
 	background-color: #2d90e3;
+=======
+	background-color: firebrick;
+>>>>>>> refs/remotes/origin/master
 	color: white;
 	cursor: pointer;
 	font-weight: 700;

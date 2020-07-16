@@ -10,12 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dao.MemberFavoriteDao;
-import gamedori.beans.dao.PointDao;
-import gamedori.beans.dao.PointHistoryDao;
 import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.MemberFavoriteDto;
-import gamedori.beans.dto.PointDto;
-import gamedori.beans.dto.PointHistoryDto;
 
 //@WebServlet(urlPatterns = "/guest/join.do")
 public class MemberJoinServlet extends HttpServlet {
@@ -24,20 +20,20 @@ public class MemberJoinServlet extends HttpServlet {
 		try {
 			req.setCharacterEncoding("UTF-8");// 사용자의 요청을 UTF-8 형태로 복원하라!
 
-			MemberDto mdto = new MemberDto();
-			
+			MemberDto mdto = new MemberDto();			
 			MemberDao mdao = new MemberDao();
 			int member_no = mdao.getMember_no();
 			mdto.setMember_no(member_no);
 			mdto.setMember_name(req.getParameter("member_name"));
 			mdto.setMember_id(req.getParameter("member_id"));
 			mdto.setMember_pw(req.getParameter("member_pw"));
+			mdto.setMember_name(req.getParameter("member_name"));
 			mdto.setMember_nick(req.getParameter("member_nick"));
 			mdto.setMember_phone(req.getParameter("member_phone"));
 
 			// 처리 : MemberDao를 이용한 데이터베이스 등록
 			
-			mdao.join(mdto);
+			mdao.join(mdto); 
 			
 			String []genre_no = req.getParameterValues("member_favorite");
 			

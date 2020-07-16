@@ -3,7 +3,6 @@ package gamedori.beans.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.sql.SQLException;
 
 import javax.naming.Context;
@@ -28,9 +27,11 @@ public class MemberDao {
 
 	// 연결 메소드
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
+//		Class.forName("oracle.jdbc.OracleDriver");
+//		return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "c##gamedori", "c##gamedori");
 		return src.getConnection();
 	}
-	
+
 	// 로그인
 	public MemberDto login(MemberDto mdto) throws Exception {
 		Connection con = getConnection();
@@ -56,12 +57,11 @@ public class MemberDao {
 		} else {
 			user = null;
 		}
-
 		con.close();
 
 		return user;
 	}
-	
+
 	// 로그인 시간 메소드
 	public void updateLoginTime(int no) throws Exception {
 		Connection con = getConnection();
@@ -78,14 +78,16 @@ public class MemberDao {
 	public String findId(MemberDto mdto) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "SELECT member_id FROM member "
-				+ "WHERE member_name = ? and member_phone = ?";
+		String sql = "SELECT member_id FROM member " + " WHERE member_name = ? and member_phone = ?";
+//					
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, mdto.getMember_name());
 		ps.setString(2, mdto.getMember_phone());
 		ResultSet rs = ps.executeQuery();
 
+//			String member_id = 추출한 아이디 or null;
 		String member_id;
+
 		if (rs.next()) {
 			member_id = rs.getString("member_id");// rs.getString(1)
 		} else {
@@ -93,32 +95,29 @@ public class MemberDao {
 		}
 
 		con.close();
-
 		return member_id;
 	}
 
 	// 비밀번호 찾기 메소드
-	public String findPw(MemberDto mdto) throws Exception{
+	public String findPw(MemberDto mdto) throws Exception {
 		Connection con = getConnection();
-		
-		String sql = "SELECT member_pw FROM member "
-				+ "WHERE member_id = ? and member_phone = ? and member_name=?";
+
+		String sql = "SELECT member_pw FROM member " + "WHERE member_id = ? and member_phone = ? and member_name=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, mdto.getMember_id());
 		ps.setString(2, mdto.getMember_phone());
 		ps.setString(3, mdto.getMember_name());
 		ResultSet rs = ps.executeQuery();
-		
+
 		String member_pw;
-		if(rs.next()) {
+		if (rs.next()) {
 			member_pw = rs.getString("member_pw");
-		}
-		else {
+		} else {
 			member_pw = null;
 		}
-		
+
 		con.close();
-		
+
 		return member_pw;
 	}
 
@@ -162,9 +161,7 @@ public class MemberDao {
 	public void changeInfo(MemberDto mdto) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "UPDATE member "
-				+ "SET member_pw = ?, member_nick = ?, member_phone = ? "
-				+ "WHERE member_id = ?";
+		String sql = "UPDATE member " + "SET member_pw = ?, member_nick = ?, member_phone = ? " + "WHERE member_id = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, mdto.getMember_pw());
 		ps.setString(2, mdto.getMember_nick());
@@ -175,32 +172,30 @@ public class MemberDao {
 
 		con.close();
 	}
-	
+
 	// 단일 조회 메소드
-		public MemberDto get(String member_id) throws Exception{
-			Connection con = getConnection();
-			
-			String sql = "SELECT * FROM member WHERE member_id = ?";
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, member_id);
-			ResultSet rs = ps.executeQuery();
-			
-			MemberDto mdto;
-			if(rs.next()) {
-				mdto = new MemberDto(rs);
-			} else {
-				mdto = null;
-			}
-			con.close();
-			return mdto;
+	public MemberDto get(String member_id) throws Exception {
+		Connection con = getConnection();
+
+		String sql = "SELECT * FROM member WHERE member_id = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, member_id);
+		ResultSet rs = ps.executeQuery();
+
+		MemberDto mdto;
+		if (rs.next()) {
+			mdto = new MemberDto(rs);
+		} else {
+			mdto = null;
 		}
+		con.close();
+		return mdto;
+	}
 
 	// 비밀번호 변경 메소드
 	public void changePw(MemberDto mdto) throws Exception {
 		Connection con = getConnection();
-		String sql = "UPDATE member "
-				+ "Set member_pw = ? "
-				+ "WHERE member_id = ?";
+		String sql = "UPDATE member " + "Set member_pw = ? " + "WHERE member_id = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, mdto.getMember_pw());
 		ps.setString(2, mdto.getMember_id());
@@ -209,47 +204,49 @@ public class MemberDao {
 
 		con.close();
 	}
+
 	// 단일 조회 메소드
-		public MemberDto get(int member_no) throws Exception {
-			Connection con = getConnection();
+	public MemberDto get(int member_no) throws Exception {
+		Connection con = getConnection();
 
-			String sql = "select*from member where member_no=?";
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, member_no);
-			ResultSet rs = ps.executeQuery();
+		String sql = "select * from member where member_no=?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, member_no);
+		ResultSet rs = ps.executeQuery();
 
-			MemberDto mdto;
-			if (rs.next()) {
-				mdto = new MemberDto();
-				
-				mdto.setMember_no(rs.getInt("member_no"));
-				mdto.setMember_name(rs.getString("member_name"));
-				mdto.setMember_id(rs.getString("member_id"));
-				mdto.setMember_pw(rs.getString("member_pw"));
-				mdto.setMember_nick(rs.getString("member_nick"));
-				mdto.setMember_phone(rs.getString("member_phone"));
-				mdto.setMember_auth(rs.getString("member_auth"));
-				mdto.setMember_join_date(rs.getString("member_join_date"));
-				mdto.setMember_login_date(rs.getString("member_login_date"));
+		MemberDto mdto;
+		if (rs.next()) {
+			mdto = new MemberDto();
 
-			} else {
-				mdto = null;
-			}
+			mdto.setMember_no(rs.getInt("member_no"));
+			mdto.setMember_name(rs.getString("member_name"));
+			mdto.setMember_id(rs.getString("member_id"));
+			mdto.setMember_pw(rs.getString("member_pw"));
+			mdto.setMember_nick(rs.getString("member_nick"));
+			mdto.setMember_phone(rs.getString("member_phone"));
+			mdto.setMember_auth(rs.getString("member_auth"));
+			mdto.setMember_join_date(rs.getString("member_join_date"));
+			mdto.setMember_login_date(rs.getString("member_login_date"));
 
-			con.close();
-			return mdto;
+		} else {
+			mdto = null;
 		}
-		//탈퇴 메소드
-		public void exit(int member_no) throws Exception{
-			Connection con=getConnection();
-			
-			String sql="delete member where member_no=?";
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, member_no);
-			ps.execute();
-			
-			con.close();
-		}
-		
-		}
+		con.close();
+		return mdto;
+	}
+
+	// 탈퇴 메소드
+	public void exit(int member_no) throws Exception {
+		Connection con = getConnection();
+
+		String sql = "delete member where member_no=?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, member_no);
+		ps.execute();
+
+		con.close();
+	}
+	
+}
+
 

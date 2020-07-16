@@ -46,9 +46,9 @@ td, th{
 					<td>
 						<Select name="commu_head">
 							<option value="">말머리 선택</option>
-							<option>자유</option>
-							<option>공략</option>
-							<option>유머</option>
+							<option value="자유">자유</option>
+							<option value="공략">공략</option>
+							<option value="유머">유머</option>
 						</Select>
 					</td>
 				</tr>
