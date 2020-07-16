@@ -15,6 +15,7 @@
 	int member_no = user.getMember_no();	
 	boolean isAdmin= user.getMember_auth().equals("관리자");
 	boolean isSearch = type != null && keyword != null;
+	
 	// 페이지 번호 계산 코드
 	int pageSize = 10;
 	String pageStr = request.getParameter("page");
@@ -65,21 +66,100 @@
 %>
     
 <jsp:include page="/template/header.jsp"></jsp:include>
-<div align="center">
-
+<style>
+	.ec-base-table.typeList table{
+		border-top-color: #e8e8e8;
+	}
+	.ec-base-table table{
+	position: releative;
+	margin: 0;
+	border: 1px solid #e8e8e8;
+	border-left:0;
+	border-right:0;
+	color: #fff;
+	line-height:L
 	
-	<h2></h2>
+	}
+	
+	
+	
+	
+	
+	.font-notice {
+		font-family: ARCADECLASSIC;
+		font-size: 30px;
+		color: #20639B;
+	}
+	
+	.path li {
+		float: left;
+		padding: 0 0 0 12px;
+		margin: 0 0 0 8px;
+		color: #999;
+		background: url(../image/화살표.png) no-repeat 0 10px;
+	}
+	element.style{
+	
+	}
+		
+	.path ol {
+		float: right;
+	
+	}
+	.path {
+		position: absolute;
+		right: 0;
+		z-index: 99;
+		line-height: 30px;
+		text-transform: lowercase;
+		
+	}
+	ol{
+	diplay: block;
+	list-style-type: decimal;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	padding-inline-start: 40px;
+	
+	}
+	div{
+	diplay: block;s
+	}
+	
+	.ec-bace-table{
+		clear: both;
+	}
+
+</style>
+<div align="center">
+	
 	<form action="list.jsp" method="get">
-	<table border="1" width="90%">
+	<div class="ec-bace-table- typeList gBorder">
+	<table border="1" summary>
 	
 		<thead>
+				
+		<div class="title">
 		<h2>공지사항</h2>
-			<tr>				
-				<th>글번호</th>
-				<th width="50%">제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>조회수</th>
+		</div>
+		<div class="path">
+		 <ol >
+		 	<li>
+		 	 <a href="/">home</a>
+		 	</li>
+		 	<li title="현재 위치">
+		 		<strong>notice</strong>
+		 	</li>
+		 </ol>
+		</div>
+			<tr style=" ";>				
+				<th scope="col">NO</th>
+				<th scope="col">CONTENTS</th>
+				<th scope="col">NAME</th>
+				<th scope="col">DATE</th>
+				<th scope="col">READ</th>
 			</tr>
 		</thead>
 		
@@ -114,6 +194,7 @@
 		</tfoot>
 		<%} %>
 	</table>
+	</div>
 	<!-- 네비게이터 -->
 	<h6>
 <%if(startBlock > 1) {%>	

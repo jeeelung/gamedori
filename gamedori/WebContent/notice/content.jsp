@@ -50,9 +50,16 @@
 	
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
+<style>
+	@font-face {
+		font-family: ARCADECLASSIC;
+		src: url("../font/ARCADECLASSIC.ttf");
+	}
+
+</style>
 <div align="center">
 	<form >
-		<h2>게시글 상세보기</h2>
+		<h2 >게시글 상세보기</h2>
 		<table border="1" width="900" >
 			<thead align="left">
 				<tr>
@@ -87,6 +94,7 @@
 				</tr>
 				<!-- 첨부파일 출력 영역 : 첨부파일이 있는 경우만 출력 -->
 				<%if(!fileList.isEmpty()) {%>
+				<div class="row" style="min-height10px;">
 				<tr height="100">
 					<td>
 						첨부파일 목록
@@ -99,11 +107,12 @@
 								<img src="download.do?file_no=<%=fdto.getFile_no()%>" width="50" height="50">
 								<!-- 다운로드 버튼을 누른다면 해당 파일을 다운로드 할 수 있도록 링크 -->
 								<a href="download.do?file_no=<%=fdto.getFile_no()%>">
-									<input type="button" value="다운로드">
+									<input class="form-btn form-inline" type="button" value="다운로드">
 								</a>
 							</li>
 							<%}%>
 						</ul>
+						</div>
 					</td>
 				</tr>
 				<%}%>
@@ -113,20 +122,20 @@
 					<td>
 						<br>
 						<a href="write.jsp">
-							<input type="button" value="글쓰기">
+							<input class = "form-btn form-inline" type="button" value="글쓰기">
 						</a>
 						
 					<%if(isAdmin || isMine){%>
 						<a href="edit.jsp?notice_no=<%=notice_no%>">
-							<input type="button" value="수정">
+							<input class = "form-btn form-inline" type="button" value="수정">
 						</a>
 						<a href="<%=request.getContextPath()%>/member/check.jsp?
 						go=<%=request.getContextPath()%>/notice/delete.do?notice_no=<%=notice_no%>">
-							<input type="button" value="삭제">
+							<input class = "form-btn form-inline" type="button" value="삭제">
 						</a>
 					<%}%>
 						<a href="list.jsp">
-							<input type="button" value="목록으로">
+							<input class = "form-btn form-inline" type="button" value="목록으로">
 						</a>
 						<br><br>
 					</td>
