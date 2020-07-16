@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 <%@page import="gamedori.beans.dto.ReplyDto"%>
 <%@page import="gamedori.beans.dao.ReplyDao"%>
-=======
-
->>>>>>> refs/remotes/origin/master
 <%@page import="gamedori.beans.dto.FilesDto"%>
 <%@page import="gamedori.beans.dto.CommunityFileDto"%>
 <%@page import="java.util.List"%>

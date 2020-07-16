@@ -34,44 +34,32 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 			int member_no = mdto.getMember_no();
 			//이벤트 파라미터 받고
 			int event_no = Integer.parseInt(req.getParameter("event_no"));
-			
-			//두 정보를 dto에 삽입
-			
-			event_participateDto epdto = new event_participateDto();
-			//회원, 이벤트 번호 dto 넣기
-			epdto.setEvent_no(event_no); 
-			epdto.setMember_no(member_no);
-			
-			//이벤트 응모하기
 			event_participateDao epdao = new event_participateDao();
-			epdao.EventInfo(epdto);
+			event_participateDto epdto = new event_participateDto();
 			
-			// 위의 두 정보를 DTO에 삽입 후 이벤트 응모하기
-			//event_participateDto epdto = new event_participateDto();
+			// 회원 참여 여부 확인
+			Integer check = epdao.getEventCheck(member_no);
 			
-			//epdto.setMember_no(member_no); // 회원 번호 dto 에 넣기
-			//epdto.setEvent_no(event_no); // 이벤트 번호 dto 에 넣기
-			
-			// 본격적으로 이벤트 응모하기 > 이벤트 응모 메소드 호출
-			//event_participateDao epdao = new event_participateDao();
-			//epdao.EventInfo(epdto);
-			
-			resp.sendRedirect("Eventresult.jsp?=event_no="+event_no);
-			
-			
-//			String io = req.getParameter("io"); 
-//			
-//			event_participateDto epdto = new event_participateDto();
-//			event_participateDao epdao= new event_participateDao();
-//			
-//			MemberDto mdto = (MemberDto) req.getSession().getAttribute("userinfo");
-//			mdto.setMember_no(Integer.parseInt("member_no"));
-//			 
-//			EventboardDto edto= new EventboardDto();
-//			epdto.setEvent_no(Integer.parseInt(req.getParameter("event_no")));
-//			epdao.EventInfo(epdto);
-//			
-//			resp.sendRedirect("Eventresult.jsp");
+			if(check == null) {
+				// 회원 번호 없으면
+				
+				// 회원, 이벤트 번호 dto 넣기
+				epdto.setEvent_no(event_no);
+				epdto.setMember_no(member_no);
+
+				// 이벤트 응모하기
+				epdao.EventInfo(epdto);
+				
+				resp.sendRedirect("Eventresult.jsp");
+				System.out.println("이벤트 등록 완료");
+
+			} else {
+				// 회원 번호 있으면
+				
+				resp.sendRedirect("Eventresult2.jsp");
+				System.out.println("이벤트 등록 실패");
+			}
+
 		
 					
 		}
