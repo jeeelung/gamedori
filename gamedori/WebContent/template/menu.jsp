@@ -1,5 +1,7 @@
+
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
+
 	pageEncoding="UTF-8"%>
 
 
@@ -11,6 +13,7 @@
 	MemberDto mdto = (MemberDto) session.getAttribute("userinfo");//다운캐스팅(down-casting)
 	boolean isLogin = mdto != null;
 %>
+
 
 
 <div class="notice-wrap">
@@ -34,7 +37,6 @@
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/member/logout.do">로그아웃</a>
 	</h5>
-	<h5>｜</h5>
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/member/info.jsp">마이페이지</a>
 	</h5>

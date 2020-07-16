@@ -140,9 +140,9 @@
 <%}%>
 	</h6>
 	<!-- 검색창 -->
-	<select name="type">
-		<option value="notice_title">제목만</option>
-		<option value="notice_content">내용만</option>
+	<select class="form-input form-inline" name="type">
+		<option value="notice_title">제목</option>
+		<option value="notice_content">내용</option>
 		<option value="member_nick">글작성자</option>
 	</select>
 		<input type="text" name="keyword" placeholder="검색어를 입력하세요" required>

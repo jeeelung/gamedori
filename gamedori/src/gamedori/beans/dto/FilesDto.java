@@ -2,7 +2,6 @@ package gamedori.beans.dto;
 
 import java.sql.ResultSet;
 
-
 public class FilesDto {
 	private int file_no;
 	private String file_name;

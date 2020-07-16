@@ -10,8 +10,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.sun.scenario.effect.impl.prism.PrTexture;
-
 import gamedori.beans.dto.GameFileDto;
 
 public class GameFileDao {
