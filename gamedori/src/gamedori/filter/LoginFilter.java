@@ -47,7 +47,7 @@ public class LoginFilter implements Filter{
 			// 리다이렉트는 사용자에게 내가 알려준 위치로 다시 들어오라고 전송하는 명령
 			// 사용자에게 알려지는 주소이므로 프로젝트명(Context Path)을 적어야 함
 			// 필터는 반드시 절대경로로 써야한다 (어느 페이지에서 들어올 지 모르기 때문에)
-			resp.sendRedirect(req.getContextPath()+"/member/login.jsp"); // 로그인 페이지로 이동
+			resp.sendRedirect(req.getContextPath()+"/guest/login.jsp"); // 로그인 페이지로 이동
 		}
 		
 	}

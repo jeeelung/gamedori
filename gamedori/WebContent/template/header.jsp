@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <title>GAMEDORI</title>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/base.css">
@@ -17,8 +18,7 @@
         
         .font-game {
             font-family: ARCADECLASSIC;
-            font-size: 70px;
-            
+            font-size: 70px;   
         }
         .foot {
             color: gray;
@@ -32,6 +32,7 @@
     </style>
 </head>
 <body>
+
     <main class="center">
         <header>
             
