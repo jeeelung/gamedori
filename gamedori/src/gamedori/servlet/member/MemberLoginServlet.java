@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dto.MemberDto;
 
-@WebServlet(urlPatterns = "/guest/login.do")
+//@WebServlet(urlPatterns = "/guest/login.do")
 public class MemberLoginServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -49,11 +49,7 @@ public class CommunityFileDao {
 	// 게시물 파일 정보 불러오는 메소드
 	public List<FilesDto> getList(int commu_no) throws Exception{
 		Connection con = getConnection();
-		String sql = "SELECT f.* "
-				+ "FROM files f INNER JOIN community_file c "
-				+ "ON c.file_no = f.file_no "
-				+ "WHERE c.commu_no = ? "
-				+ "ORDER BY f.file_no ASC";
+		String sql = "SELECT f.* FROM files f INNER JOIN community_file c ON c.file_no = f.file_no WHERE c.commu_no = ? ORDER BY f.file_no ASC";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, commu_no);
 		ResultSet rs = ps.executeQuery();
