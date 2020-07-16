@@ -12,7 +12,7 @@ import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dao.MemberFavoriteDao;
 import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.MemberFavoriteDto;
-//@WebServlet(urlPatterns = "/member/change_info.do")
+@WebServlet(urlPatterns = "/member/change_info.do")
 public class MemberChangeInfoServlet extends HttpServlet {
 
 	@Override

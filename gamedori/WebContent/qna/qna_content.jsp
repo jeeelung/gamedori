@@ -76,8 +76,6 @@
 			<td><%=qdto.getQna_title() %></td>
 			</tr>
 				<tr>
-					<td>문의내용</td>
-					<!-- 게시물 내용 -->
 					<th>내용</th>
 					<td><%=qdto.getQna_content()%></td>
 				</tr>

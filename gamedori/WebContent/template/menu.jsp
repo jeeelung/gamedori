@@ -23,7 +23,7 @@
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">
-		<a href="<%=rootPath%>/qna/qna_list.jsp">자주 묻는 질문</a>
+		<a href="<%=rootPath%>/faq/list.jsp">자주 묻는 질문</a>
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">
@@ -38,7 +38,7 @@
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/member/logout.do">로그아웃</a>
 	</h5>
-	
+	<h5>｜</h5>
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/member/info.jsp">마이페이지</a>
 	</h5>

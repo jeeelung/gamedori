@@ -148,10 +148,17 @@
 		<tr>
 		<th colspan="2">
 			<input type="submit" value="등록">
-		</th>
-		<a href="<%=request.getContextPath()%>/member/pointdelete.do">
-			<input type="button" value="삭제">
-		</a>
+		<tr>
+		</form>
+		
+		
+		<form action="pointdelete.do"  method ="get">
+		<th>포인트 번호</th>
+		<td>
+			<input type="text" name ="point_no">
+			<input type="submit" value="삭제">
+		</td>
+		</tr>
 		</tr>
 			</table>	
 		</form>

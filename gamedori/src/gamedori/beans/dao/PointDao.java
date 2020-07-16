@@ -64,7 +64,7 @@ public class PointDao {
 		public void delete(int point_no) throws Exception {
 			Connection con = getConnection();
 
-			String sql = "DELETE point WHERE point_no = ?";
+			String sql = "DELETE point WHERE  point_no= ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, point_no);
 			ps.execute();
