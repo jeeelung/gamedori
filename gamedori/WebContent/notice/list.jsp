@@ -147,16 +147,16 @@
 		<h2>N O T I C E</h2>
 		</div>
 		<div class="path">
-		 <ol >
+		 <ol>
 		 	<li>
-		 	 <a href="/gamedori/index.jsp">home</a>
+		 	 <a href="/gamedori/index.jsp">Home</a>
 		 	</li>
 		 	<li title="현재 위치">
 		 		<strong>notice</strong>
 		 	</li>
 		 </ol>
 		</div>
-			<tr style=" ">				
+			<tr>				
 				<th scope="col">NO</th>
 				<th scope="col">CONTENTS</th>
 				<th scope="col">NAME</th>
