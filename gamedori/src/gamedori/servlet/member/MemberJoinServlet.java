@@ -10,12 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dao.MemberFavoriteDao;
-import gamedori.beans.dao.PointDao;
-import gamedori.beans.dao.PointHistoryDao;
 import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.MemberFavoriteDto;
-import gamedori.beans.dto.PointDto;
-import gamedori.beans.dto.PointHistoryDto;
 
 @WebServlet(urlPatterns = "/guest/join.do")
 public class MemberJoinServlet extends HttpServlet {
@@ -37,7 +33,7 @@ public class MemberJoinServlet extends HttpServlet {
 
 			// 처리 : MemberDao를 이용한 데이터베이스 등록
 			
-			mdao.join(mdto);
+			mdao.join(mdto); 
 			
 			String []genre_no = req.getParameterValues("member_favorite");
 			
