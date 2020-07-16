@@ -13,7 +13,7 @@ import gamedori.beans.dao.MemberFavoriteDao;
 import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.MemberFavoriteDto;
 
-@WebServlet(urlPatterns = "/guest/join.do")
+//@WebServlet(urlPatterns = "/guest/join.do")
 public class MemberJoinServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
