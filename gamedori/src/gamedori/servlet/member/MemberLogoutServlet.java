@@ -1,3 +1,4 @@
+
 package gamedori.servlet.member;
 
 import java.io.IOException;
@@ -8,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//@WebServlet(urlPatterns = "/member/logout.do")
+@WebServlet(urlPatterns = "/member/logout.do")
 public class MemberLogoutServlet extends HttpServlet{
 	
 	
