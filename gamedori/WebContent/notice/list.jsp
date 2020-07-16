@@ -9,12 +9,18 @@
 <%
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
+	if((MemberDto)session.getAttribute("userinfo")!=null){
+	}
 	
 	MemberDto user=(MemberDto)session.getAttribute("userinfo");
 	
-	int member_no = user.getMember_no();	
-	boolean isAdmin= user.getMember_auth().equals("관리자");
-	boolean isSearch = type != null && keyword != null;
+	boolean isAdmin = false;
+	boolean isSearch = false;
+	
+	if(user != null) {
+		isAdmin= user.getMember_auth().equals("관리자");
+		isSearch = type != null && keyword != null;
+	}
 	
 	// 페이지 번호 계산 코드
 	int pageSize = 10;
@@ -81,16 +87,6 @@
 	
 	}
 	
-	
-	
-	
-	
-	.font-notice {
-		font-family: ARCADECLASSIC;
-		font-size: 30px;
-		color: #20639B;
-	}
-	
 	.path li {
 		float: left;
 		padding: 0 0 0 12px;
@@ -98,6 +94,14 @@
 		color: #999;
 		background: url(../image/화살표.png) no-repeat 0 10px;
 	}
+	
+	.font-notice {
+		font-family: ARCADECLASSIC;
+		font-size: 30px;
+		color: #20639B;
+	}
+	
+	
 	element.style{
 	
 	}
@@ -137,24 +141,22 @@
 	
 	<form action="list.jsp" method="get">
 	<div class="ec-bace-table- typeList gBorder">
-	<table border="1" summary>
-	
+	<table border="1" >
 		<thead>
-				
 		<div class="title">
-		<h2>공지사항</h2>
+		<h2>N O T I C E</h2>
 		</div>
 		<div class="path">
 		 <ol >
 		 	<li>
-		 	 <a href="/">home</a>
+		 	 <a href="/gamedori/index.jsp">home</a>
 		 	</li>
 		 	<li title="현재 위치">
 		 		<strong>notice</strong>
 		 	</li>
 		 </ol>
 		</div>
-			<tr style=" ";>				
+			<tr style=" ">				
 				<th scope="col">NO</th>
 				<th scope="col">CONTENTS</th>
 				<th scope="col">NAME</th>
@@ -166,7 +168,9 @@
 		<tbody align="center"> 
 			<% for(NoticeDto ndto : list) { %>
 			<tr>	
-			<%MemberDto mdto = ndao.getWriter(member_no);%>
+			<%MemberDto mdto = ndao.getWriter(ndto.getMember_no());
+				System.out.println(mdto.getMember_id());
+			%>
 				<th><%=ndto.getNotice_no()%></th>
 			<td>
 				<a href="content.jsp?notice_no=<%=ndto.getNotice_no()%>">
@@ -175,7 +179,7 @@
 				</a>
 			</td>
 			
-				<td><%=user.getMember_nick()%></td>
+				<td><%=mdto.getMember_nick()%></td>
 				<td><%=ndto.getNotice_auto()%></td>
 				<td><%=ndto.getNotice_read()%></td>
 			</tr>

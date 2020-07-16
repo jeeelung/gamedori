@@ -15,7 +15,7 @@
 
 <div class="notice-wrap">
 	<h5 class="menu-font">
-		<a href="<%=rootPath%>/notice/list.jsp">공지사항</a>
+		<a href="<%=rootPath%>/notice/list.jsp">Notice</a>
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-front">

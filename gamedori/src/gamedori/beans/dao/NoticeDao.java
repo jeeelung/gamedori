@@ -116,13 +116,13 @@ public class NoticeDao {
 	}
 
 	// 조회수 증가
-	public void plusReadCount(int notice_no, int member_no) throws Exception {
+	public void plusReadCount(int notice_no) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "UPDATE notice " + "SET notice_read = notice_read + 1 " + "WHERE notice_no = ? and member_no != ?";
+		String sql = "UPDATE notice SET notice_read = notice_read + 1 " + "WHERE notice_no = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, notice_no);
-		ps.setInt(2, member_no);
+	
 		ps.execute();
 
 		con.close();

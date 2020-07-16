@@ -41,9 +41,15 @@
 	
 	
 	// 권한 확인
-	boolean isMine = user.getMember_id().equals(mdto.getMember_id());
-	boolean isAdmin = user.getMember_auth().equals("관리자");
-	
+	boolean isMine;
+	boolean isAdmin;
+	if(user==null){
+		isMine = false;
+		isAdmin = false;
+	} else {
+	isMine= user.getMember_id().equals(mdto.getMember_id());
+	isAdmin = user.getMember_auth().equals("관리자");
+	}
 	// 첨부파일 목록을 구해오는 코드
 		NoticeFileDao nfdao = new NoticeFileDao();
 		List<FilesDto> fileList = nfdao.getList(notice_no);
@@ -125,7 +131,7 @@
 							<input class = "form-btn form-inline" type="button" value="글쓰기">
 						</a>
 						
-					<%if(isAdmin || isMine){%>
+					<%if(isAdmin && isMine){%>
 						<a href="edit.jsp?notice_no=<%=notice_no%>">
 							<input class = "form-btn form-inline" type="button" value="수정">
 						</a>
