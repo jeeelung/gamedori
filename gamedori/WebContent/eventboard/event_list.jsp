@@ -88,6 +88,9 @@ if(isSearch){
 else{
 	list= edao.getList(start, finish);
 }
+
+MemberDto user = (MemberDto)session.getAttribute("userinfo");
+
 %>
  
  
@@ -102,14 +105,21 @@ else{
 	</div>
 	
 	<!-- 글쓰기 버튼 -->
+	
 	<div class="row right">
+	<%if(user != null) {
+						boolean isAdmin = user.getMember_auth().equals("관리자");
+					
+ 						if (isAdmin) { %>
 		<a href="EventBoardWrite.jsp">
 			<input class="form-btn form-inline" type="button" value="글쓰기">
 		</a>
+	<%} %>
+	<%} %>
 	</div>
 	
 	<!-- 글 목록 -->
-	<div class="row">
+
 	
 		<!-- 테이블 -->
 		<table border="1" width="90%" class=" table table1-stripe table-border  table-hover" >
@@ -151,9 +161,17 @@ else{
 		<tfoot>
 			<tr>
 				<td colspan="5" align="right">
-					<a href="EventBoardWrite.jsp">
-						<input type="button" value="글쓰기">
+				
+				
+				<%if(user !=null) {
+				boolean isAdmin = user.getMember_auth().equals("관리자");
+				
+				if(isAdmin){%>	
+					<a  href="EventBoardWrite.jsp">
+						<input class="form-btn form-inline" type="button" value="글쓰기">
 					</a>
+				<%} %>
+				<%} %>
 				</td>
 			</tr>
 		</tfoot>
