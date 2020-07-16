@@ -2,6 +2,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
+<style>
+
+
+
+td, th{
+ width:auto;
+ border-radius: 5px;
+}
+
+.font_han{
+	font-family: DungGeunMo;
+	color: #20639B;
+}
+
+
+
+</style>
 
 <%
 	MemberDto mdto = (MemberDto) session.getAttribute("userinfo");
@@ -10,22 +28,22 @@
 
 <div align="center">
 
-	<h2 class="">이벤트 게시글 작성</h2>
+	<h2 class="font-game">To Write The Event Notice</h2>
 
 
 	<form action="eventwrite.do" method="post" enctype="multipart/form-data" >
 
-		<table border="1">
+		<table border = "1" class=" table.table-hover>tbody>tr:hover" >
 
 			<tr>
-				<th>제목</th>
+				<th class="font_han">제목</th>
 				<td>
 					<!-- 제목은 일반 입력창으로 구현 --> <input type="text" name="event_title"
-					size="70" required>
+					size="78" required>
 				</td>
 			</tr>
 			<tr>
-				<th>내용</th>
+				<th class="font_han">내용</th>
 				<td>
 					<!-- 내용은 textarea로 구현 --> 
 					<textarea name="event_content" required
@@ -35,13 +53,14 @@
 
 
 			<tr>
-				<th>첨부파일</th>
-				<td><input type="file" name="event_file" multiple accept=".jpg, .png, .gif">
+				<th class="font_han">첨부파일</th>
+				<td>
+				<input class="font_file form-inline " type="file" name="event_file" multiple accept=".jpg, .png, .gif">
 				</td>
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="2" align="center"><input type="submit" value="작성">
+					<td colspan="2" align="center"><input class="form-btn form-inline" type="submit" value="작성">
 					</td>
 				</tr>
 			</tfoot>

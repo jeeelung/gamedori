@@ -608,6 +608,19 @@ article h1, article h2, article h3, article h4, article h5, article h5,
 	font-weight: 700;
 }
 
+.form-file{
+	width: 100px;
+	padding: 0.5rem;
+	outline: none;
+	border: none;
+	background-color: #2d90e3;
+	color: white;
+	cursor: pointer;
+	font-weight: 700;
+}
+	
+}
+
 .form-btn:hover {
 	background-color: #ff9b71;
 }
@@ -625,7 +638,7 @@ article h1, article h2, article h3, article h4, article h5, article h5,
 	padding-left: 3rem;
 }
 
-.form-input.form-inline, .form-btn.form-inline {
+.form-input.form-inline, .form-btn.form-inline, .form_file.form-inline {
 	width: auto;	
     background-color: #20639B;
 
@@ -695,9 +708,23 @@ a.deco {
 
 .table.table1-stripe>tbody>tr:nth-child(2n) {
 	/* RGB Hex String */
-	background-color: #2d90e3;
+	background-color: #85BCE1;
 }
 
 .table.table-stripe>thead>tr {
-	background-color: #2d90e3;
+	background-color: #85BCE1;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

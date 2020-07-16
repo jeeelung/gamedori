@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dto.MemberDto;
 
-//@WebServlet(urlPatterns = "/member/check.do")
+@WebServlet(urlPatterns = "/member/check.do")
 public class MemberCheckServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

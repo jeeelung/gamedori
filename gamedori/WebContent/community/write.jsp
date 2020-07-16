@@ -1,21 +1,45 @@
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
+<style>
+
+
+
+td, th{
+ width:auto;
+ border-radius: 5px;
+}
+
+.font_han{
+	font-family: DungGeunMo;
+	color: #20639B;
+}
+
+
+
+</style>   
+    
+    
 <%
 	MemberDto mdto = (MemberDto)session.getAttribute("userinfo");
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
-<div>
+<div align="center">
+
+	<h2 class="font-game">Write Whatever You Want</h2>
+
 	<form action="write.do" method="post" enctype="multipart/form-data">
-		<table align="center">
+		<table border = "1" class=" table.table-hover>tbody>tr:hover" >
 			<thead>
 				<tr>
-					<td>
+			
 						<%if(request.getParameter("commu_super_no") != null) {%>
 						<input type="hidden" name="commu_super_no" value="<%=request.getParameter("commu_super_no")%>">
 						<%}%>
 						<input type="hidden" name="member_no" value="<%=mdto.getMember_no()%>">
-					</td>
+					
 				</tr>
 				<tr>
 					<th>말머리</th>
@@ -31,7 +55,8 @@
 				<tr>
 					<th>제목</th>
 					<td>
-						<input  type="text" name="commu_title" maxlength="100" size="50" required>
+						<input  name="event_content" required
+						rows="15" cols="72" required>
 					</td>
 				</tr>
 			</thead>

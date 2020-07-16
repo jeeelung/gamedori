@@ -20,9 +20,12 @@
 .font_han{
 	font-family: DungGeunMo;
 }
+
+thead tr {
+    background-color: #85BCE1;
+    color: #ffffff;
+  }
     </style>
-
-
 <% 
 
 String type = request.getParameter("type");
@@ -122,14 +125,14 @@ MemberDto user = (MemberDto)session.getAttribute("userinfo");
 
 	
 		<!-- 테이블 -->
-		<table border="1" width="90%" class=" table table1-stripe table-border  table-hover" >
+		<table border="1" width="90%" class=" table  table-border  table-hover" >
 			<thead>
-				<tr aling="center" >
-					<th class= "font_han">번호</th>
-					<th class= "font_han" width="40%">제목</th>
-					<th class= "font_han">작성자</th>
-					<th class= "font_han" >작성일</th>
-					<th class= "font_han" >조회수</th>
+				<tr align="center" class= "font_header">
+					<th >번호</th>
+					<th  width="40%">제목</th>
+					<th >작성자</th>
+					<th  >작성일</th>
+					<th >조회수</th>
 				</tr>
 			</thead>
 			<tbody align="center">
@@ -163,15 +166,13 @@ MemberDto user = (MemberDto)session.getAttribute("userinfo");
 				<td colspan="5" align="right">
 				
 				
-				<%if(user !=null) {
-				boolean isAdmin = user.getMember_auth().equals("관리자");
+			
 				
-				if(isAdmin){%>	
+		
 					<a  href="EventBoardWrite.jsp">
 						<input class="form-btn form-inline" type="button" value="글쓰기">
 					</a>
-				<%} %>
-				<%} %>
+				
 				</td>
 			</tr>
 		</tfoot>
@@ -216,7 +217,7 @@ MemberDto user = (MemberDto)session.getAttribute("userinfo");
 			</select>
 			
 			<!-- 검색어 -->
-			<input class="form-input form-inline1" type="text" name="keyword" 
+			<input class="form-input form-inline1" type="text" name="keyword" placeholder="검색어를 입력하시요" 
 			 required>
 			 
 			<!-- 전송버튼 -->
