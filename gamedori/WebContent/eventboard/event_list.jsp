@@ -14,7 +14,7 @@
 
 	font-family: arcadeclassic;
 	font-size: 35px;
-	color: #20639B;
+	color: #85BCE1;
 }
 
 .font_han{
@@ -99,7 +99,7 @@ MemberDto user = (MemberDto)session.getAttribute("userinfo");
  
 <jsp:include page="/template/header.jsp"></jsp:include>
 
-<article class="w-90">
+<article class="w-80">
 
 
 	<!-- 제목 -->
@@ -125,7 +125,7 @@ MemberDto user = (MemberDto)session.getAttribute("userinfo");
 
 	
 		<!-- 테이블 -->
-		<table border="1" width="90%" class=" table  table-border  table-hover" >
+		<table border="1" aline:"center" width="90%" class=" table2 table-border table-hover" >
 			<thead>
 				<tr align="center" class= "font_header">
 					<th >번호</th>
@@ -154,7 +154,7 @@ MemberDto user = (MemberDto)session.getAttribute("userinfo");
 					</td>
 					<%MemberDto mdto = edao.getWriter(edto.getMember_no()); %>
 					<td class= "font_han" ><%=mdto.getMember_nick() %></td>
-					<td class= "font_han" ><%=edto.getEvent_date() %></td>
+					<td class= "font_han" ><%=edto.getEvent_auto() %></td>
 					<td class= "font_han" ><%=edto.getEvent_read() %></td>
 					
 				</tr>
@@ -163,14 +163,9 @@ MemberDto user = (MemberDto)session.getAttribute("userinfo");
 		
 		<tfoot>
 			<tr>
-				<td colspan="5" align="right">
-				
-				
-			
-				
-		
+				<td colspan="5" align="center">
 					<a  href="EventBoardWrite.jsp">
-						<input class="form-btn form-inline" type="button" value="글쓰기">
+						<input class="form-btn form-inline2" type="button" value="글쓰기">
 					</a>
 				
 				</td>
@@ -180,6 +175,16 @@ MemberDto user = (MemberDto)session.getAttribute("userinfo");
 	
 	<!-- 페이지 네비게이터 -->
 	<h6 align="center">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<!-- 이전 -->
 	<%if(startBlock >1){ %>
 	<%if(!isSearch){ %>
@@ -221,7 +226,7 @@ MemberDto user = (MemberDto)session.getAttribute("userinfo");
 			 required>
 			 
 			<!-- 전송버튼 -->
-			<input class="form-btn form-inline" type="submit" value="검색">
+			<input class="form-btn form-inline3" type="submit" value="검색">
 		</form>
 		
 	</div>

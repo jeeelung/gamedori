@@ -11,7 +11,7 @@
 
 	font-family: arcadeclassic;
 	font-size: 35px;
-	color: #20639B;
+	color: #85BCE1;
 }
 
 .font_han{
@@ -22,9 +22,7 @@ thead tr {
     background-color: #85BCE1;
     color: #ffffff;
   }
-
-
-    </style>
+</style>
     
     
     
@@ -113,10 +111,10 @@ thead tr {
 	
 	<h2></h2>
 	<form action="list.jsp" method="get">
-	<table border="1" width="60%" class=" table table1-stripe table-border  table-hover">
+	<table border="1" aline="center" width="90%" class=" table2 table-border table-hover">
 	
 		<thead>
-			<tr align="center">
+			<tr align="center" class="font_header">
 				<th>
 					<select name="commu_head" onchange="headSort();">
 						<option value="">전체보기</option>
@@ -159,10 +157,10 @@ thead tr {
 		</tbody>
 		
 		<tfoot>
-			<tr align="right">
-				<td colspan="5" align="right">
+			<tr>
+				<td colspan="5" align="center">
 					<a href="write.jsp">
-						<input class="form-btn form-inline" type="button" value="글쓰기">
+						<input class="form-btn form-inline3" type="button" value="글쓰기">
 					</a>
 				</td>
 			</tr>
@@ -176,6 +174,7 @@ thead tr {
 	<%} else {%>
 		<a href="list.jsp?page=<%=startBlock-1%>&type=<%=type%>&keyword=<%=keyword%>">[이전]</a>
 	<%}%>
+	
 <%}%>
 
 	<%for(int i=startBlock; i<=finishBlock; i++) { %>
@@ -199,8 +198,8 @@ thead tr {
 		<option value="commu_content">내용만</option>
 		<option value="member_nick">글작성자</option>
 	</select>
-		<input type="text" name="keyword" placeholder="검색어를 입력하세요" required>
-		<input class="form-btn form-inline" type="submit" value="검색">
+		<input class="form-input form-inline1" type="text" name="keyword" placeholder="검색어를 입력하세요" required>
+		<input class="form-btn form-inline3" type="submit" value="검색">
 	</form>
 </div>
 </article>

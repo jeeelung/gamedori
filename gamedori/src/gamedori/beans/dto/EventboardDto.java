@@ -59,7 +59,23 @@ public class EventboardDto {
 	
 	
 		}
-	
+	// 날짜 자동 변환 메소드
+		public String getEvent_time() {
+			return event_date.substring(11, 16);
+		}
+		
+		public String getEvent_day() {
+			return event_date.substring(0, 10);
+		}
+		
+		public String getEvent_auto() {
+			String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+			if(getEvent_day().equals(today)) {
+				return getEvent_time();
+			} else {			
+				return getEvent_day();
+			}
+		}
 		
 	}
 
