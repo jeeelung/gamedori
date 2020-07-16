@@ -33,18 +33,23 @@
 	
 	<!-- 게시글 전송 폼 -->
 	<form action="edit.do" method="post" enctype="multipart/form-data">
-	
+			<%if(!isAdmin){ %>
+					<input type ="hidden" name="qna_answer" value="<%=qdto.getQna_answer()%>">
+			<% }%>
 		<!-- 수정이 가능하도록 PK를 숨김 첨부한다 -->
 		<input type="hidden" name="qna_no" value="<%=qna_no%>">
 		
 		<table border="1">
 			<tbody>
 				<tr>
-					<th>말머리</th>
-					<td>
-						<!-- 말머리는 select로 구현 -->
+					<th>분류</th>
+					<td><%if(qdto.getQna_head() != null){ %>
+					<!-- 분류는 있을 경우만 출력 -->
+						[<%=qdto.getQna_head()%>]
+					<%} %>
+						<!-- 분류는 select로 구현 -->
 						<select name="qna_head">
-							<option value="">말머리</option>
+							<option value="">분류</option>
 							<option value="회원">회원</option>
 							<option value="게임">게임</option>
 							<option value="포인트">포인트</option>

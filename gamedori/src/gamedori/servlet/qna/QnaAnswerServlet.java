@@ -43,7 +43,7 @@ import gamedori.beans.dto.QnaFileDto;
 				Map<String, List<FileItem>> map = utility.parseParameterMap(req);
 			
 				QnaDto qdto = new QnaDto();
-				if(map.get("qna_answer") !=null) {
+				if(map.get("qna_answer") ==null) {
 					qdto.setQna_answer(map.get("qna_answer").get(0).getString());
 				}
 				

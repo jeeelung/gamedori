@@ -175,26 +175,19 @@ public class QnaDao {
 		public void edit(QnaDto qdto) throws Exception {
 			Connection con = getConnection();
 			
-			 String sql = "UPDATE qna SET ";
-		        if(qdto.getQna_answer() != null){
-		            sql += "qna_answer=? ";
-		        }else{
-		            sql += "qna_head=?, qna_title=?, qna_content=?, qna_email =?";
-		        }
-		        sql += "where qna_no=?";
+			 String sql = "UPDATE qna SET qna_head=?,qna_title=?,qna_content=?,qna_email=?,qna_answer=? where qna_no=?";
 
 		    PreparedStatement ps = con.prepareStatement(sql);
-		    if(qdto.getQna_answer() != null){
-		        ps.setString(1, qdto.getQna_answer());
-		        ps.setInt(2, qdto.getQna_no());
-		    }else{
 		        ps.setString(1, qdto.getQna_head());
 		        ps.setString(2, qdto.getQna_title());
 		        ps.setString(3, qdto.getQna_content());
 		        ps.setString(4, qdto.getQna_email());
-		        ps.setInt(5, qdto.getQna_no());
+		        ps.setString(5, qdto.getQna_answer());
+		        ps.setInt(6, qdto.getQna_no());
+		        
+		        ps.execute();
+		        con.close();
 		    }
-		}
 		//개수 조회 메소드
 		public int getCount(int member_no,String auth) throws Exception{
 			Connection con = getConnection();

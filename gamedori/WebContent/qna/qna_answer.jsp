@@ -19,6 +19,7 @@
 	QnaFileDao qfdao = new QnaFileDao();
 	MemberDto user = (MemberDto)session.getAttribute("userinfo");
 	List<FilesDto> fileList = qfdao.getList(qna_no);
+	
 	// 권한 확인
 	boolean isAdmin = user.getMember_auth().equals("관리자");
 %>
@@ -28,21 +29,28 @@
 <div align="center">
 	
 	<h2>문의글 답변</h2>
-	
 	<!-- 게시글 전송 폼 -->
 	<form action="edit.do" method="post" enctype="multipart/form-data">
 	
 		<!-- 수정이 가능하도록 PK를 숨김 첨부한다 -->
+		<%if(qdto.getQna_head()==null){ %>
+		<input type="hidden" name="qna_head" value=""> 
+		<%} %>
+		<input type="hidden" name="qna_head" value="<%=qdto.getQna_head()%>"> 
+		<input type="hidden" name="qna_title" value="<%=qdto.getQna_title()%>"> 
+		<input type="hidden" name="qna_content" value="<%=qdto.getQna_content()%>"> 
+		<input type="hidden" name="qna_email" value="<%=qdto.getQna_email()%>"> 
 		<input type="hidden" name="qna_no" value="<%=qna_no%>">
 		
 		<table border="1">
 			<tbody>
-					
-						<th><Colspan="2">말머리
-						<%if(qdto.getQna_head() != null){ %>
+					<tr>
+						<th>분류</th>
+					<td>	<%if(qdto.getQna_head() != null){ %>
 					<!-- 말머리는 있을 경우만 출력 -->
-					[<%=qdto.getQna_head()%>]<%=qdto.getQna_title() %>
-						<%} %></th>
+					[<%=qdto.getQna_head()%>]
+					</td>
+			<%} %>
 				</tr>
 				<tr>
 					<th>제목</th>
@@ -63,12 +71,14 @@
 								<%=qdto.getQna_email()%>
 					</td>
 				</tr>
-					<!-- 첨부파일 -->
 				<!-- 첨부파일 출력 영역 : 첨부파일이 있는 경우만 출력 -->
 				<%if(!fileList.isEmpty()){%>
 				<tr>
-					<th>첨부파일</th>
-					<td>
+					<th colspan="5">첨부파일</th>
+				</tr>							
+				<tr height="100" >
+					<td colspan="5">
+						첨부파일 목록
 						<ul>
 							<!-- ol은 순서가 있는거 / ul은 순서가 없는거 -->
 							<%for(FilesDto fdto : fileList){%>
@@ -78,7 +88,7 @@
 								<!-- 다운로드 버튼을 누른다면 해당 파일을 다운로드 할 수 있도록 링크 -->
 								
 								<a href="download.do?file_no=<%=fdto.getFile_no()%>">
-									<input type="button" value="다운로드">	
+									<input type="button" value="다운로드">
 								</a>
 							</li>
 							<%}%>
@@ -86,15 +96,20 @@
 					</td>
 				</tr>
 				<%} %>
-				<%if(isAdmin){ %>
 				<tr>
 					<th>답변</th>
 					<td>
 						<textarea name="qna_answer" required 
-							rows="15" cols="72"><%=qdto.getQna_answer() == null? "": qdto.getQna_answer() %></textarea>
+							rows="15" cols="72"><%=qdto.getQna_answer() %></textarea>
 					</td>
 				</tr>
-				<%}%>
+				<!-- 첨부파일 -->
+				<tr>
+					<th>첨부파일</th>
+					<td>
+						<input type="file" name="qna_file" multiple accept=".jpg, .png, .gif">
+					</td>
+				</tr>
 			</tbody>
 			
 			<tfoot>
