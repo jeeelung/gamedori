@@ -65,8 +65,7 @@
             </div>
 			<div class="row-empty"></div>
 			<div class="row">
-				<embed width="80%" height="500" src="fileDownload.do?game_no=<%=game_no%>" quality="high" align="middle">
-				</embed>
+				<embed width="400" height="400" src="fileDownload.do?game_no=<%=game_no%>" type="application/x-shockwave-flash" allowfullscreen="true">
 			</div>
         </article>
         <article class="w-70">

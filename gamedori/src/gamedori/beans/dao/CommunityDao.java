@@ -1,3 +1,4 @@
+
 package gamedori.beans.dao;
 
 import java.sql.Connection;
@@ -172,7 +173,7 @@ public class CommunityDao {
 					+ "SELECT ROWNUM rn, T.* FROM("
 					+ "SELECT c.*, m.MEMBER_NICK FROM COMMUNITY c INNER JOIN MEMBER m "
 					+ "ON c.MEMBER_NO = m.MEMBER_NO "
-					+ "WHERE m.MEMBER_NICK = ?"
+					+ "WHERE instr(m.MEMBER_NICK, ?) > 0"
 					+ "CONNECT BY PRIOR commu_no = commu_super_no "
 					+ "START WITH commu_super_no IS NULL "
 					+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
@@ -218,7 +219,7 @@ public class CommunityDao {
 					+ "SELECT ROWNUM rn, T.* FROM("
 					+ "SELECT c.*, m.MEMBER_NICK FROM COMMUNITY c INNER JOIN MEMBER m "
 					+ "ON c.MEMBER_NO = m.MEMBER_NO "
-					+ "WHERE m.MEMBER_NICK = ? AND commu_head = ? "
+					+ "WHERE instr(m.MEMBER_NICK, ?) > 0 AND commu_head = ? "
 					+ "CONNECT BY PRIOR commu_no = commu_super_no "
 					+ "START WITH commu_super_no IS NULL "
 					+ "ORDER SIBLINGS BY commu_group_no DESC, commu_no ASC"
@@ -300,7 +301,7 @@ public class CommunityDao {
 			sql = "SELECT count(*) FROM ("
 					+ "SELECT c.*, m.MEMBER_NICK FROM COMMUNITY c INNER JOIN MEMBER m "
 					+ "ON c.MEMBER_NO = m.MEMBER_NO "
-					+ "WHERE m.MEMBER_NICK = ?"
+					+ "WHERE instr(m.MEMBER_NICK, ?) > 0"
 					+ ")";
 		} else {
 			sql = "SELECT COUNT(*) FROM community WHERE instr(#1, ?) > 0";
@@ -334,7 +335,7 @@ public class CommunityDao {
 			sql = "SELECT count(*) FROM ("
 					+ "SELECT c.*, m.MEMBER_NICK FROM COMMUNITY c INNER JOIN MEMBER m "
 					+ "ON c.MEMBER_NO = m.MEMBER_NO "
-					+ "WHERE m.MEMBER_NICK = ? AND c.commu_head = ?"
+					+ "WHERE instr(m.MEMBER_NICK, ?) > 0 AND c.commu_head = ?"
 					+ ")";
 		}
 		

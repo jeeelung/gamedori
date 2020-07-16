@@ -1,3 +1,5 @@
+<%@page import="gamedori.beans.dto.GenreDto"%>
+<%@page import="gamedori.beans.dao.GenreDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="gamedori.beans.dto.GamePopularDto"%>
 <%@page import="gamedori.beans.dao.GamePopularDao"%>
@@ -26,6 +28,31 @@
 
 	// 관심분야 게임 리스트
 	int topN = 5;
+	
+	// 장르명 추출
+	GenreDao gdao = new GenreDao();
+	List<GenreDto> genre = gdao.getList();
+	
+	// 정렬 방식 설정
+	String arrow = request.getParameter("genre_arrow") == null? "desc": request.getParameter("genre_arrow");
+	int genre_no = request.getParameter("genre_no")==null? 0: Integer.parseInt(request.getParameter("genre_no"));
+	
+	System.out.println(arrow);
+	System.out.println(genre_no);
+	
+	boolean isList = genre_no == 0;
+	boolean isGameRead = arrow.equals("game_read");
+	
+	GameListDao gldao = new GameListDao();
+	List<GameListDto> gameList = new ArrayList<>();
+	
+	if(isList) {
+		gameList = gldao.getList(arrow);
+	} else {
+		gameList = gldao.getGenreList(genre_no, arrow);
+	}
+	
+	System.out.println(request.getQueryString());
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
 <link rel="stylesheet"
@@ -40,7 +67,7 @@
 
 .font-kor {
 	font-family: DungGeunMo;
-	color:firebrick;
+	color: firebrick;
 	font-size: 30px;
 }
 
@@ -75,7 +102,8 @@
 	margin-top: 20px;
 }
 
-.swiper-container .swiper-slide, .swiper-container .swiper-slide .game_img{
+.swiper-container .swiper-slide, .swiper-container .swiper-slide .game_img
+	{
 	width: 180;
 	height: 130;
 }
@@ -94,7 +122,8 @@
 	max-height: 20px;
 	font-weight: 700;
 }
-.img-wrap, .gameName{
+
+.img-wrap, .gameName {
 	text-decoration: none;
 	color: black;
 	font-family: DungGeunMo;
@@ -102,16 +131,91 @@
 	font-size: 15px;
 	margin-bottom: 0;
 }
+
 .genre {
 	margin: 0;
 	color: black;
 	font-weight: 100px;
 }
+
 .gameName {
 	margin-top: 0;
 }
+
 .wrap {
 	background-color: lightgray;
+}
+
+.arrow-wrap {
+	float: right;
+	margin: 10px;
+}
+
+.arrow-wrap select {
+	width: 80px;
+	font-weight: 800;
+	color: #20639B;
+	border: none;
+}
+
+.menu-sec, .menu-sec ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	background-color: #85BCE1;
+	font-weight: 900;
+	width: 100%;
+	display: inline-block;
+}
+
+.menu-sec>li {
+	/* 폭 설정이 가능해야하므로 inline-block */
+	display: inline-block;
+}
+
+/* 모든 li는 relative 설정 */
+.menu-sec li {
+	position: relative;
+	padding: 1rem;
+	font-size: 15px;
+	width: 100px;
+	text-align: center;
+	cursor: pointer;
+}
+
+/*
+    2단계 메뉴 설정
+
+    1) 2단계 메뉴부터는 position을 absolute로 설정
+    2) 처음에는 2단계 이후의 메뉴가 나오지 않도록 처리
+*/
+.menu-sec>li ul {
+	/* .menu li > ul */
+	position: absolute;
+	left: 0;
+	/* 기준과 왼쪽을 맞춰라 */
+	top: 100%;
+	/* 기준의 바닥에 시작점을 맞춰라 */
+	display: none;
+}
+
+/* 메뉴에 커서가 올라가면 하위 메뉴가 나오도록 처리 */
+.menu-sec li:hover>ul {
+	display: block;
+}
+
+.menu-sec li:hover {
+	background-color: skyblue;
+}
+
+.menu-sec a {
+	/* .menu > li > a */
+	color: white;
+	text-decoration: none;
+}
+
+.menu-sec li:hover a {
+	color: floralwhite;
 }
 </style>
 
@@ -163,6 +267,9 @@
 
 		});
 	};
+	function sendForm(){
+		document.querySelector("form").submit();
+	}
 	
 </script>
 <article>
@@ -188,8 +295,11 @@
 					for (GamePopularDto gpdto : favoriteGame) {
 				%>
 				<div class="game-wrap">
-					<a class="img-wrap" href="content.jsp?game_no=<%=gpdto.getGame_no()%>"> <img class="game_img"
-						src="imgDownload.do?game_img_no=<%=gpdto.getGame_img_no()%>"  width="180" height="130">
+					<a class="img-wrap"
+						href="content.jsp?game_no=<%=gpdto.getGame_no()%>"> <img
+						class="game_img"
+						src="imgDownload.do?game_img_no=<%=gpdto.getGame_img_no()%>"
+						width="180" height="130">
 						<p class="game_name"><%=gpdto.getGame_name()%></p>
 					</a>
 				</div>
@@ -213,33 +323,38 @@
 	</div>
 </article>
 <article>
+	<form action="genrelist.jsp" method="get">
+	<%if(request.getParameter("genre_no") != null) { %>
+	<input type="hidden" name="genre_no" value="<%=request.getQueryString().substring(9, 10) %>">
+	<%} %>
 	<div class="row-empty"></div>
-	<div>
-		<h3 class="font-game">B E S T　TO P　1 0 0</h3>
-	</div>
-	<div class="row wrap">
-		<div class="row-empty"></div>
-		<%
-			for (GamePopularDto gpdto : list) {
-		%>
-		<div class="row game-wrap">
-			<a class="img-wrap" href="content.jsp?game_no=<%=gpdto.getGame_no()%>"> <img
-				width="160" height="140"
-				src="imgDownload.do?game_img_no=<%=gpdto.getGame_img_no()%>">
-				<h5 class="gameName">
-					<span class="gameNo"><%=gameCount += 1%>.</span><%=gpdto.getGame_name()%>
-				</h5>
-			</a>
-			<h6 class="genre">
-				장르 :
-				<%=gpdto.getGenre_type()%></h6>
+	<div class="row-empty"></div>
+	<div class="row">
+		<ul class="menu-sec center">
+			<li><a href="genrelist.jsp">전체</a></li>
+		<%for(GenreDto gdto : genre) {%>
+			<li><a href="genrelist.jsp?genre_no=<%=gdto.getGenre_no()%>"><%=gdto.getGenre_type()%></a></li>
+		<%}%>
+		</ul>
+	<div class="row-empty"></div>
+		<div class="arrow-wrap row">
+			<select name="genre_arrow" onchange="sendForm();">
+				<option value="desc">최신순</option>
+				<option value="game_read">조회순</option>
+				<option value="asc">업로드순</option>
+			</select>
 		</div>
-		<%
-			}
-		%>
-		<div class="row-empty"></div>
+		<div class="row">
+		<%for(GameListDto gldto : gameList) {%>
+			<div class="row game-wrap">
+				<a class="img-wrap" href="content.jsp?game_no=<%=gldto.getGame_no()%>">
+					<img width="160" height="140" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
+					<h5 class="gameName"><%=gldto.getGame_name()%></h5>
+				</a>
+			</div>
+		<%}%>
+		</div>
 	</div>
-	<div class="row-empty"></div>
+	</form>
 </article>
-</form>
 <jsp:include page="/template/footer.jsp"></jsp:include>
