@@ -47,27 +47,24 @@
 				</tr>
 				<tr>
 					<!-- 작성자 및 권한 -->
-					<th>
+					<td>
 						작성자
-					<td>	<%if(user != null) {%>
+					</td>	
+					<td colspan="3">	<%if(user != null) {%>
 						<%=user.getMember_nick()%>
 						 <font color="gray"><%=mdto.getMember_auth()%></font>
-						
 						<%} else { %>
 						<font color="gray">탈퇴한 사용자</font>
 						<%}%> 
-						
-						</td>
-					</th>
-				</tr>
+					</td>
+					</tr>
 				<tr>
-					<th>
-						작성 일<td><%=qdto.getQna_date()%></td>
-					</th>
+					<td>작성 일</td>
+					<td><%=qdto.getQna_date()%></td>
 				</tr>
 				
 				<tr>
-					<th>이메일</th>
+					<td>이메일</td>
 					<td>
 						 <%=qdto.getQna_email()%>
 					</td>
@@ -79,6 +76,7 @@
 			<td><%=qdto.getQna_title() %></td>
 			</tr>
 				<tr>
+					<td>문의내용</td>
 					<!-- 게시물 내용 -->
 					<th>내용</th>
 					<td><%=qdto.getQna_content()%></td>
