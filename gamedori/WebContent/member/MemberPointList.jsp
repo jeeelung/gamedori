@@ -83,10 +83,10 @@
 	List<PointDto> list;
 	
 	if(isSearch){
-		list = pdao.search(type, keyword,auth,start, finish); 
+		list = phdao.search(type, keyword,auth,member_no,start, finish); 
 	}
 	else{
-		list = pdao.getList(auth,start ,finish); 
+		list = phdao.getList(member_no,auth,start ,finish); 
 	}
 
 	
@@ -96,12 +96,15 @@
  
  
 <jsp:include page="/template/header.jsp"></jsp:include>
+<style>
 
+
+</style>
 <div align="center">
 	
 	
 	<!-- 제목 -->
-	<h2>POINT</h2>
+	<h2>포인트 유형</h2>
 	
 	<!-- 테이블 -->
 	<table border="1" width="90%">
@@ -131,8 +134,40 @@
 
 		<form action="adminpoint.do" method ="get">
 		<table border="1">
+		<br><br>
+		<h3>신규 등록/삭제</h3>
+		<tr>
+		<th colspan="2">등록</th>
+		</tr>
+		<tr>
+		<td> 유형</td>
+		<td>
+			<input type="text" name ="point_type">
+		</td>
+		</tr>
+		<tr>
+		<th>점수</th>
+		<td>
+			<input type="text" name ="point_score">
+		</td>
+		</tr>
+		<tr>
+		<th colspan="2" rowspan="2">
+			<input type="submit" value="등록">
+		</form>
+			</table>	
 	
-		<h3>유형 등록</h3>
+		<form action="adminpoint.do" method ="get">
+		<table border="1">
+		<tr>
+		<th colspan="2">삭제</th>
+		</tr>
+		<tr>
+		<td> 번호</td>
+		<td>
+			<input type="text" name ="point_no">
+		</td>
+		</tr>
 		<tr>
 		<th>유형</th>
 		<td>
@@ -140,26 +175,8 @@
 		</td>
 		</tr>
 		<tr>
-		<th>포인트 점수</th>
-		<td>
-			<input type="text" name ="point_score">
-		</td>
-		</tr>
-		<tr>
-		<th colspan="2">
-			<input type="submit" value="등록">
-		<tr>
-		</form>
-		
-		
-		<form action="pointdelete.do"  method ="get">
-		<th>포인트 번호</th>
-		<td>
-			<input type="text" name ="point_no">
+		<th colspan="2" rowspan="2">
 			<input type="submit" value="삭제">
-		</td>
-		</tr>
-		</tr>
 			</table>	
 		</form>
 	</div>

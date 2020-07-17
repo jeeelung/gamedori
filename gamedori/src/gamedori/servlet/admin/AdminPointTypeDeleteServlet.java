@@ -15,9 +15,11 @@ public class AdminPointTypeDeleteServlet extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			int point_no = Integer.parseInt(req.getParameter("point_no"));
+			String point_type = req.getParameter("point_type");
 			
 			PointDao pdao=new PointDao();
-			pdao.delete(point_no);
+			pdao.delete(point_no,point_type);
+			
 			
 			resp.sendRedirect("MemberPointList.jsp");
 		}

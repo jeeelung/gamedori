@@ -61,12 +61,13 @@ public class PointDao {
 		}
 
 		// 삭제
-		public void delete(int point_no) throws Exception {
+		public void delete(int point_no,String point_type) throws Exception {
 			Connection con = getConnection();
 
-			String sql = "DELETE point WHERE  point_no= ?";
+			String sql = "DELETE point WHERE  point_no= ?, point_type=? ";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, point_no);
+			ps.setString(2, point_type);
 			ps.execute();
 
 			con.close();

@@ -62,8 +62,12 @@
 				<tr>
 					<th>내용</th>
 					<td width ="50" height="100">
-						<span style="text-align:right"><%=qdto.getQna_content()%></span>	
-					</td>  
+					<%if(qdto.getQna_content()==null){ %>
+								정성을 다해 답변하시오.
+						<%}else{%>
+						<%=qdto.getQna_content()%>
+					<%} %>			
+						</td>  
 				</tr>
 				<tr>
 					<th>이메일</th>

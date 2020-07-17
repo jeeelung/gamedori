@@ -143,7 +143,7 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 			}
 			
 			//목록 메소드
-			public List<PointHistoryDto> getList(int member_no, String auth, int start , int finish) throws Exception{
+			public List<PointDto> getList(int member_no, String auth, int start , int finish) throws Exception{
 				Connection con = getConnection();
 				String sql = "SELECT * FROM "
 						+ "(SELECT ROWNUM rn, T.* FROM "
@@ -158,30 +158,29 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 				ps.setInt(4, finish);
 				
 				ResultSet rs = ps.executeQuery();
-				List<PointHistoryDto> list = new ArrayList<>();
+				List<PointDto> list = new ArrayList<>();
 				while(rs.next()) {
-					PointHistoryDto phdto = new PointHistoryDto(rs);
+					PointDto pdto = new PointDto(rs);
 					
-					list.add(phdto);
+					list.add(pdto);
 				}
-				
 				con.close();
 				return list;
 			}
 			
-			public List<PointDto> search(String type, String auth, String keyword, int member_no, int start, int finish) throws Exception{
+			public List<PointDto> search(String type, String keyword,String auth, int member_no, int start, int finish) throws Exception{
 				Connection con = getConnection();
 				
 				String sql = "SELECT * FROM "
 						+ "(SELECT ROWNUM rn, T.* FROM "
 						+ "(SELECT * FROM point_view WHERE "
-						+ "(member_no=? OR '관리자' = ?)ORDER BY member_no asc) T ) WHERE rn BETWEEN ? and ?";
+						+ "(instr(#1, ?) > 0 and ('관리자' = ?  or member_no=? ) )T) WHERE rn BETWEEN ? and ?";
 						
 				sql = sql.replace("#1", type);
 				PreparedStatement ps = con.prepareStatement(sql);			
 				ps.setString(1, keyword);
-				ps.setInt(2, member_no);
-				ps.setString(3,auth);
+				ps.setString(2,auth);
+				ps.setInt(3, member_no);
 				ps.setInt(4, start);
 				ps.setInt(5, finish);
 				
