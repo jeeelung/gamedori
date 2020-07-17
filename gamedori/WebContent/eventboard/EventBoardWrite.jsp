@@ -10,7 +10,7 @@
 .div {font-family: arcadeclassic;}
 .font-game {
 	font-family: arcadeclassic;
-	font-size: 30px;
+	font-size: 20px;
 	color: #85BCE1;
 }
 .wrap {
@@ -108,7 +108,7 @@ background-color: transparent;
 
 <div align="center" class="font-game">
 
-	<h2 >To Write The Event Notice</h2>
+	<h1 style= "font-size:60;">To Write The Event Notice</h1>
 
 </div>
 <div align="center">
