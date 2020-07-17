@@ -129,7 +129,7 @@ MemberDto mdto = edao.getWriter(edto.getMember_no());
 					
 				<%if(user !=null){
 					boolean isMine = user.getMember_id().equals(mdto.getMember_id());
-					if(isMine){
+					if(user != null){
 				%>
 					<a href = "event.do?event_no=<%=event_no%>">
 					<input type = "button" value= "이벤트 참여">
