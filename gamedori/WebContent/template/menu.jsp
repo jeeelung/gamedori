@@ -23,10 +23,12 @@
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">
-		<a href="<%=rootPath%>/qna/qna_list.jsp">자주 묻는 질문</a>
+		<a href="<%=rootPath%>/qna/qna_list.jsp">1:1 게시판</a>
 	</h5>
 	<h5>｜</h5>
-	<h5 class="menu-font"><a href="<%=rootPath%>/faq/list.jsp">자주 묻는 질문</a></h5>
+	<h5 class="menu-font">
+		<a href="<%=rootPath%>/faq/list.jsp">자주 묻는 질문</a>
+	</h5>
 </div>
 <!--  	로그인 상태일 경우 -->
 <%
