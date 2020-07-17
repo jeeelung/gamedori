@@ -1,3 +1,4 @@
+<%@page import="gamedori.beans.dao.MemberDao"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@page import="gamedori.beans.dao.FAQDao"%>
 <%@page import="gamedori.beans.dto.FAQDto"%>
@@ -69,6 +70,17 @@
 		list = fdao.search(type, keyword, start, finish);
 	} else {
 		list = fdao.getList(start, finish);
+	}
+	MemberDto user = (MemberDto)session.getAttribute("userinfo");
+	MemberDao mdao = new MemberDao();
+	boolean isAdmin;
+	boolean isMine;
+	if(user==null){
+		isAdmin = false;
+		isMine = false;
+	}else {
+	isAdmin = user.getMember_auth().equals("관리자");
+	isMine = user.getMember_id().equals(user.getMember_id());		
 	}
 %>
 
@@ -147,8 +159,10 @@
 	<div class="row today-wrap"><div class="row-empty"></div>
 	</article>
 	<div class="right">
+	<%if(isAdmin && isMine){ %>
 	<a href="write.jsp"><input class="form-btn form-inline" type="button" value="글쓰기">
 	</a>
+	<%} %>
 	</div>
 	<!-- 테이블 -->
 	<table class="table table-border table-hover">
@@ -190,9 +204,11 @@
 </tfoot>
 </table>
 <div class="right">
+<%if(isAdmin && isMine){ %>
 <a href="write.jsp">
 <input class="form-btn form-inline" type="button" value="글쓰기">
 </a>
+<%} %>
 </div>
 	<!-- 네비게이터 -->
 	<div class="row center pagination">

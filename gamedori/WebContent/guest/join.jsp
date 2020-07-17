@@ -56,14 +56,61 @@
 </style>
 <script>
 function checked(){
-	var idtext = document.getElementById("ide");
+	 var regexName = /^[가-힣]{2,8}$/;
+	 var regexId = /^[a-zA-Z0-9]{5,20}$/;
+	 var regexPw = /^[a-zA-Z0-9]]{8,16}$/;
+	 var regexNick =/^[가-힣]{,8}$/;
+	 var regexPhone =/^[0-9]{,11}$/;
+	var id = document.getElementById("id");
     //아이디의 id값
-    var patext = document.getElementById("pass");
+    var pw = document.getElementById("pw");
     //비밀번호의 id값
-    var cpatext = document.getElementById("cpass");
-   //비밀번호확인의 id값
-    var nametext = document.getElementById("name");
-    var phonetext = 
+    var checkpw = document.getElementById("checkpw");
+    var nick = document.getElementById("nick");
+    var name = document.getElementById("name");
+    var phone = document.getElementById("phone");
+    if(!regexName.test(name.value)) {
+        alert("이름은 한글 2글자 이상 8글자 이하로 입력해 주세요");
+        name.value="";
+        name.focus();
+    	return false;
+    }
+    else if(!regexId.test(id.value)) {
+        alert("5~20자의 영문 대소문자와 숫자만 입력하세요");
+        id.value="";
+        id.focus();
+    	return false;
+    }
+
+    else if(!regexPw.test(pw.value)) {
+        alert("패스워드는 8~16자의 영문 대소문자와 숫자로만 입력");
+        pw.value="";
+        pw.focus();
+    	return false;
+    }
+
+    else if(!(pw.value.slice(0,pw.value.length)===checkpw.value.slice(0, checkpw.value.length))) {
+        alert("비밀번호가 다릅니다. 다시 확인해 주세요.");
+        join.checkpw.value = "";
+        join.checkpw.focus();
+        return false;
+    }
+    else if(!regexNick.test(nick.value)){
+    	alert("닉네임은 한글 8자 이내로 입력해 주세요");
+    	nick.value="";
+    	nick.focus="";
+    	return false;
+    }
+    else if(!regexPhone.test(phone.value))){
+    	alert("숫자만 입력해 주세요");
+    	phone.value="";
+    	phone.focus="";
+    	return false;
+    }
+    else{
+    alert("회원가입이 완료되었습니다.");
+    return true;
+    }
 }
 </script>
 <article>
@@ -72,19 +119,19 @@ function checked(){
 </div>
 	<div class="row today-wrap"><div class="row-empty"></div></div>
 </article>
-	<form action="join.do" method="post">
+	<form action="join.do" method="post" name="join" onsubmit="return checked();">
 		<table class="table table-border left">
 			<tbody>
 			<tr>
 				<th>이름</th>
 					<td>
-						<input type="text" name="member_name" required placeholder="5~20자 영문 또는 숫자" maxlength="20">
+						<input type="text" name="member_name" id="name" required placeholder="2~8자의 한글을 입력해주세요" maxlength="20">
 					</td>
 			</tr>
 				<tr>
 					<th>아이디</th>
 					<td>
-						<input type="text" name="member_id" required placeholder="5~20자 영문 또는 숫자 ※아이디 중복 불가" maxlength="20">
+						<input type="text" name="member_id" id="id" required placeholder="5~20자 영문 또는 숫자 ※아이디 중복 불가" maxlength="20">
 						<%if(request.getParameter("errorID")!=null) {%>
 							<span><font color="#FF0000">이미 아이디가 사용 중 입니다.</font></span>
 						<%} %>
@@ -93,13 +140,19 @@ function checked(){
 				<tr>
 					<th>비밀번호</th>
 					<td>
-						<input type="password" name="member_pw" required placeholder="8~16자 영문 또는 숫자" maxlength="16">
+						<input type="password" name="member_pw" id="pw" required placeholder="8~16자 영문 또는 숫자" maxlength="16">
 					</td>
+				</tr>
+				<tr>
+					<th>비밀번호 확인</th>
+					<th>
+						<input type="password" id ="checkpw" maxlengh="16">
+					</th>
 				</tr>
 				<tr>
 					<th>닉네임</th>
 					<td>
-						<input type="text" name="member_nick" required placeholder="한글 8자 이내 ※닉네임 중복 불가" maxlength="24">
+						<input type="text" name="member_nick" id="nick" required placeholder="한글 8자 이내 ※닉네임 중복 불가" maxlength="24">
 						<%if(request.getParameter("errorNick")!=null) {%>
 							<span><font color="#FF0000">이미 닉네임이 사용 중 입니다.</span></h6>
 						<%}%>
@@ -108,7 +161,7 @@ function checked(){
 				<tr>
 					<th>전화번호</th>
 					<td>
-						<input type="text" name="member_phone" required placeholder="- 제외" maxlength="11">
+						<input type="text" name="member_phone" id="phone" required placeholder="- 제외" maxlength="11">
 					</td>
 				</tr>
 				<tr>

@@ -17,8 +17,15 @@
 	FAQDto fdto = fdao.get(faq_no);
 	MemberDao mdao = new MemberDao();
 	MemberDto mdto = mdao.get(fdto.getMember_no());
-	boolean isAdmin = user.getMember_auth().equals("관리자");
-	boolean isMine = user.getMember_id().equals(mdto.getMember_id());
+	boolean isAdmin;
+	boolean isMine;
+	if(user==null){
+		isAdmin = false;
+		isMine = false;
+	}else {
+	isAdmin = user.getMember_auth().equals("관리자");
+	isMine = user.getMember_id().equals(mdto.getMember_id());		
+	}
 	FAQFileDao ffdao = new FAQFileDao();
 	List<FilesDto> fileList = ffdao.getList(faq_no);
 %>
@@ -151,8 +158,9 @@
 		<!-- 각종 버튼들 구현 -->
 		<tfoot>
 			<tr align="center">
-				<td colspan="4"><a href="write.jsp"> <input class="form-btn form-inline"  type="button" value="글쓰기"></a>
-				  <%if(isAdmin || isMine){ %>
+				<td colspan="4">
+				  <%if(isAdmin && isMine){ %>
+				<a href="write.jsp"> <input class="form-btn form-inline"  type="button" value="글쓰기"></a>
 					  <a href="edit.jsp?faq_no=<%=faq_no %>"><input class="form-btn form-inline" type="button" value="수정"></a> 
 					  <a href="<%=request.getContextPath()%>/member/check.jsp?go=<%=request.getContextPath()%>/faq/delete.do?faq_no=<%=faq_no%>">
 					  <input class="form-btn form-inline" type="button" value="삭제"></a>
