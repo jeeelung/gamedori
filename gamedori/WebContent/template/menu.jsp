@@ -23,15 +23,7 @@
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">
-<<<<<<< HEAD
-		<a href="<%=rootPath%>/faq/list.jsp">자주 묻는 질문</a>
-	</h5>
-	<h5>｜</h5>
-	<h5 class="menu-font">
 		<a href="<%=rootPath%>/qna/qna_list.jsp">1:1 문의</a>
-=======
-		<a href="<%=rootPath%>/qna/qna_list.jsp">1:1 게시판</a>
->>>>>>> refs/remotes/origin/master
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">

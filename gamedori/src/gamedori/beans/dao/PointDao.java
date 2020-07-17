@@ -198,4 +198,29 @@ public class PointDao {
 					return result;
 					
 				}
+				
+				public int getSequence() throws Exception {
+					Connection con = getConnection();
+					String sql = "SELECT point_seq.nextval FROM dual";
+					PreparedStatement ps = con.prepareStatement(sql);
+					ResultSet rs = ps.executeQuery();
+					rs.next();
+					int seq = rs.getInt(1);
+					
+					con.close();
+					
+					return seq;
+				}
+				
+				public void add_point(int member_no)throws Exception{
+		               Connection con = getConnection();
+		               String sql = "update member set MEMBER_POINT = MEMBER_POINT + 500 where member_no = ?";
+		               PreparedStatement ps = con.prepareStatement(sql);
+		               ps.setInt(1, member_no);
+		               ps.execute();
+		               
+		               con.close();
+		            }
+				
+				
 }

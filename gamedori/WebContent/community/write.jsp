@@ -55,7 +55,7 @@ td, th{
 				<tr>
 					<th>제목</th>
 					<td>
-						<input  name="event_content" required
+						<input  name="commu_title" required
 						rows="15" cols="72" required>
 					</td>
 				</tr>

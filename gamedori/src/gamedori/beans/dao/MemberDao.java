@@ -254,7 +254,7 @@ public class MemberDao {
 	public List<MemberDto> list(int start, int finish) throws Exception{
 		Connection con = getConnection();
 		
-		String sql= "SELECT *FROM MEMBER WHERE rownum BETWEEN ? AND ?";
+		String sql= "SELECT * FROM (SELECT ROWNUM rn, A.* FROM MEMBER A) B WHERE rn BETWEEN ? AND ?";
 		PreparedStatement ps= con.prepareStatement(sql);
 		ps.setInt(1, start);
 		ps.setInt(2, finish);
@@ -272,7 +272,8 @@ public class MemberDao {
 			public List<MemberDto> search(String type, String keyword,int start,int finish) throws Exception{
 				Connection con = getConnection();
 				
-				String sql = "SELECT * FROM member where (instr(#1,?)>0) AND (ROWnum BETWEEN ? and ?)";
+				String sql = "SELECT * FROM(SELECT ROWNUM rn, T.* FROM(SELECT * FROM member WHERE (instr(#1, ?) > 0 ) )T ) WHERE rn BETWEEN ? and ?";
+									
 				sql = sql.replace("#1", type);
 				
 				PreparedStatement ps = con.prepareStatement(sql);
