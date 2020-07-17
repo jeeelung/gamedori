@@ -1,3 +1,5 @@
+<%@page import="gamedori.beans.dto.GenreDto"%>
+<%@page import="gamedori.beans.dao.GenreDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="gamedori.beans.dto.GamePopularDto"%>
 <%@page import="gamedori.beans.dao.GamePopularDao"%>
@@ -16,9 +18,40 @@
 
 	GamePopularDao gpdao = new GamePopularDao();
 	int top = 100;
-
-	List<GamePopularDto> list = gpdao.getList(top);
-	int gameCount = 0;
+	
+	// 페이지 번호 계산 코드
+	int pageSize = 20;
+	String pageStr = request.getParameter("page")==null? "1": request.getParameter("page");
+	int pageNo;
+	try{
+		pageNo = Integer.parseInt(pageStr);
+		
+		if(pageNo <= 0 ){ // 음수시 강제 예외
+			throw new Exception();
+		}
+	} catch(Exception e){ // 문제가 생기면 무조건 1페이지
+		pageNo = 1;
+	}
+	
+	// 시작 글 순서와 종료 글 순서 계산
+	int finish = pageNo * pageSize;
+	int start = finish - (pageSize - 1);
+	
+	// 페이지 네비게이터 계산
+	int blockSize = 10;
+	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
+	int finishBlock = startBlock + 9;
+	
+	// 페이지 개수 
+	int count = top;
+	int pageCount = (count + pageSize -1) / pageSize;
+	
+	if(finishBlock > pageCount) {
+		finishBlock = pageCount;	
+	}
+	
+	// 인기게임 리스트
+	List<GamePopularDto> list = gpdao.getList(top, start, finish);
 
 	// 회원 관심분야 추출
 	MemberGenreTypeDao mgtdao = new MemberGenreTypeDao();
@@ -35,7 +68,7 @@
 	font-family: arcadeclassic;
 	font-size: 40px;
 	color: #20639B;
-	margin: 10;
+	margin-bottom: 0;
 }
 
 .font-kor {
@@ -107,11 +140,33 @@
 	color: black;
 	font-weight: 100px;
 }
-.gameName {
+.gameNo {
+	font-family: arcadeclassic;
+	font-size: 25px;
+	color:firebrick;
+	margin: 0;
+}
+.gameName, .game_name {
 	margin-top: 0;
 }
 .wrap {
-	background-color: lightgray;
+	background-color: #E8E9EC;
+	border-top: 3px solid #20639B;
+	border-bottom: 3px solid #20639B;
+}
+.pagination a {
+    color:gray;
+    text-decoration: none;
+    display: inline-block;
+    padding:0.5rem;
+    min-width: 2.5rem;
+    text-align: center;
+    border:1px solid transparent;
+}
+.pagination a:hover,/*마우스 올라감*/
+.pagination .on {/*활성화 */
+    border:1px solid gray;
+    color:red;
 }
 </style>
 
@@ -167,7 +222,7 @@
 </script>
 <article>
 	<div class="row">
-		<h3 class="font-game">G e n r e　o f　i n te r e s t</h3>
+		<h3 class="font-game">B E S T　G A M E　B Y　G E N R E</h3>
 	</div>
 	<!-- 이미지 슬라이더 영역 -->
 	<div class="swiper-container">
@@ -175,14 +230,17 @@
 		<div class="swiper-wrapper">
 			<!-- 배치되는 이미지 또는 화면 -->
 			<%
-				for (MemberGenreTypeDto mgtdto : favorite) {
+			GenreDao gdao = new GenreDao();
+			List<GenreDto> genreList = gdao.getList();
+			for(GenreDto gdto : genreList) {
+				int genre_no = gdto.getGenre_no();
 			%>
 			<div class="swiper-slide">
 				<div class="genre_type">
-					<h1 class="font-kor"><%=mgtdto.getGenre_type()%></h1>
+					<h1 class="font-kor"><%=gdto.getGenre_type()%></h1>
 				</div>
 				<%
-					List<GamePopularDto> favoriteGame = gpdao.getFavorite(mgtdto.getGenre_no(), topN);
+					List<GamePopularDto> favoriteGame = gpdao.getFavorite(genre_no, topN);
 				%>
 				<%
 					for (GamePopularDto gpdto : favoriteGame) {
@@ -190,6 +248,7 @@
 				<div class="game-wrap">
 					<a class="img-wrap" href="content.jsp?game_no=<%=gpdto.getGame_no()%>"> <img class="game_img"
 						src="imgDownload.do?game_img_no=<%=gpdto.getGame_img_no()%>"  width="180" height="130">
+						<span class="gameNo">TOP <%=gpdto.getRow_num()%>.</span>
 						<p class="game_name"><%=gpdto.getGame_name()%></p>
 					</a>
 				</div>
@@ -224,10 +283,10 @@
 		%>
 		<div class="row game-wrap">
 			<a class="img-wrap" href="content.jsp?game_no=<%=gpdto.getGame_no()%>"> <img
-				width="160" height="140"
+				width="230" height="170"
 				src="imgDownload.do?game_img_no=<%=gpdto.getGame_img_no()%>">
 				<h5 class="gameName">
-					<span class="gameNo"><%=gameCount += 1%>.</span><%=gpdto.getGame_name()%>
+					<span class="gameNo"><%=gpdto.getRow_num()%>.</span> <%=gpdto.getGame_name()%>
 				</h5>
 			</a>
 			<h6 class="genre">
@@ -237,9 +296,23 @@
 		<%
 			}
 		%>
-		<div class="row-empty"></div>
 	</div>
+		<div class="row-empty"></div>
+		<div class="row-empty"></div>
+<div class="pagination">
+<%if(startBlock > 1) {%>
+	<a href="popularlist.jsp?page=<%=startBlock-1%>">[이전]</a>
+<%}%>
+
+	<%for(int i=startBlock; i<=finishBlock; i++) { %>
+		<a href="popularlist.jsp?page=<%=i%>"><%=i%></a>
+	<%}%>
+	
+<%if(pageCount > finishBlock) {%>	
+	<a href="popularlist.jsp?page=<%=finishBlock+1%>">[다음]</a>
+<%}%>
+</div>
+	<div class="row-empty"></div>
 	<div class="row-empty"></div>
 </article>
-</form>
 <jsp:include page="/template/footer.jsp"></jsp:include>

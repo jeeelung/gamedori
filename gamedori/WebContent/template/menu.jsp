@@ -52,7 +52,7 @@
 <ul class="menu">
 	<li><a href="<%=rootPath%>/game/latestlist.jsp">최신게임</a></li>
 	<li><a href="<%=rootPath%>/game/popularlist.jsp">인기게임</a></li>
-	<li><a href="#">장르별</a></li>
+	<li><a href="<%=rootPath%>/game/genrelist.jsp">장르별</a></li>
 	<li><a href="#">브랜드별</a>
 		<ul class="menu-sec">
 			<li><a href="#">게임엔</a></li>

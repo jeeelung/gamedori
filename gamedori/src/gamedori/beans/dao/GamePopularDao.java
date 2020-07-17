@@ -32,19 +32,24 @@ public class GamePopularDao {
 	}
 	
 	// 인기게임 추출 메소드	
-	public List<GamePopularDto> getList(int topN) throws Exception {
+	public List<GamePopularDto> getList(int topN, int start, int finish) throws Exception {
 		Connection con = getConnection();
 		String sql = "SELECT * FROM ("
+				+ "SELECT * FROM ("
 				+ "SELECT rownum rn, a.* FROM ("
 				+ "SELECT * FROM game_popular "
 				+ ")a"
-				+ ") WHERE rn BETWEEN 1 AND ?";
+				+ ") WHERE rn BETWEEN 1 AND ?"
+				+ ") WHERE rn BETWEEN ? AND ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, topN);
+		ps.setInt(2, start);
+		ps.setInt(3, finish);
 		ResultSet rs = ps.executeQuery();
 		List<GamePopularDto> list = new ArrayList<GamePopularDto>();
 		while(rs.next()) {
 			GamePopularDto gpdto = new GamePopularDto(rs);
+			gpdto.setRow_num(rs.getInt("rn"));
 			list.add(gpdto);
 		}
 		con.close();
@@ -66,6 +71,7 @@ public class GamePopularDao {
 		List<GamePopularDto> list = new ArrayList<GamePopularDto>();
 		while(rs.next()) {
 			GamePopularDto gpdto = new GamePopularDto(rs);
+			gpdto.setRow_num(rs.getInt("rn"));
 			list.add(gpdto);
 		}
 		con.close();

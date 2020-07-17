@@ -13,14 +13,57 @@
 	pageEncoding="UTF-8"%>
 
 <%
+	String arrow = request.getParameter("genre_arrow") == null? "desc": request.getParameter("genre_arrow");
+	int genre_no = request.getParameter("genre_no")==null? 0: Integer.parseInt(request.getParameter("genre_no"));
+	
+	boolean isList = genre_no == 0;
+	boolean isGameRead = arrow.equals("game_read");
+	
 	MemberDto mdto = (MemberDto) session.getAttribute("userinfo");
 	int member_no = mdto.getMember_no();
 
 	GamePopularDao gpdao = new GamePopularDao();
 	int top = 100;
-
-	List<GamePopularDto> list = gpdao.getList(top);
-	int gameCount = 0;
+	
+	// 페이지 번호 계산 코드
+	int pageSize = 20;
+	String pageStr = request.getParameter("page")==null? "1": request.getParameter("page");
+	int pageNo;
+	try{
+		pageNo = Integer.parseInt(pageStr);
+		
+		if(pageNo <= 0 ){ // 음수시 강제 예외
+			throw new Exception();
+		}
+	} catch(Exception e){ // 문제가 생기면 무조건 1페이지
+		pageNo = 1;
+	}
+	
+	// 시작 글 순서와 종료 글 순서 계산
+	int finish = pageNo * pageSize;
+	int start = finish - (pageSize - 1);
+	
+	// 페이지 네비게이터 계산
+	int blockSize = 10;
+	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
+	int finishBlock = startBlock + 9;
+	
+	// 페이지 개수 
+	GameListDao gldao = new GameListDao();
+	int count;
+	if(isList) {
+		count = gldao.getAllCount(arrow);
+	} else {
+		count = gldao.getGenreCount(genre_no, arrow);
+	}
+	
+	int pageCount = (count + pageSize -1) / pageSize;
+	
+	if(finishBlock > pageCount) {
+		finishBlock = pageCount;	
+	}
+	
+	List<GamePopularDto> list = gpdao.getList(top, start, finish);
 
 	// 회원 관심분야 추출
 	MemberGenreTypeDao mgtdao = new MemberGenreTypeDao();
@@ -34,25 +77,14 @@
 	List<GenreDto> genre = gdao.getList();
 	
 	// 정렬 방식 설정
-	String arrow = request.getParameter("genre_arrow") == null? "desc": request.getParameter("genre_arrow");
-	int genre_no = request.getParameter("genre_no")==null? 0: Integer.parseInt(request.getParameter("genre_no"));
-	
-	System.out.println(arrow);
-	System.out.println(genre_no);
-	
-	boolean isList = genre_no == 0;
-	boolean isGameRead = arrow.equals("game_read");
-	
-	GameListDao gldao = new GameListDao();
 	List<GameListDto> gameList = new ArrayList<>();
 	
 	if(isList) {
-		gameList = gldao.getList(arrow);
+		gameList = gldao.getList(arrow, start, finish);
 	} else {
-		gameList = gldao.getGenreList(genre_no, arrow);
+		gameList = gldao.getGenreList(genre_no, arrow, start, finish);
 	}
 	
-	System.out.println(request.getQueryString());
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
 <link rel="stylesheet"
@@ -62,7 +94,7 @@
 	font-family: arcadeclassic;
 	font-size: 40px;
 	color: #20639B;
-	margin: 10;
+	margin-bottom: 0;
 }
 
 .font-kor {
@@ -77,8 +109,12 @@
 
 .gameNo {
 	font-family: arcadeclassic;
-	font-size: 20px;
-	color: #20639B;
+	font-size: 25px;
+	color:firebrick;
+	margin: 0;
+}
+.gameName, .game_name {
+	margin-top: 0;
 }
 
 /* .wrap {
@@ -129,7 +165,6 @@
 	font-family: DungGeunMo;
 	font-weight: 200;
 	font-size: 15px;
-	margin-bottom: 0;
 }
 
 .genre {
@@ -140,15 +175,16 @@
 
 .gameName {
 	margin-top: 0;
+	padding: 1rem;
 }
 
 .wrap {
-	background-color: lightgray;
+	background-color: #E8E9EC;
 }
 
 .arrow-wrap {
-	float: right;
-	margin: 10px;
+	display: block;
+	text-align: right;
 }
 
 .arrow-wrap select {
@@ -217,6 +253,21 @@
 .menu-sec li:hover a {
 	color: floralwhite;
 }
+
+.pagination a {
+    color:gray;
+    text-decoration: none;
+    display: inline-block;
+    padding:0.5rem;
+    min-width: 2.5rem;
+    text-align: center;
+    border:1px solid transparent;
+}
+.pagination a:hover,/*마우스 올라감*/
+.pagination .on {/*활성화 */
+    border:1px solid gray;
+    color:red;
+}
 </style>
 
 <script src="<%=request.getContextPath()%>/swiper/js/swiper.min.js"></script>
@@ -227,51 +278,65 @@
 		// var mySwiper = new swiper('선택자', 옵션)
 		var mySwiper = new Swiper('.swiper-container', {
 			// Optional parameters
-
 			// swiper에 적용할 옵션들을 작성
-
 			direction : 'horizontal', // 표시방식(수직 : vartical / 수평 : horizontal)
 			loop : true, // 순환모드 여부(마지막과 처음이 이어지는 것)
-
 			// 자동재생 옵션그룹
 			autoplay : {
 				delay : 3000, // 자동재생 시간(1000 = 1초)
 			},
-
 			// 페이지 네비게이터 옵션그룹
 			pagination : {
 				el : '.swiper-pagination', // 적용대상의 선택자
 				type : 'bullets', // 네비게이터 모양(bullets, fraction, progressbar)
 			},
-
 			// 이전/다음 이동버튼 설정그룹
 			navigation : {
 				nextEl : '.swiper-button-next',
 				prevEl : '.swiper-button-prev',
 			},
-
 			// 스크롤바 옵션
 			//scrollbar: {
 			//    el: '.swiper-scrollbar',
 			//},
-
 			// 커서 모양을 손모양으로 변경
 			grabCursor : true,
-
 			// 슬라이드 전환효과
 			// effect: 'coverflow',
 			// effect: 'cube',
 			// effect: 'fade'
 			// effect: 'flip',
 			effect : 'slide', // 기본값
-
 		});
+		
+		var genre_arrow = document.querySelector("[name=genre_arrow]");
+		genre_arrow.value = "<%=request.getParameter("genre_arrow") == null? "desc": request.getParameter("genre_arrow")%>";
+		
+		// 파라미터 유지
+		var genre_no = document.querySelector("input[name=genre_no]")
+		genre_no.value = "<%=request.getParameter("genre_no")==null? 0: request.getParameter("genre_no")%>";
 	};
+	
 	function sendForm(){
 		document.querySelector("form").submit();
 	}
+	function movePage(no){
+        var form = document.querySelector("form");
+        form.querySelector("input[name=page]").value = no;
+        form.submit();
+        return false;
+    }
 	
 </script>
+<%-- <h5>
+	pageStr = <%=pageStr%>, 
+	pageNo = <%=pageNo%>,
+	start = <%=start%>
+	finish = <%=finish%>
+	pageCount = <%=pageCount%>
+	startBlock = <%=startBlock%>
+	finishBlock = <%=finishBlock%>
+</h5> --%>
 <article>
 	<div class="row">
 		<h3 class="font-game">G e n r e　o f　i n te r e s t</h3>
@@ -300,6 +365,7 @@
 						class="game_img"
 						src="imgDownload.do?game_img_no=<%=gpdto.getGame_img_no()%>"
 						width="180" height="130">
+						<span class="gameNo">TOP <%=gpdto.getRow_num()%>.</span>
 						<p class="game_name"><%=gpdto.getGame_name()%></p>
 					</a>
 				</div>
@@ -322,6 +388,7 @@
 		<div class="swiper-scrollbar"></div>
 	</div>
 </article>
+
 <article>
 	<form action="genrelist.jsp" method="get">
 	<%if(request.getParameter("genre_no") != null) { %>
@@ -329,7 +396,7 @@
 	<%} %>
 	<div class="row-empty"></div>
 	<div class="row-empty"></div>
-	<div class="row">
+	<div class="row wrap">
 		<ul class="menu-sec center">
 			<li><a href="genrelist.jsp">전체</a></li>
 		<%for(GenreDto gdto : genre) {%>
@@ -348,13 +415,31 @@
 		<%for(GameListDto gldto : gameList) {%>
 			<div class="row game-wrap">
 				<a class="img-wrap" href="content.jsp?game_no=<%=gldto.getGame_no()%>">
-					<img width="160" height="140" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
+					<img width="230" height="170" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
 					<h5 class="gameName"><%=gldto.getGame_name()%></h5>
 				</a>
 			</div>
 		<%}%>
 		</div>
 	</div>
-	</form>
+<input type="hidden" name="page" value="">
+<div class="row-empty"></div>
+<div class="row-empty"></div>
+<div class="pagination">
+<%if(startBlock > 1) {%>
+	<a href="" onclick="return movePage(<%=startBlock-1%>);">이전</a>
+<%}%>
+
+	<%for(int i=startBlock; i<=finishBlock; i++) { %>
+		<a href="" onclick="return movePage(<%=i%>);"><%=i%></a>
+	<%}%>
+	
+<%if(pageCount > finishBlock) {%>
+	<a href="" onclick="return movePage(<%=finishBlock+1%>);">다음</a>
+<%}%>
+</div>
+<div class="row-empty"></div>
+<div class="row-empty"></div>
+</form>
 </article>
 <jsp:include page="/template/footer.jsp"></jsp:include>

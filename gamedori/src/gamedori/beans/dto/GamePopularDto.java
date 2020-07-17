@@ -16,7 +16,16 @@ public class GamePopularDto {
 	private String game_img_type;
 	private long game_img_size;
 	private int game_read;
+	private int row_num;
 	
+	public int getRow_num() {
+		return row_num;
+	}
+
+	public void setRow_num(int row_num) {
+		this.row_num = row_num;
+	}
+
 	public GamePopularDto() {
 		super();
 	}

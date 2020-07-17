@@ -235,7 +235,7 @@
 	position: relative;
 	padding: 1rem;
 	font-size: 15px;
-	width: 140px;
+	width: 150px;
 	text-align: center;
 	cursor: pointer;
 }
@@ -565,7 +565,6 @@ a.deco {
 
 .game-wrap .gameName {
 	margin-bottom: 0px;
-	margin-top: 20px;
 }
 
 .game-wrap {
