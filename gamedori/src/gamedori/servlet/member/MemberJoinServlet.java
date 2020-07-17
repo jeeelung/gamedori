@@ -3,7 +3,6 @@ package gamedori.servlet.member;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,6 +41,7 @@ public class MemberJoinServlet extends HttpServlet {
 			}else {
 				mdao.join(mdto); 
 				// 출력 : 이곳에서 하는 것이 아니라 다른 JSP 파일로 강제 이동
+				if(req.getParameterValues("member_favorite")!=null) {
 				String []genre_no = req.getParameterValues("member_favorite");
 				for (int i = 0; i < genre_no.length; i++) {
 					MemberFavoriteDto mfdto = new MemberFavoriteDto();
@@ -50,6 +50,7 @@ public class MemberJoinServlet extends HttpServlet {
 					
 					MemberFavoriteDao mfdao = new MemberFavoriteDao();
 					mfdao.choice(mfdto);
+				}
 				}
 				resp.sendRedirect("join_result.jsp");				
 			}

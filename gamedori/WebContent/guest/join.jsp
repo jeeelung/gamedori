@@ -58,16 +58,14 @@
 function checked(){
 	 var regexName = /^[가-힣]{2,8}$/;
 	 var regexId = /^[a-zA-Z0-9]{5,20}$/;
-	 var regexPw = /^[a-zA-Z0-9]]{8,16}$/;
-	 var regexNick =/^[가-힣]{,8}$/;
+	 var regexPw = /^[a-zA-Z0-9]{8,16}$/;
+	 var regexNick =/^[가-힣]{1,8}$/;
 	 var regexPhone =/^[0-9]{,11}$/;
+    var name = document.getElementById("name");
 	var id = document.getElementById("id");
-    //아이디의 id값
     var pw = document.getElementById("pw");
-    //비밀번호의 id값
     var checkpw = document.getElementById("checkpw");
     var nick = document.getElementById("nick");
-    var name = document.getElementById("name");
     var phone = document.getElementById("phone");
     if(!regexName.test(name.value)) {
         alert("이름은 한글 2글자 이상 8글자 이하로 입력해 주세요");
@@ -76,7 +74,7 @@ function checked(){
     	return false;
     }
     else if(!regexId.test(id.value)) {
-        alert("5~20자의 영문 대소문자와 숫자만 입력하세요");
+        alert("아이디는 5~20자의 영문 대소문자와 숫자만 입력하세요");
         id.value="";
         id.focus();
     	return false;
@@ -101,7 +99,7 @@ function checked(){
     	nick.focus="";
     	return false;
     }
-    else if(!regexPhone.test(phone.value))){
+    else if(!regexPhone.test(phone.value)){
     	alert("숫자만 입력해 주세요");
     	phone.value="";
     	phone.focus="";
@@ -140,7 +138,7 @@ function checked(){
 				<tr>
 					<th>비밀번호</th>
 					<td>
-						<input type="password" name="member_pw" id="pw" required placeholder="8~16자 영문 또는 숫자" maxlength="16">
+						<input type="password" name="member_pw" id="pw" placeholder="8~16자 영문 또는 숫자" maxlength="16">
 					</td>
 				</tr>
 				<tr>
