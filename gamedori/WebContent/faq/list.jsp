@@ -80,15 +80,15 @@
 .font-game {
 	font-family: arcadeclassic;
 	font-size: 30px;
-	color: #20639B;
+	color: #85BCE1;
 }
 .wrap {
 	border-top: 3px solid #20639B;
-	border-bottom : 3px solid #20639B;
+	border-bottom : 3px solid #85BCE1;
 }
 .today-wrap {
-	border-top: 3px solid #20639B;
-	border-bottom : 3px solid #20639B;
+	border-top: 3px solid #85BCE1;
+	border-bottom : 3px solid #85BCE1;
 	position : relative;
 }
 .table{
@@ -96,7 +96,7 @@
 }
 .table.table-border {
 	/* 테이블에 테두리를 부여*/
-	border: 3px solid #20639B;
+	border: 3px solid #85BCE1;
 	/* 테두리 병합 */
 	border-collapse: collapse;
 }
