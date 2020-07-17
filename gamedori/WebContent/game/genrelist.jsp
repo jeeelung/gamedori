@@ -268,6 +268,22 @@
     border:1px solid gray;
     color:red;
 }
+.img-wrap:hover .gameName,
+.gameName:hover .gameName,
+.game_name:hover .gameName{
+	color: #20639B;
+}
+.img-wrap:hover .img-wrap,
+.gameName:hover .img-wrap,
+.game_name:hover .img-wrap{
+	opacity: 0.5;
+}
+
+.img-wrap:hover .game_name,
+.gameName:hover .game_name,
+.game_name:hover .game_name{
+	color : firebrick;
+}
 </style>
 
 <script src="<%=request.getContextPath()%>/swiper/js/swiper.min.js"></script>

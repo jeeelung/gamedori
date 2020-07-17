@@ -77,7 +77,9 @@
 	width:100%;
 	background-color: #E8E9EC;
 }
-
+.img-wrap:hover .gameName, .gameName:hover .gameName{
+	color: #20639B;
+}
 
 </style>
 <script>
