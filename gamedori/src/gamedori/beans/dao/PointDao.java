@@ -181,4 +181,25 @@ public class PointDao {
 					con.close();
 					return list;
 				}
+				
+				public void add_point(int member_no)throws Exception{
+					Connection con = getConnection();
+					String sql = "update member set MEMBER_POINT = MEMBER_POINT + 10 where member_no = ?";
+					PreparedStatement ps = con.prepareStatement(sql);
+					ps.setInt(1, member_no);
+					ps.execute();
+					
+					con.close();
+				}
+				
+				public void add_point_event(int member_no) throws Exception{
+					Connection con = getConnection();
+					String sql= "update member set member_point = memeber_point +50 where member_no=?";
+					PreparedStatement ps = con.prepareStatement(sql);
+					ps.setInt(1, member_no);
+					ps.execute();
+					
+					con.close();
+				}
+				
 }

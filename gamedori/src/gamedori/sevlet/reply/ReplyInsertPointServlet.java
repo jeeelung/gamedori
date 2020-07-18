@@ -16,8 +16,8 @@ import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.ReplyDto;
 
 
-@WebServlet(urlPatterns = "/community/reply_insert.do")
-public class ReplyInsertServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/community/reply_insert_point.do")
+public class ReplyInsertPointServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			
@@ -45,7 +45,13 @@ public class ReplyInsertServlet extends HttpServlet {
 				rdto.setReply_no(reply_no);
 				// 댓글 등록하고
 				rdao.write(rdto);
-			
+				
+				//포인트 넣고
+				
+				int member_no = mdto.getMember_no();
+				PointDao qdao = new PointDao();
+				qdao.add_point(member_no);
+				
 				
 //				출력 : 
 				resp.sendRedirect(req.getContextPath() + "/community/content.jsp?commu_no="+rdto.getOrigin_no());
