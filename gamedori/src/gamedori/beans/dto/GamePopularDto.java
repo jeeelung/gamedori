@@ -2,14 +2,11 @@ package gamedori.beans.dto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class GameListDto {
-	private int genre_no;
-	private String genre_type;
+public class GamePopularDto {
+	private	int genre_no;
+	private	String genre_type;
 	private int member_no;
-
 	private String member_nick;
 	private String game_name;
 	private String game_date;
@@ -18,6 +15,7 @@ public class GameListDto {
 	private String game_img_name;
 	private String game_img_type;
 	private long game_img_size;
+	private int game_read;
 	private int row_num;
 	
 	public int getRow_num() {
@@ -28,11 +26,11 @@ public class GameListDto {
 		this.row_num = row_num;
 	}
 
-	public GameListDto() {
+	public GamePopularDto() {
 		super();
 	}
 	
-	public GameListDto(ResultSet rs) throws SQLException {
+	public GamePopularDto(ResultSet rs) throws SQLException {
 		this.setGenre_no(rs.getInt("genre_no"));
 		this.setGenre_type(rs.getString("genre_type"));
 		this.setMember_no(rs.getInt("member_no"));
@@ -44,9 +42,9 @@ public class GameListDto {
 		this.setGame_img_name(rs.getString("game_img_name"));
 		this.setGame_img_type(rs.getString("game_img_type"));
 		this.setGame_img_size(rs.getLong("game_img_size"));
+		this.setGame_read(rs.getInt("game_read"));
 	}
 
-	
 	public int getGenre_no() {
 		return genre_no;
 	}
@@ -70,31 +68,6 @@ public class GameListDto {
 	public void setMember_no(int member_no) {
 		this.member_no = member_no;
 	}
-	
-	public String getGame_date() {
-		return game_date;
-	}
-
-	public String getGame_time() {
-		return game_date.substring(11, 16);
-	}
-	
-	public String getGame_day() {
-		return game_date.substring(0, 10);
-	}
-	
-	public String getGame_auto() {
-		String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-		if(getGame_day().equals(today)) {
-			return getGame_time();
-		} else {
-			return getGame_day();
-		}
-	}
-	
-	public void setGame_date(String game_date) {
-		this.game_date = game_date;
-	}
 
 	public String getMember_nick() {
 		return member_nick;
@@ -110,6 +83,14 @@ public class GameListDto {
 
 	public void setGame_name(String game_name) {
 		this.game_name = game_name;
+	}
+
+	public String getGame_date() {
+		return game_date;
+	}
+
+	public void setGame_date(String game_date) {
+		this.game_date = game_date;
 	}
 
 	public int getGame_no() {
@@ -151,5 +132,14 @@ public class GameListDto {
 	public void setGame_img_size(long game_img_size) {
 		this.game_img_size = game_img_size;
 	}
+
+	public int getGame_read() {
+		return game_read;
+	}
+
+	public void setGame_read(int game_read) {
+		this.game_read = game_read;
+	}
+	
 	
 }

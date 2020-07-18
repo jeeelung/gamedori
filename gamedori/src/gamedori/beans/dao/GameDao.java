@@ -58,4 +58,19 @@ public class GameDao {
 		ps.execute();
 		con.close();
 	}
+	
+	// 조회수 서블릿
+	public void plusReadCount(int game_no, int member_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "UPDATE game "
+				+ "SET game_read = game_read + 1 "
+				+ "WHERE game_no = ? "
+				+ "AND member_no != ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, game_no);
+		ps.setInt(2, member_no);
+		ps.execute();
+		
+		con.close();
+	}
 }

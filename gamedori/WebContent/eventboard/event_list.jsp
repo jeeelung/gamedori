@@ -9,23 +9,6 @@
     
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
 
-<style>
-.font-header {
-
-	font-family: arcadeclassic;
-	font-size: 35px;
-	color: #85BCE1;
-}
-
-.font_han{
-	font-family: DungGeunMo;
-}
-
-thead tr {
-    background-color: #85BCE1;
-    color: #ffffff;
-  }
-    </style>
 <% 
 
 String type = request.getParameter("type");
@@ -99,17 +82,103 @@ MemberDto user = (MemberDto)session.getAttribute("userinfo");
  
 <jsp:include page="/template/header.jsp"></jsp:include>
 
-<article class="w-80">
+<style>
+.div {font-family: arcadeclassic;}
+.font-game {
+	font-family: arcadeclassic;
+	font-size: 30px;
+	color: #85BCE1;
+}
+.wrap {
+	border-top: 3px solid #85BCE1;
+	border-bottom : 3px solid #85BCE1;
+}
+.today-wrap {
+	border-top: 3px solid #85BCE1;
+	border-bottom : 3px solid #85BCE1;
+	position : relative;
+}
+.table{
+	
+}
+.table.table-border {
+	/* 테이블에 테두리를 부여*/
+	border: 3px solid #85BCE1;
+	/* 테두리 병합 */
+	border-collapse: collapse;
+}
+.table.table-border > thead > tr > th,
+        .table.table-border > thead > tr > td,
+        .table.table-border > tbody > tr > th,
+        .table.table-border > tbody > tr > td,
+        .table.table-border > tfoot > tr > th,
+        .table.table-border > tfoot > tr > td {
+            /* 칸에 테두리를 부여 */
+            border:2px solid #85BCE1;
+             color:#85BCE1;
+            
+        }
+.table.table-border > thead > tr > th,
+        .table.table-border > thead > tr > td > a,
+        .table.table-border > tbody > tr > th > a,
+        .table.table-border > tbody > tr > td > a,
+        .table.table-border > tfoot > tr > th > a,
+        .table.table-border > tfoot > tr > td > a{
+            text-decoration : none;
+             color: #546583;
+        }
+        .pagination a {
+            color:gray;
+            text-decoration: none;
+            display: inline-block;
+            padding:0.5rem;
+            min-width: 2.5rem;
+            text-align: center;
+            border:1px solid transparent;
+        }
+        .pagination a:hover,/*마우스 올라감*/
+        .pagination .on {/*활성화 */
+            border:1px solid gray;
+            color:black;
+        }
+        
+        .font-header {
 
+	font-family: arcadeclassic;
+	font-size: 35px;
+	color: #85BCE1;
+}
+
+.font-header2 {
+
+	font-family: arcadeclassic;
+	font-size: 20px;
+	color: white;
+}
+
+
+.font_han{
+	font-family: DungGeunMo;
+	font-weight:bold;
+}
+
+thead tr {
+    background-color: #85BCE1;
+    color: #ffffff;
+  }
+        
+</style>
+
+<div align="center">
 
 	<!-- 제목 -->
-	<div>
-		<h1 class="font-header">Event Board</h1>
+	<article>
+	<div class="font-header">
+	<h3>Check Our Event</h3>
 	</div>
-	
-	<!-- 글쓰기 버튼 -->
-	
-	<div class="row right">
+	<div class="row today-wrap"><div class="row-empty"></div>
+	</article>
+	<div class="right">
 	<%if(user != null) {
 						boolean isAdmin = user.getMember_auth().equals("관리자");
 					
@@ -125,14 +194,14 @@ MemberDto user = (MemberDto)session.getAttribute("userinfo");
 
 	
 		<!-- 테이블 -->
-		<table border="1" aline:"center" width="90%" class=" table2 table-border table-hover" >
+		<table class="table table-border2 table-hover">
 			<thead>
-				<tr align="center" class= "font_header">
-					<th >번호</th>
-					<th  width="40%">제목</th>
-					<th >작성자</th>
-					<th  >작성일</th>
-					<th >조회수</th>
+				<tr align="center" class= "font_header2">
+					<th width="10%" >No</th>
+					<th  width="40%">Title</th>
+					<th width="10%">Writer</th>
+					<th width="10%" >Date</th>
+					<th width="10%">Read</th>
 				</tr>
 			</thead>
 			<tbody align="center">
@@ -146,7 +215,7 @@ MemberDto user = (MemberDto)session.getAttribute("userinfo");
 					
 					
 					<!-- 게시글 제목 -->
-					<a href="Eventcontent.jsp?event_no=<%=edto.getEvent_no() %>">
+					<a class= "font_han" href="Eventcontent.jsp?event_no=<%=edto.getEvent_no() %>">
 					<%=edto.getEvent_title() %>
 					</a>
 					
