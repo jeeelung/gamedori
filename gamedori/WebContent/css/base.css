@@ -30,6 +30,7 @@
 /*
     이미지 관련 스타일
     - 기본 스타일은 .img
+   
     - 확장 스타일은 4가지로 분류
         - .img-border : 마우스가 올라가면 테두리가 생성
         - .img-shadow : 마우스가 올라가면 그림자가 생성
@@ -77,11 +78,14 @@
 .table {
 	width: 100%;
 }
-
+.table3{
+	width:100%;
+}
 .table>thead>tr>th, .table>thead>tr>td, .table>tbody>tr>th, .table>tbody>tr>td,
 	.table>tfoot>tr>th, .table>tfoot>tr>td {
 	padding: 0.5rem;
 	text-align: center;
+	font-weight: bold;
 }
 
 /* 확장 스타일 1번 : .table-border 로 테두리를 부여 */
@@ -104,6 +108,21 @@
 	text-aline: center;
 }
 
+.table3.table-border {
+	/* 테이블에 테두리를 부여*/
+	border: 0.5px solid #85BCE1;
+	/* 테두리 병합 */
+	border-collapse: collapse;
+}
+
+.table3.table-border>thead>tr>th, .table.table-border>thead>tr>td, .table.table-border>tbody>tr>th,
+	.table.table-border>tbody>tr>td, .table.table-border>tfoot>tr>th,
+	.table.table-border>tfoot>tr>td {
+	/* 칸에 테두리를 부여 */
+	border: 1px solid  #85BCE1;
+	border-collapse: collapse;
+}
+
 .table.table-border>thead>tr>th, .table.table-border>thead>tr>td, .table.table-border>tbody>tr>th,
 	.table.table-border>tbody>tr>td, .table.table-border>tfoot>tr>th,
 	.table.table-border>tfoot>tr>td {
@@ -117,6 +136,7 @@
 	.table2.table-border>tfoot>tr>td {
 	/* 칸에 테두리를 부여 */
 	border-right:none;
+	border-left:none;	
 }
 
 /* 확장 스타일 2번 : .table-stripe 로 줄무늬 부여 */
@@ -675,13 +695,21 @@ article h1, article h2, article h3, article h4, article h5, article h5,
 .form-btn.form-inline2{
 	width:auto; 
 	background-color: #85BCE1;
-	margin-left: 90;
+
 	padding: 5px 10px;
 	border-radius: 5px;
 }
 .form-btn.form-inline3{
 	width:auto; 
 	background-color: #85BCE1;
+
+	padding: 5px 10px;
+	border-radius: 5px;
+}
+
+.form-btn.form-inline4{
+	width:auto; 
+	background-color:  #a49ec2;
 
 	padding: 5px 10px;
 	border-radius: 5px;
@@ -737,11 +765,7 @@ a.deco {
 	display: inline-block;
 }
 
-.font-game {
-	font-family: arcadeclassic;
-	font-size: 30px;
-	color: #20639B;
-	
+
 }
 .gametitle{
 	font-family: arcadeclassic;
@@ -749,7 +773,11 @@ a.deco {
 	color: black;
 }
 
-
+.font-game2{
+	font-family:arcadeclassic;
+	font-size: 30px;
+	color: #85BCE1;
+}
 
 
 
@@ -792,8 +820,10 @@ a.deco {
     appearance: none;
 }
 
-
-
+a{
+	text-decoration: none;
+	color:black;
+}
 
 
 
