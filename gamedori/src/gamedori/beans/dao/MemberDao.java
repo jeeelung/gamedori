@@ -180,7 +180,7 @@ public class MemberDao {
 		
 		ResultSet rs =ps.executeQuery();
 		if(rs.next()) {
-			result =rs.getInt("member_no"); 
+			result =rs.getInt(1); 
 		}
 		con.close();
 		

@@ -3,6 +3,7 @@ package gamedori.servlet.member;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,13 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dao.MemberFavoriteDao;
 import gamedori.beans.dao.PointDao;
-import gamedori.beans.dao.PointHistoryDao;
 import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.MemberFavoriteDto;
 import gamedori.beans.dto.PointDto;
-import gamedori.beans.dto.PointHistoryDto;
 
-//@WebServlet(urlPatterns = "/guest/join.do")
+@WebServlet(urlPatterns = "/guest/join.do")
 public class MemberJoinServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,12 +29,12 @@ public class MemberJoinServlet extends HttpServlet {
 			mdto.setMember_name(req.getParameter("member_name"));
 			mdto.setMember_id(req.getParameter("member_id"));
 			mdto.setMember_pw(req.getParameter("member_pw"));
-			mdto.setMember_name(req.getParameter("member_name"));
 			mdto.setMember_nick(req.getParameter("member_nick"));
 			mdto.setMember_phone(req.getParameter("member_phone"));
 			// 처리 : MemberDao를 이용한 데이터베이스 등록
 			MemberDao idDao = new MemberDao();
 			String idDto = idDao.overlapID(mdto);
+			
 			MemberDao nickDao = new MemberDao();
 			String nickDto = nickDao.overlapNick(mdto);
 			if (idDto != null) {// 아이디 정보 중복
