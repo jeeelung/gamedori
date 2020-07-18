@@ -17,8 +17,12 @@ public class AdminPointTypeServlet extends HttpServlet{
 		try {
 			req.setCharacterEncoding("UTF-8");// 사용자의 요청을 UTF-8 형태로 복원하라!
 			
+			
+			
+			
 			PointDao pdao =new PointDao();
 			PointDto pdto = new PointDto();
+			
 			
 			pdto.setPoint_type(req.getParameter("point_type"));
 			pdto.setPoint_score(Integer.parseInt(req.getParameter("point_score")));

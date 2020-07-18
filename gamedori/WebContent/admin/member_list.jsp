@@ -1,3 +1,4 @@
+<%@page import="gamedori.beans.dao.PointHistoryDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@page import="java.util.List"%>
@@ -93,7 +94,7 @@ if (isSearch) {
 	
 	<hr>
 	
-	<h4>총 <%=list.size()%> 개의 데이터가 발견되었습니다</h4>
+	<h4>총 <%=list.size()%> 명의 회원이 있습니다</h4>
 	
 	<!-- 결과 -->
 	<%if(list.isEmpty()){ %>
@@ -103,21 +104,26 @@ if (isSearch) {
 		<thead>
 			<tr>
 				<th>아이디</th>
+				<th>이름</th>
 				<th>닉네임</th>
 				<th>권한</th>
+				<th>핸드폰 번호</th>
+				<th>포인트</th>
+				<th>가입일</th>
+				<th>최종 로그인</th>
 			</tr>
 		</thead>
 		<tbody align="center">
 			<%for(MemberDto mdto : list){ %>
 			<tr>
 				<td><%=mdto.getMember_id()%></td>
+				<td><%=mdto.getMember_name() %>
 				<td><%=mdto.getMember_nick()%></td>
 				<td><%=mdto.getMember_auth()%></td>
-				<td>
-					<a href="detail.jsp?member_id=<%=mdto.getMember_id()%>">상세</a>
-					<a href="<%=request.getContextPath()%>/member/check.jsp?go=<%=request.getContextPath()%>/admin/edit.jsp?member_id=<%=mdto.getMember_id()%>">수정</a>
-					<a href="<%=request.getContextPath()%>/member/check.jsp?go=<%=request.getContextPath()%>/admin/drop.do?member_id=<%=mdto.getMember_id()%>">탈퇴</a>
-				</td>
+				<td><%=mdto.getMember_phone() %></td>
+				<td><%=mdto.getMember_point() %></td>
+				<td><%=mdto.getMember_join_date() %></td>
+				<td><%=mdto.getMember_login_date() %></td>
 			</tr>
 			<%} %>
 		</tbody>

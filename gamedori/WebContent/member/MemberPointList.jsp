@@ -83,7 +83,7 @@
 		list = phdao.search(type, keyword,auth,member_no,start, finish); 
 	}
 	else{
-		list = phdao.getList(member_no,auth,start ,finish); 
+		list = phdao.getList(start ,finish); 
 	}
 	
 	
@@ -127,11 +127,9 @@
 		</table>
 
 
-
-		<form action="adminpoint.do" method ="get">
-		<table border="1">
-		<br><br>
 		<h3>신규 등록/삭제</h3>
+		<form action="adminpoint.do" method ="get" style="display: inline-block;">
+		<table border="1">
 		<tr>
 		<th colspan="2">등록</th>
 		</tr>
@@ -150,11 +148,11 @@
 		<tr>
 		<th colspan="2" rowspan="2">
 			<input type="submit" value="등록">
-		</form>
 			</table>	
-	
-		<form action="adminpoint.do" method ="get">
-		<table border="1">
+		</form>
+		
+		<form action="pointdelete.do" method ="get" style="display: inline-block;">
+		<table border="1" style="display: inline-block;">
 		<tr>
 		<th colspan="2">삭제</th>
 		</tr>

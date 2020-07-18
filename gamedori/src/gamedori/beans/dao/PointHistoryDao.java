@@ -143,19 +143,17 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 			}
 			
 			//목록 메소드
-			public List<PointDto> getList(int member_no, String auth, int start , int finish) throws Exception{
+			public List<PointDto> getList(int start , int finish) throws Exception{
 				Connection con = getConnection();
 				String sql = "SELECT * FROM "
 						+ "(SELECT ROWNUM rn, T.* FROM "
-						+ "(SELECT * FROM point_view WHERE "
-						+ "(member_no=? OR '관리자' = ?)ORDER BY member_no asc) T ) WHERE rn BETWEEN ? and ?";
+						+ "(SELECT * FROM point "
+						+ "ORDER BY point_no asc) T ) WHERE rn BETWEEN ? and ?";
 
 				PreparedStatement ps = con.prepareStatement(sql);
 				
-				ps.setInt(1, member_no);
-				ps.setString(2, auth);
-				ps.setInt(3, start);
-				ps.setInt(4, finish);
+				ps.setInt(1, start);
+				ps.setInt(2, finish);
 				
 				ResultSet rs = ps.executeQuery();
 				List<PointDto> list = new ArrayList<>();

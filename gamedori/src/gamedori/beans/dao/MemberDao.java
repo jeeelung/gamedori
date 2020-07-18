@@ -227,6 +227,7 @@ public class MemberDao {
 			mdto.setMember_nick(rs.getString("member_nick"));
 			mdto.setMember_phone(rs.getString("member_phone"));
 			mdto.setMember_auth(rs.getString("member_auth"));
+			mdto.setMember_point(rs.getInt("member_point"));
 			mdto.setMember_join_date(rs.getString("member_join_date"));
 			mdto.setMember_login_date(rs.getString("member_login_date"));
 

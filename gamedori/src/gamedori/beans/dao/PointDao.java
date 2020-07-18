@@ -27,7 +27,6 @@ public class PointDao {
 			e.printStackTrace();
 		}
 	}
-
 	// 연결 메소드
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
 		return src.getConnection();
@@ -64,7 +63,7 @@ public class PointDao {
 		public void delete(int point_no,String point_type) throws Exception {
 			Connection con = getConnection();
 
-			String sql = "DELETE point WHERE  point_no= ?, point_type=? ";
+			String sql = "DELETE point WHERE  point_no= ? and point_type=? ";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, point_no);
 			ps.setString(2, point_type);
@@ -212,15 +211,30 @@ public class PointDao {
 					return seq;
 				}
 				
-				public void add_point(int member_no)throws Exception{
+				public void add_point(int member_no , int point)throws Exception{
 		               Connection con = getConnection();
-		               String sql = "update member set MEMBER_POINT = MEMBER_POINT + 500 where member_no = ?";
+		               String sql = "update member set MEMBER_POINT = MEMBER_POINT + #1 where member_no = ?";
+		               sql = sql.replace("#1", point+"");
 		               PreparedStatement ps = con.prepareStatement(sql);
+		        
 		               ps.setInt(1, member_no);
 		               ps.execute();
 		               
 		               con.close();
 		            }
-				
-				
+				public PointDto getByType(String point_type) throws Exception {
+					Connection con = getConnection();
+					
+					String sql = "SELECT * FROM point WHERE point_type = ?";
+					PreparedStatement ps = con.prepareStatement(sql);
+					ps.setString(1,point_type);
+					ResultSet rs = ps.executeQuery();
+					
+
+					PointDto pdto = rs.next() ? new PointDto(rs) : null;//3항 연산자
+					
+					con.close();
+					
+					return pdto;
+				}
 }

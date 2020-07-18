@@ -10,11 +10,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	
+	
 <!-- 	info.jsp 
 	1.세션의 정보 조회
 	2.데이터베이스에서 정보 조회
 	3.조회된 정보를 출력
 -->
+
+
 <%
 //세션에서 userinfo를 읽어온다
 	MemberDto mdto=(MemberDto)session.getAttribute("userinfo");
@@ -29,7 +32,6 @@
 	List<Map<String,Object>> fList = mfdao.getList(mdto.getMember_no());
 	PointHistoryDao phdao = new PointHistoryDao();
 	PointHistoryDto phdto = new PointHistoryDto();
-	
 	int point_score = phdao.getPoint(mdto.getMember_no());
 %>
 
@@ -66,7 +68,7 @@
 	
 			<tr>
 				<th>포인트</th>
-				<td><%=point_score%> <a href="check.jsp?go=MemberPointList.jsp">포인트 내역확인</a></td>
+				<td><%=user.getMember_point()%> <a href="check.jsp?go=MemberPointList.jsp">포인트 내역확인</a></td>
 			</tr>
 			<tr>
  				<th>가입일</th>
