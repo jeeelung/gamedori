@@ -42,13 +42,20 @@
         }
         .form-btn {
         	font-size: 20px;
-            background-color: #2f3542;
+            background-color: #B22222;
             color:white;
             cursor: pointer;
         }
         .form-btn:hover {
-            background-color: #57606f;
+            background-color: #EF9A9A;
         }
+        
+        .title{
+      	 	text-align:left;
+      	 	margin-bottom: 0;
+      	 	font-family: 'DungGeunMo', sans-serif; 
+	    }
+        
     </style>
 
 <body>
@@ -66,35 +73,38 @@
                     <img src="../image/signup.png">
                 </div>
                 <div class="row">
-                        <th>이름</th>
-                       <br>
-                    <input class="form-input" type="text" placeholder="5자 이하 한글">
+                        <h4 class="title" style="font-family: DungGeunMo;">이름</h4>
+                     <input class="form-input" type="text" placeholder="5자 이하 한글">
                 </div>
                 <div class="row">
-                       <th>아이디</th>
-                       <br>                       
+                        <h4 class="title">닉네임</h4>                      
+                    <input class="form-input" type="password" placeholder="한글 8자 이내">
+                </div>
+                <div class="row">
+                       <h4 class="title">아이디</h4>
                     <input class="form-input" type="password" placeholder="5~20자 영문 또는 숫자">
                 </div>
-                 <div class="row">
-                       <th>비밀번호</th>
-                       <br>                       
+                <div class="row">
+                       <h4 class="title">비밀번호</h4>                     
                     <input class="form-input" type="password" placeholder="8~16자 영문 또는 숫자">
                 </div>
                 <div class="row">
-                       <th>닉네임</th>
-                       <br>                       
-                    <input class="form-input" type="password" placeholder="한글 8자 이내">
+                       <h4 class="title">비밀번호 확인</h4>                     
+                    <input class="form-input" type="password" placeholder="8~16자 영문 또는 숫자">
+                </div>
+                <div class="row">
+                       <h4 class="title">전화번호</h4>                     
+                    <input class="form-input" type="password" placeholder="-제외">
+                </div>
+                <div class="row">
+                       <h4 class="title">관심분야</h4>                     
+                    <input class="form-input" type="password" placeholder="-제외">
+                </div>
+                <br>
+                <div class="row">
+                    <input class="form-btn" type="submit" value="가입완료">
                 </div>
                 
-                <div class="row">
-                    <input class="form-btn" type="submit" value="로그인">
-                </div>
-                <div class="row">
-                    <a href="#">아이디가 기억나지 않습니다.</a>
-                </div>
-                <div class="row">
-                    <a href="#">비밀번호가 기억나지 않습니다.</a>
-                </div>
             </article>
 
             <div class="row-empty"></div>
@@ -107,15 +117,6 @@
     
 </body>
 </html>
-
-
-
-
-
-
-
-
-
 
 
 <jsp:include page="/template/footer.jsp"></jsp:include>
