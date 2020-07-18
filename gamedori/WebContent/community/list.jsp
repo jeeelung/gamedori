@@ -4,6 +4,20 @@
 <%@page import="gamedori.beans.dto.CommunityDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
+    
+<style>
+.font-han{
+	font-family: DungGeunMo;
+	font-size: 35px;
+	color: #85BCE1;
+}
+
+thead tr {
+    background-color: #85BCE1;
+    color: #ffffff;
+  }
+</style> 
 <%
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
@@ -87,25 +101,17 @@
 </script>
     
 <jsp:include page="/template/header.jsp"></jsp:include>
-<div align="center">
 
-	<!-- 계산한 데이터를 확인하기 위해 출력 -->
-	<%-- <h5>
-	pageStr = <%=pageStr%>, 
-	pageNo = <%=pageNo%>,
-	start = <%=start%>
-	finish = <%=finish%>
-	pageCount = <%=pageCount%>
-	startBlock = <%=startBlock%>
-	finishBlock = <%=finishBlock%>
-	</h5> --%>
-	
-	<h2></h2>
+<article class="w-90">
+<div align="center">
+	<h5 class="font-kor">
+	자유게시판
+	</h5>
 	<form action="list.jsp" method="get">
-	<table border="1" width="90%">
+	<table border="1" aline="center" width="90%" class=" table2 table-border table-hover">
 	
 		<thead>
-			<tr>
+			<tr align="center" class="font_header">
 				<th>
 					<select name="commu_head" onchange="sendForm();">
 						<option value="">전체보기</option>
@@ -126,8 +132,8 @@
 			<tr>
 				<%MemberDto mdto = cdao.getWriter(cdto.getMember_no());%>
 				<th><%=cdto.getCommu_no()%></th>
-				<td>
-					<%if(cdto.getCommu_super_no() > 0){ %>
+				<td class="left">
+					<%if(cdto.getCommu_depth() > 0){ %>
 						<%for(int i=0; i<cdto.getCommu_depth(); i++) {%>
 							&nbsp;&nbsp;&nbsp;&nbsp;
 						<%}%>
@@ -136,7 +142,9 @@
 					<%}%>
 					<a href="<%=request.getContextPath()%>/community/content.jsp?commu_no=<%=cdto.getCommu_no()%>">
 					[<%=cdto.getCommu_head()%>]<%=cdto.getCommu_title()%>
-					</a>
+						</a>
+					[<%=cdto.getCommu_replycount() %>]
+					
 				</td>
 				<td><%=mdto.getMember_nick()%></td>
 				<td><%=cdto.getCommu_auto()%></td>
@@ -146,10 +154,10 @@
 		</tbody>
 		
 		<tfoot>
-			<tr align="right">
-				<td colspan="5" align="right">
+			<tr>
+				<td colspan="5" align="center">
 					<a href="write.jsp">
-						<input type="button" value="글쓰기">
+						<input class="form-btn form-inline3" type="button" value="글쓰기">
 					</a>
 				</td>
 			</tr>
@@ -163,6 +171,7 @@
 	<%} else {%>
 		<a href="list.jsp?page=<%=startBlock-1%>&type=<%=type%>&keyword=<%=keyword%>">[이전]</a>
 	<%}%>
+	
 <%}%>
 
 	<%for(int i=startBlock; i<=finishBlock; i++) { %>
@@ -186,8 +195,9 @@
 		<option value="commu_content">내용만</option>
 		<option value="member_nick">글작성자</option>
 	</select>
-		<input type="text" name="keyword" placeholder="검색어를 입력하세요" required>
-		<input type="submit" value="검색">
+		<input class="form-input form-inline1" type="text" name="keyword" placeholder="검색어를 입력하세요" required>
+		<input class="form-btn form-inline3" type="submit" value="검색">
 	</form>
 </div>
+</article>
 <jsp:include page="/template/footer.jsp"></jsp:include>

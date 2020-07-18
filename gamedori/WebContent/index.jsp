@@ -3,6 +3,8 @@
 <%@page import="java.util.List"%>
 <%@page import="gamedori.beans.dao.GameListDao"%>
 <%@page import="gamedori.beans.dto.GameListDto"%>
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -64,7 +66,6 @@
 	padding: 10px;
 	margin-top: 20px;
 }
-
 .swiper-container .swiper-slide, .swiper-container .swiper-slide .game_img
 	{
 	width: 180;

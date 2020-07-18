@@ -22,6 +22,10 @@
     font-family: arcadeclassic;
     src: url(font/ARCADECLASSIC.TTF);
 }
+@font-face{
+	font-family: DungGeunMo;
+	src: url(font/DungGeunMo.ttf)
+}
 
 @font-face{
 	font-family: DungGeunMo;
@@ -88,9 +92,21 @@
 /* 확장 스타일 1번 : .table-border 로 테두리를 부여 */
 .table.table-border {
 	/* 테이블에 테두리를 부여*/
-	border: 1px solid black;
+	border: 0.5px solid gray;
 	/* 테두리 병합 */
 	border-collapse: collapse;
+}
+
+.table2.table-border {
+	/* 테이블에 테두리를 부여*/
+	border-right: none;
+	border-left:none;
+	border-bottom:none;
+	border-radius:5px;
+	 frame=void;
+	/* 테두리 병합 */
+	border-collapse: collapse;
+	text-aline: center;
 }
 
 .table.table-border>thead>tr>th, .table.table-border>thead>tr>td, .table.table-border>tbody>tr>th,
@@ -98,6 +114,14 @@
 	.table.table-border>tfoot>tr>td {
 	/* 칸에 테두리를 부여 */
 	border: 1px solid black;
+}
+
+
+.table2.table-border>thead>tr>th, .table2.table-border>thead>tr>td, .table2.table-border>tbody>tr>th,
+	.table2.table-border>tbody>tr>td, .table2.table-border>tfoot>tr>th,
+	.table2.table-border>tfoot>tr>td {
+	/* 칸에 테두리를 부여 */
+	border-right:none;
 }
 
 /* 확장 스타일 2번 : .table-stripe 로 줄무늬 부여 */
@@ -139,11 +163,13 @@
         
         </div>
     </div>
-
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> refs/remotes/origin/master
     모달을 보여주고 싶다면 .modal-wrap에 .on을 추가한다
     <div class="modal-wrap on">
         <div>
-
         </div>
     </div>
 */
@@ -196,7 +222,6 @@
     - 메뉴와 같은 계층형 구조는 일반적으로 ul-li로 구현
     - list-style: none; 으로 앞에 점을 제거
     - ul이 가지고 있는 기본 padding과 margin을 제거
-
     작성 시 주의사항
     - 반드시 다음 구조로 메뉴를 구현해야 한다
     <ul class="menu">
@@ -246,7 +271,115 @@
 
 /*
     2단계 메뉴 설정
+=======
+    모달을 보여주고 싶다면 .modal-wrap에 .on을 추가한다
+    <div class="modal-wrap on">
+        <div>
+        </div>
+    </div>
+*/
+.modal-wrap {
+	/* 전체를 가리기 위한 설정 */
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	/* opacity로 투명도를 조절하면 내용물도 적용된다 */
+	/* opacity: 0.5; */
+	/* 배경색에 알파값을  */
+	background-color: rgba(0, 0, 0, 0.5);
+	/* 모달은 기본적으로 표시가 되면 안된다 */
+	display: none;
+}
 
+<<<<<<< HEAD
+.modal-wrap.on {
+	display: block;
+}
+
+.modal {
+	position: absolute;
+	width: 400px;
+	height: 400px;
+	/* 중앙에 배치하기 위한 코드 */
+	background-color: white;
+	top: 50%;
+	left: 50%;
+	/* 
+        방법 1 : margin 을 활용 (폭이 고정일 경우) 
+        - 폭을 반드시 알아야 함
+        - 모든 브라우저에서 지원
+    */
+	/*
+    margin-left: -200px;
+    margin-top: -200px;
+    */
+	/* 
+        방법 2 : 이동 스타일을 사용하는 경우
+        - 이동할 때 기준이 자기 자신이므로 폭을 몰라도 됨
+        - 지원하지 않는 브라우저가 있음
+    */
+	transform: translate(-50%, -50%)
+}
+
+/*
+    메뉴 스타일
+    - 메뉴와 같은 계층형 구조는 일반적으로 ul-li로 구현
+    - list-style: none; 으로 앞에 점을 제거
+    - ul이 가지고 있는 기본 padding과 margin을 제거
+    작성 시 주의사항
+    - 반드시 다음 구조로 메뉴를 구현해야 한다
+    <ul class="menu">
+        <li>
+            <a>1차 메뉴명</a>
+            <ul>
+                <li>
+                    <a>2차 메뉴명</a>
+                    <ul>
+                    ...(3차 이후도 마찬가지로 구현)...
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+*/
+.menu, .menu ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	font-weight: 900;
+}
+
+.menu {
+	background-color: firebrick;
+	z-index: 3000;
+}
+
+.menu>li {
+	/* 폭 설정이 가능해야하므로 inline-block */
+	display: inline-block;
+}
+
+/* 모든 li는 relative 설정 */
+.menu li {
+	position: relative;
+	padding: 1rem;
+	font-size: 15px;
+	width: 140px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.menu li:hover {
+	opacity: 80%;
+}
+
+/*
+    2단계 메뉴 설정
+=======
+
+>>>>>>> refs/remotes/origin/master
     1) 2단계 메뉴부터는 position을 absolute로 설정
     2) 처음에는 2단계 이후의 메뉴가 나오지 않도록 처리
 */
@@ -400,6 +533,7 @@ article.w-85 {
 
 article.w-80 {
 	width: 80%;
+	text-align: center
 }
 
 article.w-75 {
@@ -505,10 +639,26 @@ article h1, article h2, article h3, article h4, article h5, article h5,
 	padding: 0.5rem;
 	outline: none;
 	border: none;
-	background-color: #dd614a;
+
+
+	background-color: firebrick;
+
 	color: white;
 	cursor: pointer;
 	font-weight: 700;
+}
+
+.form-file{
+	width: 100px;
+	padding: 0.5rem;
+	outline: none;
+	border: none;
+	background-color: #2d90e3;
+	color: white;
+	cursor: pointer;
+	font-weight: 700;
+}
+	
 }
 
 .form-btn:hover {
@@ -528,10 +678,31 @@ article h1, article h2, article h3, article h4, article h5, article h5,
 	padding-left: 3rem;
 }
 
-.form-input.form-inline, .form-btn.form-inline {
-	width: auto;
+.form-input.form-inline, .form-btn.form-inline, .form_file.form-inline {
+	width:auto;
 }
+.form-btn.form-inline2{
+	width:auto; 
+	background-color: #85BCE1;
+	margin-left: 90;
+	padding: 5px 10px;
+	border-radius: 5px;
+}
+.form-btn.form-inline3{
+	width:auto; 
+	background-color: #85BCE1;
 
+	padding: 5px 10px;
+	border-radius: 5px;
+}
+.form-input.form-inline1{
+	width: auto;
+	padding: 5px 10px;
+}
+.form-select.form-inline1{
+	width: auto;
+	padding: 5px 10px;
+}
 textarea.form-input {
 	resize: vertical;
 }
@@ -578,4 +749,65 @@ a.deco {
 	font-family: arcadeclassic;
 	font-size: 30px;
 	color: #20639B;
+	
 }
+.gametitle{
+	font-family: arcadeclassic;
+	font-size: 15px;
+	color: black;
+}
+
+
+
+
+
+
+.table.table1-stripe>tbody>tr:nth-child(2n) {
+	/* RGB Hex String */
+	background-color: #85BCE1;
+}
+
+.table.table-stripe>thead>tr {
+	background-color: #85BCE1;
+}
+
+
+.form-btn {
+	width: 100px;
+	padding: 0.5rem;
+	outline: none;
+	border: none;
+
+
+	background-color: firebrick;
+
+	color: white;
+	cursor: pointer;
+	font-weight: 700;
+}
+
+.selectbox select {
+    width: 100%;
+    height: auto;  /* 높이 초기화 */
+    line-height: normal;  /* line-height 초기화 */
+    font-family: inherit;  /* 폰트 상속 */
+    padding: .8em .5em;  /* 여백과 높이 결정 */
+    border: 0;
+    opacity: 0;  /* 숨기기 */
+    filter:alpha(opacity=0);  /* IE8 숨기기 */
+    -webkit-appearance: none; /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -61,7 +61,8 @@ public class TestLoginFilter implements Filter{
 			chain.doFilter(request, response);
 			
 		} catch (Exception e) {
-			
+			e.printStackTrace();
+			resp.sendError(500);
 		}
 	}
 }

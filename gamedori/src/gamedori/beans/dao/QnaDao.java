@@ -51,8 +51,6 @@ public class QnaDao {
 			ps.setInt(3, start);
 			ps.setInt(4, finish);
 			
-		
-			
 			ResultSet rs = ps.executeQuery();
 			
 			List<QnaDto> list = new ArrayList<>();

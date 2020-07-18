@@ -1,7 +1,7 @@
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
 
 <%
 	//rootPath에는 프로젝트 root path(/home)가 자동으로 계산되어 저장된다. 이는 절대경로 작성 시 활용할 수 있다.
@@ -12,18 +12,24 @@
 	boolean isLogin = mdto != null;
 %>
 
+
 <div class="notice-wrap">
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/notice/list.jsp">공지사항</a>
 	</h5>
 	<h5>｜</h5>
+	<h5 class="menu-front">
+		<a href="<%=rootPath%>/eventboard/event_list.jsp">Event</a>
+	</h5>
+	<h5>｜</h5>
 	<h5 class="menu-font">
-		<a href="<%=rootPath%>/event/list.jsp">이벤트</a>
+		<a href="<%=rootPath%>/qna/qna_list.jsp">1:1 게시판</a>
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/faq/list.jsp">자주 묻는 질문</a>
 	</h5>
+	
 </div>
 <!--  	로그인 상태일 경우 -->
 <%
@@ -33,7 +39,7 @@
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/member/logout.do">로그아웃</a>
 	</h5>
-	<h5>｜</h5>
+	
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/member/info.jsp">마이페이지</a>
 	</h5>
@@ -67,4 +73,5 @@
 		</ul>
 	</li>
 	<li><a href="<%=rootPath%>/community/list.jsp">커뮤니티</a></li>
+	
 </ul>
