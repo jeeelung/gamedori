@@ -54,6 +54,13 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 				
 				resp.sendRedirect("Eventresult.jsp");
 				System.out.println("이벤트 등록 완료");
+			
+				PointDto pdto = new PointDto();
+				PointDao pdao = new PointDao();
+				
+				pdto = pdao.getByType("이벤트참여");
+				
+				pdao.add_point(member_no, pdto.getPoint_score());
 
 			} else {
 				// 회원 번호 있으면
@@ -62,12 +69,6 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 				System.out.println("이벤트 등록 실패");
 			}
 				
-			PointDto pdto = new PointDto();
-			PointDao pdao = new PointDao();
-			
-			pdto = pdao.getByType("이벤트참여");
-			
-			pdao.add_point(member_no, pdto.getPoint_score());
 			
 		
 					
