@@ -112,7 +112,7 @@ function checkCheckPw(){
     var pw = document.getElementById("pw").value;
     var checkPw = document.getElementById("checkPw").value;
 
-return pw === checkPw
+return pw === checkPw;
 }
 function checkNick(){
     var regexNick =/^[가-힣]{1,8}$/g;
