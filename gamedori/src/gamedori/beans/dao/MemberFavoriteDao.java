@@ -14,6 +14,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
+
 import gamedori.beans.dto.MemberFavoriteDto;
 
 public class MemberFavoriteDao {
@@ -91,7 +93,9 @@ public class MemberFavoriteDao {
 				temp.put("genre_no", genre_no);
 				temp.put("genre_type", genre_type);
 				temp.put("member_favorite_no", member_favorite_no);
+				
 				result.add(temp);
+			
 			}				
 			
 			con.close();

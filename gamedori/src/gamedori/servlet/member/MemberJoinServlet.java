@@ -3,15 +3,18 @@ package gamedori.servlet.member;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dao.MemberFavoriteDao;
+import gamedori.beans.dao.PointDao;
+import gamedori.beans.dao.PointHistoryDao;
 import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.MemberFavoriteDto;
+import gamedori.beans.dto.PointDto;
+import gamedori.beans.dto.PointHistoryDto;
 
 //@WebServlet(urlPatterns = "/guest/join.do")
 public class MemberJoinServlet extends HttpServlet {
@@ -34,7 +37,7 @@ public class MemberJoinServlet extends HttpServlet {
 			// 처리 : MemberDao를 이용한 데이터베이스 등록
 			
 			mdao.join(mdto); 
-			
+			if(req.getParameterValues("member_favorite")!=null) {
 			String []genre_no = req.getParameterValues("member_favorite");
 			
 			for (int i = 0; i < genre_no.length; i++) {
@@ -45,10 +48,18 @@ public class MemberJoinServlet extends HttpServlet {
 				MemberFavoriteDao mfdao = new MemberFavoriteDao();
 				mfdao.choice(mfdto);
 			}
+}		
+			PointDto pdto = new PointDto();
+			PointDao pdao = new PointDao();
+			
+			pdto = pdao.getByType("회원가입");
+			
+			pdao.add_point(member_no, pdto.getPoint_score());
+			
 			
 			// 출력 : 이곳에서 하는 것이 아니라 다른 JSP 파일로 강제 이동
 			resp.sendRedirect("join_result.jsp");
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.sendError(500);

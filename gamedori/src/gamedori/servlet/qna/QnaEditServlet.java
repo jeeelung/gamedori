@@ -37,7 +37,6 @@ import gamedori.beans.dto.QnaFileDto;
 				factory.setDefaultCharset(charset);
 				
 				ServletFileUpload utility = new ServletFileUpload(factory);
-				MemberDto user =(MemberDto) req.getSession().getAttribute("userinfo");
 				
 
 				Map<String, List<FileItem>> map = utility.parseParameterMap(req);
@@ -47,12 +46,7 @@ import gamedori.beans.dto.QnaFileDto;
 				qdto.setQna_title(map.get("qna_title").get(0).getString());
 				qdto.setQna_content(map.get("qna_content").get(0).getString());
 				qdto.setQna_email(map.get("qna_email").get(0).getString());
-				if(map.get("qna_answer") !=null) {
-					qdto.setQna_answer(map.get("qna_answer").get(0).getString());
-				}
-				
-				
-				
+				qdto.setQna_answer(map.get("qna_answer").get(0).getString());
 				
 				QnaDao qdao = new QnaDao();
 				int qna_no = Integer.parseInt(map.get("qna_no").get(0).getString());
