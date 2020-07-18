@@ -69,9 +69,6 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 				System.out.println("이벤트 등록 실패");
 			}
 				
-			
-		
-					
 		}
 		
 		catch (Exception e ) {
