@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import gamedori.beans.dao.CommunityDao;
 import gamedori.beans.dao.PointDao;
+import gamedori.beans.dao.PointHistoryDao;
 import gamedori.beans.dao.ReplyDao;
 import gamedori.beans.dto.CommunityDto;
 import gamedori.beans.dto.MemberDto;
+import gamedori.beans.dto.PointDto;
+import gamedori.beans.dto.PointHistoryDto;
 import gamedori.beans.dto.ReplyDto;
 
 
@@ -48,10 +51,18 @@ public class ReplyInsertPointServlet extends HttpServlet {
 				
 				//포인트 넣고
 				
-				int member_no = mdto.getMember_no();
-				PointDao qdao = new PointDao();
-				qdao.add_point(member_no);
-				
+			/*
+			 * int member_no = mdto.getMember_no(); PointDto pdto = new PointDto(); PointDao
+			 * pdao = new PointDao();
+			 * 
+			 * pdto = pdao.getByType("답글달기");
+			 * 
+			 * pdao.add_point(member_no, pdto.getPoint_score()); PointHistoryDto phdto = new
+			 * PointHistoryDto(); phdto.setPoint_no(pdto.getPoint_no()); PointHistoryDao
+			 * phdao = new PointHistoryDao();
+			 * 
+			 * phdao.insert(phdto, member_no);
+			 */
 				
 //				출력 : 
 				resp.sendRedirect(req.getContextPath() + "/community/content.jsp?commu_no="+rdto.getOrigin_no());

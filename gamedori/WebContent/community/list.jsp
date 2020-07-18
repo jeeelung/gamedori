@@ -167,12 +167,6 @@ thead tr {
         
  .font-header {
 
-<<<<<<< HEAD
-<article class="w-90">
-<div align="center">
-	<h5 class="font-kor">
-	자유게시판
-=======
 	font-family: arcadeclassic;
 	font-size: 35px;
 	color: #a49ec2;
@@ -205,17 +199,13 @@ thead tr {
 	<!-- 계산한 데이터를 확인하기 위해 출력 -->
 	<h5 class="font-header">
 	Write Whatever You Want
->>>>>>> refs/remotes/origin/master
 	</h5>
-<<<<<<< HEAD
-=======
 	<div class="row today-wrap" align="right" >비방, 광고글은 제재를 당할 수 있습니다.</div>
 	</article>
 	<div class="right">
 	
 	
 	<h2></h2>
->>>>>>> refs/remotes/origin/master
 	<form action="list.jsp" method="get">
 	<table align="center" width="100%" class="table table-border2 table-hover">
 	

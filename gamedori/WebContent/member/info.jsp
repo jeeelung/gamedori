@@ -68,7 +68,7 @@
 	
 			<tr>
 				<th>포인트</th>
-				<td><%=user.getMember_point()%> <a href="check.jsp?go=MemberPointList.jsp">포인트 내역확인</a></td>
+				<td><%=user.getMember_point()%> <a href="check.jsp?go=<%=user.getMember_auth() == "관리자"?"MemberPointList.jsp":"point_history.jsp" %>">포인트 내역확인</a></td>
 			</tr>
 			<tr>
  				<th>가입일</th>

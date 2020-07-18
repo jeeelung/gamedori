@@ -56,6 +56,13 @@ public class MemberJoinServlet extends HttpServlet {
 			
 			pdao.add_point(member_no, pdto.getPoint_score());
 			
+			PointHistoryDto phdto = new PointHistoryDto();
+			
+			phdto.setPoint_no(pdto.getPoint_no());
+			
+			PointHistoryDao phdao = new PointHistoryDao();
+			
+			phdao.insert(phdto, member_no);
 			
 			// 출력 : 이곳에서 하는 것이 아니라 다른 JSP 파일로 강제 이동
 			resp.sendRedirect("join_result.jsp");
