@@ -12,28 +12,36 @@
 <%
 	NoticeDao ndao = new NoticeDao();
 	int notice_no = Integer.parseInt(request.getParameter("notice_no"));
-	
+	MemberDto user = (MemberDto)session.getAttribute("userinfo");
 	// 조회수 계산
 //	- session에 memory라는 저장소 정보를 추출한다 (없을 수도 있으므로)
 	Set<Integer> memory = (Set<Integer>)session.getAttribute("memory");
+	NoticeDto ndto = ndao.get(notice_no);
 //	- memory가 없을 경우에는 "게시물을 아예 처음 읽는 경우"이므로 저장소 생성
 	if(memory == null){
 		memory = new HashSet<>();
 	}
 	
 // 	- memory에 현재 글 번호를 저장
-	boolean isFirst = memory.add(notice_no);
-//	System.out.println(memory);
+	boolean isFirst = false;
+
+	if(user != null){
+		isFirst = (user.getMember_no() != ndto.getMember_no()) || memory.add(notice_no);
+	}else{
+		isFirst = true;
+	}
+	
+	
 	session.setAttribute("memory", memory);
 	
 	// Board_no를 이용하여 조회수를 증가시킨다
 	// 반드시 BoardDto 를 가져오기 전에 증가시켜야 함
-	MemberDto user = (MemberDto)session.getAttribute("userinfo");
+	
 	if(isFirst){
-		ndao.plusReadCount(notice_no, user.getMember_no());	// 내 글에는 조회수가 올라가면 안되므로 아이디를 함께 전달
+		ndao.plusReadCount(notice_no);	// 내 글에는 조회수가 올라가면 안되므로 아이디를 함께 전달
 	}
 	// 번호에 맞는 게시물 정보 불러오기
-	NoticeDto ndto = ndao.get(notice_no);
+	
 	
 	// 작성자 정보 불러오기
 	//System.out.println(cdto);

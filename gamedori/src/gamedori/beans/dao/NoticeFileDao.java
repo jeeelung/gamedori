@@ -66,7 +66,7 @@ public class NoticeFileDao {
 	public List<FilesDto> getList(int notice_no) throws Exception{
 		Connection con = getConnection();
 		String sql = "SELECT f.* "
-				+ "FROM files f INNER JOIN Notice_file n "
+				+ "FROM files f INNER JOIN notice_file n "
 				+ "ON n.file_no = f.file_no "
 				+ "WHERE n.notice_no = ? "
 				+ "ORDER BY f.file_no ASC";

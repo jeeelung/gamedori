@@ -119,9 +119,8 @@ public class NoticeDao {
 	public void plusReadCount(int notice_no) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "UPDATE notice SET notice_read = notice_read + 1 " + "WHERE notice_no = ?";
+		String sql = "UPDATE notice SET notice_read = notice_read + 1 ";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, notice_no);
 	
 		ps.execute();
 
