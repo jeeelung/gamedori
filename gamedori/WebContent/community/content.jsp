@@ -51,6 +51,10 @@
 	List<ReplyDto> replyList = rdao.getList(commu_no);
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
+<style>
+
+</style>
 <div align="center">
 		<h2>게시글 상세보기</h2>
 		<table border="1" width="900">

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -253,6 +255,7 @@ public class MemberDao {
 			mdto.setMember_nick(rs.getString("member_nick"));
 			mdto.setMember_phone(rs.getString("member_phone"));
 			mdto.setMember_auth(rs.getString("member_auth"));
+			mdto.setMember_point(rs.getInt("member_point"));
 			mdto.setMember_join_date(rs.getString("member_join_date"));
 			mdto.setMember_login_date(rs.getString("member_login_date"));
 
@@ -275,6 +278,83 @@ public class MemberDao {
 		con.close();
 	}
 	
+	//멤버 리스트 메소드
+	
+	public List<MemberDto> list(int start, int finish) throws Exception{
+		Connection con = getConnection();
+		
+		String sql= "SELECT * FROM (SELECT ROWNUM rn, A.* FROM MEMBER A) B WHERE rn BETWEEN ? AND ?";
+		PreparedStatement ps= con.prepareStatement(sql);
+		ps.setInt(1, start);
+		ps.setInt(2, finish);
+		ResultSet rs=ps.executeQuery();
+		
+		List<MemberDto> list = new ArrayList<>();
+		while(rs.next()) {
+			MemberDto mdto = new MemberDto(rs);
+			list.add(mdto);
+		}
+		con.close();
+		return list;
+	}
+	//(관리자) 회원 검색 기능(타입 추가) - 메소드 오버로딩
+			public List<MemberDto> search(String type, String keyword,int start,int finish) throws Exception{
+				Connection con = getConnection();
+				
+				String sql = "SELECT * FROM(SELECT ROWNUM rn, T.* FROM(SELECT * FROM member WHERE (instr(#1, ?) > 0 ) )T ) WHERE rn BETWEEN ? and ?";
+									
+				sql = sql.replace("#1", type);
+				
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setString(1, keyword);
+				ps.setInt(2, start);
+				ps.setInt(3, finish);
+				ResultSet rs = ps.executeQuery();
+				
+				//나머지 처리는 다른 목록들과 동일하다
+				List<MemberDto> list = new ArrayList<>();
+				while(rs.next()) {
+					MemberDto mdto = new MemberDto(rs);
+					list.add(mdto);
+				}
+				
+				con.close();
+				
+				return list;
+			}
+	
+			//개수 조회 메소드
+			public int getCount() throws Exception{
+				Connection con = getConnection();
+				String sql="select count(*) from member";
+
+				PreparedStatement ps=con.prepareStatement(sql);
+				ResultSet rs= ps.executeQuery();
+				rs.next();
+				int count =rs.getInt(1); //또는 rs.getInt ("count(*)");
+				
+				con.close();
+				return count;
+			}
+			
+			public int getCount(String type,String keyword) throws Exception{
+				Connection con = getConnection();
+				String sql = "SELECT count (*)  FROM member "
+						+ "WHERE instr(#1, ?) > 0 "
+						+ "order by member_no desc";
+						
+				sql = sql.replace("#1", type);
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setString(1, keyword);
+				
+				ResultSet rs= ps.executeQuery();
+				rs.next();
+				int count = rs.getInt(1); //또는 rs.getInt("count(*));
+				
+				con.close();
+				return count;
+				
+			}
 }
 
 

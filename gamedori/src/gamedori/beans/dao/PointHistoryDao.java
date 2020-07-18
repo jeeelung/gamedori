@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -103,9 +105,9 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 			
 			public int getCount(String type,String keyword,int member_no, String auth) throws Exception{
 				Connection con = getConnection();
-				String sql = "SELECT count (*)  FROM point p  INNER JOIN MEMBER m ON p.member_no = m.member_no "
-						+ "WHERE instr(#1, ?) > 0 and (p.member_no= ? or '관리자'=?) "
-						+ "order by point_no desc";
+				String sql = "SELECT count (*)  FROM point_history ph  INNER JOIN MEMBER m ON ph.member_no = m.member_no "
+						+ "WHERE instr(#1, ?) > 0 and (ph.member_no= ? or '관리자'=?) "
+						+ "order by point_his_no desc";
 						
 				sql = sql.replace("#1", type);
 				PreparedStatement ps = con.prepareStatement(sql);
@@ -126,37 +128,32 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 			public int getPoint(int member_no) throws Exception{
 				Connection con = getConnection();
 				
-				String sql = "SELECT SUM(POINT_SCORE) AS point_score from POINT where member_no=?";
+				String sql = "SELECT SUM(point_score) AS point_score FROM point p INNER JOIN point_history ph ON p.point_no=ph.point_no WHERE member_no=?";
 				PreparedStatement ps = con.prepareStatement(sql);
 				
 				ps.setInt(1, member_no);
 				
 				ResultSet rs = ps.executeQuery();
-				int result = 0;
+				int result=0;
 				while(rs.next()) {
 					result = rs.getInt("point_score");
 				}
-				
 				con.close();
 				return result;
 			}
 			
 			//목록 메소드
-			public List<PointDto> getList(int member_no, String auth, int start , int finish) throws Exception{
+			public List<PointDto> getList(int start , int finish) throws Exception{
 				Connection con = getConnection();
-				String sql = "SELECT * FROM( "
-						+ "SELECT ROWNUM rn, T.* FROM( "
-						+ "SELECT * FROM point p INNER JOIN MEMBER m ON p.MEMBER_NO = m.MEMBER_NO "
-						+ "WHERE (p.member_no=? OR '관리자' = ? ) "
-						+ "ORDER BY point_no desc "
-						+ ")T "
-					+ ") WHERE rn BETWEEN ? and ?";
+				String sql = "SELECT * FROM "
+						+ "(SELECT ROWNUM rn, T.* FROM "
+						+ "(SELECT * FROM point "
+						+ "ORDER BY point_no asc) T ) WHERE rn BETWEEN ? and ?";
+
 				PreparedStatement ps = con.prepareStatement(sql);
 				
-				ps.setInt(1, member_no);
-				ps.setString(2, auth);
-				ps.setInt(3, start);
-				ps.setInt(4, finish);
+				ps.setInt(1, start);
+				ps.setInt(2, finish);
 				
 				ResultSet rs = ps.executeQuery();
 				List<PointDto> list = new ArrayList<>();
@@ -165,27 +162,23 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 					
 					list.add(pdto);
 				}
-				
 				con.close();
 				return list;
 			}
 			
-			public List<PointDto> search(String type, String auth, String keyword, int member_no, int start, int finish) throws Exception{
+			public List<PointDto> search(String type, String keyword,String auth, int member_no, int start, int finish) throws Exception{
 				Connection con = getConnection();
 				
-				String sql = "SELECT * FROM( "
-						+ "SELECT ROWNUM rn, T.* FROM( "
-						+ "SELECT * FROM point p INNER JOIN MEMBER m ON p.MEMBER_NO = m.MEMBER_NO "
-						+ "WHERE instr(#1, ?) > 0 and (p.member_no=? OR '관리자' = ?) " 
-						+ "ORDER BY point_no desc "
-						+ ")T "
-					+ ") WHERE rn BETWEEN ? and ?";
+				String sql = "SELECT * FROM "
+						+ "(SELECT ROWNUM rn, T.* FROM "
+						+ "(SELECT * FROM point_view WHERE "
+						+ "(instr(#1, ?) > 0 and ('관리자' = ?  or member_no=? ) )T) WHERE rn BETWEEN ? and ?";
 						
 				sql = sql.replace("#1", type);
 				PreparedStatement ps = con.prepareStatement(sql);			
 				ps.setString(1, keyword);
-				ps.setInt(2, member_no);
-				ps.setString(3,auth);
+				ps.setString(2,auth);
+				ps.setInt(3, member_no);
 				ps.setInt(4, start);
 				ps.setInt(5, finish);
 				
@@ -199,4 +192,5 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 				con.close();
 				return list;
 			}
+			
 }

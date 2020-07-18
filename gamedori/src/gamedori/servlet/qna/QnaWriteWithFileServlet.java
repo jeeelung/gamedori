@@ -34,8 +34,6 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 		File baseDir = new File("D:/upload/image");
 		baseDir.mkdirs();
 		
-		
-		
 		DiskFileItemFactory factory = new DiskFileItemFactory(limit, baseDir);
 		factory.setDefaultCharset(charset);
 		

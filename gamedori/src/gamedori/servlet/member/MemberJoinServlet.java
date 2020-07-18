@@ -9,8 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import gamedori.beans.dao.MemberDao;
 import gamedori.beans.dao.MemberFavoriteDao;
+import gamedori.beans.dao.PointDao;
+import gamedori.beans.dao.PointHistoryDao;
 import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.MemberFavoriteDto;
+import gamedori.beans.dto.PointDto;
+import gamedori.beans.dto.PointHistoryDto;
 
 //@WebServlet(urlPatterns = "/guest/join.do")
 public class MemberJoinServlet extends HttpServlet {
@@ -19,7 +23,7 @@ public class MemberJoinServlet extends HttpServlet {
 		try {
 			req.setCharacterEncoding("UTF-8");// 사용자의 요청을 UTF-8 형태로 복원하라!
 
-			MemberDto mdto = new MemberDto();			
+			MemberDto mdto = new MemberDto();
 			MemberDao mdao = new MemberDao();
 			int member_no = mdao.getMember_no();
 			mdto.setMember_no(member_no);
@@ -34,29 +38,40 @@ public class MemberJoinServlet extends HttpServlet {
 			String idDto = idDao.overlapID(mdto);
 			MemberDao nickDao = new MemberDao();
 			String nickDto = nickDao.overlapNick(mdto);
-			if(idDto !=null) {// 아이디 정보 중복
+			if (idDto != null) {// 아이디 정보 중복
 				resp.sendRedirect("join.jsp?errorID");
-			}else if(nickDto !=null) {
+			} else if (nickDto != null) {
 				resp.sendRedirect("join.jsp?errorNick");
-			}else {
-				mdao.join(mdto); 
+			} else {
+				mdao.join(mdto);
 				// 출력 : 이곳에서 하는 것이 아니라 다른 JSP 파일로 강제 이동
-				if(req.getParameterValues("member_favorite")!=null) {
-				String []genre_no = req.getParameterValues("member_favorite");
-				for (int i = 0; i < genre_no.length; i++) {
-					MemberFavoriteDto mfdto = new MemberFavoriteDto();
-					mfdto.setGenre_no(Integer.parseInt(genre_no[i]));
-					mfdto.setMember_no(member_no);
-					
-					MemberFavoriteDao mfdao = new MemberFavoriteDao();
-					mfdao.choice(mfdto);
+				if (req.getParameterValues("member_favorite") != null) {
+					String[] genre_no = req.getParameterValues("member_favorite");
+					for (int i = 0; i < genre_no.length; i++) {
+						MemberFavoriteDto mfdto = new MemberFavoriteDto();
+						mfdto.setGenre_no(Integer.parseInt(genre_no[i]));
+						mfdto.setMember_no(member_no);
+
+						MemberFavoriteDao mfdao = new MemberFavoriteDao();
+						mfdao.choice(mfdto);
+					}
 				}
-				}
-				resp.sendRedirect("join_result.jsp");				
+				resp.sendRedirect("join_result.jsp");
 			}
+
+			PointDto pdto = new PointDto();
+			PointDao pdao = new PointDao();
+
+			pdto = pdao.getByType("회원가입");
+
+			pdao.add_point(member_no, pdto.getPoint_score());
+
+			// 출력 : 이곳에서 하는 것이 아니라 다른 JSP 파일로 강제 이동
+			resp.sendRedirect("join_result.jsp");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.sendError(500);
 		}
-	}
+	
 }
