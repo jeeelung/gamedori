@@ -6,33 +6,26 @@
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
     
-    <style>
-.font-header {
-
-	font-family: arcadeclassic;
+<style>
+.font-han{
+	font-family: DungGeunMo;
 	font-size: 35px;
 	color: #85BCE1;
 }
-/* 
-.font_han{
-	font-family: DungGeunMo;
-}
- */
+
 thead tr {
     background-color: #85BCE1;
     color: #ffffff;
   }
-</style>
-    
-    
-    
+</style> 
 <%
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
-	String head = request.getParameter("head");
+	String head = request.getParameter("commu_head");
 	
-	boolean isHead = head != null;
-	boolean isSearch = type != null && keyword != null;
+	boolean isHead = head != null && !head.isEmpty();
+	boolean isSearch = type != null && keyword != null && !keyword.isEmpty();
+	boolean isList = !isHead && !isSearch;
 	
 	// 페이지 번호 계산 코드
 	int pageSize = 10;
@@ -61,13 +54,16 @@ thead tr {
 	
 	// 페이지 개수 
 	int count;
-	if(isSearch) {
-		count = cdao.getCount(type, keyword);
-	} else if(isHead){
+	if(isHead && !isSearch) {
 		count = cdao.getCount(head);
+	} else if(!isHead && isSearch){
+		count = cdao.getCount(type, keyword);
+	} else if(isHead && isSearch) {
+		count = cdao.getCount(head, type, keyword);
 	} else {
-		count = cdao.getCount();		
+		count = cdao.getCount();
 	}
+	
 	int pageCount = (count + pageSize -1) / pageSize;
 	
 	if(finishBlock > pageCount) {
@@ -76,27 +72,32 @@ thead tr {
 	// 검색 또는 목록
 	List<CommunityDto> list;
 	
-	if(isSearch){
-		list = cdao.search(type, keyword, start, finish);
-	} else if(isHead){
-		list = cdao.headSort(head, start, finish);
+	if(isHead && !isSearch) {
+		list = cdao.search(head, start, finish);	
+	} else if(!isHead && isSearch){
+		list = cdao.search(type, keyword, start, finish);			
+	} else if(isHead && isSearch) {
+		list = cdao.search(head, type, keyword, start, finish);
 	} else {
 		list = cdao.getList(start, finish);
 	}
 	
-	
-	
 %>
 
 <script>
-	function headSort() {
-    	var headvalue = document.querySelector("select[name=commu_head]").value;
-    	<%if(isSearch) {%>
-    		location.href = "list.jsp?type="<%=type%>"&keyword="<%=keyword%>"&head="+headvalue;
-    	<%} else {%>
-    		location.href = "list.jsp?head="+headvalue;
-    	<%}%>
+	function sendForm(){
+		document.querySelector("form").submit();
 	}
+	
+	//a는 전송된 값이 선택되어 있도록 유지
+	window.onload = function(){
+		var head = document.querySelector("[name=commu_head]");
+		var type = document.querySelector("[name=type]");
+		var keyword = document.querySelector("[name=keyword]");
+		head.value = "<%=request.getParameter("commu_head") == null? "":request.getParameter("commu_head")%>";
+		type.value = "<%=request.getParameter("type") == null? "commu_title":request.getParameter("type")%>";
+		keyword.value = "<%=request.getParameter("keyword") == null? "":request.getParameter("keyword")%>";
+	};
 </script>
     
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -166,6 +167,12 @@ thead tr {
         
  .font-header {
 
+<<<<<<< HEAD
+<article class="w-90">
+<div align="center">
+	<h5 class="font-kor">
+	자유게시판
+=======
 	font-family: arcadeclassic;
 	font-size: 35px;
 	color: #a49ec2;
@@ -198,20 +205,24 @@ thead tr {
 	<!-- 계산한 데이터를 확인하기 위해 출력 -->
 	<h5 class="font-header">
 	Write Whatever You Want
+>>>>>>> refs/remotes/origin/master
 	</h5>
+<<<<<<< HEAD
+=======
 	<div class="row today-wrap" align="right" >비방, 광고글은 제재를 당할 수 있습니다.</div>
 	</article>
 	<div class="right">
 	
 	
 	<h2></h2>
+>>>>>>> refs/remotes/origin/master
 	<form action="list.jsp" method="get">
 	<table align="center" width="100%" class="table table-border2 table-hover">
 	
 		<thead>
 			<tr align="center" class="font_header">
 				<th>
-					<select name="commu_head" onchange="headSort();">
+					<select name="commu_head" onchange="sendForm();">
 						<option value="">전체보기</option>
 						<option>자유</option>
 						<option>유머</option>

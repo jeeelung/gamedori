@@ -27,6 +27,11 @@
 	src: url(font/DungGeunMo.ttf)
 }
 
+@font-face{
+	font-family: DungGeunMo;
+	src: url(font/DungGeunMo.ttf);
+}
+
 /*
     이미지 관련 스타일
     - 기본 스타일은 .img
@@ -275,7 +280,7 @@
 	position: relative;
 	padding: 1rem;
 	font-size: 15px;
-	width: 140px;
+	width: 150px;
 	text-align: center;
 	cursor: pointer;
 }
@@ -424,6 +429,9 @@
 	/* .menu > li > a */
 	color: white;
 	text-decoration: none;
+	font-family: DungGeunMo;
+	font-size: 17px;
+	font-weight: 300;
 }
 
 .menu li:hover a {
@@ -493,8 +501,9 @@ main {
 	left: 10px;
 }
 
-.menu-font:hover {
-	
+.menu-font > a{
+	font-family: DungGeunMo;
+	font-weight: 100;
 }
 
 .notice-wrap {
@@ -755,7 +764,6 @@ a.deco {
 
 .game-wrap .gameName {
 	margin-bottom: 0px;
-	margin-top: 20px;
 }
 
 .game-wrap {

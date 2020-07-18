@@ -57,19 +57,19 @@
 <%}%>
 <ul class="menu">
 	<li><a href="<%=rootPath%>/game/latestlist.jsp">최신게임</a></li>
-	<li><a href="#">인기게임</a></li>
-	<li><a href="#">장르별</a></li>
+	<li><a href="<%=rootPath%>/game/popularlist.jsp">인기게임</a></li>
+	<li><a href="<%=rootPath%>/game/genrelist.jsp">장르별</a></li>
 	<li><a href="#">브랜드별</a>
 		<ul class="menu-sec">
-			<li>게임엔</li>
-			<li>키니위니</li>
-			<li>쥬디게임</li>
-			<li>엔젤메이플</li>
+			<li><a href="#">게임엔</a></li>
+			<li><a href="#">키니위니</a></li>
+			<li><a href="#">쥬디게임</a></li>
+			<li><a href="#">엔젤메이플</a></li>
 		</ul>
 	</li>
 	<li><a href="<%=rootPath%>/game/upload.jsp">업로드</a>
 		<ul class="menu-sec">
-			<li>업로드 요청</li>
+			<li><a href="#">업로드 요청</a></li>
 		</ul>
 	</li>
 	<li><a href="<%=rootPath%>/community/list.jsp">커뮤니티</a></li>
