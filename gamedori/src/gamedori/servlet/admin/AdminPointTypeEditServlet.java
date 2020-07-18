@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import gamedori.beans.dao.PointDao;
-@WebServlet(urlPatterns="/member/pointdelete.do")
-public class AdminPointTypeDeleteServlet extends HttpServlet{
+@WebServlet(urlPatterns="/member/pointedit.do")
+public class AdminPointTypeEditServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
@@ -18,7 +18,7 @@ public class AdminPointTypeDeleteServlet extends HttpServlet{
 			String point_type = req.getParameter("point_type");
 			
 			PointDao pdao=new PointDao();
-			pdao.delete(point_no,point_type);
+			pdao.edit(point_no,point_type);
 			
 			
 			resp.sendRedirect("MemberPointList.jsp");

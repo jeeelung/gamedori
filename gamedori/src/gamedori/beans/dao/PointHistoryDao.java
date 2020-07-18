@@ -39,7 +39,7 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 		String sql = "INSERT INTO Point_history VALUES(point_his_seq.nextval, ? , ? , sysdate)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		
-		ps.setInt(1, phdto.getMember_no());
+		ps.setInt(1, member_no);
 		ps.setInt(2, phdto.getPoint_no());
 		ps.execute();
 

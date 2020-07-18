@@ -151,7 +151,7 @@
 			</table>	
 		</form>
 		
-		<form action="pointdelete.do" method ="get" style="display: inline-block;">
+		<form action="pointedit.do" method ="get" style="display: inline-block;">
 		<table border="1" style="display: inline-block;">
 		<tr>
 		<th colspan="2">삭제</th>
