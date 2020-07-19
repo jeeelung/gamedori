@@ -59,9 +59,6 @@ public class MemberChangeInfoServlet extends HttpServlet {
 						mfdao.choice(mfdto);
 					}
 				}
-
-				// 출력
-				resp.sendRedirect("info.jsp");
 			}
 			// 출력
 			resp.sendRedirect("info.jsp");
