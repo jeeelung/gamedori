@@ -143,5 +143,52 @@ public class event_participateDao {
 
 		return epdto;
 	}
+	
+	//중복방지
+	public event_participateDto saMe(event_participateDto epdto) throws Exception{
+		Connection con = getConnection();
+		
+		String sql = "select * from event_partici where event_no=?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, epdto.getMember_no());
+		ResultSet rs= ps.executeQuery();
+		event_participateDto samE;
+		if(rs.next()) {
+			samE = new event_participateDto();
+			samE.setEvent_partici_no(rs.getInt("event_partici_no"));
+			samE.setMember_no(rs.getInt("member_no"));
+			samE.setEvent_no(rs.getInt("event_no"));
+			samE.setEvent_partici_date(rs.getString("event_partici_date"));
+		} else {
+			samE= null;
+		}
+		con.close();
+		return samE;
+	}
+	
+	// 회원번호 이벤트 테이블을 조회
+	public Integer getEventCheck(int member_no) throws Exception {
+		Connection con = getConnection();
+		
+		String sql = "SELECT EVENT_PARTICI_NO FROM EVENT_PARTICI WHERE MEMBER_NO = ?";
+		
+		PreparedStatement ps = con.prepareStatement(sql);
+		
+		ps.setInt(1, member_no);
+		
+		ResultSet rs = ps.executeQuery();
+		
+		Integer result;
+		
+		if(rs.next()) {
+			result = rs.getInt(1);
+		} else {
+			result = null;
+		}
+		
+		con.close();
+		
+		return result;
+	}
 
 }

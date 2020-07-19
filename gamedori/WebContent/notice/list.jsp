@@ -9,19 +9,18 @@
 <%
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
-	if((MemberDto)session.getAttribute("userinfo")!=null){
-	}
 	
 	MemberDto user=(MemberDto)session.getAttribute("userinfo");
-	
-	boolean isAdmin = false;
-	boolean isSearch = false;
-	
-	if(user != null) {
-		isAdmin= user.getMember_auth().equals("관리자");
-		isSearch = type != null && keyword != null;
+	int member_no;
+	boolean isAdmin;
+	if(user==null){
+	member_no = 0;
+	isAdmin = false;
+	}else{		
+	member_no = user.getMember_no();
+	isAdmin= user.getMember_auth().equals("관리자");
 	}
-	
+	boolean isSearch = type != null && keyword != null;
 	// 페이지 번호 계산 코드
 	int pageSize = 10;
 	String pageStr = request.getParameter("page");
@@ -72,105 +71,28 @@
 %>
     
 <jsp:include page="/template/header.jsp"></jsp:include>
-<style>
-	.ec-base-table.typeList table{
-		border-top-color: #e8e8e8;
-	}
-	.ec-base-table table{
-	position: releative;
-	margin: 0;
-	border: 1px solid #e8e8e8;
-	border-left:0;
-	border-right:0;
-	color: #fff;
-	line-height:L
-	
-	}
-	
-	.path li {
-		float: left;
-		padding: 0 0 0 12px;
-		margin: 0 0 0 8px;
-		color: #999;
-		background: url(../image/화살표.png) no-repeat 0 10px;
-	}
-	
-	.font-notice {
-		font-family: ARCADECLASSIC;
-		font-size: 30px;
-		color: #20639B;
-	}
-	
-	
-	element.style{
-	
-	}
-		
-	.path ol {
-		float: right;
-	
-	}
-	.path {
-		position: absolute;
-		right: 0;
-		z-index: 99;
-		line-height: 30px;
-		text-transform: lowercase;
-		
-	}
-	ol{
-	diplay: block;
-	list-style-type: decimal;
-	margin-block-start: 1em;
-	margin-block-end: 1em;
-	margin-inline-start: 0px;
-	margin-inline-end: 0px;
-	padding-inline-start: 40px;
-	
-	}
-	div{
-	diplay: block;s
-	}
-	
-	.ec-bace-table{
-		clear: both;
-	}
-
-</style>
 <div align="center">
+
 	
+	<h2></h2>
 	<form action="list.jsp" method="get">
-	<div class="ec-bace-table- typeList gBorder">
-	<table border="1" >
+	<table border="1" width="90%">
+	
 		<thead>
-		<div class="title">
-		<h2>N O T I C E</h2>
-		</div>
-		<div class="path">
-		 <ol>
-		 	<li>
-		 	 <a href="/gamedori/index.jsp">Home</a>
-		 	</li>
-		 	<li title="현재 위치">
-		 		<strong>notice</strong>
-		 	</li>
-		 </ol>
-		</div>
+		<h2>공지사항</h2>
 			<tr>				
-				<th scope="col">NO</th>
-				<th scope="col">CONTENTS</th>
-				<th scope="col">NAME</th>
-				<th scope="col">DATE</th>
-				<th scope="col">READ</th>
+				<th>글번호</th>
+				<th width="50%">제목</th>
+				<th>작성자</th>
+				<th>작성일</th>
+				<th>조회수</th>
 			</tr>
 		</thead>
 		
 		<tbody align="center"> 
 			<% for(NoticeDto ndto : list) { %>
 			<tr>	
-			<%MemberDto mdto = ndao.getWriter(ndto.getMember_no());
-				System.out.println(mdto.getMember_id());
-			%>
+			<%MemberDto mdto = ndao.getWriter(member_no);%>
 				<th><%=ndto.getNotice_no()%></th>
 			<td>
 				<a href="content.jsp?notice_no=<%=ndto.getNotice_no()%>">
@@ -179,7 +101,7 @@
 				</a>
 			</td>
 			
-				<td><%=mdto.getMember_nick()%></td>
+				<td><%=user.getMember_nick()%></td>
 				<td><%=ndto.getNotice_auto()%></td>
 				<td><%=ndto.getNotice_read()%></td>
 			</tr>
@@ -198,7 +120,6 @@
 		</tfoot>
 		<%} %>
 	</table>
-	</div>
 	<!-- 네비게이터 -->
 	<h6>
 <%if(startBlock > 1) {%>	

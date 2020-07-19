@@ -17,8 +17,15 @@
 	FAQDto fdto = fdao.get(faq_no);
 	MemberDao mdao = new MemberDao();
 	MemberDto mdto = mdao.get(fdto.getMember_no());
-	boolean isAdmin = user.getMember_auth().equals("관리자");
-	boolean isMine = user.getMember_id().equals(mdto.getMember_id());
+	boolean isAdmin;
+	boolean isMine;
+	if(user==null){
+		isAdmin = false;
+		isMine = false;
+	}else {
+	isAdmin = user.getMember_auth().equals("관리자");
+	isMine = user.getMember_id().equals(mdto.getMember_id());		
+	}
 	FAQFileDao ffdao = new FAQFileDao();
 	List<FilesDto> fileList = ffdao.getList(faq_no);
 %>
@@ -75,27 +82,6 @@
  }
 </style>
 <script>
-	function preview() {
-		var fileTage = document.querySelector("input[name=f]");
-		var divTag = document.querySelelctor(".preview-wrap");
-		if(fileTag.files.length > 0){
-			divTag.innerHTML = "";
-			 for(var i=0; i < fileTag.files.length; i++){
-                 var reader = new FileReader();
-                 reader.onload = function(data){
-                     //img 생성 후 data.target.result 설정하여 추가
-                     var imgTag = document.createElement("img");
-                     imgTag.setAttribute("src", data.target.result);
-                     divTag.appendChild(imgTag);
-                 };
-                 reader.readAsDataURL(fileTag.files[i]);
-             }
-             
-         }else{
-             //미리보기 전부 삭제
-             divTag.innerHTML = "";
-         }
-	}
 </script>
 <div align="center">
 <form>
@@ -138,11 +124,9 @@
 						<li><%=filesdto.getFile_name() %> (<%=filesdto.getFile_size() %>bytes) 
 						<a href="download.do?file_no=<%=filesdto.getFile_no() %>"><input type="button" value="다운로드"> 
 						<!-- 다운로드 미리보기 -->
-						<span class="preview-text">미리보기<img class="preview" src="dowload.do?file_no="<%=filesdto.getFile_no() %>"width="150"></span>
 						</a>
 						</li>
 						<%}%>
-						<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif"> 
 					</ul>
 				</td>
 			</tr>
@@ -151,8 +135,9 @@
 		<!-- 각종 버튼들 구현 -->
 		<tfoot>
 			<tr align="center">
-				<td colspan="4"><a href="write.jsp"> <input class="form-btn form-inline"  type="button" value="글쓰기"></a>
-				  <%if(isAdmin || isMine){ %>
+				<td colspan="4">
+				  <%if(isAdmin && isMine){ %>
+				<a href="write.jsp"> <input class="form-btn form-inline"  type="button" value="글쓰기"></a>
 					  <a href="edit.jsp?faq_no=<%=faq_no %>"><input class="form-btn form-inline" type="button" value="수정"></a> 
 					  <a href="<%=request.getContextPath()%>/member/check.jsp?go=<%=request.getContextPath()%>/faq/delete.do?faq_no=<%=faq_no%>">
 					  <input class="form-btn form-inline" type="button" value="삭제"></a>

@@ -15,7 +15,7 @@
 
 <div class="notice-wrap">
 	<h5 class="menu-font">
-		<a href="<%=rootPath%>/notice/list.jsp">Notice</a>
+		<a href="<%=rootPath%>/notice/list.jsp">공지사항</a>
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-front">
@@ -23,7 +23,7 @@
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">
-		<a href="<%=rootPath%>/qna/qna_list.jsp">1:1문의</a>
+		<a href="<%=rootPath%>/qna/qna_list.jsp">1:1 문의</a>
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">
@@ -38,10 +38,17 @@
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/member/logout.do">로그아웃</a>
 	</h5>
-	
+	<h5>｜</h5>
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/member/info.jsp">마이페이지</a>
 	</h5>
+	<%if(mdto.getMember_auth().equals("관리자")){ %>
+	<h5>｜</h5>
+	<h5 class="menu-font">
+		<a href="<%=rootPath%>/admin/home.jsp">관리페이지</a>
+	</h5>
+			<%} %>
+
 </div>
 <%} else { %>
 <div class="member-wrap">
@@ -56,19 +63,19 @@
 <%}%>
 <ul class="menu">
 	<li><a href="<%=rootPath%>/game/latestlist.jsp">최신게임</a></li>
-	<li><a href="#">인기게임</a></li>
-	<li><a href="#">장르별</a></li>
+	<li><a href="<%=rootPath%>/game/popularlist.jsp">인기게임</a></li>
+	<li><a href="<%=rootPath%>/game/genrelist.jsp">장르별</a></li>
 	<li><a href="#">브랜드별</a>
 		<ul class="menu-sec">
-			<li>게임엔</li>
-			<li>키니위니</li>
-			<li>쥬디게임</li>
-			<li>엔젤메이플</li>
+			<li><a href="#">게임엔</a></li>
+			<li><a href="#">키니위니</a></li>
+			<li><a href="#">쥬디게임</a></li>
+			<li><a href="#">엔젤메이플</a></li>
 		</ul>
 	</li>
 	<li><a href="<%=rootPath%>/game/upload.jsp">업로드</a>
 		<ul class="menu-sec">
-			<li>업로드 요청</li>
+			<li><a href="#">업로드 요청</a></li>
 		</ul>
 	</li>
 	<li><a href="<%=rootPath%>/community/list.jsp">커뮤니티</a></li>

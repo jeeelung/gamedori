@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 <%@page import="gamedori.beans.dto.ReplyDto"%>
 <%@page import="gamedori.beans.dao.ReplyDao"%>
-=======
-
->>>>>>> refs/remotes/origin/master
 <%@page import="gamedori.beans.dto.FilesDto"%>
 <%@page import="gamedori.beans.dto.CommunityFileDto"%>
 <%@page import="java.util.List"%>
@@ -55,6 +51,10 @@
 	List<ReplyDto> replyList = rdao.getList(commu_no);
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
+<style>
+
+</style>
 <div align="center">
 		<h2>게시글 상세보기</h2>
 		<table border="1" width="900">
@@ -68,19 +68,20 @@
 				</tr>
 				<tr>
 					<!-- 작성자 및 권한 -->
-					<th>작성자 <%
-						if (mdto != null) {
-					%> <%=mdto.getMember_nick()%> <font
-						color="gray"><%=mdto.getMember_auth()%></font> <%
- 	} else {
- %> <font
-						color="gray">탈퇴한 사용자</font> <%
- 	}
- %>
+					<th>
+					작성자 
+					<%	if (mdto != null) {%> 
+					<%=mdto.getMember_nick()%> 
+					<font color="gray"><%=mdto.getMember_auth()%></font> 
+					<%} else {%> 
+					<font color="gray">탈퇴한 사용자</font> 
+					<%}%>
 					</th>
 				</tr>
 				<tr>
-					<td><%=cdto.getCommu_auto()%> 조회 <%=cdto.getCommu_read()%></td>
+					<td><%=cdto.getCommu_auto()%> 조회 
+					<%=cdto.getCommu_read()%>
+					</td>
 				</tr>
 			</thead>
 			<tbody align="left" valign="top">
@@ -89,24 +90,18 @@
 					<td><%=cdto.getCommu_content()%></td>
 				</tr>
 				<!-- 첨부파일 출력 영역 : 첨부파일이 있는 경우만 출력 -->
-				<%
-					if (!fileList.isEmpty()) {
-				%>
+				<%if (!fileList.isEmpty()) {%>
 				<tr height="100">
 					<td>첨부파일 목록
 						<ul>
 							<!-- ol은 순서가 있는거 / ul은 순서가 없는거 -->
-							<%
-								for (FilesDto fdto : fileList) {
-							%>
+							<%for (FilesDto fdto : fileList) {%>
 							<li><a href="download.do?file_no=<%=fdto.getFile_no()%>">
 									<%=fdto.getFile_name()%>
 							</a> (<%=fdto.getFile_size()%> bytes) <img
 								src="download.do?file_no=<%=fdto.getFile_no()%>" width="50"
 								height="50"></li>
-							<%
-								}
-							%>
+							<%}%>
 						</ul>
 					</td>
 				</tr>
@@ -127,8 +122,8 @@
 				<%for(ReplyDto rdto : replyList){%>
 				<tr>
 				<td>
-				<%MemberDto nick = cdao.getWriter(rdto.getMember_no()); %>
-				<div><%=nick.getMember_nick() %></div>
+				<%MemberDto userNick = cdao.getWriter(cdto.getMember_no()); %>
+				<div><%=mdto.getMember_nick() %></div>
 				<div><%=rdto.getReply_content() %></div>
 				<div><%=rdto.getReply_date() %></div>
 				</td>
@@ -140,7 +135,7 @@
 				</td>
 				</tr>
 				
-				<%} %>
+				<%}%>
 				</tbody>
 				</table>	
 				</td>

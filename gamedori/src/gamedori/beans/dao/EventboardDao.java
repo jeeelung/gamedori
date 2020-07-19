@@ -129,7 +129,10 @@ public class EventboardDao {
 	public void plusReadcount(int event_no, int member_no) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "UPDATE event SET event_read = event_read + 1 WHERE event_no = ? and member_no != ?";
+		String sql = "UPDATE event "
+				+ "SET event_read = event_read + 1 "
+				+ "WHERE event_no = ? "
+				+ "AND member_no != ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, event_no);
 		ps.setInt(2, member_no);

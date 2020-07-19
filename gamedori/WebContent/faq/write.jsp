@@ -52,7 +52,6 @@
 select{
 border: 2px solid dodgerblue;
 }
-
 textarea{
 display:incline-block;
 postion : absolute;

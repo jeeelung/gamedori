@@ -1,3 +1,4 @@
+<%@page import="gamedori.beans.dao.MemberDao"%>
 <%@page import="gamedori.beans.dto.MemberDto"%>
 <%@page import="gamedori.beans.dao.FAQDao"%>
 <%@page import="gamedori.beans.dto.FAQDto"%>
@@ -15,13 +16,10 @@
 	//		- isSearch라는 변수에 검색인지 아닌지 판정하여 저장
 	//		- isSearch의 값에 따라 "목록" 또는 "검색" 결과를 저장
 	//3. 결과물(출력) : 게시글 리스트 - List<FAQDto>
-
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
-
 	boolean isSearch = type != null && keyword != null;
 	int pageSize = 10;//한 페이지에 표시할 데이터 개수
-
 	//page 번호를 계산하기 위한 코드
 	// - 이상한 값은 전부다 1로 변경
 	// - 멀쩡한 값은 그대로 숫자로 변환
@@ -35,20 +33,16 @@
 	} catch (Exception e) {
 		pageNo = 1;
 	}
-
 	//시작 글 순서와 종료 글 순서를 계산
 	int finish = pageNo * pageSize;
 	int start = finish - (pageSize - 1);
-
 	//////////////////////////////////////////////////////////////////
 	// 페이지 네비게이터 계산 코드
 	//////////////////////////////////////////////////////////////////
 	int blockSize = 10;//이 페이지에는 네비게이터 블록을 10개씩 배치하겠다!
 	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
 	int finishBlock = startBlock + blockSize - 1;
-
 	FAQDao fdao = new FAQDao();
-
 	//(주의!) 다음 버튼의 경우 계산을 통하여 페이지 개수를 구해야 출력 여부 판단이 가능
 	//int count = 목록개수 or 검색개수;
 	int count;
@@ -62,13 +56,23 @@
 	if (finishBlock > pageCount) {
 		finishBlock = pageCount;
 	}
-
 	// 	List<FAQDto> list = 목록 or 검색;
 	List<FAQDto> list;
 	if (isSearch) {
 		list = fdao.search(type, keyword, start, finish);
 	} else {
 		list = fdao.getList(start, finish);
+	}
+	MemberDto user = (MemberDto)session.getAttribute("userinfo");
+	MemberDao mdao = new MemberDao();
+	boolean isAdmin;
+	boolean isMine;
+	if(user==null){
+		isAdmin = false;
+		isMine = false;
+	}else {
+	isAdmin = user.getMember_auth().equals("관리자");
+	isMine = user.getMember_id().equals(user.getMember_id());		
 	}
 %>
 
@@ -80,15 +84,15 @@
 .font-game {
 	font-family: arcadeclassic;
 	font-size: 30px;
-	color: #20639B;
+	color: #85BCE1;
 }
 .wrap {
 	border-top: 3px solid #20639B;
-	border-bottom : 3px solid #20639B;
+	border-bottom : 3px solid #85BCE1;
 }
 .today-wrap {
-	border-top: 3px solid #20639B;
-	border-bottom : 3px solid #20639B;
+	border-top: 3px solid #85BCE1;
+	border-bottom : 3px solid #85BCE1;
 	position : relative;
 }
 .table{
@@ -96,7 +100,7 @@
 }
 .table.table-border {
 	/* 테이블에 테두리를 부여*/
-	border: 3px solid #20639B;
+	border: 3px solid #85BCE1;
 	/* 테두리 병합 */
 	border-collapse: collapse;
 }
@@ -147,8 +151,10 @@
 	<div class="row today-wrap"><div class="row-empty"></div>
 	</article>
 	<div class="right">
+	<%if(isAdmin && isMine){ %>
 	<a href="write.jsp"><input class="form-btn form-inline" type="button" value="글쓰기">
 	</a>
+	<%} %>
 	</div>
 	<!-- 테이블 -->
 	<table class="table table-border table-hover">
@@ -190,9 +196,11 @@
 </tfoot>
 </table>
 <div class="right">
+<%if(isAdmin && isMine){ %>
 <a href="write.jsp">
 <input class="form-btn form-inline" type="button" value="글쓰기">
 </a>
+<%} %>
 </div>
 	<!-- 네비게이터 -->
 	<div class="row center pagination">

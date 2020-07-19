@@ -32,7 +32,7 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 //			1. 해석을 위한 도구를 생성할 옵션을 설정
 			String charset = "UTF-8";//해석할 인코딩 방식
 			int limit = 10 * 1024  * 1024;//최대 허용 용량
-			File baseDir = new File("D:/upload/faq");
+			File baseDir = new File("E:/upload/faq");
 			baseDir.mkdirs();
 			
 //			2. 도구 생성을 위한 Factory 객체를 생성
@@ -49,7 +49,7 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 			
 //			5. 해석한 데이터에서 필요한 정보들을 추출
 			FAQDto fdto = new FAQDto();	
-			//System.out.println(map.get("faq_head"));
+			System.out.println(map.get("faq_head"));
 			fdto.setFaq_head(map.get("faq_head").get(0).getString());			
 			fdto.setFaq_title(map.get("faq_title").get(0).getString());
 			fdto.setFaq_content(map.get("faq_content").get(0).getString());
@@ -57,7 +57,7 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 //			MemberDto user = (MemberDto) req.getSession().getAttribute("userinfo");
 //			fdto.getMember_no(Integer.parseInt(user.getMember_no()));
 			MemberDto user =(MemberDto) req.getSession().getAttribute("userinfo");
-			System.out.println(user.getMember_no());
+			//System.out.println(user.getMember_no());
 			fdto.setMember_no((user.getMember_no()));
 
 //			7. 작성할 게시글의 번호를 미리 가져온다.
