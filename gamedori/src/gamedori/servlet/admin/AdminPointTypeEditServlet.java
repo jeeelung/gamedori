@@ -9,17 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import gamedori.beans.dao.PointDao;
+import gamedori.beans.dto.PointDto;
 @WebServlet(urlPatterns="/member/pointedit.do")
 public class AdminPointTypeEditServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			int point_no = Integer.parseInt(req.getParameter("point_no"));
-			String point_type = req.getParameter("point_type");
+			PointDto pdto = new PointDto();
+			PointDao pdao = new PointDao();
+			pdto.setPoint_type(req.getParameter("point_type"));
+			pdto.setPoint_score(Integer.parseInt(req.getParameter("point_score")));
+			pdto.setPoint_no(Integer.parseInt(req.getParameter("point_no")));
 			
-			PointDao pdao=new PointDao();
-			pdao.edit(point_no,point_type);
-			
+			pdao.edit(pdto);
 			
 			resp.sendRedirect("MemberPointList.jsp");
 		}
@@ -30,3 +32,4 @@ public class AdminPointTypeEditServlet extends HttpServlet{
 	}
 
 }
+

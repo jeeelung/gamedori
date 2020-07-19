@@ -30,7 +30,6 @@
 	int member_no = user.getMember_no();
 	// 페이지 계산 코드
 	int pageSize = 10;//한 페이지에 표시할 데이터 개수
-	
 	//page 번호를 계산하기 위한 코드
 	// - 이상한 값은 전부다 1로 변경
 	// - 멀쩡한 값은 그대로 숫자로 변환
@@ -85,8 +84,6 @@
 	else{
 		list = phdao.getList(start ,finish); 
 	}
-	
-	
 	
  %>
  
@@ -154,23 +151,33 @@
 		<form action="pointedit.do" method ="get" style="display: inline-block;">
 		<table border="1" style="display: inline-block;">
 		<tr>
-		<th colspan="2">삭제</th>
+		<th colspan="2">수정</th>
 		</tr>
 		<tr>
-		<td> 번호</td>
+		<th>기존 유형</th>
 		<td>
-			<input type="text" name ="point_no">
+			<select name="point_no">
+				<%for(PointDto pdto : list){ %>
+					<option onclick ="setPoint(this.value)" value="<%=pdto.getPoint_no() %>"><%=pdto.getPoint_type() %></option>
+				<%} %>
+			</select>
 		</td>
 		</tr>
 		<tr>
-		<th>유형</th>
+		<th>변경할 유형</th>
 		<td>
-			<input type="text" name ="point_type">
+			<input type="text" name ="point_type" id="point_type">
+		</td>
+		</tr>
+		<tr>
+		<th>점수</th>
+		<td>
+			<input type="text" name ="point_score" id="point_score">
 		</td>
 		</tr>
 		<tr>
 		<th colspan="2" rowspan="2">
-			<input type="submit" value="삭제">
+			<input type="submit" value="수정">
 			</table>	
 		</form>
 	</div>
@@ -223,5 +230,13 @@
 		<input type="submit" value="검색">
 	</form>
 <script>
+function setPoint(no){
+	let point_no = no;
+	
+	let point_type = document.querySelector("#point_type");
+	let point_score = document.querySelector("#point_score");
+	
+	
+}
 </script>
 <jsp:include page="/template/footer.jsp"></jsp:include>
