@@ -9,85 +9,54 @@
 	List<GenreDto> genreList = genre.getList();
 %>
 <style>
-.div {font-family: arcadeclassic;}
-.font-game {
-	font-family: arcadeclassic;
-	font-size: 30px;
-	color: #20639B;
-}
-.wrap {
-	border-top: 3px solid #20639B;
-	border-bottom : 3px solid #20639B;
-}
-.today-wrap {
-	border-top: 3px solid #20639B;
-	border-bottom : 3px solid #20639B;
-	position : relative;
-}
-.table{
-	width: auto;
-}
-.table.table-border {
-	/* 테이블에 테두리를 부여*/
-	border: 3px solid #20639B;
-	/* 테두리 병합 */
-	border-collapse: collapse;
-}
-.table.table-border > thead > tr > th,
-        .table.table-border > thead > tr > td,
-        .table.table-border > tbody > tr > th,
-        .table.table-border > tbody > tr > td,
-        .table.table-border > tfoot > tr > th,
-        .table.table-border > tfoot > tr > td {
-            /* 칸에 테두리를 부여 */
-            border:2px solid #20639B;
-             color:black;         
+        main{
+            width:1000px;
+            margin:auto;
         }
-.table.table-border > thead > tr > th,
-        .table.table-border > thead > tr > td > a,
-        .table.table-border > tbody > tr > th > a,
-        .table.table-border > tbody > tr > td > a,
-        .table.table-border > tfoot > tr > th > a,
-        .table.table-border > tfoot > tr > td > a{
-            text-decoration : none;
-             color:black;
+        
+        /* article 내에 사용하는 헤더는 가운데 정렬 */
+        article h1,
+        article h2,
+        article h3,
+        article h4,
+        article h5,
+        article h6{
+            text-align: center;
         }
- <style>
-        /* 입력창 관련 스타일 */
-        .form-input {
-            border: 1px solid black;
+        
+        /*
+        입력창 스타일
+        - form-input : 100% 크기의 입력창
+        - form-btn : 100% 크기의 버튼
+        */
+        
+        .form-input, .form-btn{
+            width:100%;
+            padding:0.5rem;
+            outline: none;/* 선택 시 자동 부여되는 테두리 제거 */
+            border:1px solid black;
         }
+        .form-input:focus{
+            border-color: blue;
+        }
+        .form-btn {
+           font-size: 20px;
+            background-color: #B22222;
+            color:white;
+            cursor: pointer;
+        }
+        .form-btn:hover {
+            background-color: #EF9A9A;
+        }
+        
+        .title{
+             text-align:left;
+             margin-bottom: 0;
+             font-family: 'DungGeunMo', sans-serif; 
+       }
+        
+    </style>
 
-        .form-input.correct {
-            border: 1px solid blue;
-        }
-
-        .form-input.incorrect {
-            border: 1px solid red;
-        }
-
-        .correct-message {
-            color: blue;
-        }
-
-        .incorrect-message {
-            color: red;
-        }
-
-        /* 메시지 관련 스타일 */
-        .correct-message,
-        .incorrect-message {
-            display: none;
-        }
-
-        .form-input.correct~.correct-message {
-            display: block;
-        }
-
-        .form-input.incorrect~.incorrect-message {
-            display: block;
-        }
-</style>
 <script language="javascript">
 function checkName() {
     var regexName = /^[가-힣]{2,8}$/g;
@@ -192,9 +161,10 @@ if(checkPwIsValid==false){
 </script>
 <div align="center">
 <article>
-<div class="font-game">
-	<h3>회원가입</h3>
+<div class="row">
+    <img src="../image/signup.png">
 </div>
+
 	<div class="row today-wrap"><div class="row-empty"></div></div>
 </article>
 	<form action="join.do" method="post" name="join" onsubmit="return checkForm();">
