@@ -66,18 +66,7 @@
         // - g(global) : 1회성 검사가 아닌 지속적인 전체 검사를 수행
         // - i(ignorecase) : 대/소문자 구분 없이 검사
         // - m(multiline) : 매 줄마다 형식 검사를 수행
-        function checkName() {
-            var regexName = /^[가-힣]{2,8}$/g;
-            var name = document.getElementById("name").value;
-            return regexName.test(name);
-            console.log(regex.test(name));
-        }
-
-        function checkId() {
-            var regex = /[a-zA-Z0-9]{8,20}/g;
-            var id = document.getElementById("id").value;
-            return regex.test(id);
-        }
+      
         //isValid의 결과에 따라서 입력창에 correct / incorrect 클래스를 추가
         //비밀번호를 검사하는 함수 : 반드시 true 또는 false를 반환해야 checkForm에서 사용이 가능하다
         function checkPw() {
@@ -104,24 +93,16 @@ function checkPhone(){
 
         //폼 전송 여부를 판정하는 함수
         function checkForm() {
-            var nameIsValid = checkName();
-            var idIsValid = checkId();
             var pwIsValid = checkPw();
             var nickIsValid = checkNick();
             var phoneIsValid = checkPhone();
             var checkPwIsValid = checkCheckPw();
             //아이디가 맞는 경우는 전송될테니까 추가적인 작업이 필요하지 않지만 틀린 경우는 처리를 해야한다.
-            var nameTag = document.getElementById("name");
-            var idTag = document.getElementById("id");
             var pwTag = document.getElementById("pw");
              var nickTag = document.getElementById("nick");
          var phoneTag = document.getElementById("phone");
          var checkPwTag = document.getElementById("checkPw"); 
             //뭐가 붙어있을지 모르니 둘 다 삭제
-            nameTag.classList.remove("correct");
-            nameTag.classList.remove("incorrect");
-            idTag.classList.remove("correct");
-            idTag.classList.remove("incorrect");
             pwTag.classList.remove("correct");
             pwTag.classList.remove("incorrect");
             nickTag.classList.remove("correct");
@@ -130,16 +111,6 @@ function checkPhone(){
             phoneTag.classList.remove("incorrect");
             checkPwTag.classList.remove("correct");
             checkPwTag.classList.remove("incorrect");
-            if (nameIsValid == false) {
-                nameTag.classList.add("incorrect");
-            } else {
-                nameTag.classList.add("correct");
-            }
-            if (idIsValid == false) {
-                idTag.classList.add("incorrect");
-            } else{
-                idTag.classList.add("correct");
-            }
             if (pwIsValid == false) {
                 pwTag.classList.add("incorrect");
             } else{
@@ -160,7 +131,7 @@ function checkPhone(){
         }else{
             checkPwTag.classList.add("correct");
         }
-            if(!idIsValid || !pwIsValid ||!nameIsValid || !nickIsValid || !phoneIsValid || !checkPwIsValid){
+            if(|| !pwIsValid || !nickIsValid || !phoneIsValid || !checkPwIsValid){
                 return false;
             }else{
                 return true;
@@ -209,7 +180,7 @@ function checkPhone(){
 				<tr>
 					<th>닉네임</th>
 					<td>
-						<input type="text" class="form-input" name="member_phone" id="phone"
+						<input type="text" class="form-input" name="member_nick" id="nick"
 						 required placeholder="- 제외" maxlength="11" value="<%=user.getMember_nick()%>">
 						 <span class="correct-message">올바른 닉네임 형식입니다</span>
             			<span class="incorrect-message">닉네임는 한글로 8자 내외로 구성하세요</span>
@@ -218,9 +189,9 @@ function checkPhone(){
 				<tr>
 					<th>전화번호</th>
 					<td>
-					            <input type="text" class="form-input" name="member_phone"
-					             id="phone" required placeholder="- 제외" maxlength="11"value="<%=user.getMember_phone()%>">
-					             <span class="correct-message">올바른 전화번호 형식입니다</span>
+					    <input type="text" class="form-input" name="member_phone"
+					    id="phone" required placeholder="- 제외" maxlength="11"value="<%=user.getMember_phone()%>">
+					    <span class="correct-message">올바른 전화번호 형식입니다</span>
             			<span class="incorrect-message">전화번호는 010으로 시작하는 숫자로 11자 내외로 구성하세요</span>
 					</td>
 				</tr>
