@@ -32,7 +32,7 @@ public class FAQWriteWithFileServlet extends HttpServlet{
 //			1. 해석을 위한 도구를 생성할 옵션을 설정
 			String charset = "UTF-8";//해석할 인코딩 방식
 			int limit = 10 * 1024  * 1024;//최대 허용 용량
-			File baseDir = new File("E:/upload/faq");
+			File baseDir = new File("D:/upload/faq");
 			baseDir.mkdirs();
 			
 //			2. 도구 생성을 위한 Factory 객체를 생성
