@@ -59,7 +59,7 @@
     </style>
 
 <body>
-    
+    <form action="join.do">
     <main>
         <header></header>
         <nav></nav>
@@ -74,49 +74,46 @@
                 </div>
                 <div class="row">
                         <h4 class="title" style="font-family: DungGeunMo;">이름</h4>
-                     <input class="form-input" type="text" placeholder="5자 이하 한글">
+                     <input class="form-input" type="text" placeholder="5자 이하 한글" name="member_name">
                 </div>
                 <div class="row">
                         <h4 class="title">닉네임</h4>                      
-                    <input class="form-input" type="password" placeholder="한글 8자 이내">
+                    <input class="form-input" type="text" placeholder="한글 8자 이내" name="member_nick">
                 </div>
                 <div class="row">
                        <h4 class="title">아이디</h4>
-                    <input class="form-input" type="password" placeholder="5~20자 영문 또는 숫자">
+                    <input class="form-input" type="text" placeholder="5~20자 영문 또는 숫자" name="member_id">
                 </div>
                 <div class="row">
                        <h4 class="title">비밀번호</h4>                     
-                    <input class="form-input" type="password" placeholder="8~16자 영문 또는 숫자">
+                    <input class="form-input" type="password" placeholder="8~16자 영문 또는 숫자" name="member_pw">
                 </div>
                 <div class="row">
                        <h4 class="title">비밀번호 확인</h4>                     
-                    <input class="form-input" type="password" placeholder="8~16자 영문 또는 숫자">
+                    <input class="form-input" type="password" placeholder="8~16자 영문 또는 숫자" name="member_checkPw">
                 </div>
                 <div class="row">
                        <h4 class="title">전화번호</h4>                     
-                    <input class="form-input" type="password" placeholder="-제외">
+                    <input class="form-input" type="text" placeholder="-제외" name="member_phone">
                 </div>
-                <div class="row">
-                       <h4 class="title">관심분야</h4>                     
-                    <input class="form-input" type="password" placeholder="-제외">
-                </div>
+				<div class="row">
+				<h4 class="title">관심 분야</h4>
+					<%for( GenreDto g :genreList){%>
+						<input  type="checkbox" name="member_favorite" id="mf<%=g.getGenre_no() %>" value="<%=g.getGenre_no() %>">						
+						<label for="mf<%=g.getGenre_no()%>"><%=g.getGenre_type()%></label>
+					<%} %>	
+				</div>			
                 <br>
                 <div class="row">
                     <input class="form-btn" type="submit" value="가입완료">
-                </div>
-                
+                </div>                
             </article>
-
             <div class="row-empty"></div>
-            
-
-                            
+                     
         </section>
         <footer></footer>
     </main>
-    
+    </form>
 </body>
 </html>
-
-
 <jsp:include page="/template/footer.jsp"></jsp:include>
