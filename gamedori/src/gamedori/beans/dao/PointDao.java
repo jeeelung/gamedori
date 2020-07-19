@@ -49,11 +49,11 @@ public class PointDao {
 		public void edit(PointDto pdto) throws Exception {
 			Connection con = getConnection();
 
-			String sql = "UPDATE point SET point_no=?, point_type=? ,point_score where point_no=?";
+			String sql = "UPDATE point SET point_type=? , point_score=? where point_no=?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, pdto.getPoint_no());
-			ps.setString(2, pdto.getPoint_type());
-			ps.setInt(3, pdto.getPoint_score());
+			ps.setString(1, pdto.getPoint_type());
+			ps.setInt(2, pdto.getPoint_score());
+			ps.setInt(3, pdto.getPoint_no());
 			ps.execute();
 
 			con.close();

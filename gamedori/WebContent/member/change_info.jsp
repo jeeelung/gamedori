@@ -146,7 +146,7 @@ function checkPhone(){
 	
 	<h2>정보 수정</h2>
 	
-	<form action="change_info.do">
+	<form action="change_info.do" method="post" onsubmit="checkForm();">
 		<table width="400">
 			<tbody>
 				<tr>

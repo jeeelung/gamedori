@@ -14,8 +14,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
-
 import gamedori.beans.dto.MemberFavoriteDto;
 
 public class MemberFavoriteDao {
