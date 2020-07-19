@@ -49,7 +49,30 @@ public class GenreDao {
 		con.close();
 		return list;
 	}
-
+	
+	// 장르명 추출
+	public String getType(int genre_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT genre_type FROM genre WHERE gerne_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, genre_no);
+		ResultSet rs = ps.executeQuery();
+		String genre_type = rs.next()? rs.getString(1): null;
+		con.close();
+		return genre_type;
+	}
+	
+	// 장르 개수 추출
+	public int getCount() throws Exception {
+		Connection con = getConnection();
+		String sql = "SELECT Count(*) FROM genre";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		int count = rs.next()? rs.getInt(1): null;
+		con.close();
+		return count;
+	}
+	
 	// 등록
 	public void choice(GenreDto gdto) throws Exception {
 		Connection con = getConnection();

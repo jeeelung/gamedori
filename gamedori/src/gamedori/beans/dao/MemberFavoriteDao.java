@@ -91,7 +91,9 @@ public class MemberFavoriteDao {
 				temp.put("genre_no", genre_no);
 				temp.put("genre_type", genre_type);
 				temp.put("member_favorite_no", member_favorite_no);
+				
 				result.add(temp);
+			
 			}				
 			
 			con.close();

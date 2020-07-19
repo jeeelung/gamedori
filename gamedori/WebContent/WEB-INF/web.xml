@@ -76,6 +76,7 @@
 		<url-pattern>/member/check.do</url-pattern>
 		<url-pattern>/community/content.jsp</url-pattern>
 		<url-pattern>/eventboard/Eventcontent.jsp</url-pattern>
+		<url-pattern>/qna/qna_list.jsp</url-pattern>
 	</filter-mapping>
 	
 	
