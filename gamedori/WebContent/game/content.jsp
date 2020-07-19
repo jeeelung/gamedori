@@ -77,14 +77,34 @@
 	width:100%;
 	background-color: #E8E9EC;
 }
-.img-wrap:hover .gameName, .gameName:hover .gameName{
+.game-wrap:hover .gameName{
 	color: #20639B;
 }
-
+.list-btn {
+	background-color: transparent;
+	border: transparent;
+	color: white;
+	font-weight: 700;
+}
+.list-wrap{
+    display: inline-block;
+    text-align: right;
+    vertical-align: middle;
+    float: right;
+    /* height: 100%; */
+    position: relative;
+    left: 0;
+    right: -39;
+    top: -20;
+}
+.delete-btn {
+	background-color: #85BCE1;
+	color: white;
+	border: none;
+	width: 80;
+}
 </style>
-<script>
-	
-</script>
+
 <%
 	GameDao gdao = new GameDao();
 
@@ -123,8 +143,6 @@
 	System.out.println(count);
 	
 	Random r = new Random();
-	
-	
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
 <section class="content">
@@ -132,7 +150,10 @@
 		<div class="row-empty"></div>
 		<div class="row-empty"></div>
 		<div class="line">
-			<h3 class="font-kor"><%=gwdto.getGame_name()%></h3>
+			<h3 class="font-kor header"><%=gwdto.getGame_name()%></h3>
+			<a class="list-wrap" href="javascript:history.back();">
+				<input class="list-btn" type="button" value="목록으로">
+			</a>
 		</div>
 		<div class="swf-wrap">
 			<embed width="100%" height="100%"
@@ -157,13 +178,21 @@
 				GameListDto gldto = gldao.getList(value);
 			%>
 				<div class="row game-wrap">
-					<a class="img-wrap" href="content.jsp?game_no=<%=gldto.getGame_no()%>">
+					<a class="img-wrap img-transparent" href="content.jsp?game_no=<%=gldto.getGame_no()%>">
 						<img width="153" height="120" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
 						<h5 class="gameName"><%=gldto.getGame_name()%></h5>
 					</a>
 				</div>
 			<%}%>
 		</div>
+		<div class="row-empty"></div>
+	<div>
+	<%if(user.getMember_no() == gwdto.getMember_no()){%>
+		<a href="delete.do?game_no=<%=game_no%>">
+			<input class="delete-btn" type="button" value="삭제">
+		</a>		
+	<%}%>
+	</div>
 		<div class="row-empty"></div>
 		<div class="row-empty"></div>
 	</article>

@@ -13,9 +13,6 @@
 	pageEncoding="UTF-8"%>
 
 <%
-	MemberDto mdto = (MemberDto) session.getAttribute("userinfo");
-	int member_no = mdto.getMember_no();
-
 	GamePopularDao gpdao = new GamePopularDao();
 	int top = 100;
 	
@@ -52,10 +49,6 @@
 	
 	// 인기게임 리스트
 	List<GamePopularDto> list = gpdao.getList(top, start, finish);
-
-	// 회원 관심분야 추출
-	MemberGenreTypeDao mgtdao = new MemberGenreTypeDao();
-	List<MemberGenreTypeDto> favorite = mgtdao.getFavorite(member_no);
 
 	// 관심분야 게임 리스트
 	int topN = 5;
@@ -168,6 +161,17 @@
     border:1px solid gray;
     color:red;
 }
+.img-wrap:hover .gameName,
+.gameName:hover .gameName,
+.game_name:hover .gameName{
+	color: #20639B;
+}
+
+.img-wrap:hover .game_name,
+.gameName:hover .game_name,
+.game_name:hover .game_name{
+	color : firebrick;
+}
 </style>
 
 <script src="<%=request.getContextPath()%>/swiper/js/swiper.min.js"></script>
@@ -246,7 +250,7 @@
 					for (GamePopularDto gpdto : favoriteGame) {
 				%>
 				<div class="game-wrap">
-					<a class="img-wrap" href="content.jsp?game_no=<%=gpdto.getGame_no()%>"> <img class="game_img"
+					<a class="img-wrap" href="content.jsp?game_no=<%=gpdto.getGame_no()%>"> <img class="game_img img-transparent"
 						src="imgDownload.do?game_img_no=<%=gpdto.getGame_img_no()%>"  width="180" height="130">
 						<span class="gameNo">TOP <%=gpdto.getRow_num()%>.</span>
 						<p class="game_name"><%=gpdto.getGame_name()%></p>
@@ -282,7 +286,7 @@
 			for (GamePopularDto gpdto : list) {
 		%>
 		<div class="row game-wrap">
-			<a class="img-wrap" href="content.jsp?game_no=<%=gpdto.getGame_no()%>"> <img
+			<a class="img-wrap " href="content.jsp?game_no=<%=gpdto.getGame_no()%>"> <img class="img-transparent"
 				width="230" height="170"
 				src="imgDownload.do?game_img_no=<%=gpdto.getGame_img_no()%>">
 				<h5 class="gameName">

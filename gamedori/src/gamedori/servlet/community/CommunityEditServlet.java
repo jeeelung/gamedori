@@ -24,7 +24,7 @@ import gamedori.beans.dto.FilesDto;
 @WebServlet(urlPatterns = "/community/edit.do")
 public class CommunityEditServlet extends HttpServlet{
 
-	@Override
+@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			
@@ -55,7 +55,6 @@ public class CommunityEditServlet extends HttpServlet{
 			for(FileItem item : fileList) {
 				
 				if(item.getSize() > 0) { // 파일이 있는 경우
-					
 					FilesDao fdao = new FilesDao();
 					FilesDto fdto = new FilesDto();
 					

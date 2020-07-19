@@ -12,18 +12,45 @@
 	boolean isLogin = mdto != null;
 %>
 
-
+<!--  	로그인 상태일 경우 -->
+<%
+	if (isLogin) {
+%>
+<div class="member-wrap">
+	<h5 class="menu-font">
+		<a href="<%=rootPath%>/member/logout.do">로그아웃 </a>
+	</h5>
+	<h5>｜</h5>
+	<h5 class="menu-font">
+		<a href="<%=rootPath%>/member/info.jsp">마이페이지</a>
+	</h5>
+</div>
 <div class="notice-wrap">
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/notice/list.jsp">공지사항</a>
 	</h5>
 	<h5>｜</h5>
-	<h5 class="menu-front">
-		<a href="<%=rootPath%>/eventboard/event_list.jsp">Event</a>
+	<h5 class="menu-font">
+		<a href="<%=rootPath%>/eventboard/event_list.jsp">EVENT</a>
+	</h5>
+	<h5>｜</h5>
+	<h5 class="menu-font">
+		<a href="<%=rootPath%>/faq/list.jsp">자주 묻는 질문</a>
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/qna/qna_list.jsp">1:1 게시판</a>
+	</h5>
+	
+</div>
+<%} else { %>
+<div class="notice-wrap">
+	<h5 class="menu-font">
+		<a href="<%=rootPath%>/notice/list.jsp">공지사항</a>
+	</h5>
+	<h5>｜</h5>
+	<h5 class="menu-font">
+		<a href="<%=rootPath%>/eventboard/event_list.jsp">EVENT</a>
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">
@@ -31,20 +58,6 @@
 	</h5>
 	
 </div>
-<!--  	로그인 상태일 경우 -->
-<%
-	if (isLogin) {
-%>
-<div class="member-wrap">
-	<h5 class="menu-font">
-		<a href="<%=rootPath%>/member/logout.do">로그아웃</a>
-	</h5>
-	
-	<h5 class="menu-font">
-		<a href="<%=rootPath%>/member/info.jsp">마이페이지</a>
-	</h5>
-</div>
-<%} else { %>
 <div class="member-wrap">
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/guest/join.jsp">회원가입</a>
@@ -59,14 +72,6 @@
 	<li><a href="<%=rootPath%>/game/latestlist.jsp">최신게임</a></li>
 	<li><a href="<%=rootPath%>/game/popularlist.jsp">인기게임</a></li>
 	<li><a href="<%=rootPath%>/game/genrelist.jsp">장르별</a></li>
-	<li><a href="#">브랜드별</a>
-		<ul class="menu-sec">
-			<li><a href="#">게임엔</a></li>
-			<li><a href="#">키니위니</a></li>
-			<li><a href="#">쥬디게임</a></li>
-			<li><a href="#">엔젤메이플</a></li>
-		</ul>
-	</li>
 	<li><a href="<%=rootPath%>/game/upload.jsp">업로드</a>
 		<ul class="menu-sec">
 			<li><a href="#">업로드 요청</a></li>
