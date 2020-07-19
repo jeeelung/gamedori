@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import gamedori.beans.dao.CommunityDao;
 import gamedori.beans.dao.PointDao;
+import gamedori.beans.dao.PointHistoryDao;
 import gamedori.beans.dao.ReplyDao;
-import gamedori.beans.dto.CommunityDto;
 import gamedori.beans.dto.MemberDto;
+import gamedori.beans.dto.PointDto;
+import gamedori.beans.dto.PointHistoryDto;
 import gamedori.beans.dto.ReplyDto;
 
 
@@ -22,7 +23,7 @@ public class ReplyInsertPointServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			
 			req.setCharacterEncoding("UTF-8");
-		
+			
 			try {
 //				입력 : reply_writer(세션) , reply_content(파라미터) 
 				MemberDto mdto = (MemberDto) req.getSession().getAttribute("userinfo");
@@ -45,12 +46,6 @@ public class ReplyInsertPointServlet extends HttpServlet {
 				rdto.setReply_no(reply_no);
 				// 댓글 등록하고
 				rdao.write(rdto);
-				
-				//포인트 넣고
-				
-				int member_no = mdto.getMember_no();
-				PointDao qdao = new PointDao();
-				qdao.add_point(member_no);
 				
 				
 //				출력 : 

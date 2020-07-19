@@ -102,16 +102,10 @@
 		<table class="table table-border table-hover">
 			<thead>
 				<tr>
-					<%
-						if (request.getParameter("commu_super_no") != null) {
-					%>
-					<input type="hidden" name="commu_super_no"
-						value="<%=request.getParameter("commu_super_no")%>">
-					<%
-						}
-					%>
-					<input type="hidden" name="member_no"
-						value="<%=mdto.getMember_no()%>">
+			<%if(request.getParameter("commu_super_no") != null) {%>
+			<input type="hidden" name="commu_super_no" value="<%=request.getParameter("commu_super_no")%>">
+			<%}%>
+			<input type="hidden" name="member_no" value="<%=mdto.getMember_no()%>">
 
 				</tr>
 				<tr>
@@ -126,8 +120,9 @@
 				</tr>
 				<tr>
 					<th>제목</th>
-					<td><input class="invisible" type="text" name="commu_title"
-						size="152" required></td>
+					<td>
+						<input class="invisible" type="text"  name="commu_title" size="152" required>
+					</td>
 				</tr>
 			</thead>
 			<tbody>

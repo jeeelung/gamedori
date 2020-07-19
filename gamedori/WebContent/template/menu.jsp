@@ -24,6 +24,12 @@
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/member/info.jsp">마이페이지</a>
 	</h5>
+	<%if(mdto.getMember_auth().equals("관리자")){ %>
+	<h5>｜</h5>
+	<h5 class="menu-font">
+		<a href="<%=rootPath%>/admin/home.jsp">관리페이지</a>
+	</h5>
+	<%}%>
 </div>
 <div class="notice-wrap">
 	<h5 class="menu-font">
@@ -39,9 +45,8 @@
 	</h5>
 	<h5>｜</h5>
 	<h5 class="menu-font">
-		<a href="<%=rootPath%>/qna/qna_list.jsp">1:1 게시판</a>
+		<a href="<%=rootPath%>/qna/qna_list.jsp">1:1 문의</a>
 	</h5>
-	
 </div>
 <%} else { %>
 <div class="notice-wrap">
@@ -56,7 +61,6 @@
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/faq/list.jsp">자주 묻는 질문</a>
 	</h5>
-	
 </div>
 <div class="member-wrap">
 	<h5 class="menu-font">
@@ -73,9 +77,9 @@
 	<li><a href="<%=rootPath%>/game/popularlist.jsp">인기게임</a></li>
 	<li><a href="<%=rootPath%>/game/genrelist.jsp">장르별</a></li>
 	<li><a href="<%=rootPath%>/game/upload.jsp">업로드</a>
-		<ul class="menu-sec">
+		<!-- <ul class="menu-sec">
 			<li><a href="#">업로드 요청</a></li>
-		</ul>
+		</ul> -->
 	</li>
 	<li><a href="<%=rootPath%>/community/list.jsp">커뮤니티</a></li>
 	

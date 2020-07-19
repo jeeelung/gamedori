@@ -187,6 +187,36 @@
 
 
 /*
+    모달(modal) 스타일
+    - 모달은 다음과 같은 형태로 구성되어야 한다.
+    <div class="modal-wrap">
+        <div class="modal">
+
+        </div>
+    </div>
+
+    모달을 보여주고 싶다면 .modal-wrap에 .on을 추가한다
+    <div class="modal-wrap on">
+        <div>
+        </div>
+    </div>
+*/
+.modal-wrap {
+	/* 전체를 가리기 위한 설정 */
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	/* opacity로 투명도를 조절하면 내용물도 적용된다 */
+	/* opacity: 0.5; */
+	/* 배경색에 알파값을  */
+	background-color: rgba(0, 0, 0, 0.5);
+	/* 모달은 기본적으로 표시가 되면 안된다 */
+	display: none;
+}
+
+/*
     메뉴 스타일
     - 메뉴와 같은 계층형 구조는 일반적으로 ul-li로 구현
     - list-style: none; 으로 앞에 점을 제거
@@ -229,7 +259,7 @@
 	position: relative;
 	padding: 1rem;
 	font-size: 15px;
-	width: 150px;
+	width: 140px;
 	text-align: center;
 	cursor: pointer;
 }
@@ -629,7 +659,7 @@ article h1, article h2, article h3, article h4, article h5, article h5,
 .form-btn.form-inline2{
 	width:auto; 
 	background-color: #85BCE1;
-
+	margin-left: 90;
 	padding: 5px 10px;
 	border-radius: 5px;
 }
@@ -751,6 +781,36 @@ a.deco {
     -webkit-appearance: none; /* 네이티브 외형 감추기 */
     -moz-appearance: none;
     appearance: none;
+}
+
+a{
+	text-decoration: none;
+	color:black;
+}
+
+
+
+
+
+
+
+
+
+}
+
+a{
+	text-decoration: none;
+	color:black;
+}
+
+
+
+
+
+
+
+
+
 }
 
 a{

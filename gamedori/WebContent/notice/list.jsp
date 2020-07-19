@@ -11,9 +11,15 @@
 	String keyword = request.getParameter("keyword");
 	
 	MemberDto user=(MemberDto)session.getAttribute("userinfo");
-	
-	int member_no = user.getMember_no();	
-	boolean isAdmin= user.getMember_auth().equals("관리자");
+	int member_no;
+	boolean isAdmin;
+	if(user==null){
+	member_no = 0;
+	isAdmin = false;
+	}else{		
+	member_no = user.getMember_no();
+	isAdmin= user.getMember_auth().equals("관리자");
+	}
 	boolean isSearch = type != null && keyword != null;
 	// 페이지 번호 계산 코드
 	int pageSize = 10;
