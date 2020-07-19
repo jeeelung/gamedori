@@ -1,3 +1,5 @@
+<%@page import="gamedori.beans.dto.GenreDto"%>
+<%@page import="gamedori.beans.dao.GenreDao"%>
 <%@page import="java.util.List"%>
 <%@page import="gamedori.beans.dao.GameListDao"%>
 <%@page import="gamedori.beans.dto.GameListDto"%>
@@ -6,13 +8,11 @@
 
 <%
 	GameListDao gldao = new GameListDao();
-	int top = 14;
-	List<GameListDto> list = gldao.getLatestList(top);
-	int gameCount = 0;
+	int top = 100;
 	
 	// 페이지 번호 계산 코드
-	int pageSize = 5;
-	String pageStr = request.getParameter("page");
+	int pageSize = 20;
+	String pageStr = request.getParameter("page")==null? "1": request.getParameter("page");
 	int pageNo;
 	try{
 		pageNo = Integer.parseInt(pageStr);
@@ -29,38 +29,98 @@
 	int start = finish - (pageSize - 1);
 	
 	// 페이지 네비게이터 계산
-	int blockSize = 5;
+	int blockSize = 10;
 	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
-	int finishBlock = startBlock + 4;
+	int finishBlock = startBlock + 9;
 	
 	// 페이지 개수 
-	int count = gldao.getTodayCount();
+	int count = top;
 	int pageCount = (count + pageSize -1) / pageSize;
 	
 	if(finishBlock > pageCount) {
 		finishBlock = pageCount;	
 	}
+		
+	// 신규게임 추출
+	List<GameListDto> list = gldao.getNewList(top, start, finish);
 	
-	// 오늘의 게임 추출
-	List<GameListDto> todayList = gldao.getTodayList(start, finish);
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/swiper/css/swiper.min.css">
 <style>
+* {
+	box-sizing: border-box;
+}
+
+.swiper-container {
+	width: 100%;
+	max-height: 300px;
+}
+
+.swiper-container .swiper-slide>.game-wrap {
+	float: left;
+	width: 18.1%;
+	padding: 10px;
+	margin-top: 20px;
+}
+
+.swiper-container .swiper-slide, .swiper-container .swiper-slide .game_img
+	{
+	width: 180;
+	height: 130;
+}
+
+.swiper-container .swiper-slide {
+	margin-bottom: 10px;
+}
+
+.swiper-container .swiper-slide .game_name {
+	text-align: center;
+	font-size: 15px;
+}
+
+.genre_type {
+	text-align: center;
+	max-height: 20px;
+	font-weight: 700;
+}
+
+.img-wrap, .gameName {
+	text-decoration: none;
+	color: black;
+	font-family: DungGeunMo;
+	font-weight: 200;
+	font-size: 15px;
+	margin-bottom: 0;
+}
 .font-game {
 	font-family: arcadeclassic;
-	font-size: 30px;
+	font-size: 40px;
 	color: #20639B;
+	margin-bottom: 0;
+}
+
+.font-kor {
+	font-family: DungGeunMo;
+	color:firebrick;
+	font-size: 30px;
 }
 .line {
 	border: 1px solid #20639B;
 }
 .gameNo {
 	font-family: arcadeclassic;
-	font-size: 20px;
-	color:#20639B;
+	font-size: 25px;
+	color:firebrick;
+	margin: 0;
+}
+.gameName, .game_name{
+	margin-top: 0;
 }
 
 .wrap {
+	background-color: #E8E9EC;
 	border-top: 3px solid #20639B;
 	border-bottom: 3px solid #20639B;
 }
@@ -87,88 +147,152 @@
 .genre {
 	margin: 0;
 }
-
+.pagination a {
+    color:gray;
+    text-decoration: none;
+    display: inline-block;
+    padding:0.5rem;
+    min-width: 2.5rem;
+    text-align: center;
+    border:1px solid transparent;
+}
+.pagination a:hover,/*마우스 올라감*/
+.pagination .on {/*활성화 */
+    border:1px solid gray;
+    color:red;
+}
 </style>
-    <article>
-        <div class="font-game">
-        	<h3>TO D A Y　N E W　G A M E</h3>
-        </div>
-        <div class="row today-wrap">
-        <div class="row-empty"></div>
-<%-- <h5>
-	pageStr = <%=pageStr%>, 
-	pageNo = <%=pageNo%>,
-	start = <%=start%>
-	finish = <%=finish%>
-	pageCount = <%=pageCount%>
-	startBlock = <%=startBlock%>
-	finishBlock = <%=finishBlock%>
-</h5> --%>
+<!-- 장르별 신규게임 -->
+    <script src="<%=request.getContextPath()%>/swiper/js/swiper.min.js"></script>
+<script>
+	// 창의 로딩이 완료되었을 때 실행할 코드를 예약
+	window.onload = function() {
+		//swiper 관련 코드를 이곳에 작성
+		// var mySwiper = new swiper('선택자', 옵션)
+		var mySwiper = new Swiper('.swiper-container', {
+			// Optional parameters
 
-<!-- 오늘의 게임 이전 버튼 생성 -->
-<%if(pageNo != 1) {%>
-	<a class="arrow-left" href="latestlist.jsp?page=<%=pageNo-1%>">
-		<img src="<%=request.getContextPath()%>/image/left.png" width="50" height="50">
-	</a>
-<%} else {%>
-	<a class="arrow-left"  href="latestlist.jsp?page=<%=pageCount%>">
-		<img src="<%=request.getContextPath()%>/image/left.png" width="50" height="50">
-	</a>
-<%}%>
-<!-- 오늘의 게임 이미지 생성 -->
-<%if(!todayList.isEmpty()) {%>
-	<%for(GameListDto gldto : todayList){ %>
-	<div class="row game-wrap">
-		<img width="150" height="150" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
-		<div>
-			<h5 class="gameName"><%=gldto.getGame_name()%></h5>
-			<h6 class="genre">장르 : <%=gldto.getGenre_type()%></h6>
-		</div>
+			// swiper에 적용할 옵션들을 작성
+
+			direction : 'horizontal', // 표시방식(수직 : vartical / 수평 : horizontal)
+			loop : true, // 순환모드 여부(마지막과 처음이 이어지는 것)
+
+			// 자동재생 옵션그룹
+			autoplay : {
+				delay : 3000, // 자동재생 시간(1000 = 1초)
+			},
+
+			// 페이지 네비게이터 옵션그룹
+			pagination : {
+				el : '.swiper-pagination', // 적용대상의 선택자
+				type : 'bullets', // 네비게이터 모양(bullets, fraction, progressbar)
+			},
+
+			// 이전/다음 이동버튼 설정그룹
+			navigation : {
+				nextEl : '.swiper-button-next',
+				prevEl : '.swiper-button-prev',
+			},
+
+			// 스크롤바 옵션
+			//scrollbar: {
+			//    el: '.swiper-scrollbar',
+			//},
+
+			// 커서 모양을 손모양으로 변경
+			grabCursor : true,
+
+			// 슬라이드 전환효과
+			// effect: 'coverflow',
+			// effect: 'cube',
+			// effect: 'fade'
+			// effect: 'flip',
+			effect : 'slide', // 기본값
+
+		});
+	};	
+</script>
+<article>
+	<div class="row">
+		<h3 class="font-game">N E W　G A M E S　B Y　G E N R E</h3>
 	</div>
-	<%}%>
-<%} else {%>
-	<%List<GameListDto> top5 = gldao.getLatestList(5);%>
-	<%for(GameListDto gldto : top5) {%>
-	<div class="row game-wrap">
-        <img width="150" height="150" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
-        <div>
-			<h5 class="gameName"><%=gldto.getGame_name()%></h5>
-			<h6 class="genre">장르 : <%=gldto.getGenre_type()%></h6>
+	<!-- 이미지 슬라이더 영역 -->
+	<div class="swiper-container">
+		<!-- 필수영역-->
+		<div class="swiper-wrapper">
+			<!-- 배치되는 이미지 또는 화면 -->
+			<%
+			GenreDao gdao = new GenreDao();
+			List<GenreDto> genreList = gdao.getList();
+			for(GenreDto gdto : genreList) {
+				int genre_no = gdto.getGenre_no();
+				List<GameListDto> todayList = gldao.getTodayList(genre_no);
+			%>
+			<div class="swiper-slide">
+				<div class="genre_type">
+					<h1 class="font-kor"><%=gdto.getGenre_type()%></h1>
+				</div>
+				<%  for (GameListDto gldto : todayList) {%>
+				<div class="game-wrap">
+					<a class="img-wrap"
+						href="content.jsp?game_no=<%=gldto.getGame_no()%>"> <img
+						class="game_img"
+						src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>"
+						width="180" height="130">
+						<span class="gameNo">TOP <%=gldto.getRow_num()%>.</span>
+						<p class="game_name"><%=gldto.getGame_name()%></p>
+					</a>
+				</div>
+				<%}%>
+			</div>
+			<%}%>
 		</div>
-    </div>
-	<%}%>
-<%}%>
+		<!-- 페이지 위치 표시 영역(선택) -->
+		<div class="swiper-pagination"></div>
 
-<!-- 오늘의 게임 다음 버튼 생성 -->
-<%if(pageCount != pageNo) {%>
-	<a class="arrow-right" href="latestlist.jsp?page=<%=pageNo+1%>">
-		<img src="<%=request.getContextPath()%>/image/right.png" width="50" height="50">
-	</a>
-<%} else {%>
-	<a class="arrow-right" href="latestlist.jsp?page=1">
-		<img src="<%=request.getContextPath()%>/image/right.png" width="50" height="50">
-	</a>
-<%}%>
-		<div class="row-empty"></div>
-        </div>
-    </article>
+		<!-- 이전/다음 버튼(선택) -->
+		<div class="swiper-button-prev"></div>
+		<div class="swiper-button-next"></div>
+
+		<!-- 스크롤바(선택) -->
+		<div class="swiper-scrollbar"></div>
+	</div>
+</article>
+<!-- 신규게임 top 100 -->
     <article>
         <div class="row-empty"></div>
-        <div class="font-game">
-        	<h3>N E W　TO P　1 0 0</h3>
+        <div class="row">
+        	<h3 class="font-game">N E W　TO P　1 0 0</h3>
         </div>
         <div class="row wrap">
         <div class="row-empty"></div>
             <%for(GameListDto gldto : list) { %>
             <div class="row game-wrap">
-                <img width="150" height="150" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
-                <h5 class="gameName"><span class="gameNo"><%=gameCount+=1%>.</span><%=gldto.getGame_name()%></h5>
+            <a href="content.jsp?game_no=<%=gldto.getGame_no()%>">
+	            <img width="230" height="170" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
+            </a>
+                <h5 class="gameName"><span class="gameNo"><%=gldto.getRow_num()%>.</span><%=gldto.getGame_name()%></h5>
                 <h6 class="genre">장르 : <%=gldto.getGenre_type()%></h6>
             </div>
             <%}%>
-        <div class="row-empty"></div>
         </div>
         <div class="row-empty"></div>
-        
+        <div class="row-empty"></div>
+<div class="pagination"> 
+<%if(startBlock > 1) {%>
+	<a href="latestlist.jsp?page=<%=startBlock-1%>">[이전]</a>
+<%}%>
+
+	<%for(int i=startBlock; i<=finishBlock; i++) { %>
+		<a href="latestlist.jsp?page=<%=i%>"><%=i%></a>
+	<%}%>
+	
+<%if(pageCount > finishBlock) {%>	
+	<a href="latestlist.jsp?page=<%=finishBlock+1%>">[다음]</a>
+<%}%>
+</div>
+        <div class="row-empty"></div>
+        <div class="row-empty"></div>
+<!-- 페이지 네비게이터 -->
     </article>
 <jsp:include page="/template/footer.jsp"></jsp:include>

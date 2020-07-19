@@ -19,12 +19,97 @@
 	EventFileDao efdao = new EventFileDao();
 	List<FilesDto> fileList = efdao.getList(event_no);
 %>
+<style>
+.font-header {
+
+	font-family: arcadeclassic;
+	font-size: 35px;
+	color: #85BCE1;
+}
+
+.font-header2 {
+
+	font-family: arcadeclassic;
+	font-size: 20px;
+	color: white;
+}
+
+
+.font_han{
+	font-family: DungGeunMo;
+}
+
+thead tr {
+    background-color: #85BCE1;
+    color: #ffffff;
+  }
+  
+.div {font-family: arcadeclassic;}
+.font-game {
+	font-family: arcadeclassic;
+	font-size: 30px;
+	color: #85BCE1;
+}
+.wrap {
+	border-top: 3px solid #85BCE1;
+	border-bottom : 3px solid #85BCE1;
+}
+.today-wrap {
+	border-top: 3px solid #85BCE1;
+	border-bottom : 3px solid #85BCE1;
+	position : relative;
+}
+.table{
+	
+}
+.table.table-border {
+	/* 테이블에 테두리를 부여*/
+	border: 3px solid #85BCE1;
+	/* 테두리 병합 */
+	border-collapse: collapse;
+}
+.table.table-border > thead > tr > th,
+        .table.table-border > thead > tr > td,
+        .table.table-border > tbody > tr > th,
+        .table.table-border > tbody > tr > td,
+        .table.table-border > tfoot > tr > th,
+        .table.table-border > tfoot > tr > td {
+            /* 칸에 테두리를 부여 */
+            border:2px solid #85BCE1;
+             color:#85BCE1;
+            
+        }
+.table.table-border > thead > tr > th,
+        .table.table-border > thead > tr > td > a,
+        .table.table-border > tbody > tr > th > a,
+        .table.table-border > tbody > tr > td > a,
+        .table.table-border > tfoot > tr > th > a,
+        .table.table-border > tfoot > tr > td > a{
+            text-decoration : none;
+             color: #546583;
+        }
+        .pagination a {
+            color:gray;
+            text-decoration: none;
+            display: inline-block;
+            padding:0.5rem;
+            min-width: 2.5rem;
+            text-align: center;
+            border:1px solid transparent;
+        }
+        .pagination a:hover,/*마우스 올라감*/
+        .pagination .on {/*활성화 */
+            border:1px solid gray;
+            color:black;
+        }
+        
+</style>  
 
 <jsp:include page="/template/header.jsp"></jsp:include>
 
 <div align="center">
 	
-	<h2>게시글 수정</h2>
+	<h5 class="font-header">게시글 수정</h5>
 <!-- enctype="multipart/form-data" -->
 	<!-- 게시글 전송 폼 -->
 	<form action="eventedit.do" method="post" enctype="multipart/form-data">

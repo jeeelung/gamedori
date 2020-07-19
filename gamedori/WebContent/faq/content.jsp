@@ -121,11 +121,9 @@
 						<%for(FilesDto filesdto : fileList) {%>
 						<li><%=filesdto.getFile_name() %> (<%=filesdto.getFile_size() %>bytes) 
 						<a href="download.do?file_no=<%=filesdto.getFile_no() %>"><input type="button" value="다운로드"> 
-						<!-- 다운로드 미리보기 -->
 						</a>
 						</li>
 						<%}%>
-						<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif"> 
 					</ul>
 				</td>
 			</tr>

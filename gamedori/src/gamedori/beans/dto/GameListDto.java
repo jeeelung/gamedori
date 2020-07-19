@@ -18,7 +18,16 @@ public class GameListDto {
 	private String game_img_name;
 	private String game_img_type;
 	private long game_img_size;
+	private int row_num;
 	
+	public int getRow_num() {
+		return row_num;
+	}
+
+	public void setRow_num(int row_num) {
+		this.row_num = row_num;
+	}
+
 	public GameListDto() {
 		super();
 	}
