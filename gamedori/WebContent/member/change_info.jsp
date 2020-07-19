@@ -78,7 +78,7 @@
             var pw = document.getElementById("pw").value;
             var checkPw = document.getElementById("checkPw").value;
 
-        return pw === checkPw
+        return pw === checkPw;
         }
         function checkNick(){
             var regexNick =/^[가-힣]{1,8}$/g;
@@ -131,7 +131,8 @@ function checkPhone(){
         }else{
             checkPwTag.classList.add("correct");
         }
-            if(|| !pwIsValid || !nickIsValid || !phoneIsValid || !checkPwIsValid){
+
+            if(!pwIsValid || !nickIsValid || !phoneIsValid || !checkPwIsValid){
                 return false;
             }else{
                 return true;
