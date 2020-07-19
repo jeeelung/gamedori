@@ -42,7 +42,8 @@ public class MemberChangeInfoServlet extends HttpServlet {
 			MemberFavoriteDao mfdao = new MemberFavoriteDao();
 			mfdao.delete(member_no);
 			
-			String []genre_no = req.getParameterValues("member_favorite");
+			if(req.getParameterValues("member_favorite")!=null) {
+				String []genre_no = req.getParameterValues("member_favorite");
 			
 			for (int i = 0; i < genre_no.length; i++) {
 				mfdto.setGenre_no(Integer.parseInt(genre_no[i]));
@@ -50,7 +51,7 @@ public class MemberChangeInfoServlet extends HttpServlet {
 				
 				mfdao.choice(mfdto);				
 			}
-			
+			}
 			// 출력
 			resp.sendRedirect("info.jsp");
 			
@@ -59,4 +60,5 @@ public class MemberChangeInfoServlet extends HttpServlet {
 			resp.sendError(500);
 		}
 	}
-}
+	}
+

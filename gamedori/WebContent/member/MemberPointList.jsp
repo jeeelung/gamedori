@@ -1,3 +1,6 @@
+
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
 <%@page import="gamedori.beans.dao.PointHistoryDao"%>
 <%@page import="gamedori.beans.dto.PointHistoryDto"%>
 <%@page import="gamedori.beans.dao.PointDao"%>
@@ -6,6 +9,7 @@
 <%@page import="gamedori.beans.dao.QnaDao"%>
 <%@page import="gamedori.beans.dto.QnaDto"%>
 <%@page import="java.util.List"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -76,7 +80,7 @@
 	
 	
 // 	List<PointDto> list = 목록 or 검색;
-	List<PointDto> list;
+	List<Map<String,Object>> list = new ArrayList<>();
 	
 	if(isSearch){
 		list = phdao.search(type, keyword,auth,member_no,start, finish); 
@@ -109,13 +113,13 @@
 			</tr>
 		</thead>
 		<tbody align="center">
-			<%for(PointDto pdto : list){ %>
+			<%for(Map<String,Object> pdto : list){ %>
 			<tr>
-				<td><%=pdto.getPoint_no()%></td>
+				<td><%=pdto.get("point_no")%></td>
 				<td>
-					<%=pdto.getPoint_type()%>
+					<%=pdto.get("point_type")%>
 				</td>
-				<td><%=pdto.getPoint_score()%></td>
+				<td><%=pdto.get("point_score")%></td>
 			</tr>
 			<%} %>
 		</tbody>
@@ -156,9 +160,10 @@
 		<tr>
 		<th>기존 유형</th>
 		<td>
-			<select name="point_no">
-				<%for(PointDto pdto : list){ %>
-					<option onclick ="setPoint(this.value)" value="<%=pdto.getPoint_no() %>"><%=pdto.getPoint_type() %></option>
+			<select name="point_no" onchange ="setPoint();" id="point_list">
+					<option value="">선택</option>
+				<%for(Map<String,Object> pdto : list){ %>
+					<option data-score="<%=pdto.get("point_score")%>" data-type="<%=pdto.get("point_type")%>"value="<%=pdto.get("point_no") %>"><%=pdto.get("point_type") %></option>
 				<%} %>
 			</select>
 		</td>
@@ -230,13 +235,15 @@
 		<input type="submit" value="검색">
 	</form>
 <script>
-function setPoint(no){
-	let point_no = no;
+function setPoint(){
+	const point_list = document.querySelector("#point_list");
+	let option_selected = point_list.options[point_list.selectedIndex];
 	
 	let point_type = document.querySelector("#point_type");
 	let point_score = document.querySelector("#point_score");
 	
-	
+	point_type.value = option_selected.dataset.type || "";
+	point_score.value = option_selected.dataset.score || "";
 }
 </script>
 <jsp:include page="/template/footer.jsp"></jsp:include>

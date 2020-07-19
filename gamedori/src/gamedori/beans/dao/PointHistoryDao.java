@@ -143,7 +143,7 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 			}
 			
 			//목록 메소드
-			public List<PointDto> getList(int start , int finish) throws Exception{
+			public List<Map<String,Object>> getList(int start , int finish) throws Exception{
 				Connection con = getConnection();
 				String sql = "SELECT * FROM "
 						+ "(SELECT ROWNUM rn, T.* FROM "
@@ -156,11 +156,13 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 				ps.setInt(2, finish);
 				
 				ResultSet rs = ps.executeQuery();
-				List<PointDto> list = new ArrayList<>();
+				List<Map<String,Object>> list = new ArrayList<>();
 				while(rs.next()) {
-					PointDto pdto = new PointDto(rs);
-					
-					list.add(pdto);
+					Map<String,Object> temp = new HashMap<>();
+					temp.put("point_type",rs.getString("point_type"));
+					temp.put("point_score",rs.getInt("point_score"));
+					temp.put("point_no",rs.getInt("point_no"));
+					list.add(temp);
 				}
 				con.close();
 				return list;
@@ -193,28 +195,31 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 				return list;
 			}
 			
-			public List<PointDto> search(String type, String keyword,String auth, int member_no, int start, int finish) throws Exception{
+			public List<Map<String,Object>>search(String type, String keyword,String auth, int member_no, int start, int finish) throws Exception{
 				Connection con = getConnection();
 				
 				String sql = "SELECT * FROM "
 						+ "(SELECT ROWNUM rn, T.* FROM "
-						+ "(SELECT * FROM point_view WHERE "
-						+ "(instr(#1, ?) > 0 and ('관리자' = ?  or member_no=? ) )T) WHERE rn BETWEEN ? and ?";
+						+ "(SELECT * FROM point WHERE "
+						+ "(instr(#1, ?) > 0) )T) WHERE rn BETWEEN ? and ?";
 						
 				sql = sql.replace("#1", type);
 				PreparedStatement ps = con.prepareStatement(sql);			
 				ps.setString(1, keyword);
-				ps.setString(2,auth);
-				ps.setInt(3, member_no);
-				ps.setInt(4, start);
-				ps.setInt(5, finish);
+			
+				ps.setInt(2, start);
+				ps.setInt(3, finish);
 				
 				ResultSet rs = ps.executeQuery();
 				
-				List<PointDto> list = new ArrayList<>();
+				List<Map<String,Object>> list = new ArrayList<>();
 				while(rs.next()) {
-					PointDto pdto = new PointDto(rs);
-					list.add(pdto);
+					Map<String,Object> temp = new HashMap<>();
+					temp.put("point_type",rs.getString("point_type"));
+					temp.put("point_score",rs.getInt("point_score"));
+					temp.put("point_no",rs.getInt("point_no"));
+					
+					list.add(temp);
 				}
 				con.close();
 				return list;
