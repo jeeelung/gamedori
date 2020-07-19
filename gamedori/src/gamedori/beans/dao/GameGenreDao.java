@@ -54,4 +54,17 @@ public class GameGenreDao {
 		con.close();
 		return seq;
 	}
+	
+	public int getGameGenreNo(int game_no) throws Exception{
+		Connection con = getConnection();
+		String sql = "SELECT game_genre_no FROM game_genre WHERE game_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, game_no);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int game_genre_no = rs.getInt(1);
+		con.close();
+		return game_genre_no;
+	}
+	
 }

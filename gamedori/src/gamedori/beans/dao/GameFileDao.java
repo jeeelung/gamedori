@@ -54,4 +54,13 @@ public class GameFileDao {
 		return file_no;
 	}
 	
+	public void delete(int game_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "DELETE FROM GAME_FILE WHERE GAME_NO = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, game_no);
+		ps.execute();
+		con.close();		
+	}
+	
 }
