@@ -166,18 +166,7 @@ thead tr {
             border:1px solid gray;
             color:black;
         }
-        
- .font-header {
 
-=======
-
-.table.table-border>thead>tr>th, .table.table-border>thead>tr>td, .table.table-border>tbody>tr>th,
-	.table.table-border>tbody>tr>td, .table.table-border>tfoot>tr>th,
-	.table.table-border>tfoot>tr>td {
-	/* 칸에 테두리를 부여 */
-	border: 2px solid #85BCE1;
-	color: #85BCE1;
-}
 
 .table.table-border>thead>tr>th, .table.table-border>thead>tr>td>a,
 	.table.table-border>tbody>tr>th>a, .table.table-border>tbody>tr>td>a,
@@ -202,7 +191,7 @@ thead tr {
 }
 
 .font-header {
->>>>>>> refs/remotes/origin/master
+
 	font-family: arcadeclassic;
 	font-size: 35px;
 	color: #a49ec2;
@@ -218,7 +207,6 @@ thead tr {
 	color: #ffffff;
 }
 </style>
-<<<<<<< HEAD
 
 
 <div align="center">
@@ -236,18 +224,7 @@ thead tr {
 	
 	
 	<h2></h2>
-=======
-<article class="w-90">
-	<div align="row center">
-		<!-- 계산한 데이터를 확인하기 위해 출력 -->
-		<h5 class="font-header">COMMUNITY</h5>
-		<div class="row today-wrap" align="right">비방, 광고글은 제재를 당할 수
-			있습니다.</div>
-	</div>
-</article>
-<article>
-<div class="right">
->>>>>>> refs/remotes/origin/master
+
 	<form action="list.jsp" method="get">
 		<table align="center" width="100%"
 			class="table table-border2 table-hover">

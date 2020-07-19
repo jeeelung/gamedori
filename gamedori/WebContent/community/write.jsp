@@ -119,7 +119,6 @@ background-color: transparent;
 			<input type="hidden" name="commu_super_no" value="<%=request.getParameter("commu_super_no")%>">
 			<%}%>
 			<input type="hidden" name="member_no" value="<%=mdto.getMember_no()%>">
-					
 				</tr>
 				<tr>
 					<th>말머리</th>
