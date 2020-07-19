@@ -28,7 +28,6 @@
 	String auth = user.getMember_auth();
 	int member_no = user.getMember_no();
 	// 페이지 계산 코드
-
 	int pageSize = 10;//한 페이지에 표시할 데이터 개수
 	
 	//page 번호를 계산하기 위한 코드
@@ -50,9 +49,7 @@
 	int finish = pageNo * pageSize;
 	int start = finish - (pageSize - 1);
 	
-
 	// 페이지 네비게이터 계산 코드
-
 	int blockSize = 10;//이 페이지에는 네비게이터 블록을 10개씩 배치하겠다!
 	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
 	int finishBlock = startBlock + blockSize - 1;
@@ -91,8 +88,6 @@
  
 <jsp:include page="/template/header.jsp"></jsp:include>
 <style>
-
-
 </style>
 <div align="center">
 	<!-- 제목 -->

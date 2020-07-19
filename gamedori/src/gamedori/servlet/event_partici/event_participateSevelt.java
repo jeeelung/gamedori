@@ -1,8 +1,6 @@
 package gamedori.servlet.event_partici;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,15 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oracle.jrockit.jfr.EventInfo;
-
-import gamedori.beans.dao.EventFileDao;
-import gamedori.beans.dao.EventboardDao;
-import gamedori.beans.dao.FilesDao;
 import gamedori.beans.dao.PointDao;
 import gamedori.beans.dao.PointHistoryDao;
 import gamedori.beans.dao.event_participateDao;
-import gamedori.beans.dto.EventboardDto;
 import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.PointDto;
 import gamedori.beans.dto.PointHistoryDto;

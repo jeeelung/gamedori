@@ -280,7 +280,7 @@
 	position: relative;
 	padding: 1rem;
 	font-size: 15px;
-	width: 150px;
+	width: 140px;
 	text-align: center;
 	cursor: pointer;
 }
@@ -704,7 +704,7 @@ article h1, article h2, article h3, article h4, article h5, article h5,
 .form-btn.form-inline2{
 	width:auto; 
 	background-color: #85BCE1;
-
+	margin-left: 90;
 	padding: 5px 10px;
 	border-radius: 5px;
 }
@@ -826,6 +826,36 @@ a.deco {
     -webkit-appearance: none; /* 네이티브 외형 감추기 */
     -moz-appearance: none;
     appearance: none;
+}
+
+a{
+	text-decoration: none;
+	color:black;
+}
+
+
+
+
+
+
+
+
+
+}
+
+a{
+	text-decoration: none;
+	color:black;
+}
+
+
+
+
+
+
+
+
+
 }
 
 a{

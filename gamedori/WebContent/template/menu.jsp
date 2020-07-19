@@ -29,7 +29,6 @@
 	<h5 class="menu-font">
 		<a href="<%=rootPath%>/faq/list.jsp">자주 묻는 질문</a>
 	</h5>
-	
 </div>
 <!--  	로그인 상태일 경우 -->
 <%
