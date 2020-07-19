@@ -260,7 +260,6 @@ file_type varchar2(30)NOT NULL
 -- 파일 시퀀스
 CREATE SEQUENCE file_seq nocache;
 
-
 SELECT f.member_no,f.FAQ_NO, f.FAQ_HEAD ,f.FAQ_TITLE, m.member_nick FROM member m INNER JOIN faq f ON m.member_no = f.member_no
 select * from (select rownum rn, T.* from(SELECT * FROM FAQ
 WHERE instr(#1, ?) > 0

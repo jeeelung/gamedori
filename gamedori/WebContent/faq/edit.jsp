@@ -25,35 +25,29 @@
 .div {
 	font-family: arcadeclassic;
 }
-
 .font-game {
 	font-family: arcadeclassic;
 	font-size: 30px;
 	color: #20639B;
 }
-
 .wrap {
 	border-top: 3px solid #20639B;
 	border-bottom: 3px solid #20639B;
 }
-
 .today-wrap {
 	border-top: 3px solid #20639B;
 	border-bottom: 3px solid #20639B;
 	position: relative;
 }
-
 .table {
 	
 }
-
 .table.table-border {
 	/* 테이블에 테두리를 부여*/
 	border: 3px solid #20639B;
 	/* 테두리 병합 */
 	border-collapse: collapse;
 }
-
 .table.table-border>thead>tr>th, .table.table-border>thead>tr>td, .table.table-border>tbody>tr>th,
 	.table.table-border>tbody>tr>td, .table.table-border>tfoot>tr>th,
 	.table.table-border>tfoot>tr>td {
@@ -61,18 +55,15 @@
 	border: 2px solid #20639B;
 	color: black;
 }
-
 .table.table-border>thead>tr>th, .table.table-border>thead>tr>td>a,
 	.table.table-border>tbody>tr>th>a, .table.table-border>tbody>tr>td>a,
 	.table.table-border>tfoot>tr>th>a, .table.table-border>tfoot>tr>td>a {
 	text-decoration: none;
 	color: black;
 }
-
 .faq_head {
 	border: 2px solid dodgerblue;
 }
-
 textarea {
 	display: incline-block;
 	postion: absolute;
@@ -82,11 +73,9 @@ textarea {
 	height: 478px;
 	border-width: 0px;
 }
-
 textarea:focus {
 	border-width: 0px;
 }
-
 .preview-wrap>img {
 	width: 100px;
 	height: 100px;
@@ -98,12 +87,10 @@ textarea:focus {
             var fileTag = document.querySelector("input[name=f]");
         
 					var divTag = document.querySelector(".preview-wrap");
-
 						if (fileTag.files.length > 0) {
 							//선택된 파일들을 다 읽어와서 이미지 생성 후 추가
 							//미리보기 전부 삭제
 							divTag.innerHTML = "";
-
 							for (var i = 0; i < fileTag.files.length; i++) {
 								var reader = new FileReader();
 								reader.onload = function(data) {
@@ -115,7 +102,6 @@ textarea:focus {
 								};
 								reader.readAsDataURL(fileTag.files[i]);
 							}
-
 						} else {
 							//미리보기 전부 삭제
 							divTag.innerHTML = "";
