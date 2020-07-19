@@ -63,7 +63,36 @@ public class MemberDao {
 
 		return user;
 	}
-
+	public String  overlapID(MemberDto mdto) throws Exception{
+		Connection con = getConnection();
+		String sql ="select member_id from member where member_id=?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, mdto.getMember_id());
+		ResultSet rs = ps.executeQuery();
+		String member_id;
+		if (rs.next()) {
+			member_id = rs.getString("member_id");// rs.getString(1)
+		} else {
+			member_id = null;
+		}
+		con.close();
+		return member_id;
+	}
+	public String overlapNick(MemberDto mdto) throws Exception{
+		Connection con = getConnection();
+		String sql = "select member_nick from member where member_nick=?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, mdto.getMember_nick());
+		ResultSet rs = ps.executeQuery();
+		String member_nick;
+		if(rs.next()) {
+			member_nick = rs.getString("member_nick");
+		} else {
+			member_nick = null;
+		}
+		con.close();
+		return member_nick;
+	}
 	// 로그인 시간 메소드
 	public void updateLoginTime(int no) throws Exception {
 		Connection con = getConnection();
@@ -151,14 +180,13 @@ public class MemberDao {
 		
 		ResultSet rs =ps.executeQuery();
 		if(rs.next()) {
-			result =rs.getInt("member_no"); 
+			result =rs.getInt(1); 
 		}
 		con.close();
 		
 		return result;
 		
 	}
-//member_seq.nextval
 	// 정보 수정 메소드
 	public void changeInfo(MemberDto mdto) throws Exception {
 		Connection con = getConnection();

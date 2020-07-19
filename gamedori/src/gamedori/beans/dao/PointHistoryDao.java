@@ -36,10 +36,10 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 // 등록
 	public void insert(PointHistoryDto phdto ,int member_no) throws Exception {
 		Connection con = getConnection();
-		String sql = "INSERT INTO Point_history VALUES(point_his_no_seq.nextval, ? , ? , sysdate)";
+		String sql = "INSERT INTO Point_history VALUES(point_his_seq.nextval, ? , ? , sysdate)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		
-		ps.setInt(1, phdto.getMember_no());
+		ps.setInt(1, member_no);
 		ps.setInt(2, phdto.getPoint_no());
 		ps.execute();
 
@@ -161,6 +161,33 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 					PointDto pdto = new PointDto(rs);
 					
 					list.add(pdto);
+				}
+				con.close();
+				return list;
+			}
+			
+			public List<Map<String,Object>> getListForNormal(int member_no, int start , int finish) throws Exception{
+				Connection con = getConnection();
+				String sql = "SELECT * FROM "
+						+ "(SELECT ROWNUM rn, T.* FROM "
+						+ "(SELECT p.point_type, ph.point_his_no, ph.point_his_date, p.point_score FROM point_history ph LEFT OUTER JOIN point p on p.point_no = ph.point_no  WHERE MEMBER_NO=?"
+						+ " ORDER BY p.point_no asc) T ) WHERE rn BETWEEN ? and ?";
+
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setInt(1, member_no);
+				ps.setInt(2, start);
+				ps.setInt(3, finish);
+				
+				ResultSet rs = ps.executeQuery();
+				List<Map<String,Object>> list = new ArrayList<>();
+				while(rs.next()) {
+					Map<String,Object> temp = new HashMap<>();
+					temp.put("point_type",rs.getString("point_type"));
+					temp.put("point_his_date",rs.getString("point_his_date"));
+					temp.put("point_score",rs.getInt("point_score"));
+					temp.put("point_his_no",rs.getInt("point_his_no"));
+					
+					list.add(temp);
 				}
 				con.close();
 				return list;

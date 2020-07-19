@@ -1,15 +1,8 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html><%@page import="gamedori.beans.dao.PointHistoryDao"%>
+<%@page import="gamedori.beans.dao.PointHistoryDao"%>
 <%@page import="gamedori.beans.dto.PointHistoryDto"%>
 <%@page import="gamedori.beans.dao.PointDao"%>
 <%@page import="gamedori.beans.dto.PointDto"%>
@@ -17,11 +10,6 @@
 <%@page import="gamedori.beans.dao.QnaDao"%>
 <%@page import="gamedori.beans.dto.QnaDto"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
-
-
 <%
 	//이 페이지를 출력하기 위한 프로그래밍 처리
 	//1. 준비물(입력) : 검색창의 입력값 - type, keyword (둘다 있으면 검색)
@@ -40,7 +28,6 @@
 	String auth = user.getMember_auth();
 	int member_no = user.getMember_no();
 	// 페이지 계산 코드
-
 	int pageSize = 10;//한 페이지에 표시할 데이터 개수
 	
 	//page 번호를 계산하기 위한 코드
@@ -62,9 +49,7 @@
 	int finish = pageNo * pageSize;
 	int start = finish - (pageSize - 1);
 	
-
 	// 페이지 네비게이터 계산 코드
-
 	int blockSize = 10;//이 페이지에는 네비게이터 블록을 10개씩 배치하겠다!
 	int startBlock = (pageNo - 1) / blockSize * blockSize + 1;
 	int finishBlock = startBlock + blockSize - 1;
@@ -91,20 +76,18 @@
 	
 	
 // 	List<PointDto> list = 목록 or 검색;
-	List<PointHistoryDto> list;
+	List<Map<String,Object>> list = new ArrayList<>();
 	
 	if(isSearch){
-		list = phdao.search(type, auth,keyword,auth,start, finish); 
+		//list = phdao.search(type, auth,keyword,auth,start, finish); 
 	}
 	else{
-		list = phdao.getList(member_no,auth,start ,finish); 
+		list = phdao.getListForNormal(member_no,start ,finish);  	
 	}
  %>
  
 <jsp:include page="/template/header.jsp"></jsp:include>
 <style>
-
-
 </style>
 <div align="center">
 	<!-- 제목 -->
@@ -116,72 +99,24 @@
 				<th>NO</th>
 				<th>TYPE</th>
 				<th>POINT SCORE</th>
+				<th>POINT DATE</th>
 			</tr>
 		</thead>
 		<tbody align="center">
-			<%for(PointDto pdto : list){ %>
+			<%for(Map<String,Object> pdto : list){ %>
 			<tr>
-				<td><%=pdto.getPoint_no()%></td>
+				<td><%=pdto.get("point_his_no")%></td>
 				<td>
-					<%=pdto.getPoint_type()%>
+					<%=pdto.get("point_type")%>
 				</td>
-				<td><%=pdto.getPoint_score()%></td>
+				<td><%=pdto.get("point_score")%></td>
+				<td><%=pdto.get("point_his_date")%></td>
 			</tr>
 			<%} %>
 		</tbody>
 		<tfoot>
 		</tfoot>
-		</table>
-
-
-
-		<form action="adminpoint.do" method ="get">
-		<table border="1">
-		<br><br>
-		<h3>신규 등록/삭제</h3>
-		<tr>
-		<th colspan="2">등록</th>
-		</tr>
-		<tr>
-		<td> 유형</td>
-		<td>
-			<input type="text" name ="point_type">
-		</td>
-		</tr>
-		<tr>
-		<th>점수</th>
-		<td>
-			<input type="text" name ="point_score">
-		</td>
-		</tr>
-		<tr>
-		<th colspan="2" rowspan="2">
-			<input type="submit" value="등록">
-		</form>
-			</table>	
-	
-		<form action="adminpoint.do" method ="get">
-		<table border="1">
-		<tr>
-		<th colspan="2">삭제</th>
-		</tr>
-		<tr>
-		<td> 번호</td>
-		<td>
-			<input type="text" name ="point_no">
-		</td>
-		</tr>
-		<tr>
-		<th>유형</th>
-		<td>
-			<input type="text" name ="point_type">
-		</td>
-		</tr>
-		<tr>
-		<th colspan="2" rowspan="2">
-			<input type="submit" value="삭제">
-			</table>	
-		</form>
+	</table>
 	</div>
 	<h4>	
 	<!-- 
