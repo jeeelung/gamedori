@@ -131,6 +131,45 @@ thead tr {
 	/* 테두리 병합 */
 	border-collapse: collapse;
 }
+<<<<<<< HEAD
+.table.table-border > thead > tr > th,
+        .table.table-border > thead > tr > td,
+        .table.table-border > tbody > tr > th,
+        .table.table-border > tbody > tr > td,
+        .table.table-border > tfoot > tr > th,
+        .table.table-border > tfoot > tr > td {
+            /* 칸에 테두리를 부여 */
+            border:2px solid #85BCE1;
+             color:#85BCE1;
+            
+        }
+.table.table-border > thead > tr > th,
+        .table.table-border > thead > tr > td > a,
+        .table.table-border > tbody > tr > th > a,
+        .table.table-border > tbody > tr > td > a,
+        .table.table-border > tfoot > tr > th > a,
+        .table.table-border > tfoot > tr > td > a{
+            text-decoration : none;
+             color: #546583;
+        }
+        .pagination a {
+            color:gray;
+            text-decoration: none;
+            display: inline-block;
+            padding:0.5rem;
+            min-width: 2.5rem;
+            text-align: center;
+            border:1px solid transparent;
+        }
+        .pagination a:hover,/*마우스 올라감*/
+        .pagination .on {/*활성화 */
+            border:1px solid gray;
+            color:black;
+        }
+        
+ .font-header {
+
+=======
 
 .table.table-border>thead>tr>th, .table.table-border>thead>tr>td, .table.table-border>tbody>tr>th,
 	.table.table-border>tbody>tr>td, .table.table-border>tfoot>tr>th,
@@ -163,6 +202,7 @@ thead tr {
 }
 
 .font-header {
+>>>>>>> refs/remotes/origin/master
 	font-family: arcadeclassic;
 	font-size: 35px;
 	color: #a49ec2;
@@ -178,6 +218,25 @@ thead tr {
 	color: #ffffff;
 }
 </style>
+<<<<<<< HEAD
+
+
+<div align="center">
+
+<article >
+<div class="font-game">
+
+	<!-- 계산한 데이터를 확인하기 위해 출력 -->
+	<h5 class="font-header">
+	Write Whatever You Want
+	</h5>
+	<div class="row today-wrap" align="right" >비방, 광고글은 제재를 당할 수 있습니다.</div>
+	</article>
+	<div class="right">
+	
+	
+	<h2></h2>
+=======
 <article class="w-90">
 	<div align="row center">
 		<!-- 계산한 데이터를 확인하기 위해 출력 -->
@@ -188,6 +247,7 @@ thead tr {
 </article>
 <article>
 <div class="right">
+>>>>>>> refs/remotes/origin/master
 	<form action="list.jsp" method="get">
 		<table align="center" width="100%"
 			class="table table-border2 table-hover">

@@ -33,6 +33,7 @@ public class MemberChangeInfoServlet extends HttpServlet {
 
 			// 처리
 			MemberDao mdao = new MemberDao();
+
 			MemberDao nickDao = new MemberDao();
 			String nickDto = nickDao.overlapNick(user);
 			if (nickDto != null) {
@@ -62,9 +63,13 @@ public class MemberChangeInfoServlet extends HttpServlet {
 				// 출력
 				resp.sendRedirect("info.jsp");
 			}
+			// 출력
+			resp.sendRedirect("info.jsp");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.sendError(500);
 		}
 	}
-}
+	}
+

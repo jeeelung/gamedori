@@ -1,3 +1,6 @@
+
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
 <%@page import="gamedori.beans.dao.PointHistoryDao"%>
 <%@page import="gamedori.beans.dto.PointHistoryDto"%>
 <%@page import="gamedori.beans.dao.PointDao"%>
@@ -6,6 +9,7 @@
 <%@page import="gamedori.beans.dao.QnaDao"%>
 <%@page import="gamedori.beans.dto.QnaDto"%>
 <%@page import="java.util.List"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -30,7 +34,6 @@
 	int member_no = user.getMember_no();
 	// 페이지 계산 코드
 	int pageSize = 10;//한 페이지에 표시할 데이터 개수
-	
 	//page 번호를 계산하기 위한 코드
 	// - 이상한 값은 전부다 1로 변경
 	// - 멀쩡한 값은 그대로 숫자로 변환
@@ -77,7 +80,7 @@
 	
 	
 // 	List<PointDto> list = 목록 or 검색;
-	List<PointDto> list;
+	List<Map<String,Object>> list = new ArrayList<>();
 	
 	if(isSearch){
 		list = phdao.search(type, keyword,auth,member_no,start, finish); 
@@ -85,8 +88,6 @@
 	else{
 		list = phdao.getList(start ,finish); 
 	}
-	
-	
 	
  %>
  
@@ -112,13 +113,13 @@
 			</tr>
 		</thead>
 		<tbody align="center">
-			<%for(PointDto pdto : list){ %>
+			<%for(Map<String,Object> pdto : list){ %>
 			<tr>
-				<td><%=pdto.getPoint_no()%></td>
+				<td><%=pdto.get("point_no")%></td>
 				<td>
-					<%=pdto.getPoint_type()%>
+					<%=pdto.get("point_type")%>
 				</td>
-				<td><%=pdto.getPoint_score()%></td>
+				<td><%=pdto.get("point_score")%></td>
 			</tr>
 			<%} %>
 		</tbody>
@@ -151,26 +152,37 @@
 			</table>	
 		</form>
 		
-		<form action="pointdelete.do" method ="get" style="display: inline-block;">
+		<form action="pointedit.do" method ="get" style="display: inline-block;">
 		<table border="1" style="display: inline-block;">
 		<tr>
-		<th colspan="2">삭제</th>
+		<th colspan="2">수정</th>
 		</tr>
 		<tr>
-		<td> 번호</td>
+		<th>기존 유형</th>
 		<td>
-			<input type="text" name ="point_no">
+			<select name="point_no" onchange ="setPoint();" id="point_list">
+					<option value="">선택</option>
+				<%for(Map<String,Object> pdto : list){ %>
+					<option data-score="<%=pdto.get("point_score")%>" data-type="<%=pdto.get("point_type")%>"value="<%=pdto.get("point_no") %>"><%=pdto.get("point_type") %></option>
+				<%} %>
+			</select>
 		</td>
 		</tr>
 		<tr>
-		<th>유형</th>
+		<th>변경할 유형</th>
 		<td>
-			<input type="text" name ="point_type">
+			<input type="text" name ="point_type" id="point_type">
+		</td>
+		</tr>
+		<tr>
+		<th>점수</th>
+		<td>
+			<input type="text" name ="point_score" id="point_score">
 		</td>
 		</tr>
 		<tr>
 		<th colspan="2" rowspan="2">
-			<input type="submit" value="삭제">
+			<input type="submit" value="수정">
 			</table>	
 		</form>
 	</div>
@@ -223,5 +235,15 @@
 		<input type="submit" value="검색">
 	</form>
 <script>
+function setPoint(){
+	const point_list = document.querySelector("#point_list");
+	let option_selected = point_list.options[point_list.selectedIndex];
+	
+	let point_type = document.querySelector("#point_type");
+	let point_score = document.querySelector("#point_score");
+	
+	point_type.value = option_selected.dataset.type || "";
+	point_score.value = option_selected.dataset.score || "";
+}
 </script>
 <jsp:include page="/template/footer.jsp"></jsp:include>

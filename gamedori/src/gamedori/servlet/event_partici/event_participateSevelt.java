@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import gamedori.beans.dao.PointDao;
+import gamedori.beans.dao.PointHistoryDao;
 import gamedori.beans.dao.event_participateDao;
 import gamedori.beans.dto.MemberDto;
 import gamedori.beans.dto.PointDto;
+import gamedori.beans.dto.PointHistoryDto;
 import gamedori.beans.dto.event_participateDto;
 
 
@@ -44,11 +46,23 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 				// 이벤트 응모하기
 				epdao.EventInfo(epdto);
 				
-				PointDao pdao = new PointDao();
 				
-				resp.sendRedirect("Eventresult.jsp");
 				System.out.println("이벤트 등록 완료");
 			
+				PointDto pdto = new PointDto();
+				PointDao pdao = new PointDao();
+				
+				pdto = pdao.getByType("이벤트참여");
+				
+				pdao.add_point(member_no, pdto.getPoint_score());
+			
+				PointHistoryDto phdto = new PointHistoryDto();
+				phdto.setPoint_no(pdto.getPoint_no());
+				PointHistoryDao phdao = new PointHistoryDao();
+				
+				phdao.insert(phdto, member_no);
+				
+				resp.sendRedirect("Eventresult.jsp");
 
 			} else {
 				// 회원 번호 있으면
@@ -64,8 +78,6 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 			resp.sendError(500);
 			
 		}
-		
-		
 		
 	}
 

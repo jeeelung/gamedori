@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import gamedori.beans.dao.PointDao;
+import gamedori.beans.dao.PointHistoryDao;
 import gamedori.beans.dao.ReplyDao;
 import gamedori.beans.dto.MemberDto;
+import gamedori.beans.dto.PointDto;
+import gamedori.beans.dto.PointHistoryDto;
 import gamedori.beans.dto.ReplyDto;
 
 
@@ -44,7 +47,6 @@ public class ReplyInsertPointServlet extends HttpServlet {
 				// 댓글 등록하고
 				rdao.write(rdto);
 				
-			
 				
 //				출력 : 
 				resp.sendRedirect(req.getContextPath() + "/community/content.jsp?commu_no="+rdto.getOrigin_no());

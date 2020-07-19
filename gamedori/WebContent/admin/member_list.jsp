@@ -4,7 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="gamedori.beans.dao.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%
 String type = request.getParameter("type");
 String keyword = request.getParameter("keyword");
@@ -67,14 +67,14 @@ if (isSearch) {
 	list = mdao.list(start, finish);
 }
 %>
- 
- 
+
+
 <jsp:include page="/template/header.jsp"></jsp:include>
 
 <div align="center">
 	<!-- 제목 -->
 	<h2>회원 검색</h2>
-	
+
 	<!-- 검색창 -->
 	<form action="member_list.jsp" method="get">
 		<!-- 분류 선택창 -->
@@ -83,19 +83,23 @@ if (isSearch) {
 			<option value="member_nick">닉네임</option>
 			<option value="member_auth">권한</option>
 		</select>
-		
+
 		<!-- 검색어 입력창 -->
 		<input type="text" name="keyword" required placeholder="검색어">
-		
+
 		<!-- 검색 버튼 -->
 		<input type="submit" value="검색">
-		
+
 	</form>
-	
+
 	<hr>
-	
-	<h4>총 <%=list.size()%> 명의 회원이 있습니다</h4>
-	
+
+	<h4>
+		총
+		<%=mdao.getCount()%>
+		명의 회원이 있습니다
+	</h4>
+
 	<!-- 결과 -->
 	<%if(list.isEmpty()){ %>
 	<h5>검색 결과가 존재하지 않습니다</h5>
@@ -133,66 +137,67 @@ if (isSearch) {
 		이전 버튼을 누르면 startBlock - 1 에 해당하는 페이지로 이동해야 한다
 		(주의) startBlock이 1인 경우에는 출력하지 않는다
 	 -->
-		<%
+	<%
 			if (startBlock > 1) {
 		%>
 
-		<%
+	<%
 			if (!isSearch) {
 		%>
-		<a href="member_list.jsp?page=<%=startBlock - 1%>">[이전]</a>
-		<%
+	<a href="member_list.jsp?page=<%=startBlock - 1%>">[이전]</a>
+	<%
 			} else {
 		%>
-		<a
-			href="member_list.jsp?page=<%=startBlock - 1%>&type=<%=type%>&keyword=<%=keyword%>">[이전]</a>
-		<%
+	<a
+		href="member_list.jsp?page=<%=startBlock - 1%>&type=<%=type%>&keyword=<%=keyword%>">[이전]</a>
+	<%
 			}
 		%>
 
-		<%
+	<%
 			}
 		%>
 
-		<%
+	<%
 			for (int i = startBlock; i <= finishBlock; i++) {
 		%>
-		<%
+	<%
 			if (!isSearch) {
 		%>
-		<!-- 목록일 경우 페이지 번호만 전달 -->
-		<a href="member_list.jsp?page=<%=i%>"><%=i%></a>
-		<%
+	<!-- 목록일 경우 페이지 번호만 전달 -->
+	<a href="member_list.jsp?page=<%=i%>"><%=i%></a>
+	<%
 			} else {
 		%>
-		<!-- 검색일 경우 페이지 번호와 검색 분류(type), 검색어(keyword)를 전달 -->
-		<a href="member_list.jsp?page=<%=i%>&type=<%=type%>&keyword=<%=keyword%>"><%=i%></a>
-		<%
+	<!-- 검색일 경우 페이지 번호와 검색 분류(type), 검색어(keyword)를 전달 -->
+	<a
+		href="member_list.jsp?page=<%=i%>&type=<%=type%>&keyword=<%=keyword%>"><%=i%></a>
+	<%
 			}
 		%>
-		<%
+	<%
 			}
 		%>
 
-		<%
+	<%
 			if (pageCount > finishBlock) {
 		%>
-		<%
+	<%
 			if (!isSearch) {
 		%>
-		<a href="member_list.jsp?page=<%=finishBlock + 1%>">[다음]</a>
-		<%
+	<a href="member_list.jsp?page=<%=finishBlock + 1%>">[다음]</a>
+	<%
 			} else {
 		%>
-		<a
-			href="member_list.jsp?page=<%=finishBlock + 1%>&type=<%=type%>&keyword=<%=keyword%>">[다음]</a>
-		<%
+	<a
+		href="member_list.jsp?page=<%=finishBlock + 1%>&type=<%=type%>&keyword=<%=keyword%>">[다음]</a>
+	<%
 			}
 		%>
-		<%
+	<%
 			}
 		%>
-	
+
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>

@@ -191,7 +191,7 @@ public class MemberDao {
 	public void changeInfo(MemberDto mdto) throws Exception {
 		Connection con = getConnection();
 
-		String sql = "UPDATE member " + "SET member_pw = ?, member_nick = ?, member_phone = ? " + "WHERE member_id = ?";
+		String sql = "UPDATE member SET member_pw = ?, member_nick = ?, member_phone = ? WHERE member_id = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, mdto.getMember_pw());
 		ps.setString(2, mdto.getMember_nick());
