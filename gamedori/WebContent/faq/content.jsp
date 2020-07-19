@@ -82,27 +82,6 @@
  }
 </style>
 <script>
-	function preview() {
-		var fileTage = document.querySelector("input[name=f]");
-		var divTag = document.querySelelctor(".preview-wrap");
-		if(fileTag.files.length > 0){
-			divTag.innerHTML = "";
-			 for(var i=0; i < fileTag.files.length; i++){
-                 var reader = new FileReader();
-                 reader.onload = function(data){
-                     //img 생성 후 data.target.result 설정하여 추가
-                     var imgTag = document.createElement("img");
-                     imgTag.setAttribute("src", data.target.result);
-                     divTag.appendChild(imgTag);
-                 };
-                 reader.readAsDataURL(fileTag.files[i]);
-             }
-             
-         }else{
-             //미리보기 전부 삭제
-             divTag.innerHTML = "";
-         }
-	}
 </script>
 <div align="center">
 <form>
@@ -145,11 +124,9 @@
 						<li><%=filesdto.getFile_name() %> (<%=filesdto.getFile_size() %>bytes) 
 						<a href="download.do?file_no=<%=filesdto.getFile_no() %>"><input type="button" value="다운로드"> 
 						<!-- 다운로드 미리보기 -->
-						<span class="preview-text">미리보기<img class="preview" src="dowload.do?file_no="<%=filesdto.getFile_no() %>"width="150"></span>
 						</a>
 						</li>
 						<%}%>
-						<input type="file" name="faq_file" multiple accept=".jpg, .png, .gif"> 
 					</ul>
 				</td>
 			</tr>
