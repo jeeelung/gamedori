@@ -94,7 +94,7 @@ if (isSearch) {
 	
 	<hr>
 	
-	<h4>총 <%=list.size()%> 명의 회원이 있습니다</h4>
+	<h4>총 <%=mdao.getCount()%> 명의 회원이 있습니다</h4>
 	
 	<!-- 결과 -->
 	<%if(list.isEmpty()){ %>
@@ -123,7 +123,11 @@ if (isSearch) {
 				<td><%=mdto.getMember_phone() %></td>
 				<td><%=mdto.getMember_point() %></td>
 				<td><%=mdto.getMember_join_date() %></td>
+				<%if(mdto.getMember_login_date()!=null){%>
 				<td><%=mdto.getMember_login_date() %></td>
+				<%}else{ %>
+					<%=System.out.print("　") %>
+					<%} %>
 			</tr>
 			<%} %>
 		</tbody>
