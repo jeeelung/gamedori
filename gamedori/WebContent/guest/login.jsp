@@ -55,8 +55,7 @@
 <body>
     <form action="login.do" method="post">
     <main>
-        <header></header>
-        <nav></nav>
+        
         <section>
             
             <div class="row-empty"></div>

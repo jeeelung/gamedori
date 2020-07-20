@@ -11,6 +11,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import gamedori.beans.dto.GameImgDto;
+import oracle.jdbc.proxy.annotation.Pre;
 
 public class GameImgDao {
 
@@ -69,5 +70,26 @@ public class GameImgDao {
 			GameImgDto gidto = rs.next()? new GameImgDto(rs): null;
 			con.close();
 			return gidto;
+		}
+		
+		public void delete(int game_no) throws Exception {
+			Connection con = getConnection();
+			String sql = "DELETE FROM game_img WHERE game_no = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, game_no);
+			ps.execute();
+			con.close();
+		}
+		
+		public int getGameImgNo(int game_no) throws Exception {
+			Connection con = getConnection();
+			String sql = "SELECT game_img_no FROM game_img WHERE game_no = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, game_no);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			int game_img_no = rs.getInt(1);
+			con.close();
+			return game_img_no;
 		}
 }

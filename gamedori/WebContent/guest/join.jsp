@@ -159,90 +159,80 @@ if(checkPwIsValid==false){
     }
 }
 </script>
-<div align="center">
-<article>
-<div class="row">
-    <img src="../image/signup.png">
-</div>
-
-	<div class="row today-wrap"><div class="row-empty"></div></div>
-</article>
-	<form action="join.do" method="post" name="join" onsubmit="return checkForm();">
-		<table class="table table-border left">
-			<tbody>
-			<tr>
-				<th>이름</th>
-					<td>
-						<input type="text" class="form-input" name="member_name" id="name" placeholder="2~8자의 한글을 입력해주세요">
-            <span class="correct-message">올바른 이름 형식입니다</span>
-            <span class="incorrect-message">이름은 한글 2~8자로 구성하세요</span>
-					</td>
-			</tr>
-				<tr>
-					<th>아이디</th>
-					<td>
-						<input type="text" class="form-input" name="member_id" placeholder="아이디" id="id" placeholder="영문/숫자로 8~20자 내외로 입력">
-						<%if(request.getParameter("errorID")!=null) {%>
-							<span><font color="#FF0000">이미 아이디가 사용 중 입니다.</font></span>
-						<%} %>
-						<span class="correct-message">올바른 아이디 형식입니다</span>
-            			<span class="incorrect-message">아이디는 영문소문자와 숫자로 8~20자 내외로 구성하세요</span> 
-					</td>
-				</tr>
-				<tr>
-					<th>비밀번호</th>
-					<td>
-						<input type="password" class="form-input" name="member_pw" placeholder="비밀번호" id="pw" placeholder="영문/숫자로 8~16자 내외로 입력">
-						<span class="correct-message">올바른 비밀번호 형식입니다</span>
-            			<span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로 8~16자 내외로 구성하세요</span>
-					</td>
-				</tr>
-				<tr>
-					<th>비밀번호 확인</th>
-					<th>
-						 <input type="password"class="form-input" id ="checkPw" maxlength="16">
-						<span class="correct-message">비밀번호가 일치합니다.</span>
-            			<span class="incorrect-message">비밀번호가 불일치합니다.</span>
-					</th>
-				</tr>
-				<tr>
-					<th>닉네임</th>
-					<td>
-						<input type="text"class="form-input" name="member_nick" id="nick" required placeholder="한글 8자 이내" maxlength="24">
+<body>
+    <form action="join.do">
+    <main>
+        <header></header>
+        <nav></nav>
+        <section>
+            
+            <div class="row-empty"></div>
+            <div class="row-empty"></div>
+              
+            <article class="w-35">
+                <div class="row">
+                    <img src="../image/signup.png">
+                </div>
+                <div class="row">
+                        <h4 class="title" style="font-family: DungGeunMo;">이름</h4>
+                     <input class="form-input" type="text" placeholder="5자 이하 한글" name="member_name">
+                </div>
+                <div class="row">
+                        <h4 class="title">닉네임</h4>                      
+                    <input type="text"class="form-input" name="member_nick" id="nick" required placeholder="한글 8자 이내" maxlength="24">
 						<%if(request.getParameter("errorNick")!=null) {%>
 							<span><font color="#FF0000">이미 닉네임이 사용 중 입니다.</span></h6>
 						<%}%>
 						<span class="correct-message">올바른 닉네임 형식입니다</span>
             			<span class="incorrect-message">닉네임는 한글로 8자 내외로 구성하세요</span>
-					</td>
-				</tr>
-				<tr>
-					<th>전화번호</th>
-					<td>
-						<input type="text" class="form-input" name="member_phone" id="phone" required placeholder="- 제외 , 숫자로 11자로 내외" maxlength="11">
+                </div>
+                <div class="row">
+                       <h4 class="title">아이디</h4>
+                    <input type="text" class="form-input" name="member_id" placeholder="아이디" id="id" placeholder="영문/숫자로 8~20자 내외로 입력">
+						<%if(request.getParameter("errorID")!=null) {%>
+							<span><font color="#FF0000">이미 아이디가 사용 중 입니다.</font></span>
+						<%} %>
+						<span class="correct-message">올바른 아이디 형식입니다</span>
+            			<span class="incorrect-message">아이디는 영문소문자와 숫자로 8~20자 내외로 구성하세요</span> 
+                </div>
+                <div class="row">
+                       <h4 class="title">비밀번호</h4>                     
+                    <input type="password" class="form-input" name="member_pw" placeholder="비밀번호" id="pw" placeholder="영문/숫자로 8~16자 내외로 입력">
+						<span class="correct-message">올바른 비밀번호 형식입니다</span>
+            			<span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로 8~16자 내외로 구성하세요</span>
+                </div>
+                <div class="row">
+                       <h4 class="title">비밀번호 확인</h4>                     
+                    <input type="password"class="form-input" id ="checkPw" maxlength="16">
+						<span class="correct-message">비밀번호가 일치합니다.</span>
+            			<span class="incorrect-message">비밀번호가 불일치합니다.</span>
+                </div>
+                <div class="row">
+                       <h4 class="title">전화번호</h4>                     
+                    <input type="text" class="form-input" name="member_phone" id="phone" required placeholder="- 제외 , 숫자로 11자로 내외" maxlength="11">
 						<span class="correct-message">올바른 전화번호 형식입니다</span>
             			<span class="incorrect-message">전화번호는 숫자로 11자 내외로 구성하세요</span>
-					</td>
-				</tr>
-				<tr>
-					<th>관심 분야</th>
-					<td>
-					<%for( GenreDto g :genreList){%>
-						<input type="checkbox" name="member_favorite" id="mf<%=g.getGenre_no() %>" value="<%=g.getGenre_no() %>">						
-						<label for="mf<%=g.getGenre_no()%>"><%=g.getGenre_type()%></label>
-					<%} %>	
-					</td>	
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="2">
-						<input class="form-btn form-inline" type="submit" value="가입">
-					</th>
-				</tr>
-			</tfoot>
-		</table>
-	</form>
-</div>
-
+                </div>
+            <div class="row">
+            <h4 class="title">관심 분야</h4>
+               <%for( GenreDto g :genreList){%>
+                  <input  type="checkbox" name="member_favorite" id="mf<%=g.getGenre_no() %>" value="<%=g.getGenre_no() %>">                  
+                  <label for="mf<%=g.getGenre_no()%>"><%=g.getGenre_type()%></label>
+               <%} %>   
+            </div>         
+                <br>
+                <div class="row">
+                    <input class="form-btn" type="submit" value="가입완료">
+                </div>                
+            </article>
+            <div class="row-empty"></div>
+                     
+        </section>
+        <footer></footer>
+    </main>
+    </form>
+</body>
+</html>
 <jsp:include page="/template/footer.jsp"></jsp:include>
+
+	
