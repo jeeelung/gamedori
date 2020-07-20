@@ -11,6 +11,134 @@
 <%@page import="gamedori.beans.dao.CommunityDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">   
+
+<style>
+.font-han {
+	font-family: DungGeunMo;
+	font-size: 35px;
+	color: #85BCE1;
+}
+
+thead tr {
+	background-color: #85BCE1;
+	color: #ffffff;
+}
+
+.font-game {
+	font-family: arcadeclassic;
+	font-size: 30px;
+	color: #85BCE1;
+}
+
+.wrap {
+	border-top: 3px solid #85BCE1;
+	border-bottom: 3px solid #85BCE1;
+}
+
+.today-wrap {
+	border-top: 3px solid #a49ec2;
+	border-bottom: 3px solid #a49ec2;
+	position: relative;
+	font-size: 15px;
+	color: #a49ec2;
+}
+
+.table {
+	
+}
+
+.table.table-border {
+	/* 테이블에 테두리를 부여*/
+	border: 3px solid #85BCE1;
+	/* 테두리 병합 */
+	border-collapse: collapse;
+}
+
+.table.table-border > thead > tr > th,
+        .table.table-border > thead > tr > td,
+        .table.table-border > tbody > tr > th,
+        .table.table-border > tbody > tr > td,
+        .table.table-border > tfoot > tr > th,
+        .table.table-border > tfoot > tr > td {
+            /* 칸에 테두리를 부여 */
+            border:2px solid #85BCE1;
+             color:#85BCE1;
+            
+        }
+.table.table-border > thead > tr > th,
+        .table.table-border > thead > tr > td > a,
+        .table.table-border > tbody > tr > th > a,
+        .table.table-border > tbody > tr > td > a,
+        .table.table-border > tfoot > tr > th > a,
+        .table.table-border > tfoot > tr > td > a{
+            text-decoration : none;
+             color: #546583;
+        }
+        .pagination a {
+            color:gray;
+            text-decoration: none;
+            display: inline-block;
+            padding:0.5rem;
+            min-width: 2.5rem;
+            text-align: center;
+            border:1px solid transparent;
+        }
+        .pagination a:hover,/*마우스 올라감*/
+        .pagination .on {/*활성화 */
+            border:1px solid gray;
+            color:black;
+        }
+
+
+.table.table-border>thead>tr>th, .table.table-border>thead>tr>td>a,
+	.table.table-border>tbody>tr>th>a, .table.table-border>tbody>tr>td>a,
+	.table.table-border>tfoot>tr>th>a, .table.table-border>tfoot>tr>td>a {
+	text-decoration: none;
+	color: #546583;
+}
+
+.pagination a {
+	color: gray;
+	text-decoration: none;
+	display: inline-block;
+	padding: 0.5rem;
+	min-width: 2.5rem;
+	text-align: center;
+	border: 1px solid transparent;
+}
+
+.pagination a:hover, /*마우스 올라감*/ .pagination .on { /*활성화 */
+	border: 1px solid gray;
+	color: black;
+}
+
+.font-header {
+
+	font-family: arcadeclassic;
+	font-size: 35px;
+	color: #a49ec2;
+}
+
+.font-header2 {
+	font-family: arcadeclassic;
+	font-size: 20px;
+	color: white;
+}
+thead tr {
+	background-color: #a49ec2;
+	color: #ffffff;
+}
+</style>
+
+
+
+<script language="event">
+
+</script>
+    
+	
 <%
 	CommunityDao cdao = new CommunityDao();
 	int commu_no = Integer.parseInt(request.getParameter("commu_no"));
@@ -51,7 +179,7 @@
 	List<ReplyDto> replyList = rdao.getList(commu_no);
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
+
 <style>
 
 </style>
@@ -149,7 +277,7 @@
 				<td align="right">
 					<form action="reply_insert.do" method="post">
 						<input type="hidden" name="origin_no" value="<%=commu_no%>">
-						<textarea name="reply_content" rows="4" cols="122"
+						<textarea name="reply_content" rows="4" cols="120"
 							placeholder="댓글작성"></textarea>
 						<br> <input type="submit" value="등록">
 					</form>

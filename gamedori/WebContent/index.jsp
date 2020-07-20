@@ -148,6 +148,13 @@
 .genre {
 	margin: 0;
 }
+.game-wrap:hover .gameName{
+	color: #20639B;
+}
+
+.game-wrap:hover .game_name{
+	color : firebrick;
+}
 
 </style>
 <!-- 장르별 신규게임 -->
@@ -224,7 +231,7 @@
 				<div class="game-wrap">
 					<a class="img-wrap"
 						href="<%=request.getContextPath()%>/game/content.jsp?game_no=<%=gldto.getGame_no()%>"> <img
-						class="game_img"
+						class="game_img img-transparent"
 						src="<%=request.getContextPath()%>/game/imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>"
 						width="180" height="130">
 						<span class="gameNo">TOP <%=gldto.getRow_num()%>.</span>
@@ -257,10 +264,10 @@
             <%for(GameListDto gldto : list) { %>
             <div class="row game-wrap">
             <a href="<%=request.getContextPath()%>/game/content.jsp?game_no=<%=gldto.getGame_no()%>">
-	            <img width="160" height="140" src="<%=request.getContextPath()%>/game/imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
-            </a>
+	            <img class="img-transparent" width="230" height="170" src="<%=request.getContextPath()%>/game/imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
                 <h5 class="gameName"><span class="gameNo"><%=gldto.getRow_num()%>.</span><%=gldto.getGame_name()%></h5>
                 <h6 class="genre">장르 : <%=gldto.getGenre_type()%></h6>
+            </a>
             </div>
             <%}%>
         <div class="row-empty"></div>

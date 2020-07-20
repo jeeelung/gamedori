@@ -165,7 +165,7 @@ function checkForm() {
 					<th>비밀번호</th>
 					<td>            
 					<input type="password" class="form-input" name="member_pw" 
-					placeholder="비밀번호" id="pw">
+					placeholder="비밀번호" id="pw" placeholde="영문/숫자로 8~16자 내외로 입력">
 					<span class="correct-message">올바른 비밀번호 형식입니다</span>
             		<span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로 8~16자 내외로 구성하세요</span>
 					</td>

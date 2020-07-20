@@ -233,10 +233,15 @@ thead tr {
 		<tfoot>
 			<tr>
 				<td colspan="5" align="center">
+				<%if(user != null) {
+						boolean isAdmin = user.getMember_auth().equals("관리자");
+					
+ 						if (isAdmin) { %>
 					<a  href="EventBoardWrite.jsp">
 						<input class="form-btn form-inline2" type="button" value="글쓰기">
 					</a>
-				
+				<%} %>
+	<%} %>
 				</td>
 			</tr>
 		</tfoot>
