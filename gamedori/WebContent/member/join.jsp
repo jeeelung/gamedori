@@ -52,7 +52,6 @@
             text-decoration : none;
              color:black;
         }
- <style>
         /* 입력창 관련 스타일 */
         .form-input {
             border: 1px solid black;
@@ -87,6 +86,22 @@
         .form-input.incorrect~.incorrect-message {
             display: block;
         }
+              .form-btn {
+           font-size: 20px;
+            background-color: #B22222;
+            color:white;
+            cursor: pointer;
+        }
+        .form-btn:hover {
+            background-color: #EF9A9A;
+        }
+        
+        .title{
+             text-align:left;
+             margin-bottom: 0;
+             font-family: 'DungGeunMo', sans-serif; 
+       }
+        
 </style>
 <script language="javascript">
 function checkName() {
@@ -198,6 +213,8 @@ if(checkPwIsValid==false){
 	<div class="row today-wrap"><div class="row-empty"></div></div>
 </article>
 	<form action="join.do" method="post" name="join" onsubmit="return checkForm();">
+		<div class="row">
+		</div>
 		<table class="table table-border left">
 			<tbody>
 			<tr>
@@ -209,7 +226,7 @@ if(checkPwIsValid==false){
 					</td>
 			</tr>
 				<tr>
-					<th>아이디</th>
+					<th class="title">아이디</th>
 					<td>
 						<input type="text" class="form-input" name="member_id" placeholder="아이디" id="id">
 						<%if(request.getParameter("errorID")!=null) {%>
@@ -220,7 +237,7 @@ if(checkPwIsValid==false){
 					</td>
 				</tr>
 				<tr>
-					<th>비밀번호</th>
+					<th class="title">비밀번호</th>
 					<td>
 						<input type="password" class="form-input" name="member_pw" placeholder="비밀번호" id="pw">
 						<span class="correct-message">올바른 비밀번호 형식입니다</span>
@@ -228,7 +245,7 @@ if(checkPwIsValid==false){
 					</td>
 				</tr>
 				<tr>
-					<th>비밀번호 확인</th>
+					<th class="title">비밀번호 확인</th>
 					<th>
 						 <input type="password"class="form-input" id ="checkPw" maxlength="16">
 						<span class="correct-message">비밀번호가 일치합니다.</span>
@@ -236,7 +253,7 @@ if(checkPwIsValid==false){
 					</th>
 				</tr>
 				<tr>
-					<th>닉네임</th>
+					<th class="title">닉네임</th>
 					<td>
 						<input type="text"class="form-input" name="member_nick" id="nick" required placeholder="한글 8자 이내" maxlength="24">
 						<%if(request.getParameter("errorNick")!=null) {%>
@@ -247,7 +264,7 @@ if(checkPwIsValid==false){
 					</td>
 				</tr>
 				<tr>
-					<th>전화번호</th>
+					<th class="title">전화번호</th>
 					<td>
 						<input type="text" class="form-input" name="member_phone" id="phone" required placeholder="- 제외" maxlength="11">
 						<span class="correct-message">올바른 전화번호 형식입니다</span>
@@ -255,7 +272,7 @@ if(checkPwIsValid==false){
 					</td>
 				</tr>
 				<tr>
-					<th>관심 분야</th>
+					<th class="">관심 분야</th>
 					<td>
 					<%for( GenreDto g :genreList){%>
 						<input type="checkbox" name="member_favorite" id="mf<%=g.getGenre_no() %>" value="<%=g.getGenre_no() %>">						
