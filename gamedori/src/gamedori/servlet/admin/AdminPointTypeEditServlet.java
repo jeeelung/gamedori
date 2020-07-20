@@ -28,7 +28,7 @@ public class AdminPointTypeEditServlet extends HttpServlet{
 	catch(Exception e) {
 		e.printStackTrace();
 		resp.sendError(500);
-	}
+		}
 	}
 
 }
