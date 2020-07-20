@@ -28,7 +28,7 @@ import gamedori.beans.dto.GameImgDto;
 
 @WebServlet(urlPatterns = "/game/upload.do")
 public class GameFileUploadServlet extends HttpServlet{
-protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
 		
 		try {
 			

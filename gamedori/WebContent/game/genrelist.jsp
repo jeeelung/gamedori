@@ -273,11 +273,6 @@
 .game_name:hover .gameName{
 	color: #20639B;
 }
-.img-wrap:hover .img-wrap,
-.gameName:hover .img-wrap,
-.game_name:hover .img-wrap{
-	opacity: 0.5;
-}
 
 .img-wrap:hover .game_name,
 .gameName:hover .game_name,
@@ -378,7 +373,7 @@
 				<div class="game-wrap">
 					<a class="img-wrap"
 						href="content.jsp?game_no=<%=gpdto.getGame_no()%>"> <img
-						class="game_img"
+						class="game_img img-transparent"
 						src="imgDownload.do?game_img_no=<%=gpdto.getGame_img_no()%>"
 						width="180" height="130">
 						<span class="gameNo">TOP <%=gpdto.getRow_num()%>.</span>
@@ -430,7 +425,7 @@
 		<div class="row">
 		<%for(GameListDto gldto : gameList) {%>
 			<div class="row game-wrap">
-				<a class="img-wrap" href="content.jsp?game_no=<%=gldto.getGame_no()%>">
+				<a class="img-wrap img-transparent" href="content.jsp?game_no=<%=gldto.getGame_no()%>">
 					<img width="230" height="170" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
 					<h5 class="gameName"><%=gldto.getGame_name()%></h5>
 				</a>

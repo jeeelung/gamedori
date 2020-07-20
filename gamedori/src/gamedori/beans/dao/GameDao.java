@@ -73,4 +73,14 @@ public class GameDao {
 		
 		con.close();
 	}
+	
+	// 삭제 테이블
+	public void delete(int game_no) throws Exception {
+		Connection con = getConnection();
+		String sql = "DELETE FROM game WHERE game_no = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, game_no);
+		ps.execute();
+		con.close();
+	}
 }
