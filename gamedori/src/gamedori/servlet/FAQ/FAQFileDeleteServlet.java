@@ -23,7 +23,7 @@ public class FAQFileDeleteServlet extends HttpServlet{
 			filesdao.delete(file_no);
 			
 			// 2	
-			File target = new File("E:/upload/faq", String.valueOf(file_no));
+			File target = new File("D:/upload/faq", String.valueOf(file_no));
 			target.delete();
 			
 			// 3

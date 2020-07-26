@@ -213,6 +213,7 @@ MemberDto mdto = edao.getWriter(edto.getMember_no());
 					
 				<%if(user !=null){
 					boolean isMine = user.getMember_id().equals(mdto.getMember_id());
+					boolean isAdmin = user.getMember_auth().equals("관리자");
 					if(user != null){
 				%>
 					<a href = "event.do?event_no=<%=event_no%>">

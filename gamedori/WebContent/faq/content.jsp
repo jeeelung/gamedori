@@ -81,8 +81,6 @@
 	display:inline-block;
  }
 </style>
-<script>
-</script>
 <div align="center">
 <form>
 <article>
@@ -123,8 +121,6 @@
 						<%for(FilesDto filesdto : fileList) {%>
 						<li><%=filesdto.getFile_name() %> (<%=filesdto.getFile_size() %>bytes) 
 						<a href="download.do?file_no=<%=filesdto.getFile_no() %>"><input type="button" value="다운로드"> 
-						<!-- 다운로드 미리보기 -->
-						<span class="preview-text">미리보기<img class="preview" src="download.do?file_no="<%=filesdto.getFile_no() %>"width="150"></span>
 						</a>
 						</li>
 						<%}%>
