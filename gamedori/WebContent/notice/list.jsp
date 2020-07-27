@@ -5,13 +5,14 @@
 <%@page import="gamedori.beans.dao.NoticeDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/base.css">
 <%
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
 	
 	MemberDto user=(MemberDto)session.getAttribute("userinfo");
 	int member_no;
+	String member_nick;
 	boolean isAdmin;
 	if(user==null){
 	member_no = 0;
@@ -69,23 +70,119 @@
 		
 	}
 %>
-    
+<style>
+.div {font-family: arcadeclassic;}
+.font-game {
+	font-family: arcadeclassic;
+	font-size: 30px;
+	color: #85BCE1;
+}
+.wrap {
+	border-top: 3px solid #85BCE1;
+	border-bottom : 3px solid #85BCE1;
+}
+.today-wrap {
+	border-top: 3px solid #85BCE1;
+	border-bottom : 3px solid #85BCE1;
+	position : relative;
+}
+.table{
+	
+}
+.table.table-border {
+	/* 테이블에 테두리를 부여*/
+	border: 3px solid #85BCE1;
+	/* 테두리 병합 */
+	border-collapse: collapse;
+}
+.table.table-border > thead > tr > th,
+        .table.table-border > thead > tr > td,
+        .table.table-border > tbody > tr > th,
+        .table.table-border > tbody > tr > td,
+        .table.table-border > tfoot > tr > th,
+        .table.table-border > tfoot > tr > td {
+            /* 칸에 테두리를 부여 */
+            border:2px solid #85BCE1;
+             color:#85BCE1;
+            
+        }
+.table.table-border > thead > tr > th,
+        .table.table-border > thead > tr > td > a,
+        .table.table-border > tbody > tr > th > a,
+        .table.table-border > tbody > tr > td > a,
+        .table.table-border > tfoot > tr > th > a,
+        .table.table-border > tfoot > tr > td > a{
+            text-decoration : none;
+             color: #546583;
+        }
+        .pagination a {
+            color:gray;
+            text-decoration: none;
+            display: inline-block;
+            padding:0.5rem;
+            min-width: 2.5rem;
+            text-align: center;
+            border:1px solid transparent;
+        }
+        .pagination a:hover,/*마우스 올라감*/
+        .pagination .on {/*활성화 */
+            border:1px solid gray;
+            color:black;
+        }
+        
+        .font-header {
+
+	font-family: arcadeclassic;
+	font-size: 35px;
+	color: #85BCE1;
+}
+
+.font-header2 {
+
+	font-family: arcadeclassic;
+	font-size: 20px;
+	color: white;
+}
+
+
+.font_han{
+	font-family: DungGeunMo;
+	font-weight:bold;
+}
+
+thead tr {
+    background-color: #85BCE1;
+    color: #ffffff;
+  }
+        
+</style>    
 <jsp:include page="/template/header.jsp"></jsp:include>
 <div align="center">
-
+	<article>
+	<div class="font-header">
+	<h3>NOTICE</h3>
+	</div>
+	<%if(isAdmin){ %>
+		<div class="right">
+				<a href="write.jsp">
+					<input class="form-btn form-inline2" type="button" value="글쓰기">
+				</a>
+		</div>
+	<%} %>
+	<div class="row today-wrap"><div class="row-empty">
+	</div></div>
+	</article>
 	
-	<h2></h2>
 	<form action="list.jsp" method="get">
-	<table border="1" width="90%">
+	<table class="table table-border2 table-hover">
 	
 		<thead>
-		<h2>공지사항</h2>
-			<tr>				
-				<th>글번호</th>
-				<th width="50%">제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>조회수</th>
+			<tr align="center" class= "font_header2">
+				<th width="10%" >No</th>
+				<th  width="40%">Title</th>
+				<th width="10%">Writer</th>
+				<th width="10%" >Date</th>
+				<th width="10%">Read</th>
 			</tr>
 		</thead>
 		
@@ -93,32 +190,22 @@
 			<% for(NoticeDto ndto : list) { %>
 			<tr>	
 			<%MemberDto mdto = ndao.getWriter(member_no);%>
-				<th><%=ndto.getNotice_no()%></th>
-			<td>
-				<a href="content.jsp?notice_no=<%=ndto.getNotice_no()%>">
+				<td class="font_han"><%=ndto.getNotice_no()%></td>
+			<td class="left">
+				<a class="font_han" href="content.jsp?notice_no=<%=ndto.getNotice_no()%>">
 					<%=ndto.getNotice_title()%>
-				
 				</a>
 			</td>
-			
-				<td><%=user.getMember_nick()%></td>
-				<td><%=ndto.getNotice_auto()%></td>
-				<td><%=ndto.getNotice_read()%></td>
+				<%if(user!=null){ %>
+				<td class="font_han"><%=user.getMember_nick()%></td>
+				<%} %>
+				<td class="font-han"><%=ndto.getNotice_auto()%></td>
+				<td class="font-han"><%=ndto.getNotice_read()%></td>
 			</tr>
 			<%}%>
-				
-		</tbody>
-		<%if(isAdmin){ %>
-		<tfoot>
-			<tr align="right">
-				<td colspan="5" align="right">
-					<a href="write.jsp">
-						<input type="button" value="글쓰기">
-					</a>
-				</td>
-			</tr>
+		</tbody>	
+		<tfoot>		
 		</tfoot>
-		<%} %>
 	</table>
 	<!-- 네비게이터 -->
 	<h6>

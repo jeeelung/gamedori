@@ -5,33 +5,33 @@
 <%@page import="java.util.List"%>
 <jsp:include page="/template/header.jsp"></jsp:include>
 <%
-   GenreDao genre = new GenreDao();
-   List<GenreDto> genreList = genre.getList();
+	GenreDao genre = new GenreDao();
+	List<GenreDto> genreList = genre.getList();
 %>
 <style>
 .div {font-family: arcadeclassic;}
 .font-game {
-   font-family: arcadeclassic;
-   font-size: 30px;
-   color: #20639B;
+	font-family: arcadeclassic;
+	font-size: 30px;
+	color: #20639B;
 }
 .wrap {
-   border-top: 3px solid #20639B;
-   border-bottom : 3px solid #20639B;
+	border-top: 3px solid #20639B;
+	border-bottom : 3px solid #20639B;
 }
 .today-wrap {
-   border-top: 3px solid #20639B;
-   border-bottom : 3px solid #20639B;
-   position : relative;
+	border-top: 3px solid #20639B;
+	border-bottom : 3px solid #20639B;
+	position : relative;
 }
 .table{
-   width: auto;
+	width: auto;
 }
 .table.table-border {
-   /* 테이블에 테두리를 부여*/
-   border: 3px solid #20639B;
-   /* 테두리 병합 */
-   border-collapse: collapse;
+	/* 테이블에 테두리를 부여*/
+	border: 3px solid #20639B;
+	/* 테두리 병합 */
+	border-collapse: collapse;
 }
 .table.table-border > thead > tr > th,
         .table.table-border > thead > tr > td,
@@ -122,7 +122,7 @@ function checkNick(){
 function checkPhone(){
 var regexPhone =/^[0-9]{1,11}$/g;
 var phone = document.getElementById("phone").value;
-return regexPhone.test(콜);
+return regexPhone.test(phone);
 }
 
 //폼 전송 여부를 판정하는 함수
@@ -193,86 +193,86 @@ if(checkPwIsValid==false){
 <div align="center">
 <article>
 <div class="font-game">
-   <h3>회원가입</h3>
+	<h3>회원가입</h3>
 </div>
-   <div class="row today-wrap"><div class="row-empty"></div></div>
+	<div class="row today-wrap"><div class="row-empty"></div></div>
 </article>
-   <form action="join.do" method="post" name="join" onsubmit="return checkForm();">
-      <table class="table table-border left">
-         <tbody>
-         <tr>
-            <th>이름</th>
-               <td>
-                  <input type="text" class="form-input" name="member_name" id="name" placeholder="2~8자의 한글을 입력해주세요">
+	<form action="join.do" method="post" name="join" onsubmit="return checkForm();">
+		<table class="table table-border left">
+			<tbody>
+			<tr>
+				<th>이름</th>
+					<td>
+						<input type="text" class="form-input" name="member_name" id="name" placeholder="2~8자의 한글을 입력해주세요">
             <span class="correct-message">올바른 이름 형식입니다</span>
             <span class="incorrect-message">이름은 한글 2~8자로 구성하세요</span>
-               </td>
-         </tr>
-            <tr>
-               <th>아이디</th>
-               <td>
-                  <input type="text" class="form-input" name="member_id" placeholder="아이디" id="id" placeholder="영문/숫자로 8~20자 내외로 입력">
-                  <%if(request.getParameter("errorID")!=null) {%>
-                     <span><font color="#FF0000">이미 아이디가 사용 중 입니다.</font></span>
-                  <%} %>
-                  <span class="correct-message">올바른 아이디 형식입니다</span>
-                     <span class="incorrect-message">아이디는 영문소문자와 숫자로 8~20자 내외로 구성하세요</span> 
-               </td>
-            </tr>
-            <tr>
-               <th>비밀번호</th>
-               <td>
-                  <input type="password" class="form-input" name="member_pw" placeholder="비밀번호" id="pw" placeholder="영문/숫자로 8~16자 내외로 입력">
-                  <span class="correct-message">올바른 비밀번호 형식입니다</span>
-                     <span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로 8~16자 내외로 구성하세요</span>
-               </td>
-            </tr>
-            <tr>
-               <th>비밀번호 확인</th>
-               <th>
-                   <input type="password"class="form-input" id ="checkPw" maxlength="16">
-                  <span class="correct-message">비밀번호가 일치합니다.</span>
-                     <span class="incorrect-message">비밀번호가 불일치합니다.</span>
-               </th>
-            </tr>
-            <tr>
-               <th>닉네임</th>
-               <td>
-                  <input type="text"class="form-input" name="member_nick" id="nick" required placeholder="한글 8자 이내" maxlength="24">
-                  <%if(request.getParameter("errorNick")!=null) {%>
-                     <span><font color="#FF0000">이미 닉네임이 사용 중 입니다.</span></h6>
-                  <%}%>
-                  <span class="correct-message">올바른 닉네임 형식입니다</span>
-                     <span class="incorrect-message">닉네임는 한글로 8자 내외로 구성하세요</span>
-               </td>
-            </tr>
-            <tr>
-               <th>전화번호</th>
-               <td>
-                  <input type="text" class="form-input" name="member_phone" id="phone" required placeholder="- 제외 , 숫자로 11자로 내외" maxlength="11">
-                  <span class="correct-message">올바른 전화번호 형식입니다</span>
-                     <span class="incorrect-message">전화번호는 숫자로 11자 내외로 구성하세요</span>
-               </td>
-            </tr>
-            <tr>
-               <th>관심 분야</th>
-               <td>
-               <%for( GenreDto g :genreList){%>
-                  <input type="checkbox" name="member_favorite" id="mf<%=g.getGenre_no() %>" value="<%=g.getGenre_no() %>">                  
-                  <label for="mf<%=g.getGenre_no()%>"><%=g.getGenre_type()%></label>
-               <%} %>   
-               </td>   
-            </tr>
-         </tbody>
-         <tfoot>
-            <tr>
-               <th colspan="2">
-                  <input class="form-btn form-inline" type="submit" value="가입">
-               </th>
-            </tr>
-         </tfoot>
-      </table>
-   </form>
+					</td>
+			</tr>
+				<tr>
+					<th>아이디</th>
+					<td>
+						<input type="text" class="form-input" name="member_id" id="id" placeholder="영문/숫자로 8~20자 내외로 입력">
+						<%if(request.getParameter("errorID")!=null) {%>
+							<span><font color="#FF0000">이미 아이디가 사용 중 입니다.</font></span>
+						<%} %>
+						<span class="correct-message">올바른 아이디 형식입니다</span>
+            			<span class="incorrect-message">아이디는 영문소문자와 숫자로 8~20자 내외로 구성하세요</span> 
+					</td>
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+					<td>
+						<input type="password" class="form-input" name="member_pw" id="pw" placeholder="영문/숫자로 8~16자 내외로 입력">
+						<span class="correct-message">올바른 비밀번호 형식입니다</span>
+            			<span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로 8~16자 내외로 구성하세요</span>
+					</td>
+				</tr>
+				<tr>
+					<th>비밀번호 확인</th>
+					<th>
+						 <input type="password"class="form-input" id ="checkPw" maxlength="16"placeholder="비밀번호 확인">
+						<span class="correct-message">비밀번호가 일치합니다.</span>
+            			<span class="incorrect-message">비밀번호가 불일치합니다.</span>
+					</th>
+				</tr>
+				<tr>
+					<th>닉네임</th>
+					<td>
+						<input type="text"class="form-input" name="member_nick" id="nick" required placeholder="한글 8자 이내" maxlength="24">
+						<%if(request.getParameter("errorNick")!=null) {%>
+							<span><font color="#FF0000">이미 닉네임이 사용 중 입니다.</span></h6>
+						<%}%>
+						<span class="correct-message">올바른 닉네임 형식입니다</span>
+            			<span class="incorrect-message">닉네임는 한글로 8자 내외로 구성하세요</span>
+					</td>
+				</tr>
+				<tr>
+					<th>전화번호</th>
+					<td>
+						<input type="text" class="form-input" name="member_phone" id="phone" required placeholder="- 제외 , 숫자로 11자로 내외" maxlength="11">
+						<span class="correct-message">올바른 전화번호 형식입니다</span>
+            			<span class="incorrect-message">전화번호는 숫자로 11자 내외로 구성하세요</span>
+					</td>
+				</tr>
+				<tr>
+					<th>관심 분야</th>
+					<td>
+					<%for( GenreDto g :genreList){%>
+						<input type="checkbox" name="member_favorite" id="mf<%=g.getGenre_no() %>" value="<%=g.getGenre_no() %>">						
+						<label for="mf<%=g.getGenre_no()%>"><%=g.getGenre_type()%></label>
+					<%} %>	
+					</td>	
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="2">
+						<input class="form-btn form-inline" type="submit" value="가입">
+					</th>
+				</tr>
+			</tfoot>
+		</table>
+	</form>
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>
