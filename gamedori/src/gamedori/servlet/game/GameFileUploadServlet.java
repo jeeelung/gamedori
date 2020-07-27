@@ -20,11 +20,15 @@ import gamedori.beans.dao.GameDao;
 import gamedori.beans.dao.GameFileDao;
 import gamedori.beans.dao.GameGenreDao;
 import gamedori.beans.dao.GameImgDao;
+import gamedori.beans.dao.PointDao;
+import gamedori.beans.dao.PointHistoryDao;
 import gamedori.beans.dto.FilesDto;
 import gamedori.beans.dto.GameDto;
 import gamedori.beans.dto.GameFileDto;
 import gamedori.beans.dto.GameGenreDto;
 import gamedori.beans.dto.GameImgDto;
+import gamedori.beans.dto.PointDto;
+import gamedori.beans.dto.PointHistoryDto;
 
 @WebServlet(urlPatterns = "/game/upload.do")
 public class GameFileUploadServlet extends HttpServlet{
@@ -69,6 +73,21 @@ public class GameFileUploadServlet extends HttpServlet{
 			ggdto.setGame_genre_no(game_genre_no);
 			
 			ggdao.write(ggdto);
+			
+			
+			PointDto pdto = new PointDto();
+			PointDao pdao = new PointDao();
+			int member_no = Integer.parseInt(map.get("member_no").get(0).getString());
+			
+			pdto = pdao.getByType("업로드");
+			
+			pdao.add_point(member_no, pdto.getPoint_score());
+		
+			PointHistoryDto phdto = new PointHistoryDto();
+			phdto.setPoint_no(pdto.getPoint_no());
+			PointHistoryDao phdao = new PointHistoryDao();
+			
+			phdao.insert(phdto, member_no);
 			
 			// 게임 파일 꺼내기
 			List<FileItem> fileList = map.get("game_file");
@@ -125,6 +144,8 @@ public class GameFileUploadServlet extends HttpServlet{
 					item.write(target);
 				}
 			}
+			
+			
 			resp.sendRedirect("content.jsp?game_no="+game_no);
 			
 		} catch (Exception e) {
