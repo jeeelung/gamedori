@@ -68,5 +68,5 @@ public class MemberChangeInfoServlet extends HttpServlet {
 			resp.sendError(500);
 		}
 	}
-	}
+}
 
