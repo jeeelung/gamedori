@@ -211,7 +211,7 @@ if(checkPwIsValid==false){
 				<tr>
 					<th>아이디</th>
 					<td>
-						<input type="text" class="form-input" name="member_id" placeholder="아이디" id="id" placeholder="영문/숫자로 8~20자 내외로 입력">
+						<input type="text" class="form-input" name="member_id" id="id" placeholder="영문/숫자로 8~20자 내외로 입력">
 						<%if(request.getParameter("errorID")!=null) {%>
 							<span><font color="#FF0000">이미 아이디가 사용 중 입니다.</font></span>
 						<%} %>
@@ -222,7 +222,7 @@ if(checkPwIsValid==false){
 				<tr>
 					<th>비밀번호</th>
 					<td>
-						<input type="password" class="form-input" name="member_pw" placeholder="비밀번호" id="pw" placeholder="영문/숫자로 8~16자 내외로 입력">
+						<input type="password" class="form-input" name="member_pw" id="pw" placeholder="영문/숫자로 8~16자 내외로 입력">
 						<span class="correct-message">올바른 비밀번호 형식입니다</span>
             			<span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로 8~16자 내외로 구성하세요</span>
 					</td>
@@ -230,7 +230,7 @@ if(checkPwIsValid==false){
 				<tr>
 					<th>비밀번호 확인</th>
 					<th>
-						 <input type="password"class="form-input" id ="checkPw" maxlength="16">
+						 <input type="password"class="form-input" id ="checkPw" maxlength="16"placeholder="비밀번호 확인">
 						<span class="correct-message">비밀번호가 일치합니다.</span>
             			<span class="incorrect-message">비밀번호가 불일치합니다.</span>
 					</th>
