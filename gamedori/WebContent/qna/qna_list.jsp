@@ -85,15 +85,15 @@
 .font-game {
 	font-family: arcadeclassic;
 	font-size: 30px;
-	color: #20639B;
+	color: #85BCE1;
 }
 .wrap {
 	border-top: 3px solid #20639B;
-	border-bottom : 3px solid #20639B;
+	border-bottom : 3px solid #85BCE1;
 }
 .today-wrap {
-	border-top: 3px solid #20639B;
-	border-bottom : 3px solid #20639B;
+	border-top: 3px solid #85BCE1;
+	border-bottom : 3px solid #85BCE1;
 	position : relative;
 }
 .table{
@@ -101,7 +101,7 @@
 }
 .table.table-border {
 	/* 테이블에 테두리를 부여*/
-	border: 3px solid #20639B;
+	border: 3px solid #85BCE1;
 	/* 테두리 병합 */
 	border-collapse: collapse;
 }
@@ -143,13 +143,13 @@
 </style>
 <article class="w-90">
 	<!-- 제목 -->
-	<div class=".font-game">
-		<h2 >나의 문의 내역</h2>
+	<div class="font-game">
+		<h4>나의 문의 내역</h4>
 	</div>
 	<!-- 글목록 -->
 	<div class="row">
 		<!-- 테이블 -->
-		<table class="table table-border table-stripe">
+		<table class="table table-border table-hover">
 			<thead>
 				<tr>
 					<th>번호</th>
@@ -163,7 +163,7 @@
 			<%
 				if (isMine) {
 			%>
-			<tbody align="center">
+			<tbody align="">
 				<%
 					for (QnaDto qdto : list) {
 				%>
@@ -215,7 +215,7 @@
 	<!-- 글쓰기버튼 -->
 	<div class="row"></div>
 	<!-- 페이지 네비게이터 -->
-	<div class="navi">
+	<div class="row center pagination">
 		<!-- 
 		이전 버튼을 누르면 startBlock - 1 에 해당하는 페이지로 이동해야 한다
 		(주의) startBlock이 1인 경우에는 출력하지 않는다
@@ -286,7 +286,7 @@
 		<!-- 검색창 -->
 		<form action="qna_list.jsp" method="get">
 			<!-- 검색분류 -->
-			<select name="type">
+			<select class="form-input form-inline" name="type">
 				<option value="q.qna_title">제목</option>
 				<option value="m.MEMBER_NICK">작성자</option>
 			</select>

@@ -59,14 +59,14 @@ public class MemberChangeInfoServlet extends HttpServlet {
 						mfdao.choice(mfdto);
 					}
 				}
+				resp.sendRedirect("info.jsp");
 			}
 			// 출력
-			resp.sendRedirect("info.jsp");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.sendError(500);
 		}
 	}
-	}
+}
 
