@@ -31,7 +31,7 @@ public class EventWriteWithFileServlet extends HttpServlet{
 		try {
 			String charset = "UTF-8";
 			int limit = 10*1024*1024;
-			File baseDir= new File("D:/eventupload/board");
+			File baseDir= new File("D:/upload/kh33/eventupload/board");
 			baseDir.mkdirs();
 			
 			DiskFileItemFactory factory = new DiskFileItemFactory();

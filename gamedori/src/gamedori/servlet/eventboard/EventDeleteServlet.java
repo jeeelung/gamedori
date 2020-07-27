@@ -45,7 +45,7 @@ public class EventDeleteServlet extends HttpServlet {
 				file_no = list.get(i);
 				fdao.delete(file_no); // 3		
 				
-				File target = new File("eventupload/board", String.valueOf(file_no));
+				File target = new File("D:/upload/kh33/eventupload/board", String.valueOf(file_no));
 				target.delete(); // 4
 			}
 			

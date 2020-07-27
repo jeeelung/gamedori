@@ -36,7 +36,7 @@ public class GameImgDownloadServlet extends HttpServlet{
 			resp.setHeader("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(gidto.getGame_img_name(), "UTF-8")+"\"");
 			resp.setHeader("Content-Length", String.valueOf(gidto.getGame_img_size()));
 			
-			File target = new File("D:/upload/game/img", String.valueOf(gidto.getGame_img_no()));
+			File target = new File("D:/upload/kh33/game/img", String.valueOf(gidto.getGame_img_no()));
 			byte[] data = FileUtils.readFileToByteArray(target);
 			resp.getOutputStream().write(data); // 사용자에게 전송
 			

@@ -33,9 +33,9 @@ public class GameFileDeleteServlet extends HttpServlet{
 			FilesDao fdao = new FilesDao();
 			
 			// 4
-			File target = new File("D:/upload/game/file", String.valueOf(file_no));
+			File target = new File("D:/upload/kh33/game/file", String.valueOf(file_no));
 			target.delete();
-			File targetImg = new File("D:/upload/game/img", String.valueOf(game_img_no));
+			File targetImg = new File("D:/upload/kh33/game/img", String.valueOf(game_img_no));
 			targetImg.delete();
 			
 			// 5

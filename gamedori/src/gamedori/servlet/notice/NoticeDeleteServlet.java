@@ -37,7 +37,7 @@ public class NoticeDeleteServlet extends HttpServlet {
 				file_no = list.get(i);
 				fdao.delete(file_no);
 
-				File target = new File("D:/upload/notice", String.valueOf(file_no));
+				File target = new File("D:/upload/kh33/notice", String.valueOf(file_no));
 				target.delete();
 			}
 

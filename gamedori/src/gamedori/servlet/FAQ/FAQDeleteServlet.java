@@ -32,7 +32,7 @@ public class FAQDeleteServlet extends HttpServlet{
 			for(int i=0; i<list.size(); i++) {
 				file_no = list.get(i);
 				filesdao.delete(file_no);
-				File target = new File("D:/upload/faq", String.valueOf(file_no));
+				File target = new File("D:/upload/kh33/faq", String.valueOf(file_no));
 				target.delete();
 			}
 //			출력 : list.jsp로 redirect

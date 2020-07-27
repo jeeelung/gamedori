@@ -27,7 +27,7 @@ public class QnaFileDeleteServlet extends HttpServlet {
 			qdao.delete(file_no);
 			
 			// 2	
-			File target = new File("D:/upload/qna", String.valueOf(file_no));
+			File target = new File("D:/upload/kh33/qna", String.valueOf(file_no));
 			target.delete();
 			
 			// 3

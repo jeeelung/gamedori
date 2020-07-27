@@ -32,7 +32,7 @@ public class FAQEditServlet extends HttpServlet {
 			// 1.
 			String charset = "UTF-8";
 			int limit = 10 * 1024 * 1024;
-			File baseDir = new File("D:/upload/faq");
+			File baseDir = new File("D:/upload/kh33/faq");
 			baseDir.mkdirs();
 
 			DiskFileItemFactory factory = new DiskFileItemFactory();

@@ -34,7 +34,7 @@ public class NoticeWriteServlet extends HttpServlet{
 			
 			String charset = "UTF-8"; // 해석할 인코딩 방식
 			int limit = 10 * 1024 * 1024; // 최대 허용 용량
-			File baseDir = new File("D:/upload/notice");
+			File baseDir = new File("D:/upload/kh33/notice");
 			baseDir.mkdirs();
 			
 			DiskFileItemFactory factory = new DiskFileItemFactory(limit, baseDir);

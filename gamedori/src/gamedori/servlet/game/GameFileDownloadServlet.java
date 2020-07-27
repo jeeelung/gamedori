@@ -35,7 +35,7 @@ public class GameFileDownloadServlet extends HttpServlet{
 			
 			resp.setHeader("Content-Type", "application/x-shockwave-flash; charset=UTF-8");
 			
-			File target = new File("D:/upload/game/file", String.valueOf(fdto.getFile_no()));
+			File target = new File("D:/upload/kh33/game/file", String.valueOf(fdto.getFile_no()));
 			byte[] data = FileUtils.readFileToByteArray(target);
 			resp.getOutputStream().write(data); // 사용자에게 전송
 			
