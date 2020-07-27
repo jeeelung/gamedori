@@ -115,6 +115,7 @@
 }
 .gameName, .game_name {
 	margin-top: 0;
+	padding-bottom: 0;
 }
 
 /* .wrap {
@@ -165,17 +166,19 @@
 	font-family: DungGeunMo;
 	font-weight: 200;
 	font-size: 15px;
+	margin-bottom: 0;
 }
 
 .genre {
-	margin: 0;
+	margin-top: 0;
 	color: black;
 	font-weight: 100px;
 }
 
 .gameName {
 	margin-top: 0;
-	padding: 1rem;
+	padding : 1rem;
+	padding-bottom: 0;
 }
 
 .wrap {
@@ -423,13 +426,27 @@
 			</select>
 		</div>
 		<div class="row">
-		<%for(GameListDto gldto : gameList) {%>
+		<%if(isList) {%>
+			<%for(GameListDto gldto : gameList) {%>
+			<div class="row game-wrap">
+				<a class="img-wrap img-transparent" href="content.jsp?game_no=<%=gldto.getGame_no()%>">
+					<img width="230" height="170" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
+					<h5 class="gameName"><%=gldto.getGame_name()%></h5>
+				</a>
+				<h6 class="genre">
+				장르 :
+				<%=gldto.getGenre_type()%></h6>
+			</div>
+			<%}%>
+		<%} else {%>
+			<%for(GameListDto gldto : gameList) {%>
 			<div class="row game-wrap">
 				<a class="img-wrap img-transparent" href="content.jsp?game_no=<%=gldto.getGame_no()%>">
 					<img width="230" height="170" src="imgDownload.do?game_img_no=<%=gldto.getGame_img_no()%>">
 					<h5 class="gameName"><%=gldto.getGame_name()%></h5>
 				</a>
 			</div>
+			<%}%>
 		<%}%>
 		</div>
 	</div>

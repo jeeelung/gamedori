@@ -150,7 +150,7 @@
 		<div class="row-empty"></div>
 		<div class="row-empty"></div>
 		<div class="line">
-			<h3 class="font-kor header"><%=gwdto.getGame_name()%></h3>
+			<h3 class="font-game header"><%=gwdto.getGame_name()%></h3>
 			<a class="list-wrap" href="javascript:history.back();">
 				<input class="list-btn" type="button" value="목록으로">
 			</a>

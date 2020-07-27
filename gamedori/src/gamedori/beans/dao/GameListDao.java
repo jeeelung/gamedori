@@ -118,12 +118,23 @@ public class GameListDao {
 		String sql = null;
 		boolean isGameRead = arrow.equals("game_read");
 		if (isGameRead) {
-			sql = "SELECT * FROM (" + "SELECT rownum rn, a.* FROM ( " + "SELECT * FROM game_popular "
-					+ "WHERE genre_no = ? ORDER BY " + arrow + " " + ")a" + ") WHERE rn BETWEEN ? AND ?";
+			sql = "SELECT * FROM (" 
+					+ "SELECT rownum rn, a.* FROM ( " 
+					+ "SELECT * FROM game_popular "
+					+ "WHERE genre_no = ? ORDER BY "
+					+ ""+ arrow + " "
+					+ ")a" 
+					+ ") WHERE rn BETWEEN ? AND ?";
 		}
 		if (!isGameRead) {
-			sql = "SELECT * FROM (" + "SELECT rownum rn, a.* FROM ( " + "SELECT * FROM game_list "
-					+ "WHERE genre_no = ? " + "ORDER BY game_date " + arrow + "" + ")a" + ") WHERE rn BETWEEN ? AND ?";
+			sql = "SELECT * FROM (" 
+					+ "SELECT rownum rn, a.* FROM ( " 
+					+ "SELECT * FROM game_list "
+					+ "WHERE genre_no = ? " 
+					+ "ORDER BY game_date "
+					+ ""+ arrow + "" 
+					+ ")a" 
+					+ ") WHERE rn BETWEEN ? AND ?";
 		}
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, genre_no);
@@ -146,10 +157,10 @@ public class GameListDao {
 		String sql = null;
 		boolean isGameRead = arrow.equals("game_read");
 		if (isGameRead) {
-			sql = "SELECT COUNT(*) FROM game_popular ORDER BY " + arrow + " desc";
+			sql = "SELECT COUNT(*) FROM game_popular";
 		}
 		if (!isGameRead) {
-			sql = "SELECT COUNT(*) FROM game_list ORDER BY game_date " + arrow + "";
+			sql = "SELECT COUNT(*) FROM game_list";
 		}
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
@@ -163,10 +174,10 @@ public class GameListDao {
 		String sql = null;
 		boolean isGameRead = arrow.equals("game_read");
 		if (isGameRead) {
-			sql = "SELECT * FROM game_popular WHERE genre_no = ? ORDER BY " + arrow + "";
+			sql = "SELECT COUNT(*) FROM game_popular WHERE genre_no = ?";
 		}
 		if (!isGameRead) {
-			sql = "SELECT * FROM game_list WHERE genre_no = ? ORDER BY game_date " + arrow + "";
+			sql = "SELECT COUNT(*) FROM game_list WHERE genre_no = ?";
 		}
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, genre_no);

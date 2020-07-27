@@ -295,7 +295,8 @@
 			</a>
 			<h6 class="genre">
 				장르 :
-				<%=gpdto.getGenre_type()%></h6>
+				<%=gpdto.getGenre_type()%>
+			</h6>
 		</div>
 		<%
 			}

@@ -52,7 +52,7 @@ public class FAQFileDownloadServlet extends HttpServlet{
 			resp.setHeader("Content-Length", String.valueOf(filesdto.getFile_size()));
 			
 //			5. 실제 데이터를 불러와서 사용자에게 전송한다.
-			File target = new File("E:/upload/faq", String.valueOf(filesdto.getFile_no()));
+			File target = new File("D:/upload/faq", String.valueOf(filesdto.getFile_no()));
 			byte[] data = FileUtils.readFileToByteArray(target);//파일 데이터 로드
 			resp.getOutputStream().write(data);//사용자에게 전송
 		}

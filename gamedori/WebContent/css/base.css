@@ -20,18 +20,12 @@
 
 @font-face{
     font-family: arcadeclassic;
-    src: url(font/ARCADECLASSIC.TTF);
+    src: url(../font/ARCADECLASSIC.TTF);
 }
 @font-face{
 	font-family: DungGeunMo;
-	src: url(font/DungGeunMo.ttf)
+	src: url(../font/DungGeunMo.ttf)
 }
-
-@font-face{
-	font-family: DungGeunMo;
-	src: url(font/DungGeunMo.ttf);
-}
-
 /*
     이미지 관련 스타일
     - 기본 스타일은 .img
