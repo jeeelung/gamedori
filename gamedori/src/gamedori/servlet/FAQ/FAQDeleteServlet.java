@@ -38,7 +38,7 @@ public class FAQDeleteServlet extends HttpServlet{
 //			출력 : list.jsp로 redirect
 			resp.sendRedirect("list.jsp");
 		}
-		catch(Exception e) {
+		catch(Exception e) { 
 			e.printStackTrace();
 			resp.sendError(500);
 		}
