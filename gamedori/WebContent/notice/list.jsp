@@ -198,7 +198,9 @@ thead tr {
 			</td>
 				<%if(user!=null){ %>
 				<td class="font_han"><%=user.getMember_nick()%></td>
-				<%} %>
+				<%} else{%>
+            	<td class="font_han">관리자</td>
+            	<%} %>
 				<td class="font-han"><%=ndto.getNotice_auto()%></td>
 				<td class="font-han"><%=ndto.getNotice_read()%></td>
 			</tr>
