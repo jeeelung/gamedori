@@ -33,7 +33,7 @@ public class EventEditServlet extends HttpServlet{
 			
 			String charset = "UTF-8"; // 해석할 인코딩 방식
 			int limit = 10 * 1024 * 1024; // 최대 허용 용량
-			File baseDir = new File("D:/eventupload/board");
+			File baseDir = new File("D:/upload/kh33/eventupload/board");
 			
 			DiskFileItemFactory factory = new DiskFileItemFactory(limit, baseDir);
 			factory.setDefaultCharset(charset);

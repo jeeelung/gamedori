@@ -35,7 +35,7 @@ import gamedori.beans.dto.FilesDto;
 				resp.setHeader("Content-Disposition", "inline; filename=\""+URLEncoder.encode(fdto.getFile_name(), "UTF-8")+"\"");
 				resp.setHeader("Content-Length", String.valueOf(fdto.getFile_size()));
 				
-				File target = new File("D:/upload/image", String.valueOf(fdto.getFile_no()));
+				File target = new File("D:/upload/kh33/image", String.valueOf(fdto.getFile_no()));
 				byte[] data = FileUtils.readFileToByteArray(target);
 				resp.getOutputStream().write(data); // 사용자에게 전송
 				

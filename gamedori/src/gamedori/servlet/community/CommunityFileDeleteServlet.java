@@ -32,7 +32,7 @@ public class CommunityFileDeleteServlet extends HttpServlet {
 			fdao.delete(file_no);
 			
 			// 2	
-			File target = new File("D:/upload/community", String.valueOf(file_no));
+			File target = new File("D:/upload/kh33/community", String.valueOf(file_no));
 			target.delete();
 			
 			// 3

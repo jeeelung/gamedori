@@ -77,6 +77,10 @@
 		<url-pattern>/community/content.jsp</url-pattern>
 		<url-pattern>/eventboard/Eventcontent.jsp</url-pattern>
 		<url-pattern>/qna/qna_list.jsp</url-pattern>
+		<url-pattern>/game/genrelist.jsp </url-pattern>
+		<url-pattern>/game/latestlist.jsp </url-pattern>
+		<url-pattern>/game/popularlist.jsp </url-pattern>
+		<url-pattern>/game/upload.jsp </url-pattern>
 	</filter-mapping>
 	
 	

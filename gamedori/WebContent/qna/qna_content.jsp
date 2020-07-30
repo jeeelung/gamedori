@@ -12,49 +12,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	QnaDao qdao = new QnaDao();
-	int qna_no = Integer.parseInt(request.getParameter("qna_no"));
-	// 번호에 맞는 게시물 정보 불러오기
-	QnaDto qdto = qdao.get(qna_no);
-	// 작성자 정보 불러오기
-	MemberDto user = (MemberDto)session.getAttribute("userinfo");
-	MemberDto mdto = qdao.getWriter(qdto.getMember_no());
-	// 권한 확인
-	boolean isAdmin = user.getMember_auth().equals("관리자");
-	boolean isMine = user.getMember_id().equals(mdto.getMember_id());
-	
-	QnaFileDao qfdao = new QnaFileDao();
-	List<FilesDto> fileList = qfdao.getList(qna_no);
-	
-	AnswerFileDao afdao = new AnswerFileDao();
-	List<FilesDto> afileList =afdao.getList(qna_no);
-	
+   QnaDao qdao = new QnaDao();
+   int qna_no = Integer.parseInt(request.getParameter("qna_no"));
+   // 번호에 맞는 게시물 정보 불러오기
+   QnaDto qdto = qdao.get(qna_no);
+   // 작성자 정보 불러오기
+   MemberDto user = (MemberDto)session.getAttribute("userinfo");
+   MemberDto mdto = qdao.getWriter(qdto.getMember_no());
+   // 권한 확인
+   boolean isAdmin = user.getMember_auth().equals("관리자");
+   boolean isMine = user.getMember_id().equals(mdto.getMember_id());
+   
+   QnaFileDao qfdao = new QnaFileDao();
+   List<FilesDto> fileList = qfdao.getList(qna_no);
+   
+   AnswerFileDao afdao = new AnswerFileDao();
+   List<FilesDto> afileList =afdao.getList(qna_no);
+   
 %>
 <jsp:include page="/template/header.jsp"></jsp:include>
 <style>
 .div {font-family: arcadeclassic;}
 .font-game {
-	font-family: arcadeclassic;
-	font-size: 30px;
-	color: #20639B;
+<<<<<<< HEAD
+   font-family: arcadeclassic;
+   font-size: 30px;
+   color: #20639B;
 }
 .wrap {
-	border-top: 3px solid #20639B;
-	border-bottom : 3px solid #20639B;
+   border-top: 3px solid #20639B;
+   border-bottom : 3px solid #20639B;
 }
 .today-wrap {
-	border-top: 3px solid #20639B;
-	border-bottom : 3px solid #20639B;
-	position : relative;
+   border-top: 3px solid #20639B;
+   border-bottom : 3px solid #20639B;
+   position : relative;
 }
 .table{
-	
+   
 }
 .table.table-border {
-	/* 테이블에 테두리를 부여*/
-	border: 3px solid #20639B;
-	/* 테두리 병합 */
-	border-collapse: collapse;
+   /* 테이블에 테두리를 부여*/
+   border: 3px solid #20639B;
+   /* 테두리 병합 */
+   border-collapse: collapse;
 }
 .table.table-border > thead > tr > th,
         .table.table-border > thead > tr > td,
@@ -76,18 +77,18 @@
              color:black;
         }
 .preview-wrap > img {
-	width:100px;
-	height:100px;
-	display:inline-block;
+   width:100px;
+   height:100px;
+   display:inline-block;
  }
 </style>
 <script>
-	function preview() {
-		var fileTage = document.querySelector("input[name=f]");
-		var divTag = document.querySelelctor(".preview-wrap");
-		if(fileTag.files.length > 0){
-			divTag.innerHTML = "";
-			 for(var i=0; i < fileTag.files.length; i++){
+   function preview() {
+      var fileTage = document.querySelector("input[name=f]");
+      var divTag = document.querySelelctor(".preview-wrap");
+      if(fileTag.files.length > 0){
+         divTag.innerHTML = "";
+          for(var i=0; i < fileTag.files.length; i++){
                  var reader = new FileReader();
                  reader.onload = function(data){
                      //img 생성 후 data.target.result 설정하여 추가
@@ -102,7 +103,7 @@
              //미리보기 전부 삭제
              divTag.innerHTML = "";
          }
-	}
+   }
 </script>
 <div>
 	<form>

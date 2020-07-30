@@ -24,7 +24,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 	fdao.delete(file_no);
 	
 	// 2	
-	File target = new File("D:/eventupload/board", String.valueOf(file_no));
+	File target = new File("D:/upload/kh33/eventupload/board", String.valueOf(file_no));
 	target.delete();
 	
 	// 3

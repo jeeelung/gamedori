@@ -35,7 +35,7 @@ public class CommunityFileDownloadServlet extends HttpServlet{
 			resp.setHeader("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(fdto.getFile_name(), "UTF-8")+"\"");
 			resp.setHeader("Content-Length", String.valueOf(fdto.getFile_size()));
 			
-			File target = new File("D:/upload/community", String.valueOf(fdto.getFile_no()));
+			File target = new File("D:/upload/kh33/community", String.valueOf(fdto.getFile_no()));
 			byte[] data = FileUtils.readFileToByteArray(target);
 			resp.getOutputStream().write(data); // 사용자에게 전송
 			

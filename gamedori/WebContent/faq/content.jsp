@@ -120,7 +120,7 @@
 					<ul>
 						<%for(FilesDto filesdto : fileList) {%>
 						<li><%=filesdto.getFile_name() %> (<%=filesdto.getFile_size() %>bytes) 
-						<a href="download.do?file_no=<%=filesdto.getFile_no() %>"><input type="button" value="다운로드"> 
+						<a href="download.do?file_no=<%=filesdto.getFile_no() %>"><input type="button" value="다운로드">
 						</a>
 						</li>
 						<%}%>

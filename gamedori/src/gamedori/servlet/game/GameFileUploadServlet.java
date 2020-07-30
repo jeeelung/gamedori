@@ -38,7 +38,7 @@ public class GameFileUploadServlet extends HttpServlet{
 			
 			String charset = "UTF-8"; // 해석할 인코딩 방식
 			int limit = 10 * 1024 * 1024; // 최대 허용 용량
-			File fileBaseDir = new File("D:/upload/game");
+			File fileBaseDir = new File("D:/upload/kh33/game");
 			fileBaseDir.mkdirs();
 			
 			DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -119,7 +119,7 @@ public class GameFileUploadServlet extends HttpServlet{
 			}
 			
 			// 이미지 파일 경로 설정
-			File imgBaseDir = new File("D:/upload/game/img");
+			File imgBaseDir = new File("D:/upload/kh33/game");
 			imgBaseDir.mkdirs();
 			
 			// 이미지 파일 꺼내기

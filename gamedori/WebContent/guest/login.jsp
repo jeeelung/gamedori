@@ -96,7 +96,7 @@
 		<!-- 오류 메시지는 페이지에 error라는 파라미터가 있을 경우만 출력 -->
 		<h6><font color="#FF0000">입력하신 로그인 정보가 맞지 않습니다</font></h6>
 	<%} %>
-	
+
 </div>
 
 <jsp:include page="/template/footer.jsp"></jsp:include>
