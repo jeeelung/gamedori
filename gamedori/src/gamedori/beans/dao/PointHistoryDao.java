@@ -124,6 +124,27 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 				return count;
 				
 			}
+			public int getCount(int member_no, String auth) throws Exception{
+				Connection con = getConnection();
+				String sql = "SELECT count (*)  FROM point_history ph  INNER JOIN MEMBER m ON ph.member_no = m.member_no "
+						+ "WHERE (ph.member_no= ? or '관리자'=?) "
+						+ "order by point_his_no desc";
+						
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setInt(1, member_no);
+				ps.setString(2, auth);
+				
+				
+				ResultSet rs= ps.executeQuery();
+				rs.next();
+				int count = rs.getInt(1); //또는 rs.getInt("count(*));
+				
+				con.close();
+				return count;
+			}
+			
+			
+			
 			//회원 포인트
 			public int getPoint(int member_no) throws Exception{
 				Connection con = getConnection();
@@ -179,6 +200,32 @@ public Connection getConnection() throws ClassNotFoundException, SQLException {
 				ps.setInt(1, member_no);
 				ps.setInt(2, start);
 				ps.setInt(3, finish);
+				
+				ResultSet rs = ps.executeQuery();
+				List<Map<String,Object>> list = new ArrayList<>();
+				while(rs.next()) {
+					Map<String,Object> temp = new HashMap<>();
+					temp.put("point_type",rs.getString("point_type"));
+					temp.put("point_his_date",rs.getString("point_his_date"));
+					temp.put("point_score",rs.getInt("point_score"));
+					temp.put("point_his_no",rs.getInt("point_his_no"));
+					
+					list.add(temp);
+				}
+				con.close();
+				return list;
+			}
+			
+			public List<Map<String,Object>> getListAll(int start , int finish) throws Exception{
+				Connection con = getConnection();
+				String sql = "SELECT * FROM "
+						+ "(SELECT ROWNUM rn, T.* FROM "
+						+ "(SELECT p.point_type, ph.point_his_no, ph.point_his_date, p.point_score FROM point_history ph LEFT OUTER JOIN point p on p.point_no = ph.point_no "
+						+ " ORDER BY p.point_no asc) T ) WHERE rn BETWEEN ? and ?";
+
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setInt(1, start);
+				ps.setInt(2, finish);
 				
 				ResultSet rs = ps.executeQuery();
 				List<Map<String,Object>> list = new ArrayList<>();
